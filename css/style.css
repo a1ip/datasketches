@@ -2,13 +2,14 @@
 
 html {
   	height: 100%;
+    font-size: 62.5%;
 }
 
 body {
   	font-family: 'Assistant', sans-serif;
   	color: black;
   	height: 100%;
-  	font-size: 1.8em;
+  	font-size: 12px; /*1.2rem;*/
 }
 
 .container-fluid {
@@ -23,12 +24,18 @@ body {
 .ampersand {
 /*	font-family: 'Rochester', cursive;*/
 	font-family: 'Playfair Display', serif;
-	font-size: 2em;
+	font-size: 50px; /*5rem;*/
 	font-style: italic;
 }
 
 .verticalAlign {
 	vertical-align: sub;
+}
+
+@media only screen and (max-width: 500px) {
+	.hide-mobile {
+		display: none;
+	}
 }
 
 /*-------------- INTRO SECTION -----------------*/
@@ -51,7 +58,7 @@ body {
 
 #intro .main-title {
   	font-family: 'Quicksand', sans-serif;
-  	font-size: 6em;
+  	font-size: 12rem;
   	font-weight: 400;
   	line-height: 110%;
   	padding-bottom: 15px;
@@ -59,14 +66,14 @@ body {
 
 #intro .main-subtitle{
 	font-family: 'Sacramento', cursive;
-  	font-size: 1.4em;
+  	font-size: 25px; /*2.5rem;*/
   	color: #0a0a0a;
 }
 
 #intro .intro-body-text {
   	font-family: 'Assistant', sans-serif;
-  	font-size: 0.9em;
-  	color: #a6a6a6;
+  	font-size: 14px; /*1.4rem;*/
+  	color: #9a9a9a;
   	padding-top: 50px;
   	font-weight: 300;
 }
@@ -91,37 +98,43 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
+	width: 80%;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
 }
 
-#months #current {
-	background-color: #0a0a0a;
-	text-align: center;
-}
-
-#months #current h1 {
+#months h1 {
     font-family: 'Quicksand', sans-serif;
-    font-size: 4.5em;
+    font-size: 8.25rem;
     font-weight: 400;
-	margin-top: 0px;
+	margin-top: 0;
 }
 
-#months #current h2 {
+#months h2 {
 	font-family: 'Sacramento', cursive;
-    font-size: 1.25em;
+    font-size: 2.75rem;
 	margin-bottom: 0;
 }
+@media only screen and (max-width: 800px) {
+	#months h2 {
+		font-size: 20px;
+		padding-bottom: 10px;
+	}
+}
 
-#months #current p {
+#months p {
     font-family: 'Assistant', sans-serif;
-    font-size: 0.8em;
+    font-size: 14px; /*1.4rem;*/
     color: #a6a6a6;
     padding-top: 40px;
     font-weight: 300;
 }
 
+#months #current {
+	background-color: #1d1d1d;
+	text-align: center;
+}
 
 /*-------------- FOOTER SECTION -----------------*/
 
@@ -129,8 +142,9 @@ footer {
   padding: 30px;
   background-color: black;
   color: white;
-  font-size: 0.7em;
+  font-size: 12px; /*1.2rem;*/
   font-weight: 100;
+  width: 100%;
 }
 
 footer .block {
@@ -142,7 +156,7 @@ footer .list {
 }
 
 footer .description {
-  /*font-size: 0.7em;*/
+  /*font-size: 1.2rem;*/
 }
 
 a, a:link, a:visited, a:active {
