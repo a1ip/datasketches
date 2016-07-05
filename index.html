@@ -12,7 +12,7 @@
     <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
     
     <!-- Google fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Assistant:300,400|Sacramento|Quicksand|Playfair+Display:400i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Sacramento|Quicksand|Playfair+Display:400i" rel="stylesheet">
     
     <!-- jQuery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -44,7 +44,7 @@
 				<span class="verticalAlign"> Nadieh</span>
 				<span class="verticalAlign hide-mobile"> collaboration</span>
 			</div>
-        <div class="intro-body-text">We're just getting started...</div>
+        	<!-- <p>exploring a new theme each month through data visualizations</p> -->
       </div>
     </section>
 	
@@ -56,7 +56,7 @@
 		        <h2 class="light-grey">July</h2>
 		        <h1>Movies</h1>
 		        <p>
-		          An exploration of movies that have a personal connection to us<br>Currently being worked on
+		          Diving into movies that have a personal connection to us<br><br>Currently being worked on
 		        </p>
 			</div>
         </div>
@@ -75,19 +75,17 @@
               <div class="list">#datasketches</div>
           </div>
           <div class="col-xs-8 col-sm-3 block">
-              <div class="list">Find more about Nadieh on <a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
-              <div class="list">Find more about Shirley on <a href="https://sxywu.github.io/portfolio/">SxyWu.com</a></div>
+              <div class="list">Find Nadieh at <a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
+              <div class="list">Find Shirley at <a href="https://sxywu.github.io/portfolio/">SxyWu.com</a></div>
           </div>
         </div>
       </div>
     </footer>
 	
 	<script>
-		window.onresize = function() {
-			console.log("bliep");
-		    resizeToWindow();
-		}
-		resizeToWindow();
+		$( window ).resize( resizeToWindow );
+		$( document ).ready( resizeToWindow );
+		
 	
 		function resizeToWindow() {
 			//Reset the overall font size
