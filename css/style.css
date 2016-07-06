@@ -6,10 +6,20 @@ html {
 }
 
 body {
-  	font-family: 'Open Sans', sans-serif;
+  	font-family: 'Tinos', serif;
   	color: black;
   	height: 100%;
-  	font-size: 12px; /*1.2rem;*/
+  	font-size: 12px;
+}
+
+a, a:link, a:visited, a:active {
+  color: black;
+  border-bottom: 1px dotted rgba(0, 0, 0, .5);
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid black;
 }
 
 .container-fluid {
@@ -32,10 +42,25 @@ body {
 	vertical-align: sub;
 }
 
+.padding-column {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.margin-top-10 {
+  margin-top: 10px !important;
+}
+
 @media only screen and (max-width: 500px) {
 	.hide-mobile {
 		display: none;
 	}
+}
+
+@media only screen and (max-width: 850px) {
+  .hide-mobile-lg {
+    display: none;
+  }
 }
 
 /*-------------- INTRO SECTION -----------------*/
@@ -65,19 +90,17 @@ body {
 }
 
 #intro .main-subtitle{
-	font-family: 'Sacramento', cursive;
+	  font-family: 'Sacramento', cursive;
   	font-size: 25px; /*2.5rem;*/
   	color: #0a0a0a;
 }
 
 #intro p {
-  	font-family: 'Open Sans', sans-serif;
-  	font-size: 14px; /*1.4rem;*/
+  	font-size: 14px;
   	color: #9a9a9a;
   	padding-top: 50px;
-  	font-weight: 300;
-	width: 90%;
-	margin: 0 auto;
+	  width: 90%;
+	  margin: 0 auto;
 }
 
 /*-------------- MONTH SECTION -----------------*/
@@ -100,7 +123,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-	width: 80%;
+	  width: 80%;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -110,13 +133,13 @@ body {
     font-family: 'Quicksand', sans-serif;
     font-size: 8.25rem;
     font-weight: 400;
-	margin-top: 0;
+	  margin-top: 0;
 }
 
 #months h2 {
-	font-family: 'Sacramento', cursive;
+	  font-family: 'Sacramento', cursive;
     font-size: 2.75rem;
-	margin-bottom: 0;
+	  margin-bottom: 0;
 }
 @media only screen and (max-width: 800px) {
 	#months h2 {
@@ -126,18 +149,115 @@ body {
 }
 
 #months p {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px; /*1.2rem;*/
     color: #a6a6a6;
     padding-top: 0px;
-    font-weight: 300;
-	width: 90%;
-	margin: 0 auto;
+	  width: 90%;
+	  margin: 0 auto;
 }
 
 #months #current {
 	background-color: #1d1d1d;
 	text-align: center;
+}
+
+/*-------------- HEADER SECTION -----------------*/
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  background-color: #fbfbfb;
+  z-index: 1;
+  padding-left: 20px;
+}
+
+header .header-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 0px;
+  padding-right: 20px;
+  float: left;
+}
+
+header .month-link {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  padding-left: 10px;
+  padding-right: 10px;
+  float: left;
+}
+
+header .inactive {
+  color: #cccccc;
+  cursor: default;
+}
+
+/*-------------- MONTH PAGES -----------------*/
+
+.month-page {
+  text-align: center;
+
+}
+
+.month-page-title {
+  margin-top: 110px;
+}
+
+.month-page .write-up {
+    margin-top: 50px;
+}
+
+.month-page h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 12rem;
+    font-weight: 400;
+    line-height: 110%;
+    /*padding-bottom: 15px;*/
+    margin-top: 0;
+}
+
+.month-page .month {
+    font-family: 'Sacramento', cursive;
+    font-size: 2.75rem;
+    margin-bottom: 0;
+}
+
+.month-page h2 {
+    font-family: 'Sacramento', cursive;
+    font-size: 50px;
+    /*color: #0a0a0a;*/
+}
+@media only screen and (max-width: 800px) {
+  .month-page h2 {
+    font-size: 38px;
+  }
+}
+
+.month-page h3 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.month-page p {
+    /*font-family: 'Tinos', serif;*/
+    /*font-family: 'Fanwood Text', serif;*/
+    text-align: left;
+    color: #545454;
+}
+
+.month-page-note {
+    font-family: 'Sacramento', cursive;
+    font-size: 25px;
+    color: #0a0a0a;
+    padding-bottom: 60px;
 }
 
 /*-------------- FOOTER SECTION -----------------*/
@@ -146,8 +266,8 @@ footer {
   padding: 30px;
   background-color: black;
   color: white;
-  font-size: 12px; /*1.2rem;*/
-  font-weight: 100;
+  font-size: 12px;
+  font-weight: 400;
   width: 100%;
 }
 
@@ -163,12 +283,12 @@ footer .description {
   /*font-size: 1.2rem;*/
 }
 
-a, a:link, a:visited, a:active {
+footer a, footer a:link, footer a:visited, footer a:active {
   color: white;
   border-bottom: 1px dotted rgba(255, 255, 255, .5);
 }
 
-a:hover {
+footer a:hover {
   text-decoration: none;
   border-bottom: 1px solid white;
 }

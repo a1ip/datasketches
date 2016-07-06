@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Data Sketches</title>
+    <meta name="author" content="Nadieh Bremer">
+    <meta name="description" content="Data Sketches - July - Movies">
+    <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
+    
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Tinos:400,400i|Sacramento|Quicksand|Playfair+Display:400i" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+    <header>
+      <a href=".."><div class="header-title">
+        <span>data sketch</span><span class="light-grey">|</span><span>es</span>
+      </div></a>
+      <a href="../july"><div class="month-link hide-mobile-lg">July</div></a>
+      <div class="month-link hide-mobile-lg inactive">August</div>
+      <div class="month-link hide-mobile-lg inactive">September</div>
+      <div class="month-link hide-mobile-lg inactive">October</div>
+      <div class="month-link hide-mobile-lg inactive">November</div>
+      <div class="month-link hide-mobile-lg inactive">December</div>
+      <div class="month-link hide-mobile-lg inactive">January</div>
+      <div class="month-link hide-mobile-lg inactive">February</div>
+      <div class="month-link hide-mobile-lg inactive">March</div>
+      <div class="month-link hide-mobile-lg inactive">April</div>
+      <div class="month-link hide-mobile-lg inactive">May</div>
+      <div class="month-link hide-mobile-lg inactive">June</div>
+    </header>
+    
+    <section id="july" class="month-page">
+      <div class="container">
+
+        <!-- Title above -->
+        <div class="row">
+          <div class="col-xs-12 month-page-title">
+            <div class="month light-grey">July</div>
+            <h1>Movies</h1>
+          </div>
+        </div>
+
+        <!-- Write-ups -->
+        <div class="row">
+
+          <!-- Nadieh -->
+          <div class="col-xs-12 col-md-6 write-up padding-column">
+            <h2 class="light-grey">Nadieh</h2>
+
+            <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+
+            <p>
+              Starting off our collaboration with the theme <i>movies</i> as long as there was some personal connection to the data. Since I'm not keeping tabs on all of the movies I've ever watched, the personal touch was a bit vague to me at the start. So I started by searching for movie data in general. 
+            </p>
+
+            <p>
+              I came across budget and gross information per movie pretty quickly. But the gorgeous <a href="http://krisztinaszucs.com/?my-product=hollywood">Spotlight on Profitability</a> by Krisztina Szücs is one of my favorite dataviz pieces and I didn't want to try and do something with similar data which could never compare to the quality of Krisztina's work.
+            </p>
+
+            <p>
+              The <a href="http://www.omdbapi.com/">OMDb API</a> (the O stands for Open) seemed very interesting to get detailed information about a movie. But you needed to either provide a movie title or IMDb ID. Luckily IMDb actually has an <a href="http://www.imdb.com/interfaces">ftp</a> where you can download huge files with all of the information on movies & series on a particular subject; genre, cast, release date, budgets and much more. Having access to such a large database seemed like a very interesting angle to start working with, but it wasn't very personal yet.
+            </p>
+
+            <p>
+              So, instead I left that and started looking for data on my favorite movie (trilogy), the Lord of the Rings. I still remember, as a 12-year old girl, waiting at the movie theatre more than 1.5 hours in advance with my parents to get the best spots in the theatre (it was still first come, first serve back then). Collecting magazine clippings and posters and later fondly watching all of the extra's (even for a second time). It's more than 9 hours of film that I can watch year after year.
+              With the huge fanbase that the movies and the books have I expected to find loads of interesting datasets on the film, but I was actually a bit dissapointed. I could only find the <a href="http://lotrproject.com/statistics/">LotR Project</a>, but that is about the book, which I couldn't use, besides the fact that I couldn't find any raw data, just charts. 
+            </p>
+
+            <p>
+              And then I came across the GitHub of <a href="https://github.com/jennybc/lotr">jennybc</a> who had a fascinating dataset about the number of words spoken by each character in the actual extended editions of all 3 films. She seems to have gotten the data herself from Many Eyes, but since that no longer exists I cannot trace the data farther back. I did do several manual checks, comparing the word count to <a href="http://www.ageofthering.com/">scripts available online</a> (which sadly seems to have expired since last weekend) and they coincided very well. 
+            </p>
+
+            <p>
+              In the data, I have information on the number of words spoken by each character by scene and what race that character is. However, I found scenes to be a bit arbitrary. They are attached to the making of the movie, not the movie experience perse. So instead I went ahead and manually added an on-screen location to each of the ±800 rows of data. For this I (again) relied heavily on the Age of the Ring scripts of the extended editions and the original scripts of the non-extended editions found on <a href="http://www.imsdb.com/">IMSDb</a>. These scripts sometimes mention the location when they talk about the scene in general. And of course, I used my own memory of watching the movies time and time again. 
+            </p>
+
+            <p>
+              I made two columns, one with a broad location (Gondor for example) and an extra with a more detailed location (Minas Tirith). I feel that the general location was straightforward to find. The only issue was that I didn't quite know where to group certain very specific location to. The Grey Havens for example; not the Shire or Rivendell... or Emyn Muil (& the Dead Marshes) not yet in Mordor and doesn't really fit with Rohan. But both are too small to really are their own broad location. 
+              The detailed location, on the other hand, was sometimes just not known, too general or I couldn't find any mention of it in the scripts, but I think that about 90% have good detailed locations.
+            </p>
+
+            <p>
+              I also sometimes split up the words of a character within one scene because he or she was present in multiple detailed locations. So I had to recount the words belonging to each detailed location. Eventually this was a labor of love, during a lovely Sunday, and I tried my very best to add the right data to each scene. After finishing, it felt like a dataset that I had a personal connection to and wanted to try and visualize.
+            </p>
+
+            <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+
+            <p>
+              More text
+            </p>
+            
+            <h3>week 3 <span class="light-grey">|</span> visuals</h3>
+
+            <p>
+              More text
+            </p>
+
+            <h3>week 4 <span class="light-grey">|</span> switch</h3>
+
+            <p>
+              More text
+            </p>
+
+          </div>
+
+          <!-- Shirley -->
+          <div class="col-xs-12 col-md-6 write-up padding-column">
+            <h2 class="light-grey">Shirley</h2>
+    
+            <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+
+            <p>
+              Text
+            </p>
+
+            <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+
+            <p>
+              More text
+            </p>   
+
+            <h3>week 3 <span class="light-grey">|</span> visuals</h3>
+
+            <p>
+              More text
+            </p>
+
+            <h3>week 4 <span class="light-grey">|</span> switch</h3>
+
+            <p>
+              More text
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- Note below -->
+        <div class="row">
+          <div class="col-xs-12 month-page-note">
+            <span class="verticalAlign" style="padding-right: 8px;">Shirley </span>
+            <span class="ampersand verticalAlign light-grey">&</span>
+            <span class="verticalAlign"> Nadieh</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 description block">
+            A monthly collaboration between Shirley Wu & Nadieh Bremer
+          </div>
+          <div class="col-xs-4 col-sm-3 block">
+              <div class="list"><a href="https://twitter.com/datasketches">@datasketches</a></div>
+              <div class="list">#datasketches</div>
+          </div>
+          <div class="col-xs-8 col-sm-3 block">
+              <div class="list">Shirley <span class="light-grey">|</span> <a href="https://sxywu.github.io/portfolio/">SxyWu.com</a></div>
+              <div class="list">Nadieh <span class="light-grey">|</span> <a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
+          </div>
+        </div>
+      </div>
+    </footer>
+	
+	<script>
+		$( window ).resize( resizeToWindow );
+		$( document ).ready( resizeToWindow );
+		
+		function resizeToWindow() {
+			//Reset the overall font size
+			var newFontSize = Math.min(62.5, Math.max(30, window.innerWidth * 62.5 / 1280));
+			$("html").css("font-size", newFontSize + "%");
+		}
+	</script>
+
+  </body>
+</html>
