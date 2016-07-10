@@ -1,0 +1,7 @@
+{
+  "name": "july-data",
+  "dependencies": {
+    "d3": "^3.5.17",
+    "lodash": "^4.13.1"
+  }
+}
