@@ -73,37 +73,27 @@
             <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
             <p>
-              Starting off our collaboration with the theme <i>movies</i> as long as there was some personal connection to the data. Since I'm not keeping tabs on all of the movies I've ever watched, the personal touch was a bit vague to me at the start. So I started by searching for movie data in general. 
+              Starting off our collaboration with the theme <i>movies</i> as long as there was some personal connection to the data. I started with a general search of movies, to get a feeling of what might be out there. I came across budget and gross information per movie pretty quickly, found my way to the <a href="http://www.omdbapi.com/">OMDb API</a> and <a href="http://www.imdb.com/interfaces">IMDb ftp</a>, where you can download huge files with all of the information on movies & series. Having access to such a large databases seemed like a very interesting angle to start working with, but it wasn't very personal.
             </p>
 
             <p>
-              I came across budget and gross information per movie pretty quickly. But the gorgeous <a href="http://krisztinaszucs.com/?my-product=hollywood">Spotlight on Profitability</a> by Krisztina Szücs is one of my favorite dataviz pieces and I didn't want to try and do something with similar data which could never compare to the quality of Krisztina's work.
+              So, instead I started looking for data on my favorite movie (trilogy); the Lord of the Rings. I still remember, as a 12-year old girl, waiting at the movie theater more than 1.5 hours in advance with my parents to get the best spots in the theater (it was still first come, first serve back then). Collecting magazine clippings and posters and later fondly watching all of the extras (even for a second time). It's more than 9 hours of film that I can watch year after year.
             </p>
 
             <p>
-              The <a href="http://www.omdbapi.com/">OMDb API</a> (the O stands for Open) seemed very interesting to get detailed information about a movie. But you needed to either provide a movie title or IMDb ID. Luckily IMDb actually has an <a href="http://www.imdb.com/interfaces">ftp</a> where you can download huge files with all of the information on movies & series on a particular subject; genre, cast, release date, budgets and much more. Having access to such a large database seemed like a very interesting angle to start working with, but it wasn't very personal yet.
+              I found a fascinating <a href="https://github.com/jennybc/lotr">dataset</a> about the number of words spoken by each character in the extended editions of all 3 films. I did a few checks, comparing the word count to <a href="http://www.ageofthering.com/">scripts available on Age of the Ring</a> (which serendipitously / sadly seems to have expired only 2 days after I finished my data preparation) and they coincided pretty well. 
             </p>
 
             <p>
-              So, instead I left that and started looking for data on my favorite movie (trilogy), the Lord of the Rings. I still remember, as a 12-year old girl, waiting at the movie theatre more than 1.5 hours in advance with my parents to get the best spots in the theatre (it was still first come, first serve back then). Collecting magazine clippings and posters and later fondly watching all of the extra's (even for a second time). It's more than 9 hours of film that I can watch year after year.
-              With the huge fanbase that the movies and the books have I expected to find loads of interesting datasets on the film, but I was actually a bit dissapointed. I could only find the <a href="http://lotrproject.com/statistics/">LotR Project</a>, but that is about the book, which I couldn't use, besides the fact that I couldn't find any raw data, just charts. 
+              In the data, there is information on the number of words spoken by each character by scene and what race that character is. However, I found <i>scenes</i> to be a bit arbitrary. They are more attached to the making of the movie, not the movie experience. So instead I went ahead and manually added an on-screen location to each of the ±800 rows of data.
             </p>
 
             <p>
-              And then I came across the GitHub of <a href="https://github.com/jennybc/lotr">jennybc</a> who had a fascinating dataset about the number of words spoken by each character in the actual extended editions of all 3 films. She seems to have gotten the data herself from Many Eyes, but since that no longer exists I cannot trace the data farther back. I did do several manual checks, comparing the word count to <a href="http://www.ageofthering.com/">scripts available online</a> (which sadly seems to have expired since last weekend) and they coincided very well. 
+              Besides a map of Middle-Earth I relied heavily on the Age of the Ring scripts of the extended editions and the original scripts of the non-extended editions found on <a href="http://www.imsdb.com/">IMSDb</a>. These scripts sometimes mention the location when they talk about the scene in general. And of course, I used my own memory of watching the movies time and time again. You can find some more explanation about what I did & the dataset itself on <a href="https://github.com/nbremer/datasketches/tree/gh-pages/july/data/nadieh">the GitHub page of the dataset</a>
             </p>
 
             <p>
-              In the data, I have information on the number of words spoken by each character by scene and what race that character is. However, I found scenes to be a bit arbitrary. They are attached to the making of the movie, not the movie experience perse. So instead I went ahead and manually added an on-screen location to each of the ±800 rows of data. For this I (again) relied heavily on the Age of the Ring scripts of the extended editions and the original scripts of the non-extended editions found on <a href="http://www.imsdb.com/">IMSDb</a>. These scripts sometimes mention the location when they talk about the scene in general. And of course, I used my own memory of watching the movies time and time again. 
-            </p>
-
-            <p>
-              I made two columns, one with a broad location (Gondor for example) and an extra with a more detailed location (Minas Tirith). I feel that the general location was straightforward to find. The only issue was that I didn't quite know where to group certain very specific location to. The Grey Havens for example; not the Shire or Rivendell... or Emyn Muil (& the Dead Marshes) not yet in Mordor and doesn't really fit with Rohan. But both are too small to really are their own broad location. 
-              The detailed location, on the other hand, was sometimes just not known, too general or I couldn't find any mention of it in the scripts, but I think that about 90% have good detailed locations.
-            </p>
-
-            <p>
-              I also sometimes split up the words of a character within one scene because he or she was present in multiple detailed locations. So I had to recount the words belonging to each detailed location. Eventually this was a labor of love, during a lovely Sunday, and I tried my very best to add the right data to each scene. After finishing, it felt like a dataset that I had a personal connection to and wanted to try and visualize.
+              It took a few hours, but afterwards it felt like a dataset that I had a personal connection to and wanted to visualize.
             </p>
 
             <h3>week 2 <span class="light-grey">|</span> sketches</h3>
