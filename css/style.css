@@ -17,6 +17,11 @@ a, a:link, a:visited, a:active {
   border-bottom: 1px dotted rgba(0, 0, 0, .5);
 }
 
+a.fancybox-close, a:link.fancybox-close, a:visited.fancybox-close, a:active.fancybox-close {
+    color: black;
+    border-bottom: none;
+}
+
 a:hover {
   text-decoration: none;
   border-bottom: 1px solid black;
@@ -160,6 +165,10 @@ a:hover {
 	text-align: center;
 }
 
+.write-up .img-month {
+	margin-bottom: 10px;
+}
+
 /*-------------- HEADER SECTION -----------------*/
 
 header {
@@ -193,7 +202,7 @@ header .month-link {
 }
 
 header .inactive {
-  color: #cccccc;
+  color: #b7b7b7;
   cursor: default;
 }
 

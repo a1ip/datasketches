@@ -20,6 +20,10 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
+	<!-- fancyBox -->
+	<link rel="stylesheet" href="../plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="../plugins/fancybox/jquery.fancybox.pack.js"></script>
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="../css/style.css">
@@ -97,12 +101,34 @@
             </p>
 
             <h3>week 2 <span class="light-grey">|</span> sketches</h3>
-
+			
+			<p>
+			  Having just bought an iPad Pro 9.7" with Apple pencil I of course wanted to try it out for my dataviz sketching. This month I used the app that most charmed me, Tayasui's Sketches II.
+			</p>
             <p>
-              More text
+              About a month ago I got an email from Christian Wisniewski with a sketch that looked a bit like a Chord diagram but with "nodes" in the center. It seemed very intriguing and since I have a fond history of hacking the chord diagram for other purposes I wanted to try to create my own version of Christian's idea at some point. While going over ideas for the LotR data in my mind, I couldn't help but think that this dataset would fit that purpose very well. 
             </p>
+			<p>
+			  For my dataset, the Fellowship characters would be placed in the center. The more general locations are the arcs around it. Each character would be connected to the location where they spoke and the thickness of the chord at the location would represent the number of words spoken there. I'm not quite sure if the detailed locations should provide a more detailed level within the arcs themselves. That will probably create too many chords...
+			</p>
+			<a class="fancybox" href="sketches/nadieh/LotR sketch circular.jpg"> <img src="sketches/nadieh/LotR sketch circular.jpg" class="img-responsive img-month" alt="Sketch of the chord diagram line LotR idea"></a>
             
-            <h3>week 3 <span class="light-grey">|</span> visuals</h3>
+			<p>
+			  I tried coming up with some other ideas, but I guess I was already sold by the chord diagram-ish one, because all of my other sketches didn't amount to anything worthwhile. There was something with a timeline; when was the scene was taking place and the number of words spoken by the character.
+			</p>
+			<a class="fancybox" href="sketches/nadieh/LotR sketch timeline.jpg"><img src="sketches/nadieh/LotR sketch timeline.jpg" class="img-responsive img-month" alt="Sketch of the timeline LotR idea"></a>
+			<p>
+			  Another one where each location would a spirograph, with the number of petals being the number of detailed locations and sized in total to the number of words spoken.
+			</p>
+			<a class="fancybox" href="sketches/nadieh/LotR sketch spirograph.jpg"><img src="sketches/nadieh/LotR sketch spirograph.jpg" class="img-responsive img-month" alt="Sketch of the spirograph LotR idea"></a>
+			<p>
+			  Sketching on the iPad was quite fun. It was very easy to combine techniques, move things around, undo things. One minor downside was that I don't have the same amount of control over my pen in terms of drawing the longer strokes exactly as I want to. Perhaps its just a matter of getting used to the slippery surface.
+		  	</p>
+		  	<p>
+			  But definitely going for the first sketch for next week!
+			</p>
+            
+			<h3>week 3 <span class="light-grey">|</span> code</h3>
 
             <p>
               More text
@@ -132,7 +158,7 @@
               More text
             </p>   
 
-            <h3>week 3 <span class="light-grey">|</span> visuals</h3>
+            <h3>week 3 <span class="light-grey">|</span> code</h3>
 
             <p>
               More text
@@ -180,7 +206,10 @@
 	
 	<script>
 		$( window ).resize( resizeToWindow );
-		$( document ).ready( resizeToWindow );
+		$( document ).ready( function() {
+			resizeToWindow();
+			$(".fancybox").fancybox(); 
+		});
 		
 		function resizeToWindow() {
 			//Reset the overall font size
