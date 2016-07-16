@@ -208,7 +208,16 @@
 		$( window ).resize( resizeToWindow );
 		$( document ).ready( function() {
 			resizeToWindow();
-			$(".fancybox").fancybox(); 
+			$(".fancybox").fancybox({
+				openEffect : 'fade',
+				closeEffect : 'fade',
+				padding: 0,
+				helpers: {
+				overlay: {
+					locked: false
+				}
+				}
+			});
 		});
 		
 		function resizeToWindow() {
