@@ -79,8 +79,10 @@
 			    .attr("width", width + margin.left + margin.right)
 			    .attr("height", height + margin.top + margin.bottom);
 			
-			var fellowship = ["Frodo","Sam","Pippin","Merry","Gandalf","Aragorn","Boromir","Legolas","Gimli"];
-			var dataset;
+			////////////////////////////////////////////////////////////
+			///////////////////// Read in data /////////////////////////
+			////////////////////////////////////////////////////////////
+						
 			d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 				
 				data.forEach(function(d) {
@@ -88,12 +90,13 @@
 				});
 				
 				//Only keep the members of the fellowship & remove Voiceover
-				dataset = data.filter(function(d) { 
+				var fellowship = ["Frodo","Sam","Pippin","Merry","Gandalf","Aragorn","Boromir","Legolas","Gimli"];
+				data = data.filter(function(d) { 
 					return _.contains(fellowship, d.character) && d.location !== "Voiceover"; 
 				});	
 				
 				//Aggregate the data by detailed location
-				var dataAgg = dataGrouper.sum(dataset, ["location","character"]);
+				var dataAgg = dataGrouper.sum(data, ["location","character"]);
 	
 				//Get the unique locations
 				//var locations = _.uniq(_.pluck(dataAgg, "location"));
@@ -103,12 +106,10 @@
 			    	.domain(locations)
 			    	.range(colors);
 				
-				
 				var g = svg.append("g")
 				    .attr("transform", "translate(" + (width/2 + margin.left) + "," + (height/2 + margin.top) + ")")
 				    //.datum(chord(dataNested));
-					.datum(chord(dataAgg));
-							
+					.datum(chord(dataAgg));	
 	
 				////////////////////////////////////////////////////////////
 				////////////////////// Draw outer Arcs /////////////////////
