@@ -10,17 +10,17 @@
     <meta name="author" content="Nadieh Bremer">
     <meta name="description" content="Data Sketches - July - Movies">
     <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
-    
+
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Tinos:400,400i|Sacramento|Quicksand|Playfair+Display:400i" rel="stylesheet">
 
     <!-- jQuery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	
+
 	<!-- fancyBox -->
 	<link rel="stylesheet" href="../plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
 	<script type="text/javascript" src="../plugins/fancybox/jquery.fancybox.pack.js"></script>
@@ -55,7 +55,7 @@
       <div class="month-link hide-mobile-lg inactive">May</div>
       <div class="month-link hide-mobile-lg inactive">June</div>
     </header>
-    
+
     <section id="july" class="month-page">
       <div class="container">
 
@@ -85,7 +85,7 @@
             </p>
 
             <p>
-              I found a fascinating <a href="https://github.com/jennybc/lotr">dataset</a> about the number of words spoken by each character in the extended editions of all 3 films. I did a few checks, comparing the word count to <a href="http://www.ageofthering.com/">scripts available on Age of the Ring</a> (which serendipitously / sadly seems to have expired only 2 days after I finished my data preparation) and they coincided pretty well. 
+              I found a fascinating <a href="https://github.com/jennybc/lotr">dataset</a> about the number of words spoken by each character in the extended editions of all 3 films. I did a few checks, comparing the word count to <a href="http://www.ageofthering.com/">scripts available on Age of the Ring</a> (which serendipitously / sadly seems to have expired only 2 days after I finished my data preparation) and they coincided pretty well.
             </p>
 
             <p>
@@ -101,18 +101,18 @@
             </p>
 
             <h3>week 2 <span class="light-grey">|</span> sketches</h3>
-			
+
 			<p>
 			  Having just bought an iPad Pro 9.7" with Apple pencil I of course wanted to try it out for my dataviz sketching. This month I used the app that most charmed me, Tayasui's Sketches II.
 			</p>
             <p>
-              About a month ago I got an email from Christian Wisniewski with a sketch that looked a bit like a Chord diagram but with "nodes" in the center. It seemed very intriguing and since I have a fond history of hacking the chord diagram for other purposes I wanted to try to create my own version of Christian's idea at some point. While going over ideas for the LotR data in my mind, I couldn't help but think that this dataset would fit that purpose very well. 
+              About a month ago I got an email from Christian Wisniewski with a sketch that looked a bit like a Chord diagram but with "nodes" in the center. It seemed very intriguing and since I have a fond history of hacking the chord diagram for other purposes I wanted to try to create my own version of Christian's idea at some point. While going over ideas for the LotR data in my mind, I couldn't help but think that this dataset would fit that purpose very well.
             </p>
 			<p>
 			  For my dataset, the Fellowship characters would be placed in the center. The more general locations are the arcs around it. Each character would be connected to the location where they spoke and the thickness of the chord at the location would represent the number of words spoken there. I'm not quite sure if the detailed locations should provide a more detailed level within the arcs themselves. That will probably create too many chords...
 			</p>
 			<a class="fancybox" href="sketches/nadieh/LotR sketch circular.jpg"> <img src="sketches/nadieh/LotR sketch circular.jpg" class="img-responsive img-month" alt="Sketch of the chord diagram line LotR idea"></a>
-            
+
 			<p>
 			  I tried coming up with some other ideas, but I guess I was already sold by the chord diagram-ish one, because all of my other sketches didn't amount to anything worthwhile. There was something with a timeline; when was the scene was taking place and the number of words spoken by the character.
 			</p>
@@ -127,7 +127,7 @@
 		  	<p>
 			  But definitely going for the first sketch for next week!
 			</p>
-            
+
 			<h3>week 3 <span class="light-grey">|</span> code</h3>
 
             <p>
@@ -145,18 +145,50 @@
           <!-- Shirley -->
           <div class="col-xs-12 col-md-6 write-up padding-column">
             <h2 class="light-grey">Shirley</h2>
-    
+
             <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
             <p>
-              Text
+              Anyone who's ever talked to me for more than a few minutes will know that I am absolutely horrible with pop culture references.
+              And while I like to blame the fact that I grew up in various non-English-speaking countries for half of my childhood years (and spent the other half with my head buried in schoolwork), I know it's also because I just didn't watch that many movies growing up.
+            </p>
+
+            <p>
+              So I was pretty excited to do <i>movies</i> for our first month: how many big, blockbuster summer time movies have I watched in my lifetime?
+            </p>
+
+            <p>
+              Like Nadieh, I found <a href='http://www.omdbapi.com/' target='new'>OMDb API</a> with a simple Google search.
+              Unfortunately, it only let me search the movies by title or IMDb id, and I needed a way to get the top summer movies by year.
+              Fortunately, IMDb has an advanced search feature that is beautifully parameterized, and so it didn't take me long to <a href='http://www.imdb.com/search/title?countries=us&languages=en&release_date=2016-06-01,2016-08-30&sort=boxoffice_gross_us,desc&title_type=feature' target='_new'>form a search query</a>.
+            </p>
+
+            <p>
+              I got the top US-grossing movies for June 1st to August 30th for each of the years I have been alive, and took the top 5 movie id's for each year.
+              I then fed those id's into the OMDb API, which gave me back a detailed set of information for each movie, including ratings and genre information.
+            </p>
+
+            <p>
+              Looking through the data I found that the most popular genres for summer movies were <strong>Action & Adventure</strong>, with <strong>Comedy</strong> following third.
+              I also learned that (unsurprisingly) I have only watched 35 of the 140 movies, a rate of 25%.
+              Out of all the movies I watched, the top genres were <strong>Adventure, Action, Comedy, and Animation</strong>.
+              And out of the 35 movies I have seen, only 12 were in theatres - and all after the years of 2007 (aka the summer before my senior year of high school).
+            </p>
+
+            <p>
+              On the bright side! Out of the top 20 best rated movies, I have watched 15: a whopping rate of 75% so I guess I'm doing something right 😁
+            </p>
+
+            <p>
+              <a href='https://github.com/nbremer/datasketches/blob/gh-pages/july/data/shirley/get_data.js' target='_new'>Code for getting movie data</a><br>
+              <a href='http://bl.ocks.org/sxywu/2caf1e769ddfa0456578144152d53fd7' target='_new'>Bl.ock exploring the movie data</a>
             </p>
 
             <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
             <p>
               More text
-            </p>   
+            </p>
 
             <h3>week 3 <span class="light-grey">|</span> code</h3>
 
@@ -203,7 +235,7 @@
         </div>
       </div>
     </footer>
-	
+
 	<script>
 		$( window ).resize( resizeToWindow );
 		$( document ).ready( function() {
@@ -219,7 +251,7 @@
 				}
 			});
 		});
-		
+
 		function resizeToWindow() {
 			//Reset the overall font size
 			var newFontSize = Math.min(62.5, Math.max(30, window.innerWidth * 62.5 / 1280));
