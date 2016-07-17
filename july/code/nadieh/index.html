@@ -43,7 +43,7 @@
 		<script>
 
 			var margin = {left:90, top:90, right:90, bottom:90},
-				width = Math.min(window.innerWidth, 900) - margin.left - margin.right,
+				width = Math.min(window.innerWidth, 1100) - margin.left - margin.right,
 			    height = Math.min(window.innerWidth, 900) - margin.top - margin.bottom,
 			    innerRadius = Math.min(width, height) * .45,
 			    outerRadius = innerRadius * 1.05;
@@ -51,6 +51,8 @@
 			////////////////////////////////////////////////////////////
 			////////////////// Set-up Chord parameters /////////////////
 			////////////////////////////////////////////////////////////
+				
+			var pullOutSize = 80;
 									
 			var chord = chordNB()
 			    .padAngle(0.05)
@@ -67,7 +69,8 @@
 			    .outerRadius(outerRadius);
 
 			var ribbon = ribbonNB()
-			    .radius(innerRadius);
+			    .radius(innerRadius)
+				.pullout(pullOutSize);
 
 			//var formatValue = d3.formatPrefix(",.0", 1e2);
 	
@@ -126,6 +129,9 @@
 				var outerArcs = arcs.append("path")
 				    .style("fill", function(d) { return color(d.outername); })
 				    .attr("d", arc)
+					.attr("transform", function(d, i) { //Pull the two slices apart
+					  	return "translate(" + (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) + ',' + 0 + ")";
+					 })
 				  	.on("mouseover", function(d) { console.log(d); });
 					
 				////////////////////////////////////////////////////////////
@@ -166,6 +172,7 @@
 				  			.attr("class", "hiddenArcs")
 				  			.attr("id", "arc"+i)
 				  			.attr("d", newArc)
+							.attr("transform", "translate(" + pullOutSize * ( d.startAngle > Math.PI ? -1 : 1) + ',' + 0 + ")" )
 				  			.style("fill", "none");
 				  	});
 
@@ -239,6 +246,7 @@
 			  	  x = function (d) { return d.x; },
 			  	  y = function (d) { return d.y; },
 			  	  offset = function (d) { return d.offset; },
+			  	  pullout = 50,
 		          context = null;
 
 		      function ribbon() {
@@ -261,7 +269,8 @@
 				    yco,
 				  	xci,
 				    yci,
-				  	leftHalf;
+				  	leftHalf,
+					pulloutContext;
 					
 					//Does the group lie on the left side
 					leftHalf = sa0+halfPi$2 > pi$3 && sa0+halfPi$2 < tau$3;
@@ -270,11 +279,16 @@
 					tx = tx + toffset;
 					
 			        if (!context) context = buffer = d3.path();
+
+					//Change the pullout based on where the ribbon is
+					pulloutContext  = (leftHalf ? -1 : 1 ) * pullout;
+					sx0 = sx0 + pulloutContext;
+					sx1 = sx1 + pulloutContext;
 					
 					//Start at smallest angle of outer arc
 			        context.moveTo(sx0, sy0);
 					//Circular part along the outer arc
-			        context.arc(0, 0, sr, sa0, sa1);
+			        context.arc(pulloutContext, 0, sr, sa0, sa1);
 					//From end outer arc to center
 		            xco = d3.interpolateNumber(0, sx1)(0.5);
 		            yco = d3.interpolateNumber(0, sy1)(0.5);
@@ -337,6 +351,10 @@
 
 		      ribbon.outer = function(_) {
 		        return arguments.length ? (outer = _, ribbon) : outer;
+		      };
+			  
+		      ribbon.pullout = function(_) {
+		        return arguments.length ? (pullout = _, ribbon) : pullout;
 		      };
 
 		      ribbon.context = function(_) {
