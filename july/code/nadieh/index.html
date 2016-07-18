@@ -8,33 +8,48 @@
 			  font-family: 'Macondo Swash Caps', cursive;
 			  font-size: 12px;
 			}
-
-			.group-tick line {
-			  stroke: #000;
+			
+			.group-tick {
+				font-family: 'Open Sans', sans-serif;
+				font-size: 8px;
+				font-weight: 300;
+				fill: #b9b9b9;
 			}
 
-			.ribbons {
-			  fill-opacity: 0.67;
+			.group-tick line {
+			    stroke: #909090;
+			    stroke-width: 0.5px;
+			}
+
+			.band {
+			  	opacity: 0.7;
 			}
 			
 			.inner-label {
 				font-size: 14px;
 				fill: #232323;
+				cursor: default;
 			}
 			
 			.outer-label {
 				font-size: 14px;
 				fill: #5f5f5f;
+				cursor: default;
 			}
 
 		</style>
 		
 		<!-- Google fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps" rel="stylesheet">
+		<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet"> -->
 		
 		<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
 		<script src="../../../plugins/d3.js"></script>
 		<script src="../../../plugins/underscore.js"></script>
+		
+		<!-- Custom "chord" and "ribbon" functions -->
+		<script src="helix.js"></script>
+		<script src="bands.js"></script>
 		
 	</head>
 	<body>
@@ -42,7 +57,7 @@
 		
 		<script>
 
-			var margin = {left:90, top:90, right:90, bottom:90},
+			var margin = {left:100, top:90, right:100, bottom:90},
 				width = Math.min(window.innerWidth, 1100) - margin.left - margin.right,
 			    height = Math.min(window.innerWidth, 900) - margin.top - margin.bottom,
 			    innerRadius = Math.min(width, height) * .45,
@@ -54,10 +69,11 @@
 				
 			var pullOutSize = 80;
 									
-			var chord = chordNB()
+			var helix = helix()
 			    .padAngle(0.05)
 				.sortSubgroups(sortAlpha)
 				.heightInner(28)
+				.emptyPerc(0.3)
 				.widthOffsetInner(30)
 				//.widthOffsetInner(function(d) { return 6 * d.length; })
 				.value(function(d) { return d.words; })
@@ -68,7 +84,7 @@
 			    .innerRadius(innerRadius*1.01)
 			    .outerRadius(outerRadius);
 
-			var ribbon = ribbonNB()
+			var band = band()
 			    .radius(innerRadius)
 				.pullout(pullOutSize);
 
@@ -87,7 +103,11 @@
 			////////////////////////////////////////////////////////////
 						
 			d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
-				
+	
+				////////////////////////////////////////////////////////////
+				///////////////////// Prepare the data /////////////////////
+				////////////////////////////////////////////////////////////
+							
 				data.forEach(function(d) {
 					d.words = +d.words;
 				});
@@ -95,111 +115,115 @@
 				//Only keep the members of the fellowship & remove Voiceover
 				var fellowship = ["Frodo","Sam","Pippin","Merry","Gandalf","Aragorn","Boromir","Legolas","Gimli"];
 				data = data.filter(function(d) { 
-					return _.contains(fellowship, d.character) && d.location !== "Voiceover"; 
+					return fellowship.indexOf(d.character) > -1 && d.location !== "Voiceover"; 
 				});	
 				
 				//Aggregate the data by detailed location
 				var dataAgg = dataGrouper.sum(data, ["location","character"]);
-	
-				//Get the unique locations
-				//var locations = _.uniq(_.pluck(dataAgg, "location"));
-				var locations = ["Bree Land", "Emyn Muil", "Fangorn", "Gondor", "Isengard", "Lothlorien", "Misty Mountains", "Mordor", "Moria", "Parth Galen", "Rivendell", "Rohan", "The Shire"];
+				
+				//Sort the locations in a particula order
+				function sortLocation(a, b) {
+					var locationOrder = ["The Shire", "Bree", "Isengard", "Rivendell", "Misty Mountains", "Moria", "Lothlorien", "Parth Galen", "Emyn Muil", "Rohan", "Fangorn", "Gondor", "Mordor"];
+				  	return locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location);
+				}//sortLocation
+				dataAgg.sort(sortLocation);
+
+				////////////////////////////////////////////////////////////
+				///////////////////////// Colors ///////////////////////////
+				////////////////////////////////////////////////////////////
+								
+				//Color for the unique locations
+				var locations = ["Bree", "Emyn Muil", "Fangorn", "Gondor", "Isengard", "Lothlorien", "Misty Mountains", "Mordor", "Moria", "Parth Galen", "Rivendell", "Rohan", "The Shire"];
 				var colors = ["#684F53", "#6B8884", "#324E25", "#C6CAC9", "#213C47", "#628833", "#DDDED9", "#730b0b", "#8a290d", "#306E3F", "#8D9413", "#C99E54", "#3C7E16"];
 				var color = d3.scaleOrdinal()
 			    	.domain(locations)
 			    	.range(colors);
 				
+				//Create a group that already holds the data
 				var g = svg.append("g")
 				    .attr("transform", "translate(" + (width/2 + margin.left) + "," + (height/2 + margin.top) + ")")
-				    //.datum(chord(dataNested));
-					.datum(chord(dataAgg));	
+					.datum(helix(dataAgg));	
 	
 				////////////////////////////////////////////////////////////
-				////////////////////// Draw outer Arcs /////////////////////
+				////////////////////// Draw outer arcs /////////////////////
 				////////////////////////////////////////////////////////////
 
 				var arcs = g.append("g")
 				    .attr("class", "arcs")
 				  .selectAll("g")
-				    .data(function(chords) { 
-						return chords.groups; 
+				    .data(function(bands) { 
+						return bands.groups; 
 					})
-				  .enter().append("g");
+				  .enter().append("g")
+				  	.each(function(d) { 
+						d.pullOutSize = (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) 
+					})
+			 	 	.on("mouseover", fadeArc(.1))
+			     	.on("mouseout", fadeArc(0.7));
 
 				var outerArcs = arcs.append("path")
 				    .style("fill", function(d) { return color(d.outername); })
 				    .attr("d", arc)
 					.attr("transform", function(d, i) { //Pull the two slices apart
-					  	return "translate(" + (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) + ',' + 0 + ")";
-					 })
-				  	.on("mouseover", function(d) { console.log(d); });
-					
-				////////////////////////////////////////////////////////////
-				//////////////////// Draw outer Labels /////////////////////
-				////////////////////////////////////////////////////////////
-								  
-				var outerLabels = g.append("g")
-				  .attr("class", "outer-labels");
-				  
-				outerArcs
-				  .each(function(d,i) {
-				  		//Search pattern for everything between the start and the first capital L
-				  		var firstArcSection = /(^.+?)L/; 	
+					  	return "translate(" + d.pullOutSize + ',' + 0 + ")";
+					 });
 
-				  		//Grab everything up to the first Line statement
-				  		var newArc = firstArcSection.exec( d3.select(this).attr("d") )[1];
-				  		//Replace all the comma's so that IE can handle it
-				  		newArc = newArc.replace(/,/g , " ");
-		
-				  		//If the end angle lies beyond a quarter of a circle (90 degrees or pi/2) 
-				  		//flip the end and start position
-				  		if (d.endAngle > 90*Math.PI/180 & d.startAngle < 270*Math.PI/180) {
-				  			var startLoc 	= /M(.*?)A/,		//Everything between the first capital M and first capital A
-				  				middleLoc 	= /A(.*?)0 0 1/,	//Everything between the first capital A and 0 0 1
-				  				endLoc 		= /0 0 1 (.*?)$/;	//Everything between the first 0 0 1 and the end of the string (denoted by $)
-				  			//Flip the direction of the arc by switching the start en end point (and sweep flag)
-				  			//of those elements that are below the horizontal line
-				  			var newStart = endLoc.exec( newArc )[1];
-				  			var newEnd = startLoc.exec( newArc )[1];
-				  			var middleSec = middleLoc.exec( newArc )[1];
-			
-				  			//Build up the new arc notation, set the sweep-flag to 0
-				  			newArc = "M" + newStart + "A" + middleSec + "0 0 0 " + newEnd;
-				  		}//if
-		
-				  		//Create a new invisible arc that the text can flow along
-				  		outerLabels.append("path")
-				  			.attr("class", "hiddenArcs")
-				  			.attr("id", "arc"+i)
-				  			.attr("d", newArc)
-							.attr("transform", "translate(" + pullOutSize * ( d.startAngle > Math.PI ? -1 : 1) + ',' + 0 + ")" )
-				  			.style("fill", "none");
-				  	});
+				////////////////////////////////////////////////////////////
+				///////////////////// Draw group ticks /////////////////////
+				////////////////////////////////////////////////////////////
+					 
+				 // //Not really an added valye here, so no tick marks
+				 // var groupTick = arcs.selectAll(".group-tick")
+				 //     .data(function(d) { return groupTicks(d, 5e2); })
+				 //   .enter().append("g")
+				 //     .attr("class", "group-tick")
+				 //     .attr("transform", function(d) { return "translate(" + d.pullOutSize + ',' + 0 + ")rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + outerRadius + ",0)"; });
+				 //
+				 // groupTick.append("line")
+				 //     .attr("x2", 6);
+				 //
+				 // groupTick
+				 //   .filter(function(d) { return d.value % 5e2 === 0; })
+				 //   .append("text")
+				 //     .attr("x", 8)
+				 //     .attr("dy", ".35em")
+				 //     .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180) translate(-16)" : null; })
+				 //     .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+				 //     .text(function(d) { return d.value; });
+					 					
+				////////////////////////////////////////////////////////////
+				//////////////////// Draw outer labels /////////////////////
+				////////////////////////////////////////////////////////////
 
-				//Append the label names on the outside
-				arcs.append("text")
+				//The text needs to be rotated with the offset in the clockwise direction
+				var outerLabels = arcs.append("text")
+					.each(function(d) { d.angle = ((d.startAngle + d.endAngle) / 2); })
+					.attr("dy", ".35em")
 					.attr("class", "outer-label")
-					.attr("dy", function(d,i) { return (d.endAngle > 90*Math.PI/180 & d.startAngle < 270*Math.PI/180 ? 25 : -16); })
-				   .append("textPath")
-					.attr("startOffset","50%")
-					.style("text-anchor","middle")
-					.attr("xlink:href",function(d,i){return "#arc"+i;})
+					.attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+					.attr("transform", function(d,i) { 
+						var c = arc.centroid(d);
+						return "translate(" + (c[0] + d.pullOutSize) + "," + c[1] + ")"
+						+ "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+						+ "translate(" + 46 + ",0)"
+						+ (d.angle > Math.PI ? "rotate(180)" : "")
+					})
 					.text(function(d,i){ return d.outername; });
 
 				////////////////////////////////////////////////////////////
-				////////////////// Draw inner ribbons ///////////////////////
+				////////////////// Draw inner bands ///////////////////////
 				////////////////////////////////////////////////////////////
 				
-				var ribbons = g.append("g")
-				    .attr("class", "ribbons")
+				var bands = g.append("g")
+				    .attr("class", "bands")
 				  .selectAll("path")
-				    .data(function(chords) { 
-						return chords; 
+				    .data(function(bands) { 
+						return bands; 
 					})
 				  .enter().append("path")
-				    .attr("d", ribbon)
-				    .style("fill", function(d) { return color(d.outer.outername); })
-					.on("mouseover", function(d) { console.log(d); });
+					.attr("class", "band")
+				    .attr("d", band)
+				    .style("fill", function(d) { return color(d.outer.outername); });
 					
 				////////////////////////////////////////////////////////////
 				//////////////////// Draw inner labels /////////////////////
@@ -210,8 +234,8 @@
 				var innerLabels = g.append("g")
 					.attr("class","inner-labels")
 				  .selectAll("text")
-				    .data(function(chords) { 
-						return chords.innergroups; 
+				    .data(function(bands) { 
+						return bands.innergroups; 
 					})
 				  .enter().append("text")
 					.attr("class", "inner-label")
@@ -219,363 +243,23 @@
 					.attr("y", function(d,i) { return d.y; })
 					.style("text-anchor", "middle")
 					.attr("dy", ".35em")
-				    .text(function(d,i) { return d.name; });
+				    .text(function(d,i) { return d.name; })
+			 	 	.on("mouseover", function(d) {
+					    d3.selectAll(".band")
+					        .filter(function(o) { return o.outer.innername !== d.name; })
+					      	.transition()
+					        .style("opacity", 0.02);
+					})
+			     	.on("mouseout", function(d) {
+					    d3.selectAll(".band")
+					      	.transition()
+					        .style("opacity", 0.7);
+					});
 				  		
 			});//d3.csv
-							
-			////////////////////////////////////////////////////////////
-			///////////////////// New ribbon function //////////////////
-			////////////////////////////////////////////////////////////
-
-		    var slice$5 = Array.prototype.slice;
-	
-		    function ribbonNB() {
-				
-  			  var cos = Math.cos;
-  			  var sin = Math.sin;
-  			  var pi$3 = Math.PI;
-  			  var halfPi$2 = pi$3 / 2;
-  			  var tau$3 = pi$3 * 2;
-  			  var max$1 = Math.max;
-			  
-		      var inner = function (d) { return d.inner; },
-		          outer = function (d) { return d.outer; },
-		          radius = function (d) { return d.radius; },
-		          startAngle = function (d) { return d.startAngle; },
-		          endAngle = function (d) { return d.endAngle; },
-			  	  x = function (d) { return d.x; },
-			  	  y = function (d) { return d.y; },
-			  	  offset = function (d) { return d.offset; },
-			  	  pullout = 50,
-		          context = null;
-
-		      function ribbon() {
-		        var buffer,
-		            argv = slice$5.call(arguments),
-		            out = outer.apply(this, argv),
-		            inn = inner.apply(this, argv),
-		            sr = +radius.apply(this, (argv[0] = out, argv)),
-		            sa0 = startAngle.apply(this, argv) - halfPi$2,
-		            sa1 = endAngle.apply(this, argv) - halfPi$2,
-		            sx0 = sr * cos(sa0),
-		            sy0 = sr * sin(sa0),
-		            sx1 = sr * cos(sa1),
-		            sy1 = sr * sin(sa1),
-		            tr = +radius.apply(this, (argv[0] = inn, argv)),
-				  	tx = x.apply(this, argv),
-				  	ty = y.apply(this, argv),
-				  	toffset = offset.apply(this, argv),
-				  	xco,
-				    yco,
-				  	xci,
-				    yci,
-				  	leftHalf,
-					pulloutContext;
-					
-					//Does the group lie on the left side
-					leftHalf = sa0+halfPi$2 > pi$3 && sa0+halfPi$2 < tau$3;
-					//If the group lies on the other side, switch the inner point offset
-					if(leftHalf) toffset = -toffset;
-					tx = tx + toffset;
-					
-			        if (!context) context = buffer = d3.path();
-
-					//Change the pullout based on where the ribbon is
-					pulloutContext  = (leftHalf ? -1 : 1 ) * pullout;
-					sx0 = sx0 + pulloutContext;
-					sx1 = sx1 + pulloutContext;
-					
-					//Start at smallest angle of outer arc
-			        context.moveTo(sx0, sy0);
-					//Circular part along the outer arc
-			        context.arc(pulloutContext, 0, sr, sa0, sa1);
-					//From end outer arc to center
-		            xco = d3.interpolateNumber(0, sx1)(0.5);
-		            yco = d3.interpolateNumber(0, sy1)(0.5);
-					if( (!leftHalf && sx1 < tx) || (leftHalf && sx1 > tx) ) {
-						xci = tx + (tx - sx1)/2;//d3.interpolateNumber(tx, sx1)(0.5);
-						yci = d3.interpolateNumber(ty, sy1)(0.5);
-					} else {
-						xci = d3.interpolateNumber(tx, sx1)(0.5);
-						yci = ty;
-					}//else
-			        context.bezierCurveTo(xco, yco, xci, yci, tx, ty);
-					//From center to start of outer arc
-		            xco = d3.interpolateNumber(0, sx0)(0.5);
-		            yco = d3.interpolateNumber(0, sy0)(0.5);
-					if( (!leftHalf && sx0 < tx) || (leftHalf && sx0 > tx) ) { 
-						xci = tx + (tx - sx0)/2;//d3.interpolateNumber(tx, sx1)(0.5);
-						yci = d3.interpolateNumber(ty, sy0)(0.5);
-					} else {
-						xci = d3.interpolateNumber(tx, sx0)(0.5);
-						yci = ty;
-					}//else
-					context.bezierCurveTo(xci, yci, xco, yco, sx0, sy0);
-					//Close path
-					context.closePath();
-
-			        if (buffer) return context = null, buffer + "" || null;
-		      }//function ribbon
-
-	  		  function constant$11(x) {
-	  		      return function() { return x; };
-	  		  }//constant$11
-			
-		      ribbon.radius = function(_) {
-		        return arguments.length ? (radius = typeof _ === "function" ? _ : constant$11(+_), ribbon) : radius;
-		      };
-
-		      ribbon.startAngle = function(_) {
-		        return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant$11(+_), ribbon) : startAngle;
-		      };
-
-		      ribbon.endAngle = function(_) {
-		        return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant$11(+_), ribbon) : endAngle;
-		      };
-			  
-		      ribbon.x = function(_) {
-		        return arguments.length ? (x = _, ribbon) : x;
-		      };
-
-		      ribbon.y = function(_) {
-		        return arguments.length ? (y = _, ribbon) : y;
-		      };
-
-		      ribbon.offset = function(_) {
-		        return arguments.length ? (offset = _, ribbon) : offset;
-		      };
-
-		      ribbon.inner = function(_) {
-		        return arguments.length ? (inner = _, ribbon) : inner;
-		      };
-
-		      ribbon.outer = function(_) {
-		        return arguments.length ? (outer = _, ribbon) : outer;
-		      };
-			  
-		      ribbon.pullout = function(_) {
-		        return arguments.length ? (pullout = _, ribbon) : pullout;
-		      };
-
-		      ribbon.context = function(_) {
-		        return arguments.length ? ((context = _ == null ? null : _), ribbon) : context;
-		      };
-
-		      return ribbon;
-		    }
-			
-			////////////////////////////////////////////////////////////
-			///////////////////// New chord function ///////////////////
-			////////////////////////////////////////////////////////////
-				
-		    function chordNB() {
-				
-			  var pi$3 = Math.PI;
-			  var tau$3 = pi$3 * 2;
-			  var max$1 = Math.max;
-				
-		      var padAngle = 0,
-		          sortGroups = null,
-		          sortSubgroups = null,
-			  	  sortChords = null,
-			  	  heightInner = 20,
-			  	  widthOffsetInner = function() { return x; },
-			  	  value = function(d) { return d; },
-				  inner = function(d) { return d.source; },
-			  	  outer = function(d) { return d.target; };
-
-		      function chord(data) {
-				  
-				  //Nest the data on the outer variable
-				  data = d3.nest().key(outer).entries(data);
-				  
-				  var n = data.length,
-				  	groupSums = [],
-		            groupIndex = d3.range(n),
-		            subgroupIndex = [],
-		            chords = [],
-		            groups = chords.groups = new Array(n),
-		            subgroups,
-					numSubGroups,
-				  	uniqueInner = chords.innergroups = [],
-				  	uniqueCheck = [],
-		            k,
-		            x,
-		            x0,
-		            dx,
-		            i,
-		            j,
-				  	m,
-				  	s,
-				    v,
-				    sum,
-				  	counter,
-					reverseOrder = false;
-
-				//Loop over the outer groups and sum the values
-				k = 0;
-				numSubGroups = 0;
-				for(i = 0; i < n; i++) {
-					v = data[i].values.length;
-					sum = 0;
-					for(j = 0; j < v; j++) {
-						sum += value(data[i].values[j]);
-					}//for j
-					groupSums.push(sum);
-					subgroupIndex.push(d3.range(v));
-					numSubGroups += v;
-					k += sum;	
-				}//for i
-				
-		        // Sort groups…
-		        if (sortGroups) groupIndex.sort(function(a, b) {
-		          return sortGroups(groupSums[a], groupSums[b]);
-		        });
-
-		        // Sort subgroups…
-		        if (sortSubgroups) subgroupIndex.forEach(function(d, i) {
-		          d.sort(function(a, b) {
-		            return sortSubgroups( inner(data[i].values[a]), inner(data[i].values[b]) );
-		          });
-		        });
-			  
-		        // Convert the sum to scaling factor for [0, 2pi].
-		        k = max$1(0, tau$3 - padAngle * n) / k;
-		        dx = k ? padAngle : tau$3 / n;
-			  
-		        // Compute the start and end angle for each group and subgroup.
-		        // Note: Opera has a bug reordering object literal properties!
-				subgroups = new Array(numSubGroups);
-		        x = 0;
-				counter = 0;
-				for(i = 0; i < n; i++) {
-					var di = groupIndex[i],
-						outername = data[di].key;
-					
-					x0 = x;
-					//If you've crossed the bottom, reverse the order of the inner ribbons
-					if(x > pi$3) reverseOrder = true;
-					s = subgroupIndex[di].length;
-					for(j = 0; j < s; j++) {
-			            var dj = reverseOrder ? subgroupIndex[di][(s-1)-j] : subgroupIndex[di][j],
-			                v = value(data[di].values[dj]),
-							innername = inner(data[di].values[dj]);
-			                a0 = x,
-			                a1 = x += v * k;
-				        subgroups[counter] = {
-				              index: di,
-				              subindex: dj,
-				              startAngle: a0,
-				              endAngle: a1,
-				              value: v,
-							  outername: outername,
-							  innername: innername
-				        };
-						
-						//Check and save the unique inner names
-					    if( !uniqueCheck[innername] ) {
-					    	uniqueCheck[innername] = true;
-					    	uniqueInner.push({name: innername});
-						}//if
-						
-						counter += 1;
-					}//for j
-	  		        groups[di] = {
-	  		            index: di,
-	  		            startAngle: x0,
-	  		            endAngle: x,
-	  		            value: groupSums[di],
-						outername: outername
-	  		        };
-	  		        x += dx;		
-				}//for i
-
-				//Sort the inner groups in the same way as the ribbons
-	          	uniqueInner.sort(function(a, b) {
-	            	return sortSubgroups( a.name, b.name );
-	          	});
-				//Find x and y locations of the inner categories
-				//TODO: make x depend on length of inner name	
-				m = uniqueInner.length
-				for(i = 0; i < m; i++) {
-					uniqueInner[i].x = 0;
-					uniqueInner[i].y = -m*heightInner/2 + i*heightInner;
-					uniqueInner[i].offset = widthOffsetInner(uniqueInner[i].name, i, uniqueInner);
-				}//for i
-	          			
-  		        //Generate chords for each (non-empty) subgroup-subgroup link
-				counter = 0;
-				for(i = 0; i < n; i++) {
-					var di = groupIndex[i];
-					s = subgroupIndex[di].length;
-					for(j = 0; j < s; j++) {
-						var outerGroup = subgroups[counter];
-						var innerTerm = outerGroup.innername;
-						//Find the correct inner object based on the name
-						var innerGroup = searchTerm(innerTerm, "name", uniqueInner);
-		  		            if (outerGroup.value) {
-		  		              chords.push({inner: innerGroup, outer: outerGroup});
-		  		            }//if
-						counter +=1;
-					}//for j
-				}//for i
-
-		        return sortChords ? chords.sort(sortChords) : chords;
-		      };//function chord(matrix)
-
-	  		  function constant$11(x) {
-	  		      return function() { return x; };
-	  		  }//constant$11
-			  
-		      chord.padAngle = function(_) {
-		        return arguments.length ? (padAngle = max$1(0, _), chord) : padAngle;
-		      };
-
-		      chord.inner = function(_) {
-		        return arguments.length ? (inner = _, chord) : inner;
-		      };
-			  
-		      chord.outer = function(_) {
-		        return arguments.length ? (outer = _, chord) : outer;
-		      };
-			  
-		      chord.value = function(_) {
-		        return arguments.length ? (value = _, chord) : value;
-		      };
-			  
-		      chord.heightInner = function(_) {
-		        return arguments.length ? (heightInner = _, chord) : heightInner;
-		      };
-	
-		      chord.widthOffsetInner = function(_) {
-		        return arguments.length ? (widthOffsetInner = typeof _ === "function" ? _ : constant$11(+_), chord) : widthOffsetInner;
-		      };
-			  
-		      chord.sortGroups = function(_) {
-		        return arguments.length ? (sortGroups = _, chord) : sortGroups;
-		      };
-
-		      chord.sortSubgroups = function(_) {
-		        return arguments.length ? (sortSubgroups = _, chord) : sortSubgroups;
-		      };
-
-		      chord.sortChords = function(_) {
-		        return arguments.length ? (_ == null ? sortChords = null : (sortChords = compareValue(_))._ = _, chord) : sortChords && sortChords._;
-		      };
-
-		      return chord;
-		    }//chordNB
-			
-			function searchTerm(term, property, arrayToSearch){
-			    for (var i=0; i < arrayToSearch.length; i++) {
-			        if (arrayToSearch[i][property] === term) {
-			            return arrayToSearch[i];
-			        }//if
-			    }//for i
-			}//searchTerm
 
 			////////////////////////////////////////////////////////////
-			////////////////// Extra Functions /////////////////////////
+			///////////////////// Extra functions //////////////////////
 			////////////////////////////////////////////////////////////
 
 			//Sort alphabetically
@@ -584,12 +268,24 @@
 				    if(a > b) return 1;
 				    return 0;
 			}//sortAlpha
+			
+			// Returns an event handler for fading a given band group
+			function fadeArc(opacity) {
+			  return function(g, i) {
+			    d3.selectAll(".band")
+			        .filter(function(d) { 
+						return d.outer.outername !== g.outername; 
+					})
+			      	.transition()
+			        .style("opacity", opacity);
+			  };
+			}//fadeArc
 							
 			// // Returns an array of tick angles and values for a given group and step.
 			// function groupTicks(d, step) {
 			//   var k = (d.endAngle - d.startAngle) / d.value;
 			//   return d3.range(0, d.value, step).map(function(value) {
-			//     return {value: value, angle: value * k + d.startAngle};
+			//     return {value: value, angle: value * k + d.startAngle, pullOutSize: d.pullOutSize};
 			//   });
 			// }//groupTicks
 	
@@ -639,7 +335,6 @@
 			    	}, 0)
 				});
 			});
-				
 				
 		</script>
 	</body>
