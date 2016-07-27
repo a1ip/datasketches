@@ -2,7 +2,7 @@
 ** Based on the d3v4 d3.chord() function by Mike Bostock
 ** Adjusted by Nadieh Bremer - July 2016
 */
-function helix() {
+function loom() {
 	
   var pi$3 = Math.PI;
   var tau$3 = pi$3 * 2;
@@ -11,7 +11,7 @@ function helix() {
   var padAngle = 0,
       sortGroups = null,
       sortSubgroups = null,
-  	  sortBands = null,
+  	  sortStrings = null,
   	  heightInner = 20,
   	  widthOffsetInner = function() { return x; },
   	  emptyPerc = 0.2,
@@ -19,7 +19,7 @@ function helix() {
 	  inner = function(d) { return d.source; },
   	  outer = function(d) { return d.target; };
 
-  function helix(data) {
+  function loom(data) {
 	  
 	  //Nest the data on the outer variable
 	  data = d3.nest().key(outer).entries(data);
@@ -28,11 +28,11 @@ function helix() {
 	  	groupSums = [],
         groupIndex = d3.range(n),
         subgroupIndex = [],
-        helices = [],
-        groups = helices.groups = new Array(n),
+        looms = [],
+        groups = looms.groups = new Array(n),
         subgroups,
 		numSubGroups,
-	  	uniqueInner = helices.innergroups = [],
+	  	uniqueInner = looms.innergroups = [],
 	  	uniqueCheck = [],
 	    emptyk,
         k,
@@ -109,7 +109,7 @@ function helix() {
 			x = x + emptyk * 0.5 * k; 
 		}//if
 		x0 = x;
-		//If you've crossed the bottom, reverse the order of the inner ribbons
+		//If you've crossed the bottom, reverse the order of the inner strings
 		if(x > pi$3) reverseOrder = true;
 		s = subgroupIndex[di].length;
 		for(j = 0; j < s; j++) {
@@ -146,7 +146,7 @@ function helix() {
         x += dx;		
 	}//for i
 
-	//Sort the inner groups in the same way as the ribbons
+	//Sort the inner groups in the same way as the strings
   	uniqueInner.sort(function(a, b) {
     	return sortSubgroups( a.name, b.name );
   	});
@@ -170,14 +170,14 @@ function helix() {
 			//Find the correct inner object based on the name
 			var innerGroup = searchTerm(innerTerm, "name", uniqueInner);
 	            if (outerGroup.value) {
-	              helices.push({inner: innerGroup, outer: outerGroup});
+	              looms.push({inner: innerGroup, outer: outerGroup});
 	            }//if
 			counter +=1;
 		}//for j
 	}//for i
 
-    return sortBands ? helices.sort(sortBands) : helices;
-  };//function helix(matrix)
+    return sortStrings ? looms.sort(sortStrings) : looms;
+  };//function loom(matrix)
 
   function searchTerm(term, property, arrayToSearch){
 	   for (var i=0; i < arrayToSearch.length; i++) {
@@ -191,46 +191,46 @@ function helix() {
       return function() { return x; };
   }//constant$11
   
-  helix.padAngle = function(_) {
-    return arguments.length ? (padAngle = max$1(0, _), helix) : padAngle;
+  loom.padAngle = function(_) {
+    return arguments.length ? (padAngle = max$1(0, _), loom) : padAngle;
   };
 
-  helix.inner = function(_) {
-    return arguments.length ? (inner = _, helix) : inner;
+  loom.inner = function(_) {
+    return arguments.length ? (inner = _, loom) : inner;
   };
   
-  helix.outer = function(_) {
-    return arguments.length ? (outer = _, helix) : outer;
+  loom.outer = function(_) {
+    return arguments.length ? (outer = _, loom) : outer;
   };
   
-  helix.value = function(_) {
-    return arguments.length ? (value = _, helix) : value;
+  loom.value = function(_) {
+    return arguments.length ? (value = _, loom) : value;
   };
   
-  helix.heightInner = function(_) {
-    return arguments.length ? (heightInner = _, helix) : heightInner;
+  loom.heightInner = function(_) {
+    return arguments.length ? (heightInner = _, loom) : heightInner;
   };
 
-  helix.widthOffsetInner = function(_) {
-    return arguments.length ? (widthOffsetInner = typeof _ === "function" ? _ : constant$11(+_), helix) : widthOffsetInner;
+  loom.widthOffsetInner = function(_) {
+    return arguments.length ? (widthOffsetInner = typeof _ === "function" ? _ : constant$11(+_), loom) : widthOffsetInner;
   };
   
-  helix.emptyPerc = function(_) {
-    return arguments.length ? (emptyPerc = _ < 1 ? max$1(0, _) : max$1(0, _*0.01), helix) : emptyPerc;
+  loom.emptyPerc = function(_) {
+    return arguments.length ? (emptyPerc = _ < 1 ? max$1(0, _) : max$1(0, _*0.01), loom) : emptyPerc;
   };
   
-  helix.sortGroups = function(_) {
-    return arguments.length ? (sortGroups = _, helix) : sortGroups;
+  loom.sortGroups = function(_) {
+    return arguments.length ? (sortGroups = _, loom) : sortGroups;
   };
 
-  helix.sortSubgroups = function(_) {
-    return arguments.length ? (sortSubgroups = _, helix) : sortSubgroups;
+  loom.sortSubgroups = function(_) {
+    return arguments.length ? (sortSubgroups = _, loom) : sortSubgroups;
   };
 
-  helix.sortBands = function(_) {
-    return arguments.length ? (_ == null ? sortBands = null : (sortBands = compareValue(_))._ = _, helix) : sortBands && sortBands._;
+  loom.sortBands = function(_) {
+    return arguments.length ? (_ == null ? sortBands = null : (sortBands = compareValue(_))._ = _, loom) : sortBands && sortBands._;
   };
 
-  return helix;
+  return loom;
   
-}//helix
+}//loom

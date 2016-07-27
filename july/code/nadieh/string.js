@@ -2,7 +2,7 @@
 ** Based on the d3v4 d3.ribbon() function by Mike Bostock
 ** Adjusted by Nadieh Bremer - July 2016
 */
-function band() {
+function string() {
 
   var slice$5 = Array.prototype.slice;
 	
@@ -25,7 +25,7 @@ function band() {
   	  heightInner = 0, 
       context = null;
 
-  function band() {
+  function string() {
     var buffer,
         argv = slice$5.call(arguments),
         out = outer.apply(this, argv),
@@ -60,7 +60,7 @@ function band() {
 
         if (!context) context = buffer = d3.path();
 
-		//Change the pullout based on where the band is
+		//Change the pullout based on where the string is
 		pulloutContext  = (leftHalf ? -1 : 1 ) * pullout;
 		sx0 = sx0 + pulloutContext;
 		sx1 = sx1 + pulloutContext;
@@ -99,56 +99,56 @@ function band() {
 		context.closePath();
 
         if (buffer) return context = null, buffer + "" || null;
-  }//function band
+  }//function string
 
   function constant$11(x) {
       return function() { return x; };
   }//constant$11
 
-  band.radius = function(_) {
-    return arguments.length ? (radius = typeof _ === "function" ? _ : constant$11(+_), band) : radius;
+  string.radius = function(_) {
+    return arguments.length ? (radius = typeof _ === "function" ? _ : constant$11(+_), string) : radius;
   };
 
-  band.startAngle = function(_) {
-    return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant$11(+_), band) : startAngle;
+  string.startAngle = function(_) {
+    return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant$11(+_), string) : startAngle;
   };
 
-  band.endAngle = function(_) {
-    return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant$11(+_), band) : endAngle;
+  string.endAngle = function(_) {
+    return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant$11(+_), string) : endAngle;
   };
   
-  band.x = function(_) {
-    return arguments.length ? (x = _, band) : x;
+  string.x = function(_) {
+    return arguments.length ? (x = _, string) : x;
   };
 
-  band.y = function(_) {
-    return arguments.length ? (y = _, band) : y;
+  string.y = function(_) {
+    return arguments.length ? (y = _, string) : y;
   };
 
-  band.offset = function(_) {
-    return arguments.length ? (offset = _, band) : offset;
+  string.offset = function(_) {
+    return arguments.length ? (offset = _, string) : offset;
   };
   
-  band.heightInner = function(_) {
-    return arguments.length ? (heightInner = _, band) : heightInner;
+  string.heightInner = function(_) {
+    return arguments.length ? (heightInner = _, string) : heightInner;
   };
 
-  band.inner = function(_) {
-    return arguments.length ? (inner = _, band) : inner;
+  string.inner = function(_) {
+    return arguments.length ? (inner = _, string) : inner;
   };
 
-  band.outer = function(_) {
-    return arguments.length ? (outer = _, band) : outer;
+  string.outer = function(_) {
+    return arguments.length ? (outer = _, string) : outer;
   };
   
-  band.pullout = function(_) {
-    return arguments.length ? (pullout = _, band) : pullout;
+  string.pullout = function(_) {
+    return arguments.length ? (pullout = _, string) : pullout;
   };
 
-  band.context = function(_) {
-    return arguments.length ? ((context = _ == null ? null : _), band) : context;
+  string.context = function(_) {
+    return arguments.length ? ((context = _ == null ? null : _), string) : context;
   };
 
-  return band;
+  return string;
   
-}//band
+}//string

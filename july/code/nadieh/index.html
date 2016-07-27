@@ -2,7 +2,8 @@
 	<head>
 		<meta charset="utf-8">
 		<style>
-
+			html { font-size: 62.5%; } 
+			
 			body {
 			  font-family: 'Open Sans', sans-serif;
 			  font-size: 10px;
@@ -21,13 +22,32 @@
 			    stroke-width: 0.5px;
 			}
 
-			.band {
-			  	opacity: 0.7;
+			.string {
+/*			  	opacity: 0.7;*/
+			}
+
+			.upper-title {
+				text-anchor: middle;
+				font-size: 1.2rem;
 			}
 			
+			.name-title {
+				font-family: 'Macondo Swash Caps', cursive;
+				font-size: 2.8rem;
+				fill: #232323;
+				cursor: default;
+				text-anchor: middle;
+			}
+			
+			.value-title {
+				font-family: 'Macondo Swash Caps', cursive;
+				text-anchor: middle;
+				font-size: 1.8rem;
+			}
+						
 			.inner-label {
 				font-family: 'Macondo Swash Caps', cursive;
-				font-size: 14px;
+				font-size: 1.4rem;
 				fill: #232323;
 				cursor: default;
 			}
@@ -50,8 +70,8 @@
 		<script src="../../../plugins/underscore.js"></script>
 		
 		<!-- Custom "chord" and "ribbon" functions -->
-		<script src="helix.js"></script>
-		<script src="bands.js"></script>
+		<script src="loom.js"></script>
+		<script src="string.js"></script>
 		
 	</head>
 	<body>
@@ -59,23 +79,28 @@
 		
 		<script>
 
-			var margin = {left:100, top:90, right:100, bottom:90},
-				width = Math.min(window.innerWidth, 1100) - margin.left - margin.right,
-			    height = Math.min(window.innerWidth, 900) - margin.top - margin.bottom,
+			var margin = {left:200, top:40, right:200, bottom:50},
+				width = Math.max( Math.min(window.innerWidth, 1100) - margin.left - margin.right - 20, 300),
+			    height = Math.max( Math.min(window.innerHeight, 900) - margin.top - margin.bottom - 20, 300),
 			    innerRadius = Math.min(width, height) * .45,
 			    outerRadius = innerRadius * 1.05;
+				
+			//Reset the overall font size
+			var newFontSize = Math.max(40, innerRadius * 62.5 / 250);
+			d3.select("html").style("font-size", newFontSize + "%");
 	
 			////////////////////////////////////////////////////////////
 			////////////////// Set-up Chord parameters /////////////////
 			////////////////////////////////////////////////////////////
 				
-			var pullOutSize = 80;
+			var pullOutSize = 20 + 30/135 * innerRadius;
+			var numFormat = d3.format(",.0f");
 									
-			var helix = helix()
+			var loom = loom()
 			    .padAngle(0.05)
-				.sortSubgroups(sortAlpha)
-				.heightInner(28)
-				.emptyPerc(0.3)
+				//.sortSubgroups(sortAlpha)
+				//.heightInner(28)
+				.emptyPerc(0.2)
 				.widthOffsetInner(30)
 				//.widthOffsetInner(function(d) { return 6 * d.length; })
 				.value(function(d) { return d.words; })
@@ -86,7 +111,7 @@
 			    .innerRadius(innerRadius*1.01)
 			    .outerRadius(outerRadius);
 
-			var band = band()
+			var string = string()
 			    .radius(innerRadius)
 				.pullout(pullOutSize);
 
@@ -99,7 +124,7 @@
 			var svg = d3.select("#chart").append("svg")
 			    .attr("width", width + margin.left + margin.right)
 			    .attr("height", height + margin.top + margin.bottom);
-			
+
 			////////////////////////////////////////////////////////////
 			///////////////////// Read in data /////////////////////////
 			////////////////////////////////////////////////////////////
@@ -122,14 +147,28 @@
 				
 				//Aggregate the data by detailed location
 				var dataAgg = dataGrouper.sum(data, ["location","character"]);
-				
-				//Sort the locations in a particula order
-				function sortLocation(a, b) {
-					var locationOrder = ["The Shire", "Bree", "Isengard", "Rivendell", "Misty Mountains", "Moria", "Lothlorien", "Parth Galen", "Emyn Muil", "Rohan", "Fangorn", "Gondor", "Mordor"];
-				  	return locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location);
-				}//sortLocation
 				dataAgg.sort(sortLocation);
-
+				
+				//Sort the inner characters based on the total number of words spoken
+				
+				//Find the total number of words per character
+				var dataChar = d3.nest()
+					.key(function(d) { return d.character; })
+					.rollup(function(leaves) { return d3.sum(leaves, function(d) { return d.words; }); })
+					.entries(dataAgg)
+					.sort(function(a, b){ return d3.descending(a.value, b.value); });				
+				//Unflatten the result
+				var characterOrder = dataChar.map(function(d) { return d.key; });
+				//Sort the characters on a specific order
+				function sortCharacter(a, b) {
+				  	return characterOrder.indexOf(a) - characterOrder.indexOf(b);
+				}//sortCharacter
+				
+				
+				loom
+					.sortSubgroups(sortCharacter)
+					.heightInner(innerRadius*0.75/characterOrder.length);
+				
 				////////////////////////////////////////////////////////////
 				///////////////////////// Colors ///////////////////////////
 				////////////////////////////////////////////////////////////
@@ -144,8 +183,33 @@
 				//Create a group that already holds the data
 				var g = svg.append("g")
 				    .attr("transform", "translate(" + (width/2 + margin.left) + "," + (height/2 + margin.top) + ")")
-					.datum(helix(dataAgg));	
+					.datum(loom(dataAgg));	
 	
+
+				////////////////////////////////////////////////////////////
+				///////////////////// Set-up title /////////////////////////
+				////////////////////////////////////////////////////////////
+			
+				var titles = g.append("g")
+					.attr("class", "texts")
+					.style("opacity", 0);
+				
+				// titles.append("text")
+				// 	.attr("class", "upper-title")
+				// 	.attr("x", 0)
+				// 	.attr("y", -height/2 + 10)
+				// 	.text("total number of words spoken by");
+					
+				titles.append("text")
+					.attr("class", "name-title")
+					.attr("x", 0)
+					.attr("y", -height/2 + 50);
+					
+				titles.append("text")
+					.attr("class", "value-title")
+					.attr("x", 0)
+					.attr("y", -height/2 + 75);
+								
 				////////////////////////////////////////////////////////////
 				////////////////////// Draw outer arcs /////////////////////
 				////////////////////////////////////////////////////////////
@@ -153,15 +217,23 @@
 				var arcs = g.append("g")
 				    .attr("class", "arcs")
 				  .selectAll("g")
-				    .data(function(bands) { 
-						return bands.groups; 
+				    .data(function(s) { 
+						return s.groups; 
 					})
 				  .enter().append("g")
 				  	.each(function(d) { 
 						d.pullOutSize = (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) 
 					})
-			 	 	.on("mouseover", fadeArc(.1))
-			     	.on("mouseout", fadeArc(0.7));
+			 	 	.on("mouseover", function(d) {
+					    d3.selectAll(".string")
+					      	.transition()
+					        .style("opacity", function(s) { return s.outer.outername === d.outername ? 0.9 : 0.05; });
+			 	 	})
+			     	.on("mouseout", function(d) {
+					    d3.selectAll(".string")
+					      	.transition()
+					        .style("opacity", 0.7);
+			 	 	});
 
 				var outerArcs = arcs.append("path")
 				    .style("fill", function(d) { return color(d.outername); })
@@ -220,22 +292,23 @@
 				outerLabels.append("text")
 					.attr("class", "outer-label-value")
 					.attr("dy", "2em")
-					.text(function(d,i){ return d.value + " words"; });
+					.text(function(d,i){ return numFormat(d.value) + " words"; });
 
 				////////////////////////////////////////////////////////////
-				////////////////// Draw inner bands ///////////////////////
+				////////////////// Draw inner strings //////////////////////
 				////////////////////////////////////////////////////////////
 				
-				var bands = g.append("g")
-				    .attr("class", "bands")
+				var strings = g.append("g")
+				    .attr("class", "stringWrapper")
 				  .selectAll("path")
-				    .data(function(bands) { 
-						return bands; 
+				    .data(function(strings) { 
+						return strings; 
 					})
 				  .enter().append("path")
-					.attr("class", "band")
-				    .attr("d", band)
-				    .style("fill", function(d) { return color(d.outer.outername); });
+					.attr("class", "string")
+				    .attr("d", string)
+				    .style("fill", function(d) { return color(d.outer.outername); })
+					.style("opacity", 0.7);
 					
 				////////////////////////////////////////////////////////////
 				//////////////////// Draw inner labels /////////////////////
@@ -246,8 +319,8 @@
 				var innerLabels = g.append("g")
 					.attr("class","inner-labels")
 				  .selectAll("text")
-				    .data(function(bands) { 
-						return bands.innergroups; 
+				    .data(function(s) { 
+						return s.innergroups; 
 					})
 				  .enter().append("text")
 					.attr("class", "inner-label")
@@ -257,15 +330,57 @@
 					.attr("dy", ".35em")
 				    .text(function(d,i) { return d.name; })
 			 	 	.on("mouseover", function(d) {
-					    d3.selectAll(".band")
-					        .filter(function(o) { return o.outer.innername !== d.name; })
+						
+						//Show all the strings of the highlighted character and hide all else
+					    d3.selectAll(".string")
 					      	.transition()
-					        .style("opacity", 0.02);
+					        .style("opacity", function(s) {
+								return s.outer.innername !== d.name ? 0.02 : 0.9;
+							});
+							
+						//Update the word count of the outer labels
+						var characterData = loom(dataAgg).filter(function(s) { return s.outer.innername === d.name; });
+						d3.selectAll(".outer-label-value")
+							.text(function(s,i){
+								//Find which characterData is the correct one based on location
+								var loc = characterData.filter(function(c) { return c.outer.outername === s.outername; });
+								if(loc.length === 0) {
+									var value = 0;
+								} else {
+									var value = loc[0].outer.value;
+								}
+								return numFormat(value) + (value === 1 ? " word" : " words"); 
+								
+							});
+							
+						//Update the title to show the total word count of tha character
+						d3.selectAll(".texts")
+							.transition()
+							.style("opacity", 1);	
+						d3.select(".name-title")
+							.text(d.name);
+						d3.select(".value-title")
+							.text(function() {
+								var words = dataChar.filter(function(s) { return s.key === d.name; });
+								return numFormat(words[0].value);
+							});
+							
 					})
 			     	.on("mouseout", function(d) {
-					    d3.selectAll(".band")
+						
+						//Put the string opacity back to normal
+					    d3.selectAll(".string")
 					      	.transition()
-					        .style("opacity", 0.7);
+							.style("opacity", 0.7);
+							
+						//Return the word count to what it was
+						d3.selectAll(".outer-label-value")	
+							.text(function(s,i){ return numFormat(s.value) + " words"; });
+						
+						//Hide the title
+						d3.selectAll(".texts")
+							.transition()
+							.style("opacity", 0);
 					});
 				  		
 			});//d3.csv
@@ -274,6 +389,12 @@
 			///////////////////// Extra functions //////////////////////
 			////////////////////////////////////////////////////////////
 
+			//Sort the locations in a particula order
+			function sortLocation(a, b) {
+				var locationOrder = ["The Shire", "Bree", "Isengard", "Rivendell", "Misty Mountains", "Moria", "Lothlorien", "Parth Galen", "Emyn Muil", "Rohan", "Fangorn", "Gondor", "Mordor"];
+			  	return locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location);
+			}//sortLocation
+			
 			//Sort alphabetically
 			function sortAlpha(a, b){
 				    if(a < b) return -1;
@@ -281,17 +402,12 @@
 				    return 0;
 			}//sortAlpha
 			
-			// Returns an event handler for fading a given band group
-			function fadeArc(opacity) {
-			  return function(g, i) {
-			    d3.selectAll(".band")
-			        .filter(function(d) { 
-						return d.outer.outername !== g.outername; 
-					})
-			      	.transition()
-			        .style("opacity", opacity);
-			  };
-			}//fadeArc
+			//Sort on the number of words
+			function sortWords(a, b){
+				    if(a.words < b.words) return -1;
+				    if(a.words > b.words) return 1;
+				    return 0;
+			}//sortWords
 							
 			// // Returns an array of tick angles and values for a given group and step.
 			// function groupTicks(d, step) {
