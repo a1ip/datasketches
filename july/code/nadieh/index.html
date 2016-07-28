@@ -236,6 +236,7 @@
 			 	 	});
 
 				var outerArcs = arcs.append("path")
+					.attr("class", "arc")
 				    .style("fill", function(d) { return color(d.outername); })
 				    .attr("d", arc)
 					.attr("transform", function(d, i) { //Pull the two slices apart
@@ -352,8 +353,17 @@
 								return numFormat(value) + (value === 1 ? " word" : " words"); 
 								
 							});
-							
-						//Update the title to show the total word count of tha character
+						
+						//Hide the arc where the character hasn't said a thing
+						d3.selectAll(".arc")
+					      	.transition()
+					        .style("opacity", function(s) {
+								//Find which characterData is the correct one based on location
+								var loc = characterData.filter(function(c) { return c.outer.outername === s.outername; });
+								return loc.length === 0 ? 0.02 : 1;
+							});
+								
+						//Update the title to show the total word count of the character
 						d3.selectAll(".texts")
 							.transition()
 							.style("opacity", 1);	
@@ -376,6 +386,11 @@
 						//Return the word count to what it was
 						d3.selectAll(".outer-label-value")	
 							.text(function(s,i){ return numFormat(s.value) + " words"; });
+							
+						//Show all arcs again
+						d3.selectAll(".arc")
+					      	.transition()
+					        .style("opacity", 1);
 						
 						//Hide the title
 						d3.selectAll(".texts")
