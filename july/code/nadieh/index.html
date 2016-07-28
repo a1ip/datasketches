@@ -5,31 +5,42 @@
 			html { font-size: 62.5%; } 
 			
 			body {
-			  font-family: 'Open Sans', sans-serif;
-			  font-size: 10px;
+/*			  font-family: 'Open Sans', sans-serif;*/
+			  font-family: 'Cormorant', serif;
+			  font-size: 1.2rem;
 			  fill: #b9b9b9;
 			}
 			
-			.group-tick {
-				
-				font-size: 8px;
+			#lotr-title {
+				font-size: 42px;
 				font-weight: 300;
-				fill: #b9b9b9;
+				margin: 40px 30px 0px 30px;
+				color: #272727;
 			}
-
-			.group-tick line {
-			    stroke: #909090;
-			    stroke-width: 0.5px;
+			
+			#lotr-subtitle {
+				font-size: 14px;
+				color: #b1b1b1;
+				margin: 0px 30px 30px 30px;
+				font-weight: 300;
 			}
-
-			.string {
-/*			  	opacity: 0.7;*/
+			
+			#lotr-intro {
+				font-size: 15px;
+				margin: 0px 30px 10px 30px;
+				max-width: 800px;
 			}
-
-			.upper-title {
-				text-anchor: middle;
-				font-size: 1.2rem;
+			
+			#lotr-sources {
+				margin: 10px 30px 10px 30px;
 			}
+			
+			.MiddleEarth {
+				font-family: 'Macondo', cursive;
+				color: #8d9413;
+			}
+			
+			/*--- chart ---*/
 			
 			.name-title {
 				font-family: 'Macondo Swash Caps', cursive;
@@ -40,9 +51,9 @@
 			}
 			
 			.value-title {
-				font-family: 'Macondo Swash Caps', cursive;
 				text-anchor: middle;
 				font-size: 1.8rem;
+  			  	fill: #b9b9b9;
 			}
 						
 			.inner-label {
@@ -53,17 +64,23 @@
 			}
 			
 			.outer-label {
-				font-family: 'Macondo Swash Caps', cursive;
-				font-size: 14px;
+				font-family: 'Macondo', cursive;
+				font-size: 1.6rem;
 				fill: #5f5f5f;
 				cursor: default;
+			}
+			
+			.outer-label-value {
+  			  	font-size: 1.2rem;
+  			  	fill: #b9b9b9;
 			}
 
 		</style>
 		
 		<!-- Google fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Macondo+Swash+Caps|Macondo" rel="stylesheet">
+		<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet"> -->
+		<link href="https://fonts.googleapis.com/css?family=Cormorant:300,400" rel="stylesheet">
 		
 		<!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
 		<script src="../../../plugins/d3.js"></script>
@@ -75,18 +92,23 @@
 		
 	</head>
 	<body>
-		<div id="chart"></div>
+		
+		<h1 id="lotr-title">What's been said in <span class="MiddleEarth">Middle Earth</span></h1>
+		<h4 id="lotr-subtitle">See where the members of the Fellowship have spoken during all 3 extended editions of the Lord of the Rings</h4>
+		<div id="lotr-intro">In more than 11 hours of the LotR trilogy all characters combined speak approximately 32,000 words. The 9 members of the Fellowship alone take up about 17,000 of these words, a bit more than half. In the visualization below you can find out how many words a member has spoken at each general location throughout the trilogy. The members have been sorted from Gandalf who had the most lines, to Legolas, who spoke even less than Boromir, even though the latter was only in one movie.</div>
+		<div id="lotr-chart"></div>
+		<div id="lotr-sources">data:</div>
 		
 		<script>
 
-			var margin = {left:200, top:40, right:200, bottom:50},
+			var margin = {left:200, top:40, right:220, bottom:50},
 				width = Math.max( Math.min(window.innerWidth, 1100) - margin.left - margin.right - 20, 300),
 			    height = Math.max( Math.min(window.innerHeight, 900) - margin.top - margin.bottom - 20, 300),
 			    innerRadius = Math.min(width, height) * .45,
 			    outerRadius = innerRadius * 1.05;
 				
 			//Reset the overall font size
-			var newFontSize = Math.max(40, innerRadius * 62.5 / 250);
+			var newFontSize = Math.min(70, Math.max(40, innerRadius * 62.5 / 250));
 			d3.select("html").style("font-size", newFontSize + "%");
 	
 			////////////////////////////////////////////////////////////
@@ -121,7 +143,7 @@
 			////////////////////// Create SVG //////////////////////////
 			////////////////////////////////////////////////////////////
 						
-			var svg = d3.select("#chart").append("svg")
+			var svg = d3.select("#lotr-chart").append("svg")
 			    .attr("width", width + margin.left + margin.right)
 			    .attr("height", height + margin.top + margin.bottom);
 
@@ -164,7 +186,7 @@
 				  	return characterOrder.indexOf(a) - characterOrder.indexOf(b);
 				}//sortCharacter
 				
-				
+				//Set more loom functions
 				loom
 					.sortSubgroups(sortCharacter)
 					.heightInner(innerRadius*0.75/characterOrder.length);
@@ -185,7 +207,6 @@
 				    .attr("transform", "translate(" + (width/2 + margin.left) + "," + (height/2 + margin.top) + ")")
 					.datum(loom(dataAgg));	
 	
-
 				////////////////////////////////////////////////////////////
 				///////////////////// Set-up title /////////////////////////
 				////////////////////////////////////////////////////////////
@@ -193,12 +214,6 @@
 				var titles = g.append("g")
 					.attr("class", "texts")
 					.style("opacity", 0);
-				
-				// titles.append("text")
-				// 	.attr("class", "upper-title")
-				// 	.attr("x", 0)
-				// 	.attr("y", -height/2 + 10)
-				// 	.text("total number of words spoken by");
 					
 				titles.append("text")
 					.attr("class", "name-title")
@@ -221,6 +236,7 @@
 						return s.groups; 
 					})
 				  .enter().append("g")
+					.attr("class", "arc-wrapper")
 				  	.each(function(d) { 
 						d.pullOutSize = (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) 
 					})
@@ -242,29 +258,6 @@
 					.attr("transform", function(d, i) { //Pull the two slices apart
 					  	return "translate(" + d.pullOutSize + ',' + 0 + ")";
 					 });
-
-				////////////////////////////////////////////////////////////
-				///////////////////// Draw group ticks /////////////////////
-				////////////////////////////////////////////////////////////
-					 
-				 // //Not really an added valye here, so no tick marks
-				 // var groupTick = arcs.selectAll(".group-tick")
-				 //     .data(function(d) { return groupTicks(d, 5e2); })
-				 //   .enter().append("g")
-				 //     .attr("class", "group-tick")
-				 //     .attr("transform", function(d) { return "translate(" + d.pullOutSize + ',' + 0 + ")rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + outerRadius + ",0)"; });
-				 //
-				 // groupTick.append("line")
-				 //     .attr("x2", 6);
-				 //
-				 // groupTick
-				 //   .filter(function(d) { return d.value % 5e2 === 0; })
-				 //   .append("text")
-				 //     .attr("x", 8)
-				 //     .attr("dy", ".35em")
-				 //     .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180) translate(-16)" : null; })
-				 //     .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
-				 //     .text(function(d) { return d.value; });
 					 					
 				////////////////////////////////////////////////////////////
 				//////////////////// Draw outer labels /////////////////////
@@ -355,7 +348,7 @@
 							});
 						
 						//Hide the arc where the character hasn't said a thing
-						d3.selectAll(".arc")
+						d3.selectAll(".arc-wrapper")
 					      	.transition()
 					        .style("opacity", function(s) {
 								//Find which characterData is the correct one based on location
@@ -388,7 +381,7 @@
 							.text(function(s,i){ return numFormat(s.value) + " words"; });
 							
 						//Show all arcs again
-						d3.selectAll(".arc")
+						d3.selectAll(".arc-wrapper")
 					      	.transition()
 					        .style("opacity", 1);
 						
@@ -423,14 +416,6 @@
 				    if(a.words > b.words) return 1;
 				    return 0;
 			}//sortWords
-							
-			// // Returns an array of tick angles and values for a given group and step.
-			// function groupTicks(d, step) {
-			//   var k = (d.endAngle - d.startAngle) / d.value;
-			//   return d3.range(0, d.value, step).map(function(value) {
-			//     return {value: value, angle: value * k + d.startAngle, pullOutSize: d.pullOutSize};
-			//   });
-			// }//groupTicks
 	
 			//http://stackoverflow.com/questions/14446511/what-is-the-most-efficient-method-to-groupby-on-a-javascript-array-of-objects
 			var dataGrouper = (function() {
