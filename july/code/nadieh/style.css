@@ -87,6 +87,7 @@ a, a:link, a:visited, a:active {
 	text-anchor: middle;
 	font-size: 1.4rem;
   	fill: #232323;
+/*	font-weight: 300;*/
 }
 			
 .inner-label {

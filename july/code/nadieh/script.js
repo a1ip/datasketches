@@ -1,8 +1,12 @@
-var margin = {left:200, top:40, right:220, bottom:50},
-	width = Math.max( Math.min(window.innerWidth, 1100) - margin.left - margin.right - 20, 300),
-    height = Math.max( Math.min(window.innerHeight, 900) - margin.top - margin.bottom - 20, 300),
+var margin = {left:100, top:40, right:100, bottom:50},
+	width = Math.max( Math.min(window.innerWidth, 1100) - margin.left - margin.right - 20, 400),
+    height = Math.max( Math.min(window.innerHeight - 250, 900) - margin.top - margin.bottom - 20, 400),
     innerRadius = Math.min(width, height) * .45,
     outerRadius = innerRadius * 1.05;
+	
+//Recalculate the width and height now that we know the radius
+width = outerRadius * 2 + margin.right + margin.left;
+height = outerRadius * 2 + margin.top + margin.bottom;
 	
 //Reset the overall font size
 var newFontSize = Math.min(70, Math.max(40, innerRadius * 62.5 / 250));
@@ -130,19 +134,19 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 	titles.append("text")
 		.attr("class", "name-title")
 		.attr("x", 0)
-		.attr("y", -height/2 + 50);
+		.attr("y", -innerRadius*5/6);
 		
 	titles.append("text")
 		.attr("class", "value-title")
 		.attr("x", 0)
-		.attr("y", -height/2 + 75);
+		.attr("y", -innerRadius*5/6 + 25);
 	
 	//The character pieces	
 	titles.append("text")
 		.attr("class", "character-note")
 		.attr("x", 0)
 		.attr("y", innerRadius/2)
-		.attr("dy", "0.4em");
+		.attr("dy", "0.35em");
 					
 	////////////////////////////////////////////////////////////
 	////////////////////// Draw outer arcs /////////////////////
@@ -322,7 +326,7 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 			//Show the character note
 			d3.selectAll(".character-note")
 				.text(characterNotes[d.name])
-				.call(wrap, 2*pullOutSize);
+				.call(wrap, 2.25*pullOutSize);
 				
 		})
      	.on("mouseout", function(d) {
@@ -386,7 +390,7 @@ function wrap(text, width) {
 		word,
 		line = [],
 		lineNumber = 0,
-		lineHeight = 1.1, // ems
+		lineHeight = 1.2, // ems
 		y = parseFloat(text.attr("y")),
 		x = parseFloat(text.attr("x")),
 		dy = parseFloat(text.attr("dy")),
