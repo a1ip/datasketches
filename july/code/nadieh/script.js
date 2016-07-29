@@ -1,7 +1,7 @@
-var margin = {left:100, top:40, right:100, bottom:50},
+var margin = {left:80, top:40, right:120, bottom:50},
 	width = Math.max( Math.min(window.innerWidth, 1100) - margin.left - margin.right - 20, 400),
     height = Math.max( Math.min(window.innerHeight - 250, 900) - margin.top - margin.bottom - 20, 400),
-    innerRadius = Math.min(width, height) * .45,
+    innerRadius = Math.min(width * 0.33, height * .45),
     outerRadius = innerRadius * 1.05;
 	
 //Recalculate the width and height now that we know the radius

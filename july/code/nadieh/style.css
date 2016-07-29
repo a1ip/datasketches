@@ -6,6 +6,11 @@ body {
   fill: #b9b9b9;
 }
 
+.lotr-content-wrapper {
+	max-width: 900px;
+	margin: 0 auto;
+}
+
 #lotr-title {
 	font-size: 42px;
 	font-weight: 300;
@@ -34,7 +39,8 @@ body {
 	font-weight: 300;
 }
 
-#lotr-footer {
+#lotr-chart {
+	text-align: center;
 }
 
 #lotr-credit {
