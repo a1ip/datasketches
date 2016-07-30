@@ -171,8 +171,14 @@ a:hover {
 	text-align: center;
 }
 
+.img-month, .img-month-top {
+	text-align: center;
+	margin: 0 auto;
+}
+
 .write-up .img-month {
-	margin-bottom: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .img-month-top {
