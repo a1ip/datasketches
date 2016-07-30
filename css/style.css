@@ -116,6 +116,11 @@ a:hover {
 
 /*-------------- MONTH SECTION -----------------*/
 
+#months .row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
 #months .black-text {
 	color: black;
 }
@@ -127,7 +132,6 @@ a:hover {
 #months .month-row {
 	position: relative;
 	height: 400px;
-/*	width: 100%;*/
 	text-align: center;
 }
 
@@ -135,7 +139,7 @@ a:hover {
     position: absolute;
     top: 50%;
     left: 50%;
-	  width: 80%;
+	width: 80%;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -178,6 +182,7 @@ a:hover {
   	position: relative;
 }
 
+/* Make the images less high on small screens */
 @media only screen and (max-width: 500px) {
 	#months .month-img, #months .month-row {
 		height: 250px;
