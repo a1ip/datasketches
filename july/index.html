@@ -73,73 +73,88 @@
           <!-- Nadieh -->
           <div class="col-xs-12 col-md-6 write-up padding-column">
             <h2 class="light-grey">Nadieh</h2>
+			
+			<a href="http://localhost/~Nadieh/datasketches/july/code/nadieh/"><img src="code/nadieh/img/LotR-words-Header.jpg" class="img-responsive img-month-top" alt="The Lord of the Rings final piece"></a>
 
             <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-            <p>
-              Starting off our collaboration with the theme <i>movies</i> as long as there was some personal connection to the data. I started with a general search of movies, to get a feeling of what might be out there. I came across budget and gross information per movie pretty quickly, found my way to the <a href="http://www.omdbapi.com/">OMDb API</a> and <a href="http://www.imdb.com/interfaces">IMDb ftp</a>, where you can download huge files with all of the information on movies & series. Having access to such a large databases seemed like a very interesting angle to start working with, but it wasn't very personal.
+            <p>Starting off our collaboration with the theme <i>movies</i> as long as there was some personal connection to the data. I started with a general search of movies, to get a feeling of what might be out there. I came across budget and gross information per movie pretty quickly, found my way to the <a href="http://www.omdbapi.com/">OMDb API</a> and <a href="http://www.imdb.com/interfaces">IMDb ftp</a>, where you can download huge files with all of the information on movies & series. Having access to such a large databases seemed like a very interesting angle to start working with, but it wasn't very personal.
             </p>
 
-            <p>
-              So, instead I started looking for data on my favorite movie (trilogy); the Lord of the Rings. I still remember, as a 12-year old girl, waiting at the movie theater more than 1.5 hours in advance with my parents to get the best spots in the theater (it was still first come, first serve back then). Collecting magazine clippings and posters and later fondly watching all of the extras (even for a second time). It's more than 9 hours of film that I can watch year after year.
+            <p>So, instead I started looking for data on my favorite movie (trilogy); the Lord of the Rings. I still remember, as a 12-year old girl, waiting at the movie theater more than 1.5 hours in advance with my parents to get the best spots in the theater (it was still first come, first serve back then). Collecting magazine clippings and posters and later fondly watching all of the extras (even for a second time). It's more than 9 hours of film that I can watch year after year.
             </p>
 
-            <p>
-              I found a fascinating <a href="https://github.com/jennybc/lotr">dataset</a> about the number of words spoken by each character in the extended editions of all 3 films. I did a few checks, comparing the word count to <a href="http://www.ageofthering.com/">scripts available on Age of the Ring</a> (which serendipitously / sadly seems to have expired only 2 days after I finished my data preparation) and they coincided pretty well.
+            <p>I found a fascinating <a href="https://github.com/jennybc/lotr">dataset</a> about the number of words spoken by each character in the extended editions of all 3 films. I did a few checks, comparing the word count to <a href="http://www.ageofthering.com/">scripts available on Age of the Ring</a> (which serendipitously / sadly seems to have expired only 2 days after I finished my data preparation) and they coincided pretty well.
             </p>
 
-            <p>
-              In the data, there is information on the number of words spoken by each character by scene and what race that character is. However, I found <i>scenes</i> to be a bit arbitrary. They are more attached to the making of the movie, not the movie experience. So instead I went ahead and manually added an on-screen location to each of the ±800 rows of data.
+            <p>In the data, there is information on the number of words spoken by each character by scene and what race that character is. However, I found <i>scenes</i> to be a bit arbitrary. They are more attached to the making of the movie, not the movie experience. So instead I went ahead and manually added an on-screen location to each of the ±800 rows of data.
             </p>
 
-            <p>
-              Besides a map of Middle-Earth I relied heavily on the Age of the Ring scripts of the extended editions and the original scripts of the non-extended editions found on <a href="http://www.imsdb.com/">IMSDb</a>. These scripts sometimes mention the location when they talk about the scene in general. And of course, I used my own memory of watching the movies time and time again. You can find some more explanation about what I did & the dataset itself on <a href="https://github.com/nbremer/datasketches/tree/gh-pages/july/data/nadieh">the GitHub page of the dataset</a>
+            <p>Besides a map of Middle-Earth I relied heavily on the Age of the Ring scripts of the extended editions and the original scripts of the non-extended editions found on <a href="http://www.imsdb.com/">IMSDb</a>. These scripts sometimes mention the location when they talk about the scene in general. And of course, I used my own memory of watching the movies time and time again. You can find some more explanation about what I did & the dataset itself on <a href="https://github.com/nbremer/datasketches/tree/gh-pages/july/data/nadieh">the GitHub page of the dataset</a>
             </p>
 
-            <p>
-              It took a few hours, but afterwards it felt like a dataset that I had a personal connection to and wanted to visualize.
+            <p>It took a few hours, but afterwards it felt like a dataset that I had a personal connection to and wanted to visualize.
             </p>
 
             <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-			<p>
-			  Having just bought an iPad Pro 9.7" with Apple pencil I of course wanted to try it out for my dataviz sketching. This month I used the app that most charmed me, Tayasui's Sketches II.
+			<p>Having just bought an iPad Pro 9.7" with Apple pencil I of course wanted to try it out for my dataviz sketching. This month I used the app that most charmed me, Tayasui's Sketches II.
 			</p>
-            <p>
-              About a month ago I got an email from Christian Wisniewski with a sketch that looked a bit like a Chord diagram but with "nodes" in the center. It seemed very intriguing and since I have a fond history of hacking the chord diagram for other purposes I wanted to try to create my own version of Christian's idea at some point. While going over ideas for the LotR data in my mind, I couldn't help but think that this dataset would fit that purpose very well.
+            <p>About a month ago I got an email from Christian Wisniewski with a sketch that looked a bit like a Chord diagram but with "nodes" in the center. It seemed very intriguing and since I have a fond history of hacking the chord diagram for other purposes I wanted to try to create my own version of Christian's idea at some point. While going over ideas for the LotR data in my mind, I couldn't help but think that this dataset would fit that purpose very well.
             </p>
-			<p>
-			  For my dataset, the Fellowship characters would be placed in the center. The more general locations are the arcs around it. Each character would be connected to the location where they spoke and the thickness of the chord at the location would represent the number of words spoken there. I'm not quite sure if the detailed locations should provide a more detailed level within the arcs themselves. That will probably create too many chords...
+			<p>For my dataset, the Fellowship characters would be placed in the center. The more general locations are the arcs around it. Each character would be connected to the location where they spoke and the thickness of the chord at the location would represent the number of words spoken there. I'm not quite sure if the detailed locations should provide a more detailed level within the arcs themselves. That will probably create too many chords...
 			</p>
 			<a class="fancybox" href="sketches/nadieh/LotR sketch circular.jpg"> <img src="sketches/nadieh/LotR sketch circular.jpg" class="img-responsive img-month" alt="Sketch of the chord diagram line LotR idea"></a>
 
-			<p>
-			  I tried coming up with some other ideas, but I guess I was already sold by the chord diagram-ish one, because all of my other sketches didn't amount to anything worthwhile. There was something with a timeline; when was the scene was taking place and the number of words spoken by the character.
+			<p>I tried coming up with some other ideas, but I guess I was already sold by the chord diagram-ish one, because all of my other sketches didn't amount to anything worthwhile. There was something with a timeline; when was the scene was taking place and the number of words spoken by the character.
 			</p>
 			<a class="fancybox" href="sketches/nadieh/LotR sketch timeline.jpg"><img src="sketches/nadieh/LotR sketch timeline.jpg" class="img-responsive img-month" alt="Sketch of the timeline LotR idea"></a>
-			<p>
-			  Another one where each location would a spirograph, with the number of petals being the number of detailed locations and sized in total to the number of words spoken.
+			<p>Another one where each location would a spirograph, with the number of petals being the number of detailed locations and sized in total to the number of words spoken.
 			</p>
 			<a class="fancybox" href="sketches/nadieh/LotR sketch spirograph.jpg"><img src="sketches/nadieh/LotR sketch spirograph.jpg" class="img-responsive img-month" alt="Sketch of the spirograph LotR idea"></a>
-			<p>
-			  Sketching on the iPad was quite fun. It was very easy to combine techniques, move things around, undo things. One minor downside was that I don't have the same amount of control over my pen in terms of drawing the longer strokes exactly as I want to. Perhaps its just a matter of getting used to the slippery surface.
+			<p>Sketching on the iPad was quite fun. It was very easy to combine techniques, move things around, undo things. One minor downside was that I don't have the same amount of control over my pen in terms of drawing the longer strokes exactly as I want to. Perhaps its just a matter of getting used to the slippery surface.
 		  	</p>
-		  	<p>
-			  But definitely going for the first sketch for next week!
+		  	<p>But definitely going for the first sketch for next week!
 			</p>
 
-			<h3>week 3 <span class="light-grey">|</span> code</h3>
+			<h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-            <p>
-              More text
+            <p>I started with Mike Bostock's most basic <a href="https://bl.ocks.org/mbostock/4062006">d3v4 chord diagram</a> and a plan on how to turn it into something resembling my sketch. I dove straight into the source code of d3's chord and ribbon functions to understand exactly what was happening in each line of code. Luckily, the code is very compact and easy to understand. I then started making small changes, each step taking me closer to the visual on my sketch.
             </p>
-
-            <h3>week 4 <span class="light-grey">|</span> switch</h3>
-
-            <p>
-              More text
-            </p>
-
+			<a class="fancybox" href="code/nadieh/img/LotR-words-First-steps.jpg"><img src="code/nadieh/img/LotR-words-First-steps.jpg" class="img-responsive img-month" alt="The first steps to turn a chord diagram into the sketch from previous week"></a>
+		
+			<p>I still very much like the look of all strings flowing to the center, but I had 9 members of the Fellowship to place there. So I started introducing a vertical offset based on the character that belonged to each string. The first succesful result reminded me to work on string sorting as well to reduce the overal overlap :)
+			</p>
+			<a class="fancybox" href="code/nadieh/img/LotR-words-Inner-division.jpg"><img src="code/nadieh/img/LotR-words-Inner-division.jpg" class="img-responsive img-month" alt="Pulling apart the inner strings to flow to their respective categories"></a>
+			
+			<p>One specific website helped me <i>a lot</i> during this project, <a href="http://blogs.sitepointstatic.com/examples/tech/svg-curves/cubic-curve.html">an online Cubic Bézier Curve adjuster</a>, with which I could try out the locations of the handles with respect to the end points of a path to understand how to create more elegant S-shaped curves. I went through many, many tweaks of shapes, each one getting a bit closer to the most smooth transition between the outer arcs and the inner characters.
+			</p>
+			<a class="fancybox" href="code/nadieh/img/LotR-words-String-shape-adjustment.jpg"><img src="code/nadieh/img/LotR-words-String-shape-adjustment.jpg" class="img-responsive img-month" alt="Adjusting the inner strings to create more elegant shapes"></a>
+			
+			<p>There was definitely a need to create empty space above and below the inner section. Not only to have a less squished feeling, but also to give the strings in that region the room to really flow in a nice S-shape. I had some experience in this when I <a href="http://www.visualcinnamon.com/2015/08/stretched-chord.html">pulled apart a normal chord diagram to visualize a flow</a>. This time I made sure that I didn't have to make some sort of <i>dummy string</i> that would need to be hidden (as was the case in the flow chord diagram). 
+			</p>
+			<p>Now that the biggest challenges of the new layout were behind me, I also started looking at the design a bit. Using screenshots of the movies to set a color for each location and finding a Google font that best matched Middle Earth.
+			</p>
+			<a class="fancybox" href="code/nadieh/img/LotR-words-Splitting-up-the-two-halves.jpg"><img src="code/nadieh/img/LotR-words-Splitting-up-the-two-halves.jpg" class="img-responsive img-month" alt="Starting to pull apart the two halves to create more room in the middle and to have the string around the top and bottom flow more elegantly"></a>
+			
+			<p>After I got the stretching of the two halves visually where I wanted it, I ordered the locations on order that they (first) appear in the movie or where their most important scenes are taking place. This thankfully still divided up the two halves almost symmetrically. Even more string shape adjustments and color tweaks later and I ended up with the final result that you see below. 
+			</p>
+			<a href="http://localhost/~Nadieh/datasketches/july/code/nadieh/"><img src="code/nadieh/img/LotR-words-End-result.jpg" class="img-responsive img-month" alt="The final result of the LotR word visual"></a>
+			
+			<p>One very important thing that I didn't truly start on until the very end was interactivity. With its many strings this layout lends itself very well to be inspected in more detail through hovers over the characters on the inside and the locations on the outside. To help the viewer, when you hover over a character, the number of words of all the locations adjust to show the count for that character. Shirley gave a good suggestion to fade out the locations where the character hasn't said anything. I also implemented it vice versa, when you hover over a location, the characters that haven't said anything are dimmed.</p>
+			<p>And finally, to help you get some fun insights from the results, I added a short note per character that shows up when you hover over the Fellowship members
+			</p>
+			<div class="img-gallery-wrapper">
+				<a class="fancybox" rel="gallery-lotr" href="code/nadieh/img/LotR-words-End-result-hover-1.jpg"><img src="code/nadieh/img/LotR-words-End-result-hover-1.jpg" class="img-responsive img-gallery-3" alt="" /></a>
+				<a class="fancybox" rel="gallery-lotr" href="code/nadieh/img/LotR-words-End-result-hover-3.jpg"><img src="code/nadieh/img/LotR-words-End-result-hover-3.jpg" class="img-responsive img-gallery-3" alt="" /></a>
+				<a class="fancybox" rel="gallery-lotr" href="code/nadieh/img/LotR-words-End-result-hover-4.jpg"><img src="code/nadieh/img/LotR-words-End-result-hover-4.jpg" class="img-responsive img-gallery-3" alt="" /></a>
+			</div>
+			
+			<p><a href="http://localhost/~Nadieh/datasketches/july/code/nadieh/">See the fully interactive version here</a>. I hope you'll find some new insights. I for one never realized Sam spoke so much. Or that Legolas spoke even less than Boromir.
+			</p>
+			<p>It was quite a lot of fun working with a dataset about a topic that I love. I had to hold myself back several times throughout this month from not just laying my JavaScript files aside watching the whole trilogy again 😁
+			</p>
+			
           </div>
 
           <!-- Shirley -->
@@ -190,13 +205,7 @@
               More text
             </p>
 
-            <h3>week 3 <span class="light-grey">|</span> code</h3>
-
-            <p>
-              More text
-            </p>
-
-            <h3>week 4 <span class="light-grey">|</span> switch</h3>
+            <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
             <p>
               More text

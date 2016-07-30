@@ -20,7 +20,7 @@ body {
 
 #lotr-subtitle {
 	font-size: 14px;
-	color: #b1b1b1;
+	color: #9a9a9a;
 	margin: 0px 30px 20px 30px;
 	font-weight: 300;
 }
@@ -35,7 +35,7 @@ body {
 	font-size: 14px;
 	margin: 0px 30px 10px 30px;
 	max-width: 800px;
-	color: #b1b1b1;
+	color: #9a9a9a;
 	font-weight: 300;
 }
 
@@ -44,17 +44,18 @@ body {
 }
 
 #lotr-credit {
+	float: right;
 	font-size: 14px;
-	margin: 10px 30px 5px 30px;
+	margin: 0px 30px 5px 30px;
+	padding-bottom: 20px;
+	color: #9a9a9a;
 }
 
 #lotr-sources {
-	font-size: 11px;
-	max-width: 300px;
-	margin: 15px 30px 5px 30px;
-	color: #9e9e9e;
-	font-weight: 300;
-	padding-bottom: 20px;
+	float: left;
+	font-size: 14px;
+	margin: 0px 30px 5px 30px;
+	color: #9a9a9a;
 }
 
 a:hover {
@@ -93,7 +94,6 @@ a, a:link, a:visited, a:active {
 	text-anchor: middle;
 	font-size: 1.4rem;
   	fill: #232323;
-/*	font-weight: 300;*/
 }
 			
 .inner-label {

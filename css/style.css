@@ -68,6 +68,12 @@ a:hover {
   }
 }
 
+@media (min-width: 1400px) {
+	.container {
+    	width: 1370px;
+	}
+}
+
 /*-------------- INTRO SECTION -----------------*/
 
 #intro {
@@ -169,6 +175,17 @@ a:hover {
 	margin-bottom: 10px;
 }
 
+.img-month-top {
+	margin-bottom: 30px;
+}
+
+.img-gallery-3 {
+	max-width: 30%;
+	display: inline-block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 /*-------------- HEADER SECTION -----------------*/
 
 header {
@@ -239,7 +256,6 @@ header .inactive {
 .month-page h2 {
     font-family: 'Sacramento', cursive;
     font-size: 50px;
-    /*color: #0a0a0a;*/
 }
 @media only screen and (max-width: 800px) {
   .month-page h2 {
@@ -256,8 +272,6 @@ header .inactive {
 }
 
 .month-page p {
-    /*font-family: 'Tinos', serif;*/
-    /*font-family: 'Fanwood Text', serif;*/
     text-align: left;
     color: #545454;
 }
