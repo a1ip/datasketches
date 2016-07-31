@@ -19,7 +19,7 @@ d3.select("html").style("font-size", newFontSize + "%");
 var pullOutSize = 20 + 30/135 * innerRadius;
 var numFormat = d3.format(",.0f");
 var defaultOpacity = 0.85,
-	fadeOpacity = 0.075;
+	fadeOpacity = 0.05;
 						
 var loom = loom()
     .padAngle(0.05)
