@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	    <title>Olympic Feathers</title>
+	    <meta name="author" content="Nadieh Bremer">
+	    <meta name="description" content="Data Sketches - August - Olympics - Nadieh - Olympic Feathers">
+	    <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
+		
+		<!-- Google fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400|Titillium+Web:300,400,600" rel="stylesheet">
+
+		<!-- Styling -->
+		<!-- <link href="style.css" rel="stylesheet"> -->
+		<style>
+			body {
+				/*background-color: #d2d2d2;*/
+				font-family: 'Roboto', sans-serif;
+			}
+
+			.discipline-title {
+				font-size: 12px;
+				font-family: 'Titillium Web', sans-serif;
+				font-weight: 400;
+			}
+
+			.time-line {
+				stroke: #e8eef3;
+				stroke-width: 2px;
+			}
+
+			.year-outline {
+				fill: #e8eef3;
+			}
+
+			.feather-background {
+				fill: #e8eef3;
+			}
+
+			.feather-outline {
+				stroke: #949494;
+				stroke-width: 1px;
+				fill: none;
+			}
+
+			#other-sport-wrapper {
+				margin-left: 30px;
+			}
+
+			#other-sport-wrapper h2 {
+				font-family: 'Titillium Web', sans-serif;
+				font-weight: 300;
+				font-size: 28px;
+				color: #191919;
+				margin-top: 10px;
+				margin-bottom: 0px;
+			}
+
+			#other-sport-wrapper h5 {
+				color: #737373;
+				margin: 0px;
+				font-size: 12px;
+				font-weight: 300;
+			}
+
+			.other-sports-title {
+				font-size: 14px;
+				margin-top: 15px;
+				fill: #191919;
+			}
+
+			.discipline-other-label {
+				text-anchor: end;
+				font-size: 12px;
+				font-family: 'Titillium Web', sans-serif;
+				font-weight: 400;
+			}
+
+			.edition-other-label {
+				text-anchor: start;
+				font-size: 13px;
+				font-family: 'Titillium Web', sans-serif;
+				font-weight: 400;
+			}
+
+			#other-sport-note {
+				color: #737373;
+				font-size: 11px;
+				font-weight: 300;
+			}
+
+			.other-sports-legend-text {
+				font-size: 11px;
+				fill: #737373;
+				text-anchor: end;
+			}
+
+			.other-sports-legend-rect {
+				fill: #828282;
+				/*stroke: #191919;*/
+				/*stroke-width: 1px;*/
+			}
+
+		</style>
+		
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<!-- <script src="../../../plugins/d3.js"></script> -->
+		<!-- <script src="../../../plugins/underscore.js"></script> -->
+		
+		
+	</head>
+	<body>
+		
+		<div id="olympic-chart"></div>
+		<div id="other-sport-wrapper">
+			<h2>The 11 Olympic sports that competed no more than twice</h2>
+			<h5>and are not part of the current 41 disciplines</h5>
+			<div id="olympic-other-sports-chart"></div>
+			<span id="other-sport-note">All of these medals were won by men except for Figure skating, where half of the medals were for women</span> 
+		</div>
+		
+		
+		<script src="script.js"></script>
+		<script src="script-other-sports.js"></script>
+		
+	</body>
+</html>
