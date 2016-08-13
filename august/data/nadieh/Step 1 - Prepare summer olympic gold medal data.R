@@ -1,4 +1,4 @@
-setwd("/Volumes/Documents Nadieh-4/Data Visualization/2. D3 works/1. My works/2016 - Data sketches/August 2016 - Olympics/Data")
+setwd("/Volumes/Documents Nadieh-5/Data Visualization/2. D3 works/1. My works/2016 - Data sketches/August 2016 - Olympics/Data")
 library(countrycode)
 
 ############################################################################################
