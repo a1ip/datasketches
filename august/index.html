@@ -74,23 +74,31 @@
           <div class="col-xs-12 col-md-6 write-up padding-column">
             <h2 class="light-grey">Nadieh</h2>
 			
-			<!-- <a href="http://localhost/~Nadieh/datasketches/august/code/nadieh/"><img src="code/nadieh/img/---.jpg" class="img-responsive img-month-top" alt=""></a> -->
+			<a href="http://localhost/~Nadieh/datasketches/august/code/nadieh/"><img src="code/nadieh/img/Olympic-Feathers-Header.jpg" class="img-responsive img-month-top" alt=""></a>
 
             <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-            <p>Starting on this week...
-            </p>
+            <p>Before I even started searching online I already had an idea in my head about the data that I wanted to play with this month; all winners since the very first Olympic Games in 1896. Thankfully the Guardian had created exactly <a href="https://www.theguardian.com/sport/datablog/2012/jun/25/olympic-medal-winner-list-data">this dataset</a> right before the 2012 Olympics in London. Then I <i>only</i> needed to add the results for 2012 and create a dummy start for all of the events at 2016 that I could then start filling while the games were happening. Again, the Guardian helped out by supplying <a href="https://www.theguardian.com/sport/datablog/2012/aug/10/olympics-2012-list-medal-winners">a dataset</a> with all of the medallists from 2012.</p>
+			<p>However, I quickly found out that the 2012 dataset was missing quite a few winners. So I started manually checking the data, making sure I had winners on all 302 events held in London. I then also took the same approach with the other 30 editions. Aggregating how many events had a gold medal winner from my dataset and then comparing this with the number of events held according to <a href="https://en.wikipedia.org/wiki/2012_Summer_Olympics#Sports">these wiki pages</a>. Thankfully, all was fine with the data except for a few minor (and explainable) things and some horses.</p>
+			<p>To prepare the 2016 data I took the 2012 file as a base and then made the changes according to <a href="https://www.olympic.org/news/discover-the-changes-in-the-sports-programme-for-rio">a website</a> that outlined the differences between 2012 and 2016. During the Olympics I would add the new medal winners each morning.</p>
+			<p>With 56 different disciplines and thousands of medals I knew that I could never fit it in one circle. Looking at the Olympic symbol, having 5 circles seemed the next logical choice. I calculated the maximum number of medals that were ever won for a discipline for one gender. This would tell me how wide each discipline would have to get. I could then combine the sporting disciplines in such a way to get the same number of "maximum medals" in each ring. This turned out to be quite a challenge, but eventually the grouping became something along the lines of: athletics & gymnastics, shooting & horse, wrestling & fighting, cycling & ball sports & water sports.</p>
+			<p>Finally, due to the set-up of the chart I created a very specific json from R. Trying to do as many calculations in R and not in JavaScript, because I find it much much easier and straightforward to do in R. About 12 hours of data finding, wrangling, checking and preparing later, I was left with a pretty large json that contained 5146 medal winners in several layers of nesting ready to be visualized.</p>
+			<p>You can find a more extensive explanation about what I did & the dataset itself on <a href="https://github.com/nbremer/datasketches/tree/gh-pages/august/data/nadieh">the GitHub page of the dataset</a>
 
             <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-			<p>...
-			</p>
-			<!-- <a class="fancybox" href="sketches/nadieh/---.jpg"> <img src="sketches/nadieh/---.jpg" class="img-responsive img-month" alt=""></a> -->
+			<p>Although it's rather hard to understand why I'm calling this project the "Olympic Feathers", initially I wanted to turn each sporting discipline into a feather shaped slice. But apart from the feather tips not making the final cut I think that the end result is actually very similar to my very first sketch.</p>
+			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Sketch - 1 - medium.JPG"> <img src="sketches/nadieh/Olympic Feathers Sketch - 1 - medium.JPG" class="img-responsive img-month" alt="The first sketch of the feathers of the Olympic visualization" style="max-width: 400px;"></a>
+			<p>Because Shirley was on vacation for the first 2 weeks of August I asked a colleague from work, Jeroen de Lange our Creative director, if he'd like to help me think out the design some more. Thankfully, he was very enthusiastic about helping! It really helped a lot to have to explain my idea to him and him asking questions back. That's how I found some issues with my initial simple sketch. For one, a sporting discipline has many events in which a medal can be found, so several feathers would get really wide, such as athletics and swimming.</p>
+			<p>Also, the number of events has changed a lot throughout the years, so I had to make a choice on what exactly would define 1 medal. In the end it seemed most true to the data to have 1 medal always be the same arc length. This would create a lot of white space for disciplines in which one edition had tried out a lot of different events, but I felt that would give it gave another level of insight.</p>
+			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Pen Sketch - small.jpeg"> <img src="sketches/nadieh/Olympic Feathers Pen Sketch - small.jpeg" class="img-responsive img-month" alt="Brainstorming with my colleague about the feathers" style="max-width: 400px;"></a>
+			<p>With that initial brainstorm in my mind, I sketched out a more detailed version to see how it might look with the new information. I wasn't quite sure if the medals should be ordered in a specific order, so always Europe first, then Asia and so on. Or to have them ordered according to which continent won the most medals for that gender and for that edition. I eventually chose the latter because it would display an extra level of insight into the medal data.</p>
+			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Sketch - 2 - medium.JPG"> <img src="sketches/nadieh/Olympic Feathers Sketch - 2 - medium.JPG" class="img-responsive img-month" alt="Setting the stacked versus ranked medals against each other" style="max-width: 400px;"></a>
+			<p>After the sketch above, I got to the point where I just had to start coding it out to see how our ideas would work with the data instead of sketching more detailed ideas and guessing about how it would apply to the Olympics data.</p>
 
 			<h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-            <p>...
-            </p>
+            <p>A final note, I've actually completed this month in half of the <i>allotted</i> time. That was because I wanted to share the visual before the end of the Olympics. So data prep & sketching happened in the week before the Olympics and the coding happened in the 1st week of the Olympics. Crazy, hectic, tiring and fun 2 weeks :)</p>
 			
           </div>
 
@@ -100,20 +108,15 @@
 
             <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-            <p>Starting on this week...
-            </p>
+            <p>Starting on this week...</p>
 			
             <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-            <p>
-              ...
-            </p>
+            <p>...</p>
 
             <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-            <p>
-              ...
-            </p>
+            <p>...</p>
 
           </div>
 
