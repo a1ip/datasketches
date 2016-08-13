@@ -2,7 +2,7 @@
 ///////////////////// Read in data /////////////////////////
 ////////////////////////////////////////////////////////////
 
-d3.json('../../../data/nadieh/olympic_feathers_min.json', function (error, data) {
+d3.json('../../data/nadieh/olympic_feathers_min.json', function (error, data) {
 
 	if (error) throw error;
 

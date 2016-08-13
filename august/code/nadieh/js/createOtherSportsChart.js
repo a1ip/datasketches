@@ -9,7 +9,7 @@ function createOtherSportsChart(svg, color, chartScale, offsetX, offsetY) {
 
 	var chartScale = Math.max(chartScale, 0.75);
 
-	d3.csv('../../../data/nadieh/olympic_sports_other.csv', function (error, data) {
+	d3.csv('../../data/nadieh/olympic_sports_other.csv', function (error, data) {
 
 		if (error) throw error;
 		
