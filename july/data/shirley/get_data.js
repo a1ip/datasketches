@@ -52,9 +52,9 @@ function getSummerMoviesByYear(year) {
       // make chunk of data into string
       var str = '' + chunk;
       // get the title id from the string
-      var matched = str.match(/\<a href="\/title\/([a-zA-Z0-9]+\/")/gi)
+      var matched = str.match(/data-tconst="([a-zA-Z0-9]+)"/gi)
       _.each(matched, title => {
-        titles.push(title.split('/')[2]);
+        titles.push(title.split('"')[1]);
       });
     });
 
@@ -63,6 +63,7 @@ function getSummerMoviesByYear(year) {
       titles = _.chain(titles)
         .uniq().take(5).value();
 
+      console.log(titles)
       getAllMovieDetails(titles, function() {
         getSummerMoviesByYear(year + 1);
       });
