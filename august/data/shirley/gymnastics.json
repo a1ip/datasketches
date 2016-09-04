@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Simone Biles",
+    "scores": [
+      ["vault", 6.3, 15.866],
+      ["uneven bars", 14.966]
+    ]
+  },
+  {
+    "name": "Aly Raisman",
+    "scores": [
+      ["vault", 6.3, 15.633],
+      ["uneven bars", 14.166]
+    ]
+  },
+  {
+    "name": "Aliya Mustafina",
+    "scores": [
+      ["vault", 5.8, 15.2],
+      ["uneven bars", 15.666]
+    ]
+  },
+  {
+    "name": "Shang Chunsong",
+    "scores": [
+      ["beam", 14.833],
+      ["floor", 14.6]
+    ]
+  },
+  {
+    "name": "Ellie Black",
+    "scores": [
+      ["", 14.5],
+      ["beam"]
+    ]
+  },
+  {
+    "name": "Wang Yan",
+    "scores": [
+      ["vault", 6, 14.733],
+      ["uneven bars", 13.733]
+    ]
+  },
+  {
+    "name": "Jessica Lopez",
+    "scores": [
+      ["", 13.8],
+      ["floor"]
+    ]
+  },
+  {
+    "name": "Asuka Teramoto",
+    "scores": [
+      ["uneven bars", 14.566],
+      ["beam"]
+    ]
+  }
+]
