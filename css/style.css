@@ -36,6 +36,11 @@ a:hover {
   	color: #a6a6a6;
 }
 
+.data-sketch-font {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+}
+
 .ampersand {
 /*	font-family: 'Rochester', cursive;*/
 	font-family: 'Playfair Display', serif;
@@ -265,7 +270,8 @@ header .inactive {
     margin-top: 50px;
 }
 
-.month-page h1 {
+.month-page h1,
+.about-page h1 {
     font-family: 'Quicksand', sans-serif;
     font-size: 12rem;
     font-weight: 400;
@@ -274,18 +280,21 @@ header .inactive {
     margin-top: 0;
 }
 
-.month-page .month {
+.month-page .month,
+.about-page .subtitle {
     font-family: 'Sacramento', cursive;
     font-size: 2.75rem;
     margin-bottom: 0;
 }
 
-.month-page h2 {
+.month-page h2,
+.about-page h2 {
     font-family: 'Sacramento', cursive;
     font-size: 50px;
 }
 @media only screen and (max-width: 800px) {
-  .month-page h2 {
+  .month-page h2,
+  .about-page h2 {
     font-size: 38px;
   }
 }
@@ -364,4 +373,105 @@ footer a:hover {
   border-bottom: 1px solid white;
 }
 
+/*------------------ ABOUT PAGE -----------------*/
 
+#about {
+  text-align: center;
+}
+
+#about .general-about {
+  margin-top: 20px;
+}
+
+#about .about-top-text {
+  text-align: justify;
+  font-size: 14px;
+}
+
+.about-page p {
+    text-align: justify;
+    color: #545454;
+}
+
+#about .filter-nadieh {
+  position: relative;
+  -webkit-filter: contrast(90%) brightness(120%) saturate(110%);
+  filter: contrast(90%) brightness(120%) saturate(110%);
+}
+#about .filter-nadieh::before {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  background: -webkit-radial-gradient(50% 50%, circle closest-corner, rgba(255, 177, 166, 1) 50, rgba(52, 33, 52, 1));
+  background: radial-gradient(50% 50%, circle closest-corner, rgba(255, 177, 166, 1) 50, rgba(52, 33, 52, 1));
+}
+
+#about .filter-shirley {
+  position: relative;
+  -webkit-filter: contrast(90%) brightness(120%) saturate(110%);
+  filter: contrast(90%) brightness(120%) saturate(110%);
+}
+#about .filter-shirley::before {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  background: -webkit-radial-gradient(50% 50%, circle closest-corner, rgba(255, 177, 166, 1) 50, rgba(52, 33, 52, 1));
+  background: radial-gradient(50% 50%, circle closest-corner, rgba(255, 177, 166, 1) 50, rgba(52, 33, 52, 1));
+}
+
+#about .img-person {
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  max-width: 300px;
+}
+
+
+#about #city-images {
+  width: 100%;
+  margin-top: 20px;
+}
+
+#city-images .city-img-wrapper {
+  float: left;
+  max-width: 50%;
+  overflow: hidden;
+}
+
+#city-images .city-img {
+  width: 110%;
+  margin: -5px -10px -5px -10px;
+}
+
+/*.filter-city {
+  position: relative;
+  -webkit-filter: brightness(105%) hue-rotate(350deg) blur(4px);
+  filter: brightness(105%) hue-rotate(350deg) blur(4px);
+}*/
+/*.filter-city::before {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: darken;
+  background: -webkit-linear-gradient(to right, rgba(66, 10, 14, 0.2) 1, rgba(0, 0, 0, 0));
+  background: linear-gradient(to right, rgba(66, 10, 14, 0.2) 1, rgba(0, 0, 0, 0));
+}*/

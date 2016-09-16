@@ -16,14 +16,17 @@
 
     <!-- jQuery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- <script src="../plugins/jquery.min.js"></script> -->
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!-- <script src="../plugins/bootstrap.min.js"></script>-->
+    <!-- <link href="../plugins/bootstrap.min.css" rel="stylesheet"> -->
 
-  <!-- fancyBox -->
-  <link rel="stylesheet" href="../plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
-  <script type="text/javascript" src="../plugins/fancybox/jquery.fancybox.pack.js"></script>
+    <!-- fancyBox -->
+    <link rel="stylesheet" href="../plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="../plugins/fancybox/jquery.fancybox.pack.js"></script>
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="../css/style.css">
@@ -56,71 +59,76 @@
       <div class="month-link hide-mobile-lg inactive">June</div>
     </header>
 
-     <section id="about" class="month-page">
+     <section id="about" class="about-page">
       <div class="container">
 
         <!-- Title above -->
         <div class="row">
           <div class="col-xs-12 month-page-title">
-            <div class="month light-grey">How did we start</div>
+            <div class="subtitle light-grey">How did we start</div>
             <h1>About</h1>
           </div>
         </div>
 
         <!-- General explanation -->
-        <div class="row">
-          <div class="col-xs-12">
-            <p>Shirley and Nadieh first got into contact with each other through a data visualization Slack channel and then met a few months later at the 2016 OpenVis conference at the end of April where they both gave a presentation.</p>
+        <div class="row general-about">
+          <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+            <p class="about-top-text">One of us went freelance, had a bit of extra time and wanted to create projects with a data art focus on them. The other wanted to create more actual projects after figuring out that she only made 1 real standalone thing in the past 12 months (that wasn't a tutorial example). And while bemusing these things to each other at the start of June, Shirley came with the idea to do a 12-month collaboration. Each month we would choose a topic, sometimes personal, sometimes general, and then we'd both be free to do whatever we wanted within that. As long as there was some visualization to show for on the last day of the month. It would give us the opportunity to create whatever we wanted, experiment, have fun, and it supplied a "pressure" since you couldn't let the other down by not doing anything.</p>
+            <p class="about-top-text">Because data visualization is more than just the end result, we decided to keep track of our data preparation and sketching process, and thus the idea for <span class="data-sketch-font">data sketch<span class="light-grey">|</span>es</span> was formed. A place where we both share the choices, mistakes and screenshots made throughout the month with whomever might be interested. To force us into some structure, we give ourselves 1 week to gather and prepare data, 1 week to design ideas and the rest to create the final visual and write about it.</p>
           </div>
         </div>
 
         <!-- About explanation -->
-        <div class="row" style="padding-bottom: 20px;">
+        <div class="row">
 
           <!-- Nadieh -->
-          <div class="col-xs-12 col-md-6 write-up padding-column">
+          <div class="col-xs-12 col-md-6 padding-column">
             <h2 class="light-grey">Nadieh</h2>
 
-           <!-- <a href="code/nadieh/"><img src="code/nadieh/img/Olympic-Feathers-Header.jpg" class="img-responsive img-month-top" alt=""></a> -->
+            <div id="filter-wrapper-nadieh">
+              <figure class="filter-nadieh">
+                <img src="img/nadieh.jpg" class="img-responsive img-person polygon-clip-hexagon" alt="Nadieh in Mickey's car">
+              </figure>
+            </div>
 
-            <p class="margin-top-10"></p>
-
-            <p>I graduated as an Astronomer, but after finishing my Master's Degree I went into the world of consulting. As a data scientist working for Deloitte I came into contact with many different industries; fast-food, retail, insurance, FMCG. Each of these had enormous amounts of data from which insights were just waiting to be found. As an external party to each companies we worked for we had to often present our results. And what better way to explain the results of an algorithm or analysis than to visualize the data. This is how I already (unconsciously) got into contact with data visualization.</p>
+            <p>Born and raised in the Netherlands, now living in a small town of ±5000 people right outside of Amsterdam. I graduated as an Astronomer, but after finishing my Master's Degree I went into the world of consulting. As a data scientist working for Deloitte I came into contact with many different industries; fast-food, retail, insurance, FMCG. Each of these had enormous amounts of data from which insights were just waiting to be found. As an external party to each company we worked for we often had to present our results. And what better way to explain the results of an algorithm or analysis than to visualize the data. This is how I already (unconsciously) got into contact with data visualization.</p>
             <p>However, I didn't know yet that data visualization could be a thing on its own. And while on a data science conference in November 2014 I was mulling over what I wanted to do in the next year. Analytics was fun yes, but I knew that it wasn't truly my passion. Not something I would do in my free time as well, outside of work. And then I went to a (great) presentation by Mike Freeman. On his first slide he called himself a "Data Visualization Specialist". And then it hit me. You could do data visualization as a thing on its own!? I knew immediately that I wanted to be able to name myself a data visualization designer or specialist one day as well.</p>
             <p>And from that day on I consciously started with data visualization. Every moment of my free time I spend on learning: reading books, creating personal projects, experimenting with new visualization ideas and writing tutorials for my website <a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a>.</p>
             <p>After one more year with Deloitte, trying to specialize more and more I changed jobs and started working for Adyen, which is a payment service provider (a sort of middle-man between you paying and the shop receiving its money), as a full-time data visualization designer. With millions of new transactions a day there's more than enough data to visualize. But I still spend all of my evenings and weekends on personal projects, like this one! So I guess I've truly found my passion ^^</p>
-
-            <!-- <a class="fancybox" href="sketches/nadieh/Olympic Feathers Sketch - 1 - medium.JPG"> <img src="sketches/nadieh/Olympic Feathers Sketch - 1 - small.JPG" class="img-responsive img-month" alt="The first sketch of the feathers of the Olympic visualization"></a> -->
-
           </div>
 
           <!-- Shirley -->
-          <div class="col-xs-12 col-md-6 write-up padding-column">
+          <div class="col-xs-12 col-md-6 padding-column">
             <h2 class="light-grey">Shirley</h2>
 
-            <!-- <a href="http://sxywu.com/olympics/"><img src="code/shirley/aug-final.png" class="img-responsive img-month-top" alt=""></a> -->
+            <figure class="filter-shirley">
+              <img src="img/shirley.jpg" class="img-responsive img-person" alt="Shirley drinking coffee (is it coffee?)">
+            </figure>
 
-            <p class="margin-top-10"></p>
-
-            <p>Starting on this week...</p>
+            <p>More about Shirley...</p>
 
           </div>
 
         </div>
 
-        <!-- Note below -->
-<!--         <div class="row">
-          <div class="col-xs-12 month-page-note">
-            <span class="verticalAlign" style="padding-right: 8px;">Shirley </span>
-            <span class="ampersand verticalAlign light-grey">&</span>
-            <span class="verticalAlign"> Nadieh</span>
-          </div>
-        </div> -->
+      </div>
 
+      <!-- City images -->
+      <div id="city-images">
+        <div class="city-img-wrapper">
+          <figure class="filter-city">
+            <img class="city-img" src="img/Amsterdam.jpg" alt="Nadieh's hometown - Amsterdam">
+          </figure>
+        </div>
+        <div class="city-img-wrapper">
+          <figure class="filter-city">
+            <img class="city-img" src="img/Amsterdam.jpg" alt="Shirley's hometown - San Francisco">
+          </figure>
+        </div>
       </div>
     </section>
 
-    <footer>
+<!--     <footer>
       <div class="container">
         <div class="row">
           <div class="col-xs-12 col-sm-6 description block">
@@ -136,7 +144,7 @@
           </div>
         </div>
       </div>
-    </footer>
+    </footer> -->
 
   </body>
 </html>
