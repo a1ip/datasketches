@@ -30,12 +30,10 @@ body {
 }
 
 a, a:link, a:visited, a:active {
-  color: black;
   border-bottom: 1px dotted rgba(0, 0, 0, .5);
 }
 
 a.fancybox-close, a:link.fancybox-close, a:visited.fancybox-close, a:active.fancybox-close {
-    color: black;
     border-bottom: none;
 }
 
@@ -118,14 +116,49 @@ a:hover {
 
 /*-------------- MONTH SECTION -----------------*/
 
-#months .row {
-	margin: 40px 0;
+#months {
+  position: relative;
+
+  background: -webkit-gradient(linear, right, left, color-stop(50%, #fefdfc), color-stop(50%, #33383b)); /* Chrome, Safari4+ */
+  background: -webkit-linear-gradient(right, #fefdfc 50%, #33383b 50%); /* Chrome10+, Safari5.1+ */
+  background: -moz-linear-gradient(right, #fefdfc 50%, #33383b 50%);    /* FF3.6+ */
+  background: linear-gradient(to right, #fefdfc 50%, #33383b 50%);
+}
+
+#months .nadieh {
+  text-align: right;
+}
+
+#months .shirley, #months .nadieh {
+  padding: 40px;
+  height: 100px;
+}
+
+#months .light {
+  color: #fefdfc;
+}
+
+#months .dark {
+  color: #33383b;
+}
+
+#months .dark a, #months .dark a:hover {
+  color: #33383b;
+}
+
+#months .light a, #months .light a:hover {
+  color: #fefdfc;
+}
+
+#months .month {
+	margin-top: 40px;
 }
 
 #months .month-row {
 	position: relative;
 	height: 400px;
 	text-align: center;
+  background-color: #fff;
 }
 
 #months .month-wrapper {
