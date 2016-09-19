@@ -7,9 +7,18 @@ html {
 
 body {
   	font-family: 'Tinos', serif;
-  	color: black;
+  	color: #33383b;
   	height: 100%;
   	font-size: 12px;
+}
+
+@font-face {
+  font-family: "King Basil";
+  src: url("../font/King-Basil.ttf");
+}
+
+.kingBasil {
+  font-family: "King Basil"
 }
 
 a, a:link, a:visited, a:active {
@@ -32,16 +41,7 @@ a:hover {
   	padding-left: 0;
 }
 
-.light-grey {
-  	color: #a6a6a6;
-}
 
-.ampersand {
-/*	font-family: 'Rochester', cursive;*/
-	font-family: 'Playfair Display', serif;
-	font-size: 50px; /*5rem;*/
-	font-style: italic;
-}
 
 .verticalAlign {
 	vertical-align: sub;
@@ -78,32 +78,28 @@ a:hover {
 
 #intro {
   	width: 100%;
-  	height: 100%;
   	text-align: center;
+    background-color: #fefdfc;
+    padding: 100px;
 }
 
 #intro .title-wrapper {
-  	position: absolute;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	-webkit-transform: translate(-50%, -50%);
-  	-ms-transform: translate(-50%, -50%);
   	width: 100%;
+}
+
+#intro .logo {
+    margin: 20px;
 }
 
 #intro .main-title {
   	font-family: 'Quicksand', sans-serif;
-  	font-size: 12rem;
-  	font-weight: 400;
+  	font-size: 36px;
   	line-height: 110%;
-  	padding-bottom: 15px;
+    margin: 20px;
 }
 
 #intro .main-subtitle{
-	  font-family: 'Sacramento', cursive;
-  	font-size: 25px; /*2.5rem;*/
-  	color: #0a0a0a;
+  	font-size: 16px; /*2.5rem;*/
 }
 
 #intro p {
@@ -363,5 +359,3 @@ footer a:hover {
   text-decoration: none;
   border-bottom: 1px solid white;
 }
-
-
