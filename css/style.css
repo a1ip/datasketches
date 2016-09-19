@@ -291,35 +291,27 @@ header .about-top-text {
   font-size: 14px;
 }
 
-/*-------------- MONTH PAGES -----------------*/
 
-.month-page {
-  position: relative;
-}
-
-.month-page h1,
-.about-page h1 {
+header h1 {
     font-size: 48px;
     line-height: 110%;
     /*padding-bottom: 15px;*/
     margin-top: 0;
 }
 
-.month-page .month,
-.about-page .subtitle {
-    font-size: 2.75rem;
-    margin-bottom: 0;
-}
-
-.month-page h2,
-.about-page h2 {
+header  h2 {
     font-size: 24px;
 }
 @media only screen and (max-width: 800px) {
-  .month-page h2,
-  .about-page h2 {
+  header  h2 {
     font-size: 24px;
   }
+}
+
+/*-------------- MONTH PAGES -----------------*/
+
+.month-page {
+  position: relative;
 }
 
 .month-page h3 {
