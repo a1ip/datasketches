@@ -13,7 +13,7 @@ body {
 }
 
 @font-face {
-  font-family: "King Basil";
+  font-family: "King Basil", cursive;
   src: url("../font/King-Basil.ttf");
 }
 
@@ -30,7 +30,7 @@ body {
 }
 
 a, a:link, a:visited, a:active {
-  border-bottom: 1px dotted rgba(0, 0, 0, .5);
+  border-bottom: 1px dotted;
 }
 
 a.fancybox-close, a:link.fancybox-close, a:visited.fancybox-close, a:active.fancybox-close {
@@ -39,7 +39,7 @@ a.fancybox-close, a:link.fancybox-close, a:visited.fancybox-close, a:active.fanc
 
 a:hover {
   text-decoration: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid;
 }
 
 .container-fluid {
@@ -58,6 +58,46 @@ a:hover {
 
 .margin-top-10 {
   margin-top: 10px !important;
+}
+
+.nadieh {
+  text-align: right;
+}
+
+.shirley, .nadieh {
+  padding: 40px;
+}
+
+.light {
+  background-color: #fefdfc;
+  color: #33383b;
+}
+
+.dark {
+  color: #fefdfc;
+  background-color: #33383b;
+}
+
+.dark a, .dark a:hover {
+  color: #fefdfc;
+}
+
+.light a, .light a:hover {
+  color: #33383b;
+}
+
+.background {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+}
+
+.background.shirley {
+  left: 50%;
+}
+
+.name {
+  font-size: 24px;
 }
 
 @media only screen and (max-width: 500px) {
@@ -118,47 +158,6 @@ a:hover {
 
 #months {
   position: relative;
-}
-
-#months .nadieh {
-  text-align: right;
-}
-
-#months .shirley, #months .nadieh {
-  padding: 40px;
-  height: 100px;
-}
-
-#months .light {
-  background-color: #fefdfc;
-  color: #33383b;
-}
-
-#months .dark {
-  color: #fefdfc;
-  background-color: #33383b;
-}
-
-#months .dark a, #months .dark a:hover {
-  color: #fefdfc;
-}
-
-#months .light a, #months .light a:hover {
-  color: #33383b;
-}
-
-#months .background {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-}
-
-#months .background.shirley {
-  left: 50%;
-}
-
-#months .name {
-  font-size: 24px;
 }
 
 #months .month {
@@ -265,60 +264,33 @@ a:hover {
 /*-------------- HEADER SECTION -----------------*/
 
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 40px;
-  line-height: 40px;
   width: 100%;
-  background-color: #fbfbfb;
+  text-align: center;
+  font-size: 24px;
+  background-color: #fefdfc;
   z-index: 1;
-  padding-left: 20px;
 }
 
-header .header-title {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  padding-left: 0px;
-  padding-right: 20px;
-  float: left;
+header a, header a:link, header a:visited, header a:active {
+  color: #ffd2c6;
 }
 
-header .month-link {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  padding-left: 10px;
-  padding-right: 10px;
-  float: left;
-}
-
-header .inactive {
-  color: #b7b7b7;
-  cursor: default;
+header .month-page-title {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  background-color: #fefdfc;
+  text-align: center;
 }
 
 /*-------------- MONTH PAGES -----------------*/
 
 .month-page {
-  text-align: center;
-
-}
-
-.month-page-title {
-  margin-top: 110px;
-}
-
-.month-page .write-up {
-    margin-top: 50px;
+  position: relative;
 }
 
 .month-page h1,
 .about-page h1 {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 12rem;
-    font-weight: 400;
+    font-size: 48px;
     line-height: 110%;
     /*padding-bottom: 15px;*/
     margin-top: 0;
@@ -326,20 +298,18 @@ header .inactive {
 
 .month-page .month,
 .about-page .subtitle {
-    font-family: 'Sacramento', cursive;
     font-size: 2.75rem;
     margin-bottom: 0;
 }
 
 .month-page h2,
 .about-page h2 {
-    font-family: 'Sacramento', cursive;
-    font-size: 50px;
+    font-size: 24px;
 }
 @media only screen and (max-width: 800px) {
   .month-page h2,
   .about-page h2 {
-    font-size: 38px;
+    font-size: 24px;
   }
 }
 
@@ -353,11 +323,9 @@ header .inactive {
 
 .month-page p {
     text-align: left;
-    color: #545454;
 }
 
 .month-page-note {
-    font-family: 'Sacramento', cursive;
     font-size: 25px;
     color: #0a0a0a;
     padding-bottom: 60px;
@@ -366,6 +334,10 @@ header .inactive {
 .img-month, .img-month-top {
 	text-align: center;
 	margin: 0 auto;
+}
+
+.write-up {
+  padding: 0;
 }
 
 .write-up .img-month {
