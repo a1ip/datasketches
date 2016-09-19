@@ -282,6 +282,15 @@ header .month-page-title {
   text-align: center;
 }
 
+header .general-about {
+  margin: 20px;
+}
+
+header .about-top-text {
+  text-align: justify;
+  font-size: 14px;
+}
+
 /*-------------- MONTH PAGES -----------------*/
 
 .month-page {
@@ -380,16 +389,7 @@ footer a:hover {
 /*------------------ ABOUT PAGE -----------------*/
 
 #about {
-  text-align: center;
-}
-
-#about .general-about {
-  margin-top: 20px;
-}
-
-#about .about-top-text {
-  text-align: justify;
-  font-size: 14px;
+  position: relative;
 }
 
 .about-page p {
