@@ -118,11 +118,6 @@ a:hover {
 
 #months {
   position: relative;
-
-  background: -webkit-gradient(linear, right, left, color-stop(50%, #fefdfc), color-stop(50%, #33383b)); /* Chrome, Safari4+ */
-  background: -webkit-linear-gradient(right, #fefdfc 50%, #33383b 50%); /* Chrome10+, Safari5.1+ */
-  background: -moz-linear-gradient(right, #fefdfc 50%, #33383b 50%);    /* FF3.6+ */
-  background: linear-gradient(to right, #fefdfc 50%, #33383b 50%);
 }
 
 #months .nadieh {
@@ -135,19 +130,35 @@ a:hover {
 }
 
 #months .light {
-  color: #fefdfc;
+  background-color: #fefdfc;
+  color: #33383b;
 }
 
 #months .dark {
-  color: #33383b;
+  color: #fefdfc;
+  background-color: #33383b;
 }
 
 #months .dark a, #months .dark a:hover {
-  color: #33383b;
+  color: #fefdfc;
 }
 
 #months .light a, #months .light a:hover {
-  color: #fefdfc;
+  color: #33383b;
+}
+
+#months .background {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+}
+
+#months .background.shirley {
+  left: 50%;
+}
+
+#months .name {
+  font-size: 24px;
 }
 
 #months .month {

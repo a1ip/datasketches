@@ -19,6 +19,13 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- <script src="plugin/jquery.min.js"></script> -->
 
+    <!-- D3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Moment -->
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -51,13 +58,18 @@
     </section>
 
     <section id="months">
+      <div class="nadieh background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+      <div class="shirley background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+
       <article class="row">
-        <div class="nadieh dark col-xs-12 col-sm-12 col-md-6 col-lg-6">
-          <div class="time kingBasil">pm</div>
+        <div class="nadieh col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="name kingBasil">Nadieh</div>
+          <div class="time kingBasil"></div>
           <div class="quicksand">amsterdam</div>
         </div>
-        <div class="shirley light col-xs-12 col-sm-12 col-md-6 col-lg-6">
-          <div class="time kingBasil">pm</div>
+        <div class="shirley col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="name kingBasil">Shirley</div>
+          <div class="time kingBasil"></div>
           <div class="quicksand">san francisco</div>
         </div>
       </article>
@@ -119,14 +131,12 @@
       </article>
 
       <article class="row">
-        <div class="nadieh dark col-xs-12 col-sm-12 col-md-6 col-lg-6">
-          <div class="kingBasil">Nadieh</div>
+        <div class="nadieh col-xs-12 col-sm-12 col-md-6 col-lg-6">
           <div class="quicksand"><a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
         </div>
 
-        <div class="shirley light col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="shirley col-xs-12 col-sm-12 col-md-6 col-lg-6">
           <div class="list">
-            <div class="kingBasil">Shirley<div>
             <div class="quicksand"><a href="https://sxywu.github.io/portfolio/">sxywu.com</a></div>
           </div>
         </div>
@@ -149,8 +159,27 @@
     </footer>
 
 	<script>
-		$( document ).ready();
+    function setTime() {
+      var format = 'h:mm a';
+      var time = new Date();
+      var nadieh = moment(time, format).tz("Europe/Amsterdam");
+      var shirley = moment(time, format).tz("America/Los_Angeles");
+      $('.nadieh .time').text(nadieh.format(format));
+      $('.shirley .time').text(shirley.format(format));
 
+      var nadiehColor = nadieh.hour();
+      nadiehColor = nadiehColor >= 18 || nadiehColor <= 6 ? 'dark' : 'light';
+      var shirleyColor = shirley.hour();
+      shirleyColor = shirleyColor >= 18 || shirleyColor <= 6 ? 'dark' : 'light';
+
+      $('.nadieh').removeClass('light dark').addClass(nadiehColor);
+      $('.shirley').removeClass('light dark').addClass(shirleyColor);
+    }
+
+		$( document ).ready(function() {
+      setTime();
+      setInterval(setTime, 60000);
+    });
 	</script>
 
 	<!-- Google analytics -->
