@@ -18,7 +18,15 @@ body {
 }
 
 .kingBasil {
-  font-family: "King Basil"
+  font-family: "King Basil";
+}
+
+.quicksand {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.peach {
+  color: #f9c6b4;
 }
 
 a, a:link, a:visited, a:active {
@@ -40,8 +48,6 @@ a:hover {
   	padding-right: 0;
   	padding-left: 0;
 }
-
-
 
 .verticalAlign {
 	vertical-align: sub;
@@ -113,17 +119,7 @@ a:hover {
 /*-------------- MONTH SECTION -----------------*/
 
 #months .row {
-	margin-left: 0px;
-	margin-right: 0px;
-  border-top: 1px solid #ececec;
-}
-
-#months .black-text {
-	color: black;
-}
-
-#months .white-text {
-	color: white;
+	margin: 40px 0;
 }
 
 #months .month-row {
@@ -133,27 +129,25 @@ a:hover {
 }
 
 #months .month-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 	width: 80%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 #months h1 {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 8.25rem;
-    font-weight: 400;
+  font-size: 48px;
 	margin-top: 0;
 }
 
 #months h2 {
-	font-family: 'Sacramento', cursive;
-    font-size: 2.75rem;
+  font-size: 24px;
 	margin-bottom: 0;
 }
+
 @media only screen and (max-width: 800px) {
 	#months h2 {
 		font-size: 20px;
@@ -162,14 +156,29 @@ a:hover {
 }
 
 #months p {
-    color: #a6a6a6;
-    padding-top: 20px;
+  padding-top: 20px;
 	width: 90%;
 	margin: 0 auto;
 }
 
-#months #current {
-	background-color: #1d1d1d;
+#months .read-button {
+  background: -webkit-gradient(linear, right bottom, left top, color-stop(0%, #ffd2c6), color-stop(50%, #f2bba6), color-stop(67%, #d59381)); /* Chrome, Safari4+ */
+  background: -webkit-linear-gradient(right, #ffd2c6 0%, #f2bba6 50%, #d59381 67%); /* Chrome10+, Safari5.1+ */
+  background: -moz-linear-gradient(right, #ffd2c6 0%, #f2bba6 50%, #d59381 67%);    /* FF3.6+ */
+  background: linear-gradient(to right, #ffd2c6 0%, #f2bba6 50%, #d59381 67%);
+
+  display: inline-block;
+  font-size: 24px;
+  padding: 4px;
+  margin-top: 40px;
+}
+
+#months .read-button a, #months .read-button a:hover {
+  color: #f9c6b4;
+  text-decoration: none;
+  border-bottom: none;
+  padding: 5px 20px;
+  background-color: #fff;
 }
 
 #months .month-img {
