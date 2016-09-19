@@ -339,28 +339,16 @@ header .inactive {
 /*-------------- FOOTER SECTION -----------------*/
 
 footer {
-  padding: 30px;
-  background-color: black;
-  color: white;
+  background-color: #33383b;
+  color: #fefdfc;
   font-size: 12px;
-  font-weight: 400;
   width: 100%;
-}
-
-footer .block {
-    padding-bottom: 10px;
-}
-
-footer .list {
-    padding-bottom: 3px;
-}
-
-footer .description {
-  /*font-size: 1.2rem;*/
+  padding: 40px;
+  text-align: center;
 }
 
 footer a, footer a:link, footer a:visited, footer a:active {
-  color: white;
+  color: #fefdfc;
   border-bottom: 1px dotted rgba(255, 255, 255, .5);
 }
 
