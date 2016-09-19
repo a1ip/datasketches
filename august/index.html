@@ -17,6 +17,10 @@
     <!-- jQuery -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+    <!-- Moment -->
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -38,110 +42,119 @@
 </head>
 <body>
 
-    <header>
-      <a href=".."><div class="header-title">
-        <span>data sketch</span><span class="light-grey">|</span><span>es</span>
-      </div></a>
-      <a href="../july"><div class="month-link hide-mobile-lg">July</div></a>
-      <a href="../august"><div class="month-link hide-mobile-lg">August</div></a>
-      <a href="../september"><div class="month-link hide-mobile-lg">September</div></a>
-      <div class="month-link hide-mobile-lg inactive">October</div>
-      <div class="month-link hide-mobile-lg inactive">November</div>
-      <div class="month-link hide-mobile-lg inactive">December</div>
-      <div class="month-link hide-mobile-lg inactive">January</div>
-      <div class="month-link hide-mobile-lg inactive">February</div>
-      <div class="month-link hide-mobile-lg inactive">March</div>
-      <div class="month-link hide-mobile-lg inactive">April</div>
-      <div class="month-link hide-mobile-lg inactive">May</div>
-      <div class="month-link hide-mobile-lg inactive">June</div>
-    </header>
+  <header>
+    <img src="../img/logo.png" width="120" />
+    <div>
+      <a class="peach" href="../july">← </a>
+      <a class="quicksand peach" href="..">data sketch|es</a>
+      <span class="peach"> →</span>
+    </div>
+
+    <!-- Title above -->
+    <div class="row">
+      <div class="col-xs-12 month-page-title">
+        <h2 class="kingBasil peach">August</h2>
+        <h1 class="quicksand">Olympics</h1>
+      </div>
+    </div>
+  </header>
 
     <section id="august" class="month-page">
-      <div class="container">
+      <div class="nadieh background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+      <div class="shirley background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
 
-        <!-- Title above -->
-        <div class="row">
-          <div class="col-xs-12 month-page-title">
-            <div class="month light-grey">August</div>
-            <h1>Olympics</h1>
-          </div>
-        </div>
+      <div class="container">
 
         <!-- Write-ups -->
         <div class="row">
 
           <!-- Nadieh -->
-          <div class="col-xs-12 col-md-6 write-up padding-column">
-            <h2 class="light-grey">Nadieh</h2>
+          <div class="col-xs-12 col-md-6 write-up">
+            <div class="nadieh">
+              <div class="name kingBasil">Nadieh</div>
+              <div class="time kingBasil"></div>
+              <div class="quicksand">amsterdam</div>
+            </div>
 
-			<a href="code/nadieh/"><img src="code/nadieh/img/Olympic-Feathers-Header.jpg" class="img-responsive img-month-top" alt=""></a>
+            <div class="nadieh">
+        			<a href="code/nadieh/"><img src="code/nadieh/img/Olympic-Feathers-Header.jpg" class="img-responsive img-month-top" alt=""></a>
 
-            <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+              <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-            <p>Before I even started searching online I already had an idea in my head about the data that I wanted to play with this month; all winners since the first Olympic Games in 1896. Thankfully, the Guardian had created exactly <a href="https://www.theguardian.com/sport/datablog/2012/jun/25/olympic-medal-winner-list-data">this dataset</a> right before the 2012 Olympics in London. I <i>only</i> needed to add the results for 2012 and create a dummy start for all of the events at 2016. That 2016 dataset I could then fill with winners while the games were happening. Again, the Guardian helped out by supplying <a href="https://www.theguardian.com/sport/datablog/2012/aug/10/olympics-2012-list-medal-winners">a dataset</a> with all of the medallists from 2012.</p>
-			<p>However, I quickly found out that the 2012 dataset was missing quite a few winners. So I started manually checking the data, making sure I had winners on all 302 events held in London. I then took the same approach with the previous 29 editions. Aggregating the number of events that had a gold medal winner from my dataset and comparing this with the number of events held according to <a href="https://en.wikipedia.org/wiki/2012_Summer_Olympics#Sports">these wiki pages</a>. Thankfully, all was fine with the data before 2012 except for a few minor (and explainable) things and some horses.</p>
-			<p>To prepare the 2016 data I took the 2012 file as a base and then made the changes according to <a href="https://www.olympic.org/news/discover-the-changes-in-the-sports-programme-for-rio">a website</a> that outlined the differences between 2012 and 2016.</p>
-			<p>With 56 different disciplines and thousands of medals I knew that it could never fit in one circle. Looking at the Olympic symbol, 5 circles seemed the next logical choice.<br>I calculated the maximum number of medals that were ever won for a discipline for one gender. This would give me the width of each discipline. I then combined the sporting disciplines in such a way to get the same total width (adding the separate widths of each discipline) in each ring. This turned out to be quite a challenge, but eventually the grouping became something along the lines of: athletics & gymnastics, shooting & horse, wrestling & fighting, cycling & ball sports, and water sports.</p>
-			<p>Finally, due to the set-up of the chart I created a very specific json from R. I tried to do as many calculations in R and not in JavaScript, because I find it much much easier and straightforward to do in R. About 12 hours of data finding, wrangling, checking and preparing later, I was left with a pretty large json that contained 5146 medal winners in several layers of nesting, ready to be visualized.</p>
-			<p>You can find a more extensive explanation about what I did & the dataset itself on <a href="https://github.com/nbremer/datasketches/tree/gh-pages/august/data/nadieh">the GitHub page of the dataset</a>
+              <p>Before I even started searching online I already had an idea in my head about the data that I wanted to play with this month; all winners since the first Olympic Games in 1896. Thankfully, the Guardian had created exactly <a href="https://www.theguardian.com/sport/datablog/2012/jun/25/olympic-medal-winner-list-data">this dataset</a> right before the 2012 Olympics in London. I <i>only</i> needed to add the results for 2012 and create a dummy start for all of the events at 2016. That 2016 dataset I could then fill with winners while the games were happening. Again, the Guardian helped out by supplying <a href="https://www.theguardian.com/sport/datablog/2012/aug/10/olympics-2012-list-medal-winners">a dataset</a> with all of the medallists from 2012.</p>
+        			<p>However, I quickly found out that the 2012 dataset was missing quite a few winners. So I started manually checking the data, making sure I had winners on all 302 events held in London. I then took the same approach with the previous 29 editions. Aggregating the number of events that had a gold medal winner from my dataset and comparing this with the number of events held according to <a href="https://en.wikipedia.org/wiki/2012_Summer_Olympics#Sports">these wiki pages</a>. Thankfully, all was fine with the data before 2012 except for a few minor (and explainable) things and some horses.</p>
+        			<p>To prepare the 2016 data I took the 2012 file as a base and then made the changes according to <a href="https://www.olympic.org/news/discover-the-changes-in-the-sports-programme-for-rio">a website</a> that outlined the differences between 2012 and 2016.</p>
+        			<p>With 56 different disciplines and thousands of medals I knew that it could never fit in one circle. Looking at the Olympic symbol, 5 circles seemed the next logical choice.<br>I calculated the maximum number of medals that were ever won for a discipline for one gender. This would give me the width of each discipline. I then combined the sporting disciplines in such a way to get the same total width (adding the separate widths of each discipline) in each ring. This turned out to be quite a challenge, but eventually the grouping became something along the lines of: athletics & gymnastics, shooting & horse, wrestling & fighting, cycling & ball sports, and water sports.</p>
+        			<p>Finally, due to the set-up of the chart I created a very specific json from R. I tried to do as many calculations in R and not in JavaScript, because I find it much much easier and straightforward to do in R. About 12 hours of data finding, wrangling, checking and preparing later, I was left with a pretty large json that contained 5146 medal winners in several layers of nesting, ready to be visualized.</p>
+        			<p>You can find a more extensive explanation about what I did & the dataset itself on <a href="https://github.com/nbremer/datasketches/tree/gh-pages/august/data/nadieh">the GitHub page of the dataset</a>
 
-            <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+              <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-			<p>By looking at the end result, it might be a bit hard to understand why I'm calling this project the <i>Olympic Feathers</i>. Initially I wanted to turn each discipline into a feather shaped slice. But apart from the feather tips not making the final cut I think that the end result is still very similar to my very first sketch.</p>
-			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Sketch - 1 - medium.JPG"> <img src="sketches/nadieh/Olympic Feathers Sketch - 1 - small.JPG" class="img-responsive img-month" alt="The first sketch of the feathers of the Olympic visualization"></a>
-			<p>Because Shirley was on vacation for the first 2 weeks of August I asked a colleague from work, Jeroen de Lange our Creative director, if he'd like to help me think out the design some more. It really helped a lot to explain my idea and him asking questions back. That's how I found some issues with my initial simple sketch. For one, a sporting discipline has many events in which a medal can be won so several feathers would get really wide, such as athletics and swimming.</p>
-			<p>Also, the number of events has changed a lot throughout the years. Therefore, I had to make a choice on what exactly would define 1 medal. Since I was working with circles, in the end it seemed most logical to use the same arc length (i.e. number of degrees) to define one medal. This would create a lot of white space for disciplines in which one edition had tried out a lot of different events. However, I felt that would actually give an interesting insight into the history of the Olympics.</p>
-			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Pen Sketch - medium.jpeg"> <img src="sketches/nadieh/Olympic Feathers Pen Sketch - small.jpeg" class="img-responsive img-month" alt="Brainstorming with my colleague about the feathers"></a>
-			<p>That evening, I sketched out a more detailed version to see how it might look with the new insight I'd gained about the data. I focused on the medals themselves because wasn't quite if the they should be ordered in a specific order, so always Americas first, then Asia and so on. Or to ordered them according to which continent won the most medals (for that gender and for that edition). I eventually chose the latter, because again, like the whitespace, it would give an extra level of insight into the data.</p>
-			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Sketch - 2 - medium.JPG"> <img src="sketches/nadieh/Olympic Feathers Sketch - 2 - small.JPG" class="img-responsive img-month" alt="Setting the stacked versus ranked medals against each other"></a>
-			<p>After the sketch above, I got to the point where I just had to start coding it out to see how our ideas would work with the data instead of sketching more detailed ideas and guessing about how it would apply to the Olympics data.</p>
+        			<p>By looking at the end result, it might be a bit hard to understand why I'm calling this project the <i>Olympic Feathers</i>. Initially I wanted to turn each discipline into a feather shaped slice. But apart from the feather tips not making the final cut I think that the end result is still very similar to my very first sketch.</p>
+        			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Sketch - 1 - medium.JPG"> <img src="sketches/nadieh/Olympic Feathers Sketch - 1 - small.JPG" class="img-responsive img-month" alt="The first sketch of the feathers of the Olympic visualization"></a>
+        			<p>Because Shirley was on vacation for the first 2 weeks of August I asked a colleague from work, Jeroen de Lange our Creative director, if he'd like to help me think out the design some more. It really helped a lot to explain my idea and him asking questions back. That's how I found some issues with my initial simple sketch. For one, a sporting discipline has many events in which a medal can be won so several feathers would get really wide, such as athletics and swimming.</p>
+        			<p>Also, the number of events has changed a lot throughout the years. Therefore, I had to make a choice on what exactly would define 1 medal. Since I was working with circles, in the end it seemed most logical to use the same arc length (i.e. number of degrees) to define one medal. This would create a lot of white space for disciplines in which one edition had tried out a lot of different events. However, I felt that would actually give an interesting insight into the history of the Olympics.</p>
+        			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Pen Sketch - medium.jpeg"> <img src="sketches/nadieh/Olympic Feathers Pen Sketch - small.jpeg" class="img-responsive img-month" alt="Brainstorming with my colleague about the feathers"></a>
+        			<p>That evening, I sketched out a more detailed version to see how it might look with the new insight I'd gained about the data. I focused on the medals themselves because wasn't quite if the they should be ordered in a specific order, so always Americas first, then Asia and so on. Or to ordered them according to which continent won the most medals (for that gender and for that edition). I eventually chose the latter, because again, like the whitespace, it would give an extra level of insight into the data.</p>
+        			<a class="fancybox" href="sketches/nadieh/Olympic Feathers Sketch - 2 - medium.JPG"> <img src="sketches/nadieh/Olympic Feathers Sketch - 2 - small.JPG" class="img-responsive img-month" alt="Setting the stacked versus ranked medals against each other"></a>
+        			<p>After the sketch above, I got to the point where I just had to start coding it out to see how our ideas would work with the data instead of sketching more detailed ideas and guessing about how it would apply to the Olympics data.</p>
 
-			<h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
-			<p>First, I just needed to get those circles on the screen using the carefully prepared nested json. As always, that never happens correctly the first time you think you have enough code pulled together to get something decent on the screen. Below left, for example, is what happens when you forget that, although CSS' <i>rotate</i> works with degrees, <i>Math.cos() / Math.sin()</i> works with radians. On the right of the image, all of the disciplines were rotated to the same degree, overplotting each other...</p>
-			<a class="fancybox" href="code/nadieh/img/Olympic-Feathers-First-Results.jpg"> <img src="code/nadieh/img/Olympic-Feathers-First-Results-small.jpg" class="img-responsive img-month" alt="On the left: what happens when you mess up radians and degrees - on the right: plotting all disciplines on top of each other"></a>
-			<p>But what I love about <i>designing with code</i> is that, once you have it working for one <i>object</i>, that it works for all of them. More than 5000 medals come together on the screen correctly and you can finally see actual data and all its wonders and visual "I wish that wasn't in the data..." issues. Something you could never achieve in a sketch or static mock. Below is one of the first screenshots where all the feathers were placed correctly, with their labels.</p>
-			<a class="fancybox" href="code/nadieh/img/Olympic-Feathers-Correct-circles.png"> <img src="code/nadieh/img/Olympic-Feathers-Correct-circles-small.png" class="img-responsive img-month" alt="The first time all of the sports, editions, genders and medals are in their correct locations"></a>
-			<p>And then I started working on the feather shape. I had <i>not</i> expected that some disciplines would be so wide. Athletics took up more than half a circle! This meant that I couldn't use 1 feather tip for each discipline, instead the wider disciplines would need to get multiple tips. Luckily, my work with the <a href="../july">LotR visualization from last month</a>, meant that custom SVG paths were still fresh in my mind and it surprised me how fast I got the feather shape with multiple tips together. Below you can see two different color schemes I tried out; white feathers on a grey background or the reverse.</p>
-			<a class="fancybox" href="code/nadieh/img/Olympic-feathers-Feather-shapes-large.jpg"> <img src="code/nadieh/img/Olympic-feathers-Feather-shapes-small.jpg" class="img-responsive img-month" alt="The feather shape of each discipline in two different color settings"></a>
-			<p>I send a screenshot to Jeroen who then, in a gentle way, made it clear that the feather tips weren't working with the design. It was a bit painful for me to comment out that custom piece of feather code, especially since in my mind the project was called Olympic <i>Feathers</i>, but I knew it was in the best interest of the end result to follow his advice.</p>
-			<p>The white space in the feathers was then given a function. By filling it with a color the gender difference became easier to read. Using a light radial gradient made it nice and subtle. And with that, the feathers themselves were looking practically finished.</p>
-			<p>The final big leg was getting the introduction, annotations and legends in there nicely. Jeroen came with a wonderful example on how to place the title and introduction together that I then reproduced. And the final tweaks always take more time than you think. Maybe it was also due to simultaneously watching the Olympics during about 90% of the time that I was coding that made that last part take a bit longer, haha.</p>
-			<p>After the Olympics were done I added one more thing to the data & visual that I had in mind from the start. Some sport disciplines have Olympic records, such as athletics and swimming. As an extra level of detail, I placed a white dot on the events in which the gold medalist reached a currently standing Olympic record.</p>
-			<p>Below you can see the visual part of the end result. You can hover over each medal to see who or which team won it and you can also hover over the time-line in the bottom section of each circle to highlight only that particular edition. <a href="code/nadieh">The full interactive version can be found here</a>. It's definitely not a "understood within 5 seconds" chart. You need to <i>get</i> the visual encoding first, but when you do (which I feel isn't <i>too</i> hard) there's a lot of interesting information to find. Just the way I like my visualization to be; a little bit of effort to gain a lot.</p>
-			<a href="code/nadieh"> <img src="code/nadieh/img/Olympic-Feathers-End-result-small.jpg" class="img-responsive img-month" alt="The end result of the Olympic feathers"></a>
-			<p>It came out during August 13th so I kept updating the visual with the new medal data each day and sharing insights that I'd learned along the way. I was already a big fan of the Olympics, but after the insights I gained from building/investigating this visual that only increased!</p>
-            <p>A final note, I completed this month in half of the <i>allotted</i> time. That was because I wanted to share the visual before the end of the Olympics. So data prep & sketching happened in the week before the Olympics and the coding happened in the 1st week of the Olympics (and then daily updates for another week). Crazy, hectic, tiring and fun weeks :)</p>
-
+        			<h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+        			<p>First, I just needed to get those circles on the screen using the carefully prepared nested json. As always, that never happens correctly the first time you think you have enough code pulled together to get something decent on the screen. Below left, for example, is what happens when you forget that, although CSS' <i>rotate</i> works with degrees, <i>Math.cos() / Math.sin()</i> works with radians. On the right of the image, all of the disciplines were rotated to the same degree, overplotting each other...</p>
+        			<a class="fancybox" href="code/nadieh/img/Olympic-Feathers-First-Results.jpg"> <img src="code/nadieh/img/Olympic-Feathers-First-Results-small.jpg" class="img-responsive img-month" alt="On the left: what happens when you mess up radians and degrees - on the right: plotting all disciplines on top of each other"></a>
+        			<p>But what I love about <i>designing with code</i> is that, once you have it working for one <i>object</i>, that it works for all of them. More than 5000 medals come together on the screen correctly and you can finally see actual data and all its wonders and visual "I wish that wasn't in the data..." issues. Something you could never achieve in a sketch or static mock. Below is one of the first screenshots where all the feathers were placed correctly, with their labels.</p>
+        			<a class="fancybox" href="code/nadieh/img/Olympic-Feathers-Correct-circles.png"> <img src="code/nadieh/img/Olympic-Feathers-Correct-circles-small.png" class="img-responsive img-month" alt="The first time all of the sports, editions, genders and medals are in their correct locations"></a>
+        			<p>And then I started working on the feather shape. I had <i>not</i> expected that some disciplines would be so wide. Athletics took up more than half a circle! This meant that I couldn't use 1 feather tip for each discipline, instead the wider disciplines would need to get multiple tips. Luckily, my work with the <a href="../july">LotR visualization from last month</a>, meant that custom SVG paths were still fresh in my mind and it surprised me how fast I got the feather shape with multiple tips together. Below you can see two different color schemes I tried out; white feathers on a grey background or the reverse.</p>
+        			<a class="fancybox" href="code/nadieh/img/Olympic-feathers-Feather-shapes-large.jpg"> <img src="code/nadieh/img/Olympic-feathers-Feather-shapes-small.jpg" class="img-responsive img-month" alt="The feather shape of each discipline in two different color settings"></a>
+        			<p>I send a screenshot to Jeroen who then, in a gentle way, made it clear that the feather tips weren't working with the design. It was a bit painful for me to comment out that custom piece of feather code, especially since in my mind the project was called Olympic <i>Feathers</i>, but I knew it was in the best interest of the end result to follow his advice.</p>
+        			<p>The white space in the feathers was then given a function. By filling it with a color the gender difference became easier to read. Using a light radial gradient made it nice and subtle. And with that, the feathers themselves were looking practically finished.</p>
+        			<p>The final big leg was getting the introduction, annotations and legends in there nicely. Jeroen came with a wonderful example on how to place the title and introduction together that I then reproduced. And the final tweaks always take more time than you think. Maybe it was also due to simultaneously watching the Olympics during about 90% of the time that I was coding that made that last part take a bit longer, haha.</p>
+        			<p>After the Olympics were done I added one more thing to the data & visual that I had in mind from the start. Some sport disciplines have Olympic records, such as athletics and swimming. As an extra level of detail, I placed a white dot on the events in which the gold medalist reached a currently standing Olympic record.</p>
+        			<p>Below you can see the visual part of the end result. You can hover over each medal to see who or which team won it and you can also hover over the time-line in the bottom section of each circle to highlight only that particular edition. <a href="code/nadieh">The full interactive version can be found here</a>. It's definitely not a "understood within 5 seconds" chart. You need to <i>get</i> the visual encoding first, but when you do (which I feel isn't <i>too</i> hard) there's a lot of interesting information to find. Just the way I like my visualization to be; a little bit of effort to gain a lot.</p>
+        			<a href="code/nadieh"> <img src="code/nadieh/img/Olympic-Feathers-End-result-small.jpg" class="img-responsive img-month" alt="The end result of the Olympic feathers"></a>
+        			<p>It came out during August 13th so I kept updating the visual with the new medal data each day and sharing insights that I'd learned along the way. I was already a big fan of the Olympics, but after the insights I gained from building/investigating this visual that only increased!</p>
+              <p>A final note, I completed this month in half of the <i>allotted</i> time. That was because I wanted to share the visual before the end of the Olympics. So data prep & sketching happened in the week before the Olympics and the coding happened in the 1st week of the Olympics (and then daily updates for another week). Crazy, hectic, tiring and fun weeks :)</p>
+            </div>
           </div>
 
           <!-- Shirley -->
           <div class="col-xs-12 col-md-6 write-up padding-column">
-            <h2 class="light-grey">Shirley</h2>
+            <div class="shirley">
+              <div class="name kingBasil">Shirley</div>
+              <div class="time kingBasil"></div>
+              <div class="quicksand">san francisco</div>
+            </div>
 
-            <a href="http://sxywu.com/olympics/"><img src="code/shirley/aug-final.png" class="img-responsive img-month-top" alt=""></a>
+            <div class="shirley">
+              <a href="http://sxywu.com/olympics/"><img src="code/shirley/aug-final.png" class="img-responsive img-month-top" alt=""></a>
 
-            <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+              <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-            <p>Starting on this week...</p>
+              <p>Starting on this week...</p>
 
-            <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+              <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-            <p>...</p>
+              <p>...</p>
 
-            <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+              <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-            <p>...</p>
-
+              <p>...</p>
+            </div>
           </div>
 
         </div>
 
-        <!-- Note below -->
         <div class="row">
-          <div class="col-xs-12 month-page-note">
-            <span class="verticalAlign" style="padding-right: 8px;">Shirley </span>
-            <span class="ampersand verticalAlign light-grey">&</span>
-            <span class="verticalAlign"> Nadieh</span>
+          <div class="nadieh col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="kingBasil">Nadieh</div>
+            <div class="quicksand"><a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
+          </div>
+
+          <div class="shirley col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="list">
+              <div class="kingBasil">Shirley</div>
+              <div class="quicksand"><a href="https://sxywu.github.io/portfolio/">sxywu.com</a></div>
+            </div>
           </div>
         </div>
 
@@ -163,26 +176,37 @@
     </footer>
 
 	<script>
-		$( window ).resize( resizeToWindow );
-		$( document ).ready( function() {
-			resizeToWindow();
-			$(".fancybox").fancybox({
-				openEffect : 'fade',
-				closeEffect : 'fade',
-				padding: 0,
-				helpers: {
-				overlay: {
-					locked: false
-				}
-				}
-			});
-		});
+  function setTime() {
+    var format = 'h:mm a';
+    var time = new Date();
+    var nadieh = moment(time, format).tz("Europe/Amsterdam");
+    var shirley = moment(time, format).tz("America/Los_Angeles");
+    $('.nadieh .time').text(nadieh.format(format));
+    $('.shirley .time').text(shirley.format(format));
 
-		function resizeToWindow() {
-			//Reset the overall font size
-			var newFontSize = Math.min(62.5, Math.max(30, window.innerWidth * 62.5 / 1280));
-			$("html").css("font-size", newFontSize + "%");
-		}
+    var nadiehColor = nadieh.hour();
+    nadiehColor = nadiehColor >= 18 || nadiehColor <= 6 ? 'dark' : 'light';
+    var shirleyColor = shirley.hour();
+    shirleyColor = shirleyColor >= 18 || shirleyColor <= 6 ? 'dark' : 'light';
+
+    $('.nadieh').removeClass('light dark').addClass(nadiehColor);
+    $('.shirley').removeClass('light dark').addClass(shirleyColor);
+  }
+
+  $( document ).ready( function() {
+    setTime();
+    setInterval(setTime, 60000);
+    $(".fancybox").fancybox({
+      openEffect : 'fade',
+      closeEffect : 'fade',
+      padding: 0,
+      helpers: {
+      overlay: {
+        locked: false
+      }
+      }
+    });
+  });
 	</script>
 
   </body>
