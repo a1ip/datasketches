@@ -19,6 +19,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- <script src="plugin/jquery.min.js"></script> -->
 
+    <!-- Moment -->
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -38,29 +42,44 @@
 
     <section id="intro">
       <div class="title-wrapper">
-        <div class="main-title">data sketch<span class="light-grey">|</span>es</div>
-	        <div class="main-subtitle">
-    				<span class="verticalAlign hide-mobile">Presenting a </span>
-    				<span class="verticalAlign" style="padding-right: 8px;">Shirley </span>
-    				<span class="ampersand verticalAlign light-grey">&</span>
-    				<span class="verticalAlign"> Nadieh</span>
-    				<span class="verticalAlign hide-mobile"> collaboration</span>
-			     </div>
-        	<!-- <p>exploring a new theme each month through data visualizations</p> -->
+        <img class="logo" src="img/logo.png" width="180"/>
+        <div class="main-title quicksand">data sketch|es</div>
+        <div class="main-subtitle">
+  				<span class="hide-mobile">a </span>
+  				<span class="kingBasil">Nadieh </span>
+          <span>& </span>
+          <span class="kingBasil">Shirley </span>
+  				<span class="hide-mobile">collaboration</span>
+  	    </div>
       </div>
     </section>
 
     <section id="months">
+      <div class="nadieh background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+      <div class="shirley background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
 
-      <article class="month" id="current">
-        <div class="month-row white-text">
-			<div class="month-wrapper white-text">
-		        <h2 class="light-grey">September</h2>
-		        <h1>Travel</h1>
+      <article class="row">
+        <div class="nadieh col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="name kingBasil">Nadieh</div>
+          <div class="time kingBasil"></div>
+          <div class="quicksand">amsterdam</div>
+        </div>
+        <div class="shirley col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="name kingBasil">Shirley</div>
+          <div class="time kingBasil"></div>
+          <div class="quicksand">san francisco</div>
+        </div>
+      </article>
+
+      <article class="row month" id="current">
+        <div class="month-row">
+    			<div class="month-wrapper">
+		        <h2 class="kingBasil peach">September</h2>
+		        <h1 class="quicksand">Travel</h1>
 		        <p>
-		          Anything that has to do with our own travels<br><span style="color: white">Currently being worked on</span>
+		          Currently being worked on...
 		        </p>
-			</div>
+    			</div>
         </div>
       </article>
 
@@ -68,14 +87,18 @@
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 month-img month-img-left">
           <img src="img/august-nadieh.jpg" alt="Nadieh's Olympic Feathers project">
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 month-row black-text">
-          <a class="div-link" href="august">
-            <div class="month-wrapper">
-                <h2 class="light-grey">August</h2>
-                <h1>Olympics</h1>
-                <p>Visualizing that once-every-four-year festival of sports</p>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 month-row">
+          <div class="month-wrapper">
+            <h2 class="kingBasil peach">August</h2>
+            <h1 class="quicksand">Olympics</h1>
+            <p>
+              Visualizing that once-every-four-year<br />
+              festival of sports
+            </p>
+            <div class="read-button quicksand peach">
+              <a href='august'>Read →</a>
             </div>
-          </a>
+          </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 month-img month-img-right">
           <img src="img/august-shirley.jpg" alt="Shirley's generative Diving project">
@@ -87,16 +110,34 @@
           <img src="img/july-nadieh.jpg" alt="Nadieh's LotR words project">
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 month-row black-text">
-			<a class="div-link" href="july">
-				<div class="month-wrapper">
-			    	<h2 class="light-grey">July</h2>
-			    	<h1>Movies</h1>
-			    	<p>Diving into movies that have a personal connection to us</p>
-				</div>
-			</a>
+  				<div class="month-wrapper">
+			    	<h2 class="kingBasil peach">July</h2>
+			    	<h1 class="quicksand">Movies</h1>
+			    	<p>
+              Diving into movies that have<br />
+              a personal connection to us
+            </p>
+            <div class="read-button quicksand peach">
+              <a href='july'>Read →</a>
+            </div>
+  				</div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 month-img month-img-right">
           <img src="img/july-shirley.jpg" alt="Shirley's film flowers project">
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="nadieh col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="kingBasil">Nadieh</div>
+          <div class="quicksand"><a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
+        </div>
+
+        <div class="shirley col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <div class="list">
+            <div class="kingBasil">Shirley</div>
+            <div class="quicksand"><a href="https://sxywu.github.io/portfolio/">sxywu.com</a></div>
+          </div>
         </div>
       </article>
 
@@ -104,32 +145,40 @@
 
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-12 col-sm-6 description block">
-            A monthly collaboration between Shirley Wu & Nadieh Bremer
-          </div>
-          <div class="col-xs-4 col-sm-3 block">
-              <div class="list"><a href="https://twitter.com/datasketches">@datasketches</a></div>
-              <div class="list">#datasketches</div>
-          </div>
-          <div class="col-xs-8 col-sm-3 block">
-              <div class="list">Shirley <span class="light-grey">|</span> <a href="https://sxywu.github.io/portfolio/">SxyWu.com</a></div>
-              <div class="list">Nadieh <span class="light-grey">|</span> <a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
-          </div>
+        <div>
+          <span>a monthly collaboration between </span>
+          <span class="kingBasil">Nadieh Bremer </span>
+          <span>& </span>
+          <span class="kingBasil">Shirley Wu</span>
+        </div>
+        <div class="quicksand">
+          <a href="https://twitter.com/datasketches">@datasketches</a> | #datasketches
         </div>
       </div>
     </footer>
 
 	<script>
-		$( window ).resize( resizeToWindow );
-		$( document ).ready( resizeToWindow );
+    function setTime() {
+      var format = 'h:mm a';
+      var time = new Date();
+      var nadieh = moment(time, format).tz("Europe/Amsterdam");
+      var shirley = moment(time, format).tz("America/Los_Angeles");
+      $('.nadieh .time').text(nadieh.format(format));
+      $('.shirley .time').text(shirley.format(format));
 
+      var nadiehColor = nadieh.hour();
+      nadiehColor = nadiehColor >= 18 || nadiehColor <= 6 ? 'dark' : 'light';
+      var shirleyColor = shirley.hour();
+      shirleyColor = shirleyColor >= 18 || shirleyColor <= 6 ? 'dark' : 'light';
 
-		function resizeToWindow() {
-			//Reset the overall font size
-			var newFontSize = Math.min(62.5, Math.max(30, window.innerWidth * 62.5 / 1280));
-			$("html").css("font-size", newFontSize + "%");
-		}
+      $('.nadieh').removeClass('light dark').addClass(nadiehColor);
+      $('.shirley').removeClass('light dark').addClass(shirleyColor);
+    }
+
+		$( document ).ready(function() {
+      setTime();
+      setInterval(setTime, 60000);
+    });
 	</script>
 
 	<!-- Google analytics -->

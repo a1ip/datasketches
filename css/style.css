@@ -7,45 +7,44 @@ html {
 
 body {
   	font-family: 'Tinos', serif;
-  	color: black;
+  	color: #33383b;
   	height: 100%;
   	font-size: 12px;
 }
 
+@font-face {
+  font-family: "King Basil", cursive;
+  src: url("../font/King-Basil.ttf");
+}
+
+.kingBasil {
+  font-family: "King Basil";
+}
+
+.quicksand {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.peach {
+  color: #f9c6b4;
+}
+
 a, a:link, a:visited, a:active {
-  color: black;
-  border-bottom: 1px dotted rgba(0, 0, 0, .5);
+  border-bottom: 1px dotted;
 }
 
 a.fancybox-close, a:link.fancybox-close, a:visited.fancybox-close, a:active.fancybox-close {
-    color: black;
     border-bottom: none;
 }
 
 a:hover {
   text-decoration: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid;
 }
 
 .container-fluid {
   	padding-right: 0;
   	padding-left: 0;
-}
-
-.light-grey {
-  	color: #a6a6a6;
-}
-
-.data-sketch-font {
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 400;
-}
-
-.ampersand {
-/*	font-family: 'Rochester', cursive;*/
-	font-family: 'Playfair Display', serif;
-	font-size: 50px; /*5rem;*/
-	font-style: italic;
 }
 
 .verticalAlign {
@@ -59,6 +58,46 @@ a:hover {
 
 .margin-top-10 {
   margin-top: 10px !important;
+}
+
+.nadieh {
+  text-align: right;
+}
+
+.shirley, .nadieh {
+  padding: 40px;
+}
+
+.light {
+  background-color: #fefdfc;
+  color: #33383b;
+}
+
+.dark {
+  color: #fefdfc;
+  background-color: #33383b;
+}
+
+.dark a, .dark a:hover {
+  color: #fefdfc;
+}
+
+.light a, .light a:hover {
+  color: #33383b;
+}
+
+.background {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+}
+
+.background.shirley {
+  left: 50%;
+}
+
+.name {
+  font-size: 24px;
 }
 
 @media only screen and (max-width: 500px) {
@@ -83,32 +122,28 @@ a:hover {
 
 #intro {
   	width: 100%;
-  	height: 100%;
   	text-align: center;
+    background-color: #fefdfc;
+    padding: 100px;
 }
 
 #intro .title-wrapper {
-  	position: absolute;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	-webkit-transform: translate(-50%, -50%);
-  	-ms-transform: translate(-50%, -50%);
   	width: 100%;
+}
+
+#intro .logo {
+    margin: 20px;
 }
 
 #intro .main-title {
   	font-family: 'Quicksand', sans-serif;
-  	font-size: 12rem;
-  	font-weight: 400;
+  	font-size: 36px;
   	line-height: 110%;
-  	padding-bottom: 15px;
+    margin: 20px;
 }
 
 #intro .main-subtitle{
-	  font-family: 'Sacramento', cursive;
-  	font-size: 25px; /*2.5rem;*/
-  	color: #0a0a0a;
+  	font-size: 16px; /*2.5rem;*/
 }
 
 #intro p {
@@ -121,48 +156,41 @@ a:hover {
 
 /*-------------- MONTH SECTION -----------------*/
 
-#months .row {
-	margin-left: 0px;
-	margin-right: 0px;
-  border-top: 1px solid #ececec;
+#months {
+  position: relative;
 }
 
-#months .black-text {
-	color: black;
-}
-
-#months .white-text {
-	color: white;
+#months .month {
+	margin-top: 40px;
 }
 
 #months .month-row {
 	position: relative;
 	height: 400px;
 	text-align: center;
+  background-color: #fff;
 }
 
 #months .month-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 	width: 80%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 #months h1 {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 8.25rem;
-    font-weight: 400;
+  font-size: 48px;
 	margin-top: 0;
 }
 
 #months h2 {
-	font-family: 'Sacramento', cursive;
-    font-size: 2.75rem;
+  font-size: 24px;
 	margin-bottom: 0;
 }
+
 @media only screen and (max-width: 800px) {
 	#months h2 {
 		font-size: 20px;
@@ -171,14 +199,29 @@ a:hover {
 }
 
 #months p {
-    color: #a6a6a6;
-    padding-top: 20px;
+  padding-top: 20px;
 	width: 90%;
 	margin: 0 auto;
 }
 
-#months #current {
-	background-color: #1d1d1d;
+#months .read-button {
+  background: -webkit-gradient(linear, right bottom, left top, color-stop(0%, #ffd2c6), color-stop(50%, #f2bba6), color-stop(67%, #d59381)); /* Chrome, Safari4+ */
+  background: -webkit-linear-gradient(right, #ffd2c6 0%, #f2bba6 50%, #d59381 67%); /* Chrome10+, Safari5.1+ */
+  background: -moz-linear-gradient(right, #ffd2c6 0%, #f2bba6 50%, #d59381 67%);    /* FF3.6+ */
+  background: linear-gradient(to right, #ffd2c6 0%, #f2bba6 50%, #d59381 67%);
+
+  display: inline-block;
+  font-size: 24px;
+  padding: 4px;
+  margin-top: 40px;
+}
+
+#months .read-button a, #months .read-button a:hover {
+  color: #f9c6b4;
+  text-decoration: none;
+  border-bottom: none;
+  padding: 5px 20px;
+  background-color: #fff;
 }
 
 #months .month-img {
@@ -221,82 +264,54 @@ a:hover {
 /*-------------- HEADER SECTION -----------------*/
 
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 40px;
-  line-height: 40px;
   width: 100%;
-  background-color: #fbfbfb;
-  z-index: 1;
-  padding-left: 20px;
-}
-
-header .header-title {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  padding-left: 0px;
-  padding-right: 20px;
-  float: left;
-}
-
-header .month-link {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  padding-left: 10px;
-  padding-right: 10px;
-  float: left;
-}
-
-header .inactive {
-  color: #b7b7b7;
-  cursor: default;
-}
-
-/*-------------- MONTH PAGES -----------------*/
-
-.month-page {
   text-align: center;
-
+  font-size: 24px;
+  background-color: #fefdfc;
+  z-index: 1;
 }
 
-.month-page-title {
-  margin-top: 110px;
+header a, header a:link, header a:visited, header a:active {
+  color: #ffd2c6;
 }
 
-.month-page .write-up {
-    margin-top: 50px;
+header .month-page-title {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  background-color: #fefdfc;
+  text-align: center;
 }
 
-.month-page h1,
-.about-page h1 {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 12rem;
-    font-weight: 400;
+header .general-about {
+  margin: 20px;
+}
+
+header .about-top-text {
+  text-align: justify;
+  font-size: 14px;
+}
+
+
+header h1 {
+    font-size: 48px;
     line-height: 110%;
     /*padding-bottom: 15px;*/
     margin-top: 0;
 }
 
-.month-page .month,
-.about-page .subtitle {
-    font-family: 'Sacramento', cursive;
-    font-size: 2.75rem;
-    margin-bottom: 0;
-}
-
-.month-page h2,
-.about-page h2 {
-    font-family: 'Sacramento', cursive;
-    font-size: 50px;
+header  h2 {
+    font-size: 24px;
 }
 @media only screen and (max-width: 800px) {
-  .month-page h2,
-  .about-page h2 {
-    font-size: 38px;
+  header  h2 {
+    font-size: 24px;
   }
+}
+
+/*-------------- MONTH PAGES -----------------*/
+
+.month-page {
+  position: relative;
 }
 
 .month-page h3 {
@@ -309,11 +324,9 @@ header .inactive {
 
 .month-page p {
     text-align: left;
-    color: #545454;
 }
 
 .month-page-note {
-    font-family: 'Sacramento', cursive;
     font-size: 25px;
     color: #0a0a0a;
     padding-bottom: 60px;
@@ -322,6 +335,10 @@ header .inactive {
 .img-month, .img-month-top {
 	text-align: center;
 	margin: 0 auto;
+}
+
+.write-up {
+  padding: 0;
 }
 
 .write-up .img-month {
@@ -343,28 +360,16 @@ header .inactive {
 /*-------------- FOOTER SECTION -----------------*/
 
 footer {
-  padding: 30px;
-  background-color: black;
-  color: white;
+  background-color: #33383b;
+  color: #fefdfc;
   font-size: 12px;
-  font-weight: 400;
   width: 100%;
-}
-
-footer .block {
-    padding-bottom: 10px;
-}
-
-footer .list {
-    padding-bottom: 3px;
-}
-
-footer .description {
-  /*font-size: 1.2rem;*/
+  padding: 40px;
+  text-align: center;
 }
 
 footer a, footer a:link, footer a:visited, footer a:active {
-  color: white;
+  color: #fefdfc;
   border-bottom: 1px dotted rgba(255, 255, 255, .5);
 }
 
@@ -376,16 +381,7 @@ footer a:hover {
 /*------------------ ABOUT PAGE -----------------*/
 
 #about {
-  text-align: center;
-}
-
-#about .general-about {
-  margin-top: 20px;
-}
-
-#about .about-top-text {
-  text-align: justify;
-  font-size: 14px;
+  position: relative;
 }
 
 .about-page p {
