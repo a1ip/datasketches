@@ -12,6 +12,11 @@ body {
   	font-size: 12px;
 }
 
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 @font-face {
   font-family: "King Basil";
   src: url("../font/King-Basil.ttf");
@@ -26,7 +31,11 @@ body {
 }
 
 .peach {
-  color: #f9c6b4;
+  color: #f5c2b1;
+}
+
+.dark-pink {
+  color: #e0a390;
 }
 
 a, a:link, a:visited, a:active {
@@ -100,6 +109,18 @@ a:hover {
   font-size: 24px;
 }
 
+.time {
+  line-height: 70%
+}
+
+.location {
+  font-size: 14px;
+}
+
+.paddingBelow {
+    padding-bottom: 10px;
+}
+
 @media only screen and (max-width: 500px) {
 	.hide-mobile {
 		display: none;
@@ -124,22 +145,23 @@ a:hover {
   	width: 100%;
   	text-align: center;
     background-color: #fefdfc;
-    padding: 100px;
+    padding-bottom: 70px;
 }
 
 #intro .title-wrapper {
   	width: 100%;
+    padding-top: 20px
 }
 
 #intro .logo {
-    margin: 20px;
+    /*margin: 20px;*/
 }
 
 #intro .main-title {
   	font-family: 'Quicksand', sans-serif;
-  	font-size: 36px;
+  	font-size: 70px;
   	line-height: 110%;
-    margin: 20px;
+    margin-bottom: 20px;
 }
 
 #intro .main-subtitle{
@@ -161,7 +183,19 @@ a:hover {
 }
 
 #months .month {
-	margin-top: 40px;
+	margin-top: 10px;
+}
+
+#months #current.month {
+  margin-top: 0px;
+}
+
+
+#months .month-row-current {
+  position: relative;
+  height: 200px;
+  text-align: center;
+  background-color: #fff;
 }
 
 #months .month-row {
@@ -182,12 +216,12 @@ a:hover {
 }
 
 #months h1 {
-  font-size: 48px;
+  font-size: 52px;
 	margin-top: 0;
 }
 
 #months h2 {
-  font-size: 24px;
+  font-size: 20px;
 	margin-bottom: 0;
 }
 
@@ -204,6 +238,10 @@ a:hover {
 	margin: 0 auto;
 }
 
+#current p {
+  padding-top: 0px;
+}
+
 #months .read-button {
   background: -webkit-gradient(linear, right bottom, left top, color-stop(0%, #ffd2c6), color-stop(50%, #f2bba6), color-stop(67%, #d59381)); /* Chrome, Safari4+ */
   background: -webkit-linear-gradient(right, #ffd2c6 0%, #f2bba6 50%, #d59381 67%); /* Chrome10+, Safari5.1+ */
@@ -211,15 +249,18 @@ a:hover {
   background: linear-gradient(to right, #ffd2c6 0%, #f2bba6 50%, #d59381 67%);
 
   display: inline-block;
-  font-size: 24px;
-  padding: 4px;
-  margin-top: 40px;
+  padding: 2px;
+  margin-top: 30px;
 }
 
 #months .read-button a, #months .read-button a:hover {
   color: #f9c6b4;
   text-decoration: none;
   border-bottom: none;
+  font-size: 16px;
+}
+
+#months .read-wrapper {
   padding: 5px 20px;
   background-color: #fff;
 }
@@ -232,11 +273,11 @@ a:hover {
 }
 
 /* Make the images less high on small screens */
-@media only screen and (max-width: 500px) {
+/*@media only screen and (max-width: 500px) {
 	#months .month-img, #months .month-row {
 		height: 250px;
 	}
-}
+}*/
 
 #months .month-img-left img {
   	position: absolute;
