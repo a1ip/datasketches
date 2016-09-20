@@ -38,6 +38,14 @@ body {
   color: #e0a390;
 }
 
+.dark-grey {
+  color: #33383b;
+}
+
+.no-border {
+  border-bottom: none !important;
+}
+
 a, a:link, a:visited, a:active {
   border-bottom: 1px dotted;
 }
@@ -121,6 +129,14 @@ a:hover {
     padding-bottom: 10px;
 }
 
+.paddingTop20 {
+    padding-top: 20px;
+}
+
+.centerText {
+  text-align: center
+}
+
 @media only screen and (max-width: 500px) {
 	.hide-mobile {
 		display: none;
@@ -162,10 +178,12 @@ a:hover {
   	font-size: 70px;
   	line-height: 110%;
     margin-bottom: 20px;
+    cursor: default;
 }
 
 #intro .main-subtitle{
-  	font-size: 16px; /*2.5rem;*/
+  	font-size: 16px;
+    cursor: default;
 }
 
 #intro p {
@@ -174,6 +192,7 @@ a:hover {
   	padding-top: 50px;
 	  width: 90%;
 	  margin: 0 auto;
+    cursor: default;
 }
 
 /*-------------- MONTH SECTION -----------------*/
@@ -218,11 +237,13 @@ a:hover {
 #months h1 {
   font-size: 52px;
 	margin-top: 0;
+  cursor: default;
 }
 
 #months h2 {
   font-size: 20px;
 	margin-bottom: 0;
+  cursor: default;
 }
 
 @media only screen and (max-width: 800px) {
@@ -236,6 +257,7 @@ a:hover {
   padding-top: 20px;
 	width: 90%;
 	margin: 0 auto;
+  cursor: default;
 }
 
 #current p {
@@ -317,14 +339,14 @@ header a, header a:link, header a:visited, header a:active {
 }
 
 header .month-page-title {
-  margin-top: 80px;
+  margin-top: 60px;
   margin-bottom: 80px;
   background-color: #fefdfc;
   text-align: center;
 }
 
 header .general-about {
-  margin: 20px;
+  margin: 60px 10px;
 }
 
 header .about-top-text {
@@ -332,9 +354,8 @@ header .about-top-text {
   font-size: 14px;
 }
 
-
 header h1 {
-    font-size: 48px;
+    font-size: 80px;
     line-height: 110%;
     /*padding-bottom: 15px;*/
     margin-top: 0;
@@ -342,6 +363,7 @@ header h1 {
 
 header  h2 {
     font-size: 24px;
+    margin-bottom: 0px;
 }
 @media only screen and (max-width: 800px) {
   header  h2 {
@@ -419,15 +441,26 @@ footer a:hover {
   border-bottom: 1px solid white;
 }
 
+.about-link {
+  padding: 5px 0px;
+}
+
 /*------------------ ABOUT PAGE -----------------*/
 
 #about {
   position: relative;
 }
 
+.about-page-title {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    background-color: #fefdfc;
+    text-align: center;
+}
+
 .about-page p {
     text-align: justify;
-    color: #545454;
+    /*color: #545454;*/
 }
 
 #about .filter-nadieh {
@@ -472,9 +505,19 @@ footer a:hover {
 
 #about .img-person {
   text-align: center;
-  margin: 0 auto;
-  margin-bottom: 30px;
+  margin: 30px auto;
+  width: 100%;
   max-width: 300px;
+}
+
+#about .clip-circle {
+  -webkit-clip-path: circle(50% at 50% 50%);
+  clip-path: circle(50% at 50% 50%);
+}
+
+#about .clip-hexagon {
+  -webkit-clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+  clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
 }
 
 
