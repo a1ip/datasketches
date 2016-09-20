@@ -179,12 +179,12 @@ a:hover {
   	width: 100%;
   	text-align: center;
     background-color: #fefdfc;
-    padding-bottom: 70px;
+    padding-bottom: 140px;
 }
 
 #intro .title-wrapper {
   	width: 100%;
-    padding-top: 90px
+    padding-top: 70px
 }
 
 #intro .logo {
@@ -402,7 +402,7 @@ header  h2 {
 }
 
 .month-logo {
-  display: inline-block; 
+  display: inline-block;
   width: 200px;
 }
 
