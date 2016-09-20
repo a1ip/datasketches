@@ -12,7 +12,7 @@ body {
   	font-size: 12px;
 }
 
-.row {
+.no-margin-row {
   margin-left: 0px;
   margin-right: 0px;
 }
@@ -246,12 +246,12 @@ a:hover {
   cursor: default;
 }
 
-@media only screen and (max-width: 800px) {
+/*@media only screen and (max-width: 800px) {
 	#months h2 {
 		font-size: 20px;
 		padding-bottom: 10px;
 	}
-}
+}*/
 
 #months p {
   padding-top: 20px;
