@@ -38,6 +38,14 @@ body {
   color: #e0a390;
 }
 
+.white {
+  color: white !important;
+}
+
+.light-grey {
+    color: #a6a6a6;
+}
+
 .dark-grey {
   color: #33383b;
 }
@@ -77,8 +85,14 @@ a:hover {
   margin-top: 10px !important;
 }
 
-.nadieh {
+.nadieh,
+.textRight {
   text-align: right;
+}
+
+.shirley,
+.textLeft {
+  text-align: left;
 }
 
 .shirley, .nadieh {
@@ -131,6 +145,10 @@ a:hover {
 
 .paddingTop20 {
     padding-top: 20px;
+}
+
+.paddingBottomNone {
+  padding-bottom: 0px;
 }
 
 .centerText {
@@ -334,13 +352,13 @@ header {
   z-index: 1;
 }
 
-header a, header a:link, header a:visited, header a:active {
-  color: #ffd2c6;
+header a, header a:link, header a:visited, header a:active, header a:focus, header a:hover {
+  color: #f5c2b1;
 }
 
 header .month-page-title {
-  margin-top: 60px;
-  margin-bottom: 80px;
+  margin-top: 80px;
+  margin-bottom: 60px;
   background-color: #fefdfc;
   text-align: center;
 }
@@ -355,19 +373,21 @@ header .about-top-text {
 }
 
 header h1 {
-    font-size: 80px;
-    line-height: 110%;
-    /*padding-bottom: 15px;*/
+    font-size: 90px;
     margin-top: 0;
+    line-height: 90%
 }
 
 header  h2 {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 0px;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
+  header h1 {
+    font-size: 60px;
+}
   header  h2 {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
 
@@ -375,6 +395,20 @@ header  h2 {
 
 .month-page {
   position: relative;
+}
+
+.top-links {
+  display: inline-block;
+}
+
+.datasketch-top-link {
+  width: 300px;
+}
+
+.other-month-link {
+  font-size: 14px;
+  width: 200px;
+  vertical-align: middle;
 }
 
 .month-page h3 {
@@ -411,6 +445,11 @@ header  h2 {
 
 .img-month-top {
 	margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.img-gallery-wrapper {
+  text-align: center;
 }
 
 .img-gallery-3 {
@@ -447,10 +486,6 @@ footer a:hover {
 
 /*------------------ ABOUT PAGE -----------------*/
 
-#about {
-  position: relative;
-}
-
 .about-page-title {
     margin-top: 60px;
     margin-bottom: 20px;
@@ -465,6 +500,10 @@ footer a:hover {
 
 .about-intro-text {
   padding-bottom: 40px;
+}
+
+#about {
+  position: relative;
 }
 
 #about .filter-nadieh {
@@ -488,9 +527,9 @@ footer a:hover {
 }
 
 #about .filter-shirley {
-  position: relative;
+/*  position: relative;
   -webkit-filter: contrast(90%) brightness(120%) saturate(110%);
-  filter: contrast(90%) brightness(120%) saturate(110%);
+  filter: contrast(90%) brightness(120%) saturate(110%);*/
 }
 #about .filter-shirley::before {
   content: "";

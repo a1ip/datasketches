@@ -42,22 +42,23 @@
 </head>
 <body>
 
-    <header>
-      <img src="../img/logo.png" width="120" />
-      <div>
-        <span class="peach">← </span>
-        <a class="quicksand peach" href="..">data sketch|es</a>
-        <a class="peach" href="../august"> →</a>
-      </div>
+  <header>
+    <!-- Logo and name -->
+    <a class="no-border" href=".."><img class="paddingTop20" src="../img/logo.png" width="120" /></a>
+    <div>
+      <a class="hide-mobile white kingBasil no-border" href=".."><div class="top-links other-month-link textRight">go home</div></a>
+      <a class="quicksand no-border" href=".."><div class="top-links datasketch-top-link"><span class="dark-grey">data sketch<span class="dark-pink">|</span>es</span></div></a>
+      <a class="hide-mobile peach kingBasil no-border" href="../august"><div class="top-links other-month-link textLeft">go to August</div></a>
+    </div>
 
-      <!-- Title above -->
-      <div class="row">
-        <div class="col-xs-12 month-page-title">
-          <h2 class="kingBasil peach">July</h2>
-          <h1 class="quicksand">Movies</h1>
-        </div>
+    <!-- Title above -->
+    <div class="row">
+      <div class="col-xs-12 month-page-title">
+        <h2 class="kingBasil peach">July</h2>
+        <h1 class="quicksand">Movies</h1>
       </div>
-    </header>
+    </div>
+  </header>
 
     <section id="july" class="month-page">
       <div class="nadieh background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
@@ -70,12 +71,10 @@
           <!-- Nadieh -->
           <div class="col-xs-12 col-md-6 write-up">
             <div class="nadieh">
-              <div class="name kingBasil">Nadieh</div>
+              <div class="name paddingBelow kingBasil">Nadieh</div>
               <div class="time kingBasil"></div>
-              <div class="quicksand">amsterdam</div>
-            </div>
+              <div class="location quicksand">amsterdam</div>
 
-            <div class="nadieh">
         			<a href="code/nadieh"><img src="code/nadieh/img/LotR-words-Header.jpg" class="img-responsive img-month-top" alt="The Lord of the Rings final piece"></a>
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
@@ -90,7 +89,7 @@
               <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
         			<p>Having just bought an iPad Pro 9.7" with Apple pencil I of course wanted to try it out for my dataviz sketching. This month I used the app that most charmed me, Tayasui's Sketches II.</p>
-                    <p>About a month ago I got an email from Christian Wisniewski with a sketch that looked a bit like a Chord diagram but with "nodes" in the center. It seemed very intriguing and since I have a fond history of hacking the chord diagram for other purposes I wanted to try to create my own version of Christian's idea at some point. While going over ideas for the LotR data in my mind, I couldn't help but think that this dataset would fit that purpose very well.</p>
+              <p>About a month ago I got an email from Christian Wisniewski with a sketch that looked a bit like a Chord diagram but with "nodes" in the center. It seemed very intriguing and since I have a fond history of hacking the chord diagram for other purposes I wanted to try to create my own version of Christian's idea at some point. While going over ideas for the LotR data in my mind, I couldn't help but think that this dataset would fit that purpose very well.</p>
         			<p>For my dataset, the Fellowship characters would be placed in the center. The more general locations are the arcs around it. Each character would be connected to the location where they spoke and the thickness of the chord at the location would represent the number of words spoken there. I'm not quite sure if the detailed locations should provide a more detailed level within the arcs themselves. That will probably create too many chords...</p>
         			<a class="fancybox" href="sketches/nadieh/LotR sketch circular.jpg"> <img src="sketches/nadieh/LotR sketch circular.jpg" class="img-responsive img-month" alt="Sketch of the chord diagram line LotR idea"></a>
         			<p>I tried coming up with some other ideas, but I guess I was already sold by the chord diagram-ish one, because all of my other sketches didn't amount to anything worthwhile. There was something with a timeline; when was the scene was taking place and the number of words spoken by the character.</p>
@@ -98,17 +97,17 @@
         			<p>Another one where each location would a spirograph, with the number of petals being the number of detailed locations and sized in total to the number of words spoken.</p>
         			<a class="fancybox" href="sketches/nadieh/LotR sketch spirograph.jpg"><img src="sketches/nadieh/LotR sketch spirograph.jpg" class="img-responsive img-month" alt="Sketch of the spirograph LotR idea"></a>
         			<p>Sketching on the iPad was quite fun. It was very easy to combine techniques, move things around, undo things. One minor downside was that I don't have the same amount of control over my pen in terms of drawing the longer strokes exactly as I want to. Perhaps its just a matter of getting used to the slippery surface.</p>
-        		  	<p>But definitely going for the first sketch for next week!</p>
+        		  <p>But definitely going for the first sketch for next week!</p>
 
         			<h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-                    <p>I started with Mike Bostock's most basic <a href="https://bl.ocks.org/mbostock/4062006">d3v4 chord diagram</a> and a plan on how to turn it into something resembling my sketch. I dove straight into the source code of d3's chord and ribbon functions to understand exactly what was happening in each line of code. Luckily, the code is very compact and easy to understand. I then started making small changes, each step taking me closer to the visual on my sketch.</p>
+              <p>I started with Mike Bostock's most basic <a href="https://bl.ocks.org/mbostock/4062006">d3v4 chord diagram</a> and a plan on how to turn it into something resembling my sketch. I dove straight into the source code of d3's chord and ribbon functions to understand exactly what was happening in each line of code. Luckily, the code is very compact and easy to understand. I then started making small changes, each step taking me closer to the visual on my sketch.</p>
         			<a class="fancybox" href="code/nadieh/img/LotR-words-First-steps.jpg"><img src="code/nadieh/img/LotR-words-First-steps.jpg" class="img-responsive img-month" alt="The first steps to turn a chord diagram into the sketch from previous week"></a>
         			<p>I still very much like the look of all strings flowing to the center, but I had 9 members of the Fellowship to place there. So I started introducing a vertical offset based on the character that belonged to each string. The first succesful result reminded me to work on string sorting as well to reduce the overal overlap :)</p>
         			<a class="fancybox" href="code/nadieh/img/LotR-words-Inner-division.jpg"><img src="code/nadieh/img/LotR-words-Inner-division.jpg" class="img-responsive img-month" alt="Pulling apart the inner strings to flow to their respective categories"></a>
         			<p>One specific website helped me <i>a lot</i> during this project, <a href="http://blogs.sitepointstatic.com/examples/tech/svg-curves/cubic-curve.html">an online Cubic Bézier Curve adjuster</a>, with which I could try out the locations of the handles with respect to the end points of a path to understand how to create more elegant S-shaped curves. I went through many, many tweaks of shapes, each one getting a bit closer to the most smooth transition between the outer arcs and the inner characters.</p>
         			<a class="fancybox" href="code/nadieh/img/LotR-words-String-shape-adjustment.jpg"><img src="code/nadieh/img/LotR-words-String-shape-adjustment.jpg" class="img-responsive img-month" alt="Adjusting the inner strings to create more elegant shapes"></a>
-        			<p>There was definitely a need to create empty space above and below the inner section. Not only to have a less squished feeling, but also to give the strings in that region the room to really flow in a nice S-shape. I had some experience in this when I <a href="http://www.visualcinnamon.com/2015/08/stretched-chord.html">pulled apart a normal chord diagram to visualize a flow</a>. This time I made sure that I didn't have to make some sort of <i>dummy string</i> that would need to be hidden (as was the case in the flow chord diagram). </p>
+        			<p>There was definitely a need to create empty space above and below the inner section. Not only to have a less squished feeling, but also to give the strings in that region the room to really flow in a nice S-shape. I had some experience in this when I <a href="http://www.visualcinnamon.com/2015/08/stretched-chord.html">pulled apart a normal chord diagram to visualize a flow</a>. This time I made sure that I didn't have to make some sort of <i>dummy string</i> that would need to be hidden (as was the case in the flow chord diagram).</p>
         			<p>Now that the biggest challenges of the new layout were behind me, I also started looking at the design a bit. Using screenshots of the movies to set a color for each location and finding a Google font that best matched Middle Earth.</p>
         			<a class="fancybox" href="code/nadieh/img/LotR-words-Splitting-up-the-two-halves.jpg"><img src="code/nadieh/img/LotR-words-Splitting-up-the-two-halves.jpg" class="img-responsive img-month" alt="Starting to pull apart the two halves to create more room in the middle and to have the string around the top and bottom flow more elegantly"></a>
         			<p>After I got the stretching of the two halves visually where I wanted it, I ranked the locations on order that they (first) appear in the movie or where their most important scenes are taking place. This thankfully still divided up the two halves almost symmetrically. Even more string shape adjustments and color tweaks later and I ended up with the final result that you see below. </p>
@@ -130,118 +129,73 @@
           <!-- Shirley -->
           <div class="col-xs-12 col-md-6 write-up">
             <div class="shirley">
-              <div class="name kingBasil">Shirley</div>
+              <div class="name paddingBelow kingBasil">Shirley</div>
               <div class="time kingBasil"></div>
-              <div class="quicksand">san francisco</div>
-            </div>
+              <div class="location quicksand">san francisco</div>
 
-            <div class="shirley">
-              <a href="http://bl.ocks.org/sxywu/raw/d612c6c653fb8b4d7ff3d422be164a5d">
-                <img src="code/shirley/img/july-final.png" class="img-responsive img-month-top" alt="Film Flowers final piece"></a>
+              <a href="http://bl.ocks.org/sxywu/raw/d612c6c653fb8b4d7ff3d422be164a5d"><img src="code/shirley/img/july-final.png" class="img-responsive img-month-top" alt="Film Flowers final piece"></a>
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-              <p>Anyone who's ever talked to me for more than a few minutes will know that I am absolutely horrible with pop culture references.
-                And while I like to blame the fact that I grew up in various non-English-speaking countries for half of my childhood years (and spent the other half with my head buried in schoolwork), I know it's also because I just didn't watch that many movies growing up.</p>
+              <p>Anyone who's ever talked to me for more than a few minutes will know that I am absolutely horrible with pop culture references. And while I like to blame the fact that I grew up in various non-English-speaking countries for half of my childhood years (and spent the other half with my head buried in schoolwork), I know it's also because I just didn't watch that many movies growing up.</p>
               <p>So I was pretty excited to do <i>movies</i> for our first month: how many big, blockbuster summer time movies have I watched in my lifetime?</p>
-
-              <p>Like Nadieh, I found <a href='http://www.omdbapi.com/' target='new'>OMDb API</a> with a simple Google search.
-                Unfortunately, it only let me search the movies by title or IMDb id, and I needed a way to get the top summer movies by year.
-                Fortunately, IMDb has an advanced search feature that is beautifully parameterized, and so it didn't take me long to <a href='http://www.imdb.com/search/title?countries=us&languages=en&release_date=2016-06-01,2016-08-30&sort=boxoffice_gross_us,desc&title_type=feature' target='_new'>form a search query</a>.</p>
-              <p>I got the top US-grossing movies for June 1st to August 30th for each of the years I have been alive, and took the top 5 movie id's for each year.
-                I then fed those id's into the OMDb API, which gave me back a detailed set of information for each movie, including ratings and genre information.</p>
-              <p>Looking through the data I found that the most popular genres for summer movies were <strong>Action & Adventure</strong>, with <strong>Comedy</strong> following third.
-                I also learned that (unsurprisingly) I have only watched 35 of the 140 movies, a rate of 25%.
-                Out of all the movies I watched, the top genres were <strong>Adventure, Action, Comedy, and Animation</strong>.
-                And out of the 35 movies I have seen, only 12 were in theatres - and all after the years of 2007 (aka the summer before my senior year of high school).</p>
+              <p>Like Nadieh, I found <a href='http://www.omdbapi.com/' target='new'>OMDb API</a> with a simple Google search. Unfortunately, it only let me search the movies by title or IMDb id, and I needed a way to get the top summer movies by year. Fortunately, IMDb has an advanced search feature that is beautifully parameterized, and so it didn't take me long to <a href='http://www.imdb.com/search/title?countries=us&languages=en&release_date=2016-06-01,2016-08-30&sort=boxoffice_gross_us,desc&title_type=feature' target='_new'>form a search query</a>.</p>
+              <p>I got the top US-grossing movies for June 1st to August 30th for each of the years I have been alive, and took the top 5 movie id's for each year. I then fed those id's into the OMDb API, which gave me back a detailed set of information for each movie, including ratings and genre information.</p>
+              <p>Looking through the data I found that the most popular genres for summer movies were <strong>Action & Adventure</strong>, with <strong>Comedy</strong> following third. I also learned that (unsurprisingly) I have only watched 35 of the 140 movies, a rate of 25%. Out of all the movies I watched, the top genres were <strong>Adventure, Action, Comedy, and Animation</strong>. And out of the 35 movies I have seen, only 12 were in theatres - and all after the years of 2007 (aka the summer before my senior year of high school).</p>
               <p>On the bright side! Out of the top 20 best rated movies, I have watched 15: a whopping rate of 75% so I guess I'm doing something right 😁</p>
               <p><a href='https://github.com/nbremer/datasketches/blob/gh-pages/july/data/shirley/get_data.js' target='_new'>Code for getting movie data</a><br>
-                <a href='http://bl.ocks.org/sxywu/2caf1e769ddfa0456578144152d53fd7' target='_new'>Bl.ock exploring the movie data</a></p>
+              <a href='http://bl.ocks.org/sxywu/2caf1e769ddfa0456578144152d53fd7' target='_new'>Bl.ock exploring the movie data</a></p>
 
               <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-              <p>
-              Since I had pulled summer time movies for my dataset, I decided I also wanted someone summer for my visualization.
-              </p>
-              <p>
-              My first inspiration came when standing along the Berkeley Marina on July 4th, and as the fireworks went off above our heads, I couldn't help but think: what's more summer-y than fireworks?
-              I wanted to create different fireworks for each movie, colored by their genre, sized by their box office sales.
-              I wanted the fireworks to boom and animate according to their release date.
-              I wanted to have their descent last proportionally to the number of their weeks in the theatre.
-              </p>
+              <p>Since I had pulled summer time movies for my dataset, I decided I also wanted someone summer for my visualization.</p>
+              <p>My first inspiration came when standing along the Berkeley Marina on July 4th, and as the fireworks went off above our heads, I couldn't help but think: what's more summer-y than fireworks? I wanted to create different fireworks for each movie, colored by their genre, sized by their box office sales. I wanted the fireworks to boom and animate according to their release date. I wanted to have their descent last proportionally to the number of their weeks in the theatre.</p>
               <a class="fancybox" href="sketches/shirley/1.jpg"> <img src="sketches/shirley/1.jpg" class="img-responsive img-month" alt="Sketch of fireworks idea"></a>
-              <p>
-              The second inspiration came when I thought of sunflowers, and how fun it'd be to create summer flowers for each movie.
-              </p>
+              <p>The second inspiration came when I thought of sunflowers, and how fun it'd be to create summer flowers for each movie.</p>
               <a class="fancybox" href="sketches/shirley/2.jpg"> <img src="sketches/shirley/2.jpg" class="img-responsive img-month" alt="Sketch of summer flowers idea"></a>
-              <p>
-              I was also enamored by the idea of delauney triangulation, introduced to me by Ian Johnson (<a href='www.twitter.com/enjalot' target='_new'>@enjalot</a>), but couldn't quite make it work:
-              </p>
+              <p>I was also enamored by the idea of delauney triangulation, introduced to me by Ian Johnson (<a href='www.twitter.com/enjalot' target='_new'>@enjalot</a>), but couldn't quite make it work:</p>
               <a class="fancybox" href="sketches/shirley/3.jpg"><img src="sketches/shirley/3.jpg" class="img-responsive img-month" alt="Sketch of delauney idea"></a>
-              <p>
-              Though in the beginning I was much more excited about the fireworks, I ultimately decided that the flowers were much prettier and more fun to code.
-              It was also more straightforward; I wasn't as sure about the potential math the fireworks would require (I thought maybe I could do something with the gravity function of the force layout over time), and Nadieh agreed that I could file it away for another month.
-              </p>
+              <p>Though in the beginning I was much more excited about the fireworks, I ultimately decided that the flowers were much prettier and more fun to code. It was also more straightforward; I wasn't as sure about the potential math the fireworks would require (I thought maybe I could do something with the gravity function of the force layout over time), and Nadieh agreed that I could file it away for another month.</p>
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p>
-                The toughest part of coding the flowers was the beginning, where I had to refresh myself on svg paths, and the cubic curve command in particular.
-                At first, I had to draw out the shapes of the petals to work out the commands:
-              </p>
+              <p>The toughest part of coding the flowers was the beginning, where I had to refresh myself on svg paths, and the cubic curve command in particular. At first, I had to draw out the shapes of the petals to work out the commands:</p>
               <a class="fancybox" href="code/shirley/img/1.jpg"><img src="code/shirley/img/1.jpg" class="img-responsive img-month"></a>
-              <p>
-                But after a while, I was able to just code the petal shapes directly:
-              </p>
+              <p>But after a while, I was able to just code the petal shapes directly:</p>
               <a class="fancybox" href="code/shirley/img/2.png"><img src="code/shirley/img/2.png" class="img-responsive img-month"></a>
-              <p>
-              The most inspired shape, I think, is the cherry blossom 🌸 that Nadieh suggested:
-              </p>
+              <p>The most inspired shape, I think, is the cherry blossom 🌸 that Nadieh suggested:</p>
               <a class="fancybox" href="code/shirley/img/3.png"><img src="code/shirley/img/3.png" class="img-responsive img-month"></a>
-              <p>
-                After that, the code came naturally.
-                I assigned both the number of petals and the size of the flower itself to the data, in particular the movies' number of imdb votes and rating.
-              </p>
+              <p>After that, the code came naturally. I assigned both the number of petals and the size of the flower itself to the data, in particular the movies' number of imdb votes and rating.</p>
               <a class="fancybox" href="code/shirley/img/4.png"><img src="code/shirley/img/4.png" class="img-responsive img-month"></a>
-              <p>
-                The most fun part was adding the colors
-                (and again, I have Nadieh to thank for her two brilliant tutorials:
-                <a href='http://www.visualcinnamon.com/2016/05/beautiful-color-blending-svg-d3.html' target='_new'>1</a>,
-                <a href='http://www.visualcinnamon.com/2016/05/real-life-motion-effects-d3-visualization.html' target='_new'>2</a>),
-                while the most dreaded was adding the legend (which took a whole afternoon).
-              </p>
+              <p>The most fun part was adding the colors (and again, I have Nadieh to thank for her two brilliant tutorials:
+              <a href='http://www.visualcinnamon.com/2016/05/beautiful-color-blending-svg-d3.html' target='_new'>1</a>,
+              <a href='http://www.visualcinnamon.com/2016/05/real-life-motion-effects-d3-visualization.html' target='_new'>2</a>),
+              while the most dreaded was adding the legend (which took a whole afternoon).</p>
               <a class="fancybox" href="code/shirley/img/5.png"><img src="code/shirley/img/5.png" class="img-responsive img-month"></a>
-              <p>
-              I was incredibly happy with the result - I gushed about it to anyone who would listen for a good few days.
-              My favorite find was definitely Batman & Robin from 1997, which had an unfortunate 3.7/10 rating on IMDb, and is the most adorably tiny spec of a flower.
-              Others, like Inception, was marvelously large and complex.
-              But of all the flowers, my favorite is definitely Harry Potter 7.2:
-              </p>
+              <p>I was incredibly happy with the result - I gushed about it to anyone who would listen for a good few days.
+              My favorite find was definitely Batman & Robin from 1997, which had an unfortunate 3.7/10 rating on IMDb, and is the most adorably tiny spec of a flower. Others, like Inception, was marvelously large and complex. But of all the flowers, my favorite is definitely Harry Potter 7.2:</p>
               <a class="fancybox" href="code/shirley/img/6.png"><img src="code/shirley/img/6.png" class="img-responsive img-month"></a>
-              <p>
-              And I also had a little bit of fun plugging a different dataset - that of all the top films from the last decade - into the visualization:
-              </p>
+              <p>And I also had a little bit of fun plugging a different dataset - that of all the top films from the last decade - into the visualization:</p>
               <a class="fancybox" href="code/shirley/img/7.png"><img src="code/shirley/img/7.png" class="img-responsive img-month"></a>
               <p>
               <a href='http://bl.ocks.org/sxywu/raw/d612c6c653fb8b4d7ff3d422be164a5d' target='_new'>Summer film flowers</a><br>
               <a href="http://bl.ocks.org/sxywu/raw/8d1b563586bf411383345e95a3418715/" target='_new'>All film flowers</a>
+              </p>
             </div>
           </div>
 
         </div>
 
-        <!-- Note below -->
+        <!-- Our names and website below -->
         <div class="row">
-          <div class="nadieh col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="kingBasil">Nadieh</div>
+          <div class="nadieh col-xs-6">
+            <div class="name kingBasil">Nadieh</div>
             <div class="quicksand"><a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
           </div>
 
-          <div class="shirley col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <div class="list">
-              <div class="kingBasil">Shirley</div>
-              <div class="quicksand"><a href="https://sxywu.github.io/portfolio/">sxywu.com</a></div>
-            </div>
+          <div class="shirley col-xs-6">
+            <div class="name kingBasil">Shirley</div>
+            <div class="quicksand"><a href="http://sxywu.com/">sxywu.com</a></div>
           </div>
         </div>
 
@@ -252,12 +206,13 @@
       <div class="container">
         <div>
           <span>a monthly collaboration between </span>
-          <span class="kingBasil">Nadieh Bremer </span>
-          <span>& </span>
-          <span class="kingBasil">Shirley Wu</span>
+          <span class="kingBasil">Nadieh Bremer & Shirley Wu</span>
         </div>
         <div class="quicksand">
           <a href="https://twitter.com/datasketches">@datasketches</a> | #datasketches
+        </div>
+        <div class="about-link quicksand">
+          <a href="about">about</a>
         </div>
       </div>
     </footer>
