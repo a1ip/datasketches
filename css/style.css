@@ -13,12 +13,12 @@ body {
 }
 
 @font-face {
-  font-family: "King Basil", cursive;
+  font-family: "King Basil";
   src: url("../font/King-Basil.ttf");
 }
 
 .kingBasil {
-  font-family: "King Basil";
+  font-family: "King Basil", cursive;
 }
 
 .quicksand {
