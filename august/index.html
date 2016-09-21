@@ -179,7 +179,67 @@
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p>...</p>
+              <p>
+                The first few days was spent just trying to understand Dan's code.  At <a href='http://bl.ocks.org/sxywu/4996c518e789a3d58369881f18513c72' target='_new'>only ~250 lines</a>, it was beautiful in its brevity.  As with any piece of code I wanted to understand, I printed out all the lines, and went through them line by line for understanding.
+              </p>
+
+              <p>
+                The key was to understand enough of what was going on to be able to replace the randomly generated data with my diving data.  After the first day, I was able to boil it down to two key points:
+                <ul>
+                  <li>
+                    <em>setLinePoints</em> uses the fractal subdivision process and generates the x- and y-coordinates for a closed curve.
+                  </li>
+                  <li>
+                    <em>onTimer</em> is passed two of those closed curves (along with a miriad of other info): one for starting, and one for ending.  It then draws those curves one after the other, slowly morphing from the starting curve to the ending curve.  And as soon as it hits the ending curve, it shifts the ending curve into the starting curve, generates a new curve, and starts over.  This happens until it hits the edge of the screen.
+                  </li>
+                </ul>
+
+                From there, I knew how I wanted to map my data:
+                <ul>
+                  <li>Each round would be a distinct curve</li>
+                  <li>Instead of randomly varying the x- and y-coordinates of the curve, I would use the divers' execution scores at each round</li>
+                  <li>The radius of each curve is denoted by the difficulty score of that round's dive</li>
+                  <li>The length between each round/curve is the score the divers received for that round</li>
+                </ul>
+              </p>
+
+              <p>
+                My first attempt at adapting Dan's code took a while and didn't turn out quite as I expected.  I understood <em>setLinePoints</em> quite well and thus was able to use the divers' execution scores to generate the curves, but didn't understand some of the key parts of <em>onTimer</em>.  And because <em>onTimer</em> took care of actually drawing the circles, I ended up with this:
+                <a class="fancybox" href="code/shirley/1.png"> <img src="code/shirley/1.png" class="img-responsive img-month"></a>
+                <a href='http://bl.ocks.org/sxywu/9715b2c1a5dc5b88421f694e23d925f2' target='_new'>DS Aug, Code 1</a>
+              </p>
+
+              <p>
+                Not quite what I was expecting, heh.  Primarily, I wasn't grasping how Dan was interpolating the shapes of the curves, creating the weird discontinuity between sections.  I knew then that I had to re-implement Dan's code in a way that I could understand.  So I kept most of the code from <em>setLinePoints</em>, but completely rewrote the rest with a custom D3 interpolater to help transition from each curve/round to the next.  This worked marvelously:
+                <a class="fancybox" href="code/shirley/2.png"> <img src="code/shirley/2.png" class="img-responsive img-month"></a>
+                <a href='http://bl.ocks.org/sxywu/3979776e97db578fb647b48de348f4cb' target='_new'>DS Aug, Code 3</a>
+              </p>
+
+              <p>
+                And just for fun, I also made it animate like Dan's did (the gif isn't quite so smooth, but I promise the actual code is 😁):
+                <a class="fancybox" href="code/shirley/3.gif"> <img src="code/shirley/3.gif" class="img-responsive img-month"></a>
+                <a href='http://bl.ocks.org/sxywu/0909fba07ffd7ec9a67a619d6cb5772d' target='_new'>DS Aug, Code 4</a>
+              </p>
+              <p>
+                After that, I had to refactor the code a little bit to be able to show and animate multiple of the flows, with each flow representing a country.  My happiest moment was getting the animation working for all of the flows, and having the length of the animation dependent on the length of the flow instead of a set duration (I'm all about these small wins ✌️).
+                <a class="fancybox" href="code/shirley/4.gif"> <img src="code/shirley/4.gif" class="img-responsive img-month"></a>
+                <a href='http://bl.ocks.org/sxywu/0909fba07ffd7ec9a67a619d6cb5772d' target='_new'>DS Aug, Code 6</a>
+              </p>
+
+              <p>
+                All I had left to do after that was add in the event names, team information, and the scores for each round:
+                <a class="fancybox" href="code/shirley/5.png"> <img src="code/shirley/5.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/7.png"> <img src="code/shirley/7.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                I have to admit, I'm not fully satisfied with the final version.  I wanted to add in annotations, pointing out incredible and emotional moments in each event - because that was what made each of the events so beautiful to me.  I wanted to link to videos of those moments (I actually have all the links collected), but I was out of time; I had already bled into September.  I was also unsatisfied with the aesthetics; I was hoping for silk flowing in water, and instead I got...smoke billowing in the wind?
+              </p>
+
+              <p>
+                But like Nadieh adviced me sometime in August: the important thing isn't perfection (or near-perfection), but to produce something.  We'll have good months, and bad months, but the act of finishing is an important one.  And she's absolutely right; though I'm not satisfied with the outcome, I am very happy that I pushed through the technical challenges and managed to finish.  And in a way, smoke in the wind is beautiful too 😀.
+              </p>
+
             </div>
 
           </div>
