@@ -112,7 +112,42 @@
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-              <p>Getting started...</p>
+              <p>
+                Travel is one of my absolute favorite topics, and since graduating college, I've tried go abroad at least once a year (I moved around a lot as a kid, so I get restless when I'm in the same place for a long period of time, and traveling helps alleviate that).  Since I take so many pictures when I'm traveling, I thought it'd be a really fun idea to gather all the photos I took on my trips and visualize them.
+              </p>
+
+              <p>
+                So the first thing I did was go through all my photos from the last 4 years (thank you iPhone and Dropbox), and group them into year and airport code:
+                <a class="fancybox" href="data/shirley/folders.png"> <img src="data/shirley/folders.png" class="img-responsive img-month"></a>
+                And the first very noticeable thing is, I just like going to the same places.  The second thing I realized was, I take a ****ton of pictures.  In my last trip to Japan and China alone, I took more than 1000 pictures in the span of 2.5 weeks.
+              </p>
+
+              <p>
+                After I sorted through my images, I played with <a href='https://github.com/aheckmann/gm' target='_new'>gm</a>, a node wrapper for GraphicsMagick.  My first idea was to reduce the images down to their top 3 colors, and blur and resize them.  I experimented with the ~1000 images from my latest trip, and took every 5th picture (because 1000 is just ridiculous):
+                <a class="fancybox" href="data/shirley/data1.png"> <img src="data/shirley/data1.png" class="img-responsive img-month"></a>
+                Unfortunately, it didn't look very good, and also took a few seconds to load.
+              </p>
+
+              <p>
+                On my second try, I decided to go through all the images in all the folders, and only resize the images.  I also read the images' data, and saved the dates they were taken and the latitude/longtitude of where they were taken, when available.
+                <a class="fancybox" href="data/shirley/data2.png"> <img src="data/shirley/data2.png" class="img-responsive img-month"></a>
+                (<a href='https://github.com/sxywu/travel/blob/master/compress.js' target='_new'>Script for getting metadata and resizing images</a>)
+              </p>
+
+              <p>
+                This came out to about 800 images, which was just enough to have a noticeable lag in loading all the images, but not enough to do anything particularly exciting with them 😕.
+              </p>
+
+              <p>
+                Since using all the images (~4000 photos) felt like it would be way too memory intensive, I decided to try colors instead.  I searched around for how to get the primary color(s) of an image, and found <a href='https://www.npmjs.com/package/get-image-colors' target='_new'>get-image-colors</a> - very cool.  Unfortunately at this point, I did something minorly stupid: I passed in the fully sized images (~2500x3200pixels, ~3MB) to get the primary image colors.  Around 30 minutes and 120 images later, I realized that I could have just passed in my resized images (13KB) to get the colors instead.  D'OH!
+              </p>
+
+              <p>
+                Once I figured that out and fixed the code to take in the resized images, I had the colors for all ~800 images in the matter of seconds.  Here are the ~4000 colors for the ~800 images (each image gave me 5 primary colors):
+                <a class="fancybox" href="data/shirley/data3.png"> <img src="data/shirley/data3.png" class="img-responsive img-month"></a>
+                (<a href='https://github.com/sxywu/travel/blob/master/color.js' target='_new'>Script for getting colors from the resized images</a>)
+
+              </p>
 
               <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
