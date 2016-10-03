@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel='shortcut icon' href='../img/favicon.ico' type='image/x-icon'/ >
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Data Sketches</title>
+    <meta name="author" content="Nadieh Bremer">
+    <meta name="description" content="Data Sketches - October - Presidents & Royals">
+    <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Tinos:400,400i|Sacramento|Quicksand|Playfair+Display:400i" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Moment -->
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	  <!-- fancyBox -->
+	  <link rel="stylesheet" href="../plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+	  <script type="text/javascript" src="../plugins/fancybox/jquery.fancybox.pack.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+  <header>
+    <!-- Logo and name -->
+    <div>
+      <a class="hide-mobile peach kingBasil no-border" href="../september"><div class="top-links other-month-link textRight">go to September</div></a>
+      <div class="month-logo"><a class="no-border" href=".."><img class="paddingTop20" src="../img/logo.png" width="120" /></a></div>
+      <a class="hide-mobile peach kingBasil no-border"><div class="top-links other-month-link textLeft">waiting on November</div></a>
+    </div>
+    <div>
+      <a class="quicksand no-border" href=".."><div class="top-links datasketch-top-link"><span class="dark-grey">data sketch<span class="dark-pink">|</span>es</span></div></a>
+    </div>
+
+    <!-- Title above -->
+    <div class="row">
+      <div class="col-xs-12 month-page-title">
+        <h2 class="kingBasil peach">October</h2>
+        <h1 class="quicksand">Presidents & Royals</h1>
+      </div>
+    </div>
+  </header>
+
+    <section id="october" class="month-page">
+      <div class="nadieh background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+      <div class="shirley background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+
+      <div class="container">
+        <!-- Write-ups -->
+        <div class="row">
+          <!-- Nadieh -->
+          <div class="col-xs-12 col-md-6 write-up">
+            <div class="nadieh">
+              <div class="name paddingBelow kingBasil">Nadieh</div>
+              <div class="time kingBasil"></div>
+              <div class="location quicksand">amsterdam</div>
+
+  			     <!-- <a href="code/nadieh/"><img src="code/nadieh/img/.png" class="img-responsive img-month-top" alt=""></a> -->
+
+              <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+
+              <p>Because I'm going on vacation on October 15th I only have 2 weeks to complete this month (gulp). O and I also have to cram a completely new 40 minute presentation in my head because of the Fronteers conference that I'm speaking at on October 6th. But that's not going to stop me from trying to have a lot of fun with this month's visual!</p>
+
+              <p>We originally wanted to do something with the US elections, but with the way that turned out... So Shirley said she instead would love to look into Obama. However, as a non-American that topic didn't really interest me. However, perhaps how the Americans see/feel about the presidential family is how Europeans might feel about the royal families in Europe. So that's how we ended up with our current theme</p>
+
+              <p>The first thing that came to mind when I thought about the royals, was their bloodlines. Due to all of that intermarriage I was sure most royals in Europe would be relatives if each other. The question was then, how close of a relative? As always I was pretty sure there would be loads of nice datasets to find about the royal bloodlines. But, as in the previous months, that turned out differently. Sure, many people had drawn some images of the closest relatives of some royals in Europe. But I really didn't want to do too much manual data gathering this month.</p>
+
+              <p>Luckily there was <a href="http://www.daml.org/2001/01/gedcom/royal92.ged">1 file</a> that I found that seems to be <i>the</i> information source in terms of royal genealogy. However, it was made in 1992 so it is missing some of the recent additions to the royal families. I therefore manually added a few extra people to the file (which was a bit of a challenge because the file is in a strange format), but only the current royals, their children and the children of the 1st in line (if these already exist).</p>
+
+              <p>I did the data preparation in R as usual. Family trees are something for a network layout, so the odd format had to be transformed into a nodes & links file that d3's force layout knows how to handle. Not too difficult, but it still required quite some lines of code to eventually be able to run through the whole file and get the info out and into some data sets.</p>
+
+              <p>And that was all I did beforehand, just getting the node & link files in good shape. But while wrangling my way through d3's force layout I thought about new things to add or values to pre-calculate to get more insights from the structure of the network.</p>
+
+              <p>For example, I wanted to do something with the birth year of a person, but this wasn't know for everybody. I therefore wrote a small script that tries to find a good guess; either by looking if the death date is know (and then subtracting about 60 years), or looking at the birth or death date of the spouse, children or parents, in that order (again subtracting or adding some years to account for generational differences). Not perfect, but I didn't need perfect dates for the idea that I had in mind.</p>
+
+              <p>My final addition to the data was to calculate the smallest distance to each of the 12 current royal leaders for each person & who was the royal each person was most closely related to (and within how many steps). I wanted to have this pre-calculated so that I had access to this beforehand in the visualization. Saves a lot of calculation time :)</p>
+
+              <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+
+              <p></p>
+              <!-- <a class="fancybox" href="sketches/nadieh/.jpg"> <img src="sketches/nadieh/.jpg" class="img-responsive img-month" alt=""></a> -->
+
+              <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+
+              <p></p>
+              <!-- <a class="fancybox" href="code/nadieh/img/.png"> <img src="code/nadieh/img/.png" class="img-responsive img-month" alt=""></a> -->
+
+            </div>
+          </div>
+
+          <!-- Shirley -->
+          <div class="col-xs-12 col-md-6 write-up">
+            <div class="shirley">
+              <div class="name paddingBelow kingBasil">Shirley</div>
+              <div class="time kingBasil"></div>
+              <div class="location quicksand">san francisco</div>
+
+              <!-- <a href="http://sxywu.com/travel" target='_new'>
+                <img src="code/shirley/final.png" class="img-responsive img-month-top" alt="">
+              </a> -->
+
+              <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+
+              <p></p>
+              
+              <!-- <a class="fancybox" href="data/shirley/.png"> <img src="data/shirley/.png" class="img-responsive img-month" alt=""></a> -->
+
+              <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+
+              <p></p>
+              <!-- <a class="fancybox" href="sketches/shirley/.png"> <img src="sketches/shirley/.png" class="img-responsive img-month" alt=""></a> -->
+
+              <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+
+              <p></p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Our names and website below -->
+        <div class="row">
+          <div class="nadieh col-xs-6">
+            <div class="name kingBasil">Nadieh</div>
+            <div class="quicksand"><a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
+          </div>
+
+          <div class="shirley col-xs-6">
+            <div class="name kingBasil">Shirley</div>
+            <div class="quicksand"><a href="http://sxywu.com/">sxywu.com</a></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div>
+          <span>a monthly collaboration between </span>
+          <span class="kingBasil">Nadieh Bremer & Shirley Wu</span>
+        </div>
+        <div class="quicksand">
+          <a href="https://twitter.com/datasketches">@datasketches</a> | #datasketches
+        </div>
+        <div class="about-link quicksand">
+          <a href="../about">about</a>
+        </div>
+      </div>
+    </footer>
+
+	<script>
+  function setTime() {
+    var format = 'h:mm a';
+    var time = new Date();
+    var nadieh = moment(time, format).tz("Europe/Amsterdam");
+    var shirley = moment(time, format).tz("America/Los_Angeles");
+    $('.nadieh .time').text(nadieh.format(format));
+    $('.shirley .time').text(shirley.format(format));
+
+    var nadiehColor = nadieh.hour();
+    nadiehColor = nadiehColor >= 18 || nadiehColor <= 6 ? 'dark' : 'light';
+    var shirleyColor = shirley.hour();
+    shirleyColor = shirleyColor >= 18 || shirleyColor <= 6 ? 'dark' : 'light';
+
+    $('.nadieh').removeClass('light dark').addClass(nadiehColor);
+    $('.shirley').removeClass('light dark').addClass(shirleyColor);
+  }
+
+  $( document ).ready( function() {
+    setTime();
+    setInterval(setTime, 60000);
+    $(".fancybox").fancybox({
+      openEffect : 'fade',
+      closeEffect : 'fade',
+      padding: 0,
+      helpers: {
+      overlay: {
+        locked: false
+      }
+      }
+    });
+  });
+	</script>
+
+  </body>
+</html>
