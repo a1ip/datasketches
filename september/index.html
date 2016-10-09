@@ -139,7 +139,7 @@
               <div class="location quicksand">san francisco</div>
 
               <a href="http://sxywu.com/travel" target='_new'>
-                <img src="code/shirley/final.png" class="img-responsive img-month-top" alt="Four Years of Vacations in 20,000 Colors">
+                <img src="code/shirley/header.png" class="img-responsive img-month-top" alt="Four Years of Vacations in 20,000 Colors">
               </a>
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
@@ -214,7 +214,51 @@
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p>...</p>
+              <p>
+                So my code portion for this month started out pretty interestingly:
+                <a class="fancybox" href="code/shirley/first_fail.png"> <img src="code/shirley/first_fail.png" class="img-responsive img-month"></a>
+                This is essentially what happens when I sketch before actually exploring the data.  For July, I had the time to explore my data before really sketching and deciding on my idea, and August I just happened to luck out with the data and idea I went with.  So I think I got complacent this month (and plus I had already done so much work to get the data to where it is) that I was like, THIS IDEA WILL WORK.
+              </p>
+
+              <p>
+                It obviousy did not.  Important lesson learned: always explore the data first.
+              </p>
+
+              <p>
+                Fortunately, the short list for <a href='http://www.informationisbeautifulawards.com/' target='_new'>Kantar's Information is Beautiful Awards</a> had just been released and I came across <a href='https://twitter.com/rougeux' target='_new'>Nicholas Rougeux</a>'s absolutely gorgeous <a href='http://www.c82.net/work/?id=354' target='_new'>Off the Staff</a>:
+                <a class="fancybox" href="code/shirley/nick_offthestaff.jpeg"> <img src="code/shirley/nick_offthestaff.jpeg" class="img-responsive img-month"></a>
+                And it got me thinking about trying out a radial format - especially since I've never worked with it before.  So I grouped the colors by the trip, and then used the time the photo was taken as the angle of the colors around the center:
+                <a class="fancybox" href="code/shirley/go_radial.png"> <img src="code/shirley/go_radial.png" class="img-responsive img-month"></a>
+                When thinking about how to calculate the x- and y-positions of the colors, <a href='https://twitter.com/DataToViz' target='_new'>Susie Lu</a>'s <a href='http://bl.ocks.org/susielu/4c7a8a89a25bd86a61a8' target='_new'>Radar Plot Annual Temperature</a> code helped a lot.  After I found the correct positions, I used the new D3 <a href='https://github.com/d3/d3-force' target='_new'>forceSimulation</a> (absolutely brilliant updates in there) to actually place the colors; in particular I used <a href='https://github.com/d3/d3-force#forceX' target='_new'>forceX</a> and <a href='https://github.com/d3/d3-force#forceY' target='_new'>forceY</a> to nudge the colors toward the x- and y-positions I had previously calculated, and then <a href='https://github.com/d3/d3-force#forceCollide' target='_new'>forceCollide</a> to get rid of overlap.
+              </p>
+
+              <p>
+                (<a href='https://github.com/sxywu/travel/blob/master/src/Trip.js#L21-L25' target='_new'>My code</a>.)
+              </p>
+
+              <p>
+                At this point, I have the colors sorted by time, but it's all just a blob around the center.  So to find some sort of pattern, I wondered about how to sort color and use that as the radius for the color.  I found this really great article: <a href='http://www.alanzucconi.com/2015/09/30/colour-sorting/' target='_new'>The incredibly challenging task of sorting colours</a> by <a href='https://twitter.com/AlanZucconi' target='_new'>Alan Zucconi</a>.  It went into incredible detail about the different ways of sorting, but for me the section on HSV sorting was enough and I latched on.
+                <a class="fancybox" href="code/shirley/sortbyhue.png"> <img src="code/shirley/sortbyhue.png" class="img-responsive img-month"></a>
+                From this, I could start to see patterns, of which days and which trips had which colors.  Unsurprisingly, I had loads of green and blue from my pictures of scenery.  It's still funny to see that my 2016 trip to New York and 2014 trip to Japan have so much red and orange - what I now know to mean food pictures.
+              </p>
+
+              <p>
+                <a class="fancybox" href="code/shirley/more_colors.png"> <img src="code/shirley/more_colors.png" class="img-responsive img-month"></a>
+                (I just wanted to add this iteration, where I switched the encoding of time and hue and got the gorgeous picture on the right, but had to scratch it because it looked too close to Nicholas's Off the Staff 😢.)
+              </p>
+
+              <p>
+                So I want to mention, all of the code until this point only took a day.  It took 3 more days for me to gather metadata on my trips (where I stayed, what I enjoyed, who I traveled with and visited), figure out the visual encoding for that metadata, and work through the interactions on how to show that information.  When people say that 80% of the work for a dataviz is in the annotations, they're really not kidding.
+                <a class="fancybox" href="code/shirley/annotation.png"> <img src="code/shirley/annotation.png" class="img-responsive img-month"></a>
+                In particular, the interactions were hard to get down; originally, I had it such that hovering a line or the dot would show the information for that particular element.  But since they were all so small and thin, the flicker was unbearable when I accidentally unhovered or tried to look at the next line.  After many iterations, I landed on something I really liked: hovering over a day will show all the information from that day:
+                <img src="code/shirley/hover.gif" class="img-responsive img-month">
+              </p>
+
+              <p>
+                And here is my final iteration, which turned out kind of like the gauges in a car dashboard:
+                <a href='http://sxywu.com/travel/' target='_new'><img src="code/shirley/final.png" class="img-responsive img-month"></a>
+                I am quite happy with this month's, especially with how much I learned about color and the opportunity to try out a layout I haven't before.  I am also happy that I pushed through with the annotations and legend portion and got it to a point that I could be satisfied with, since that's what I usually despise working on (DISCIPLINE!).
+              </p>
             </div>
           </div>
 
