@@ -76,16 +76,16 @@ var linkedByIndex = {},
 ///////////////////////////////////////////////////////////////////////////
 
 var currentRoyalLeaders = [
-  {id: "I3012", country: "Liechtenstein",  title: "Prince of Liechtenstein",      name:"Hans-Adam II"}, //added manually
-  {id: "I3023", country: "Luxembourg",     title: "Grand Duke of Luxembourg",     name:"Henri"}, //added manually
+  	{id: "I3012", country: "Liechtenstein",  title: "Prince of Liechtenstein",      name:"Hans-Adam II"}, //added manually
+  	{id: "I3023", country: "Luxembourg",     title: "Grand Duke of Luxembourg",     name:"Henri"}, //added manually
 	{id: "I1128", country: "Belgium",        title: "King of Belgium",              name:"Philippe"},
 	{id: "I610",  country: "Denmark",        title: "Queen of Denmark",             name:"Margrethe II"},
-  {id: "I452",  country: "Norway",         title: "King of Norway",               name:"Harald V"},
-  {id: "I52",   country: "United Kingdom", title: "Queen of the United Kingdom",  name:"Elizabeth II"},
+  	{id: "I452",  country: "Norway",         title: "King of Norway",               name:"Harald V"},
+  	{id: "I52",   country: "United Kingdom", title: "Queen of the United Kingdom",  name:"Elizabeth II"},
 	{id: "I603",  country: "Sweden",         title: "King of Sweden",               name:"Carl XVI Gustaf"},
-  {id: "I444",  country: "Spain",          title: "King of Spain",                name:"Felipe VI"},
-  {id: "I1208", country: "Netherlands",    title: "King of the Netherlands",      name:"Willem Alexander"},
-  {id: "I3034", country: "Monaco",         title: "Prince of Monaco",             name:"Albert II"} //added manually
+  	{id: "I444",  country: "Spain",          title: "King of Spain",                name:"Felipe VI"},
+  	{id: "I1208", country: "Netherlands",    title: "King of the Netherlands",      name:"Willem Alexander"},
+  	{id: "I3034", country: "Monaco",         title: "Prince of Monaco",             name:"Albert II"} //added manually
 ];
 var royals = currentRoyalLeaders.map(function(d) { return d.id; });
 
@@ -96,7 +96,6 @@ var interestingRoyal = [
   {id: "I1341", country: "France",          title: "King of France",      name: "Louis XIV", note:"The Sun King King was, with 72 years, the longest reigning monarch in European history"},
   {id: "I65",   country: "United Kingdom",  title: "Princess of Wales",   name: "Diana", note:"Hugely popular and loved, sadly killed in a car crash in 1997"},
   {id: "I828",  country: "United Kingdom",  title: "King of England",     name: "Henry VIII", note:"Had six wives, two of whom were executed"},
-  //{id: "I1376", country: "United Kingdom",  title: "King of England",     name: "Richard I", note:"The Lionheart spend most of his reign abroad crusading"},
   {id: "I3033", country: "Monaco",          title: "Queen of Monaco",     name: "Grace Kelly", note:"American actress who became a much loved Princess of Monaco"},
   {id: "I1247", country: "Scotland",        title: "Queen of the Scots",  name: "Mary Stuart", note:"Acceded to the throne of Scotland six days after being born"},
   {id: "I1088", country: "Netherlands",     title: "Duchessof Nassau",    name: "Pauline of Wurttemberg", note:"Ancestress of the present Belgian, Danish, Dutch, Luxembourg, Norwegian, and Swedish Royal families"},
@@ -197,7 +196,8 @@ feMerge.append("feMergeNode")
 feMerge.append("feMergeNode")
   .attr("in","SourceGraphic");
 
-//More intense blur
+
+//Blur for the royal leaders
 var filterIntense = defs.append("filter")
   .attr("width", "300%")
   .attr("x", "-100%")
@@ -289,7 +289,6 @@ interestingRoyalTextWrapper.append("text")
 var repeatSearch;
 var connectionsLooper;
 var startSearch;
-//var startMouseOut;
 var doMouseOut = true;
 var stopMouseout;
 var counter = 0;
@@ -363,8 +362,8 @@ var nodesSave,
     linkSave;
 
 d3.queue() 
-  .defer(d3.json, "data/royal-families-links-force.json")
-  .defer(d3.csv, "data/royal-families-members-force.csv")
+  .defer(d3.json, "../../data/nadieh/royal-families-links-force.json")
+  .defer(d3.csv, "../../data/nadieh/royal-families-members-force.csv")
   .await(draw);
 
 function draw(error, links, nodes) {

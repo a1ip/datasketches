@@ -770,6 +770,8 @@
 2 PLAC Park House,Sandringham,Norfolk,England
 1 CHR
 2 PLAC Sandringham,Church,Norfolk,England
+1 DEAT
+2 DATE        1997
 1 FAMS @F16@
 1 FAMC @F78@
 0 @I66@ INDI
@@ -1257,6 +1259,7 @@
 2 DATE  4 AUG 1982
 2 PLAC Music Room,Buckingham,Palace,England
 1 FAMC @F16@
+1 FAMS @F1435@
 0 @I116@ INDI
 1 NAME Henry Charles Albert/Windsor/
 1 TITL Prince
@@ -4284,6 +4287,7 @@
 1 BIRT
 2 DATE        1968
 1 FAMC @F152@
+1 FAMS @F1437@
 0 @I445@ INDI
 1 NAME Gustav Adolf //
 1 TITL Prince
@@ -4383,6 +4387,7 @@
 1 BIRT
 2 DATE        1973
 1 FAMC @F154@
+1 FAMS @F1434@
 0 @I456@ INDI
 1 NAME Gustav_V  //
 1 TITL King of Sweden
@@ -4426,6 +4431,7 @@
 1 FAMC @F627@
 0 @I459@ INDI
 1 NAME Sophia  //
+1 TITL Queen of Sweden
 1 SEX F
 1 BIRT
 2 DATE  9 JUL 1836
@@ -5340,16 +5346,20 @@
 1 NAME Wilhelm of_Nassau //
 1 TITL Duke
 1 SEX M
+1 BIRT
+2 DATE        1792
+1 DEAT
+2 DATE        1839
 1 FAMS @F209@
 1 FAMC @F208@
-0 @I579@ INDI
-1 NAME Unknown  //
-1 SEX F
-1 FAMS @F209@
 0 @I580@ INDI
 1 NAME Adolphe of_Luxembourg //
 1 TITL Grand Duke
 1 SEX M
+1 BIRT
+2 DATE        1817
+1 DEAT
+2 DATE        1905
 1 FAMS @F210@
 1 FAMC @F209@
 0 @I581@ INDI
@@ -5812,44 +5822,86 @@
 1 NAME Franz Karl of_Austria//
 1 TITL Archduke
 1 SEX M
+1 BIRT
+2 DATE        1802
+1 DEAT
+2 DATE        1878
 1 FAMS @F233@
 0 @I640@ INDI
-1 NAME Otto  //
+1 NAME Otto Franz //
+1 TITL Archduke
 1 SEX M
+1 BIRT
+2 DATE        1865
+1 DEAT
+2 DATE        1906
 1 FAMS @F234@
 1 FAMC @F236@
 0 @I641@ INDI
 1 NAME Elisabeth Amalia //
+1 TITL Archduchess
 1 SEX F
+1 BIRT
+2 DATE        1878
+1 DEAT
+2 DATE        1960
 1 FAMS @F237@
 1 FAMC @F236@
 0 @I642@ INDI
-1 NAME Unknown  //
+1 NAME Maria Josepha of Saxony  //
+1 TITL Princess
 1 SEX F
+1 BIRT
+2 DATE        1867
+1 DEAT
+2 DATE        1944
 1 FAMS @F234@
 0 @I643@ INDI
 1 NAME Karl_I of_Austria //
 1 TITL Emperor
 1 SEX M
+1 BIRT
+2 DATE        1887
+1 DEAT
+2 DATE        1922
 1 FAMS @F235@
 1 FAMC @F234@
 0 @I644@ INDI
-1 NAME Unknown  //
+1 NAME Zita of Bourbon-Parma  //
+1 TITL Emperess
 1 SEX F
+1 BIRT
+2 DATE        1892
+1 DEAT
+2 DATE        1989
 1 FAMS @F235@
 0 @I645@ INDI
 1 NAME Otto of_Austria //
 1 TITL Archduke
 1 SEX M
+1 BIRT
+2 DATE        1912
+1 DEAT
+2 DATE        2011
 1 FAMC @F235@
 0 @I646@ INDI
 1 NAME Karl Ludwig //
+1 TITL Archduke of Austria
 1 SEX M
+1 BIRT
+2 DATE        1833
+1 DEAT
+2 DATE        1896
 1 FAMS @F236@
 1 FAMC @F233@
 0 @I647@ INDI
-1 NAME Unknown  //
+1 NAME Maria Annunciata  //
+1 TITL Princess
 1 SEX F
+1 BIRT
+2 DATE        1843
+1 DEAT
+2 DATE        1871
 1 FAMS @F236@
 0 @I648@ INDI
 1 NAME Aloys of_Liechtenstein //
@@ -6179,6 +6231,7 @@
 1 BIRT
 2 DATE        1905
 1 FAMC @F258@
+1 FAMS @F1429@
 0 @I692@ INDI
 1 NAME George of_Denmark //
 1 TITL Prince
@@ -9407,6 +9460,7 @@
 1 DEAT
 2 DATE        1856
 1 FAMC @F411@
+1 FAMS @F209@
 0 @I1089@ INDI
 1 NAME August  /Wurttemberg/
 1 SEX M
@@ -9600,7 +9654,12 @@
 1 NAME Pedro_V  //
 1 TITL King of Portugal
 1 SEX M
+1 BIRT
+2 DATE        1837
+1 DEAT
+2 DATE        1861
 1 FAMS @F419@
+1 FAMC @F1440@
 0 @I1112@ INDI
 1 NAME Elisabeth of_Wied //
 1 SEX F
@@ -9742,6 +9801,7 @@
 1 BIRT
 2 DATE        1960
 1 FAMC @F427@
+1 FAMS @F1432@
 0 @I1129@ INDI
 1 NAME Astrid  //
 1 SEX F
@@ -10287,7 +10347,7 @@
 2 DATE        1858
 1 FAMC @F440@
 0 @I1196@ INDI
-1 NAME Elizabeth  //
+1 NAME Elizabeth of_Bavaria //
 1 TITL Empress
 1 SEX F
 1 BIRT
@@ -10381,12 +10441,13 @@
 1 FAMS @F443@
 1 FAMC @F444@
 0 @I1208@ INDI
-1 NAME Willem Alexander //
-1 TITL Prince of Orange
+1 NAME Willem Alexander of_Netherlands //
+1 TITL King of Orange
 1 SEX M
 1 BIRT
 2 DATE        1967
 1 FAMC @F443@
+1 FAMS @F1438@
 0 @I1209@ INDI
 1 NAME John Friso //
 1 SEX M
@@ -10435,6 +10496,7 @@
 1 DEAT
 2 DATE        1888
 1 FAMS @F67@
+1 FAMC @F209@
 0 @I1217@ INDI
 1 NAME Henry_VI  //
 1 TITL King of England
@@ -12593,10 +12655,10 @@
 1 DEAT
 2 DATE 21 NOV 1916
 1 FAMS @F532@
-1 FAMC @F1150@
+1 FAMC @F233@
 0 @I1439@ INDI
-1 NAME Rudolf  //
-1 TITL Archduke
+1 NAME Rudolf of_Austria //
+1 TITL Crown Prince
 1 SEX M
 1 BIRT
 2 DATE        1858
@@ -12604,12 +12666,21 @@
 2 DATE        1889
 1 FAMC @F532@
 0 @I1440@ INDI
-1 NAME Daughter_1  //
+1 NAME Sophie  //
 1 SEX F
+1 BIRT
+2 DATE        1855
+1 DEAT
+2 DATE        1857
 1 FAMC @F532@
 0 @I1441@ INDI
-1 NAME Daughter_2  //
+1 NAME Gisela  //
+1 TITL Archduchess
 1 SEX F
+1 BIRT
+2 DATE        1856
+1 DEAT
+2 DATE        1932
 1 FAMC @F532@
 0 @I1442@ INDI
 1 NAME   //
@@ -13797,12 +13868,15 @@
 1 FAMS @F626@
 0 @I1610@ INDI
 1 NAME Frederick  //
+1 TITL Prince of Denmark
 1 SEX M
 1 BIRT
 2 DATE        1968
 1 FAMC @F626@
+1 FAMS @1433@
 0 @I1611@ INDI
 1 NAME Joachim  //
+1 TITL Prince
 1 SEX M
 1 BIRT
 2 DATE        1969
@@ -19126,15 +19200,6 @@
 1 NAME Augusta of_Bavaria //
 1 SEX F
 1 FAMS @F1149@
-0 @I2437@ INDI
-1 NAME Francis Charles //
-1 TITL Archduke
-1 SEX M
-1 BIRT
-2 DATE        1802
-1 DEAT
-2 DATE        1878
-1 FAMS @F1150@
 0 @I2438@ INDI
 1 NAME Henry_II  //
 1 TITL King of France
@@ -19193,11 +19258,12 @@
 1 FAMS @F1153@
 0 @I2446@ INDI
 1 NAME Victoria Ingrid Alice//
-1 TITL Princess
+1 TITL Princess of Sweden
 1 SEX F
 1 BIRT
 2 DATE 14 JUL 1977
 1 FAMC @F220@
+1 FAMS @1436@
 0 @I2447@ INDI
 1 NAME Carl Philip //
 1 TITL Prince of Sweden
@@ -23341,6 +23407,7 @@
 1 BIRT
 2 DATE        1968
 1 FAMC @F1424@
+1 FAMS @F1428@
 0 @I3019@ INDI
 1 NAME Maximilian Nikolaus Maria //
 1 TITL Prince
@@ -23412,6 +23479,7 @@
 1 BIRT
 2 DATE        1981
 1 FAMC @F1425@
+1 FAMS @F1431@
 0 @I3029@ INDI
 1 NAME Felix Leopold Marie Guillaume //
 1 TITL Prince
@@ -23492,6 +23560,469 @@
 1 BIRT
 2 DATE        2014
 1 FAMC @F1427@
+0 @I3040@ INDI
+1 NAME Sophie of_Bavaria //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        1967
+1 FAMC @F1430@
+1 FAMS @F1428@
+0 @I3041@ INDI
+1 NAME Joseph Wenzel of_Liechtenstein //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        1995
+1 FAMC @F1428@
+0 @I3042@ INDI
+1 NAME Marie-Caroline //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        1996
+1 FAMC @F1428@
+0 @I3043@ INDI
+1 NAME Georg //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        1999
+1 FAMC @F1428@
+0 @I3044@ INDI
+1 NAME Nikolaus //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        2000
+1 FAMC @F1428@
+0 @I3045@ INDI
+1 NAME Maria Draskovich von Trakostjan //
+1 TITL Countess of Bavaria
+1 SEX F
+1 BIRT
+2 DATE        1904
+1 DEAT
+2 DATE        1969
+1 FAMS @F1429@
+0 @I3046@ INDI
+1 NAME Marie Gabrielle Antonia Jose //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        1931
+1 FAMC @F1429@
+0 @I3047@ INDI
+1 NAME Marie Charlotte Juliana //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        1931
+1 FAMC @F1429@
+0 @I3048@ INDI
+1 NAME Franz //
+1 TITL Duke of Bavaria
+1 SEX M
+1 BIRT
+2 DATE        1933
+1 FAMC @F1429@
+0 @I3049@ INDI
+1 NAME Max-Emanual //
+1 TITL Duke in Bavaria
+1 SEX M
+1 BIRT
+2 DATE        1937
+1 FAMC @F1429@
+1 FAMS @F1430@
+0 @I3050@ INDI
+1 NAME ELisabeth //
+1 TITL Duchess in Bavaria
+1 SEX F
+1 BIRT
+2 DATE        1940
+1 FAMS @F1430@
+0 @I3051@ INDI
+1 NAME Marie-Caroline //
+1 TITL Duchess in Bavaria
+1 SEX F
+1 BIRT
+2 DATE        1969
+1 FAMC @F1430@
+0 @I3052@ INDI
+1 NAME Helena //
+1 TITL Duchess in Bavaria
+1 SEX F
+1 BIRT
+2 DATE        1972
+1 FAMC @F1430@
+0 @I3053@ INDI
+1 NAME Elisabeth //
+1 TITL Duchess in Bavaria
+1 SEX F
+1 BIRT
+2 DATE        1973
+1 FAMC @F1430@
+0 @I3054@ INDI
+1 NAME Maria-Anna  //
+1 TITL Duchess in Bavaria
+1 SEX F
+1 BIRT
+2 DATE        1975
+1 FAMC @F1430@
+0 @I3055@ INDI
+1 NAME Stephanie //
+1 TITL Grand Duchess
+1 SEX F
+1 BIRT
+2 DATE        1984
+1 FAMS @F1431@
+0 @I3056@ INDI
+1 NAME Mathilde //
+1 TITL Queen
+1 SEX F
+1 BIRT
+2 DATE        1973
+1 FAMS @F1432@
+0 @I3057@ INDI
+1 NAME Elisabeth //
+1 TITL Princess of Belgium
+1 SEX F
+1 BIRT
+2 DATE        2001
+1 FAMC @F1432@
+0 @I3058@ INDI
+1 NAME Gabriel //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        2003
+1 FAMC @F1432@
+0 @I3059@ INDI
+1 NAME Emmanuel //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        2005
+1 FAMC @F1432@
+0 @I3060@ INDI
+1 NAME Eleonore //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        2008
+1 FAMC @F1432@
+0 @I3061@ INDI
+1 NAME Mary //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        1972
+1 FAMS @F1433@
+0 @I3062@ INDI
+1 NAME Christian //
+1 TITL Prince of Denmark
+1 SEX M
+1 BIRT
+2 DATE        2005
+1 FAMC @F1433@
+0 @I3063@ INDI
+1 NAME Isabella //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        2007
+1 FAMC @F1433@
+0 @I3064@ INDI
+1 NAME Vincent //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        2011
+1 FAMC @F1433@
+0 @I3065@ INDI
+1 NAME Josephine //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        2011
+1 FAMC @F1433@
+0 @I3066@ INDI
+1 NAME  Mette-Marit//
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        1973
+1 FAMS @F1434@
+0 @I3067@ INDI
+1 NAME  Ingrid Alexandra//
+1 TITL Princess of Norway
+1 SEX F
+1 BIRT
+2 DATE        2004
+1 FAMS @F1434@
+0 @I3068@ INDI
+1 NAME  Sverre Magnus //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        2005
+1 FAMS @F1434@
+0 @I3069@ INDI
+1 NAME Catherine //
+1 TITL Duchess of Cambridge
+1 SEX F
+1 BIRT
+2 DATE        1982
+1 FAMS @F1435@
+0 @I3070@ INDI
+1 NAME George //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        2013
+1 FAMC @F1435@
+0 @I3071@ INDI
+1 NAME Charlotte //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        2015
+1 FAMC @F1435@
+0 @I3072@ INDI
+1 NAME Daniel //
+1 TITL Duke of Vastergotland
+1 SEX M
+1 BIRT
+2 DATE        1973
+1 FAMS @F1436@
+0 @I3073@ INDI
+1 NAME Estelle //
+1 TITL Princess of Sweden
+1 SEX F
+1 BIRT
+2 DATE        2012
+1 FAMC @F1436@
+0 @I3074@ INDI
+1 NAME Oscar //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        2016
+1 FAMC @F1436@
+0 @I3075@ INDI
+1 NAME Letizia Ortiz Rocasolano //
+1 TITL Queen of Spain
+1 SEX F
+1 BIRT
+2 DATE        1972
+1 FAMS @F1437@
+0 @I3076@ INDI
+1 NAME Leonor //
+1 TITL Princess of Asturias
+1 SEX F
+1 BIRT
+2 DATE        2005
+1 FAMC @F1437@
+0 @I3077@ INDI
+1 NAME Sofia //
+1 TITL Infanta of Spain
+1 SEX F
+1 BIRT
+2 DATE        2007
+1 FAMC @F1437@
+0 @I3078@ INDI
+1 NAME Maxima //
+1 TITL Queen of the Netherlands
+1 SEX F
+1 BIRT
+2 DATE        1971
+1 FAMS @F1438@
+0 @I3079@ INDI
+1 NAME Catharina-Amalia of_Netherlands //
+1 TITL Princess of Orange
+1 SEX F
+1 BIRT
+2 DATE        2003
+1 FAMC @F1438@
+0 @I3080@ INDI
+1 NAME Alexia //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        2005
+1 FAMC @F1438@
+0 @I3081@ INDI
+1 NAME Ariane //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        2007
+1 FAMC @F1438@
+0 @I3082@ INDI
+1 NAME Marie Valerie  //
+1 TITL Archduchess
+1 SEX F
+1 BIRT
+2 DATE        1868
+1 DEAT
+2 DATE        1924
+1 FAMC @F532@
+0 @I3083@ INDI
+1 NAME Maria Annunciata//
+1 TITL Archduchess
+1 SEX F
+1 BIRT
+2 DATE        1876
+1 DEAT
+2 DATE        1961
+1 FAMC @F236@
+0 @I3084@ INDI
+1 NAME Margarete Sophie //
+1 TITL Archduchess
+1 SEX F
+1 BIRT
+2 DATE        1870
+1 DEAT
+2 DATE        1902
+1 FAMC @F236@
+0 @I3085@ INDI
+1 NAME Ferdinand Karl //
+1 TITL Archduke
+1 SEX M
+1 BIRT
+2 DATE        1868
+1 DEAT
+2 DATE        1915
+1 FAMC @F236@
+0 @I3086@ INDI
+1 NAME Franz Ferdinand //
+1 TITL Archduke of Austria
+1 SEX M
+1 BIRT
+2 DATE        1863
+1 DEAT
+2 DATE        1914
+1 FAMC @F236@
+1 FAMS @F1439@
+0 @I3087@ INDI
+1 NAME Sophie //
+1 TITL Duchess of Hohenberg
+1 SEX F
+1 BIRT
+2 DATE        1868
+1 DEAT
+2 DATE        1914
+1 FAMS @F1439@
+0 @I3088@ INDI
+1 NAME Sophie //
+1 TITL Princess of Hohenberg
+1 SEX F
+1 BIRT
+2 DATE        1901
+1 DEAT
+2 DATE        1990
+1 FAMC @F1439@
+0 @I3089@ INDI
+1 NAME Maximilian //
+1 TITL Duke von Hohenberg
+1 SEX F
+1 BIRT
+2 DATE        1902
+1 DEAT
+2 DATE        1962
+1 FAMC @F1439@
+0 @I3090@ INDI
+1 NAME Ernst //
+1 TITL Prince of Hohenberg
+1 SEX F
+1 BIRT
+2 DATE        1904
+1 DEAT
+2 DATE        1954
+1 FAMC @F1439@
+0 @I3091@ INDI
+1 NAME Ferdinand_II //
+1 TITL Prince
+1 SEX M
+1 BIRT
+2 DATE        1816
+1 DEAT
+2 DATE        1885
+1 FAMS @F1440@
+0 @I3092@ INDI
+1 NAME Maria_II //
+1 TITL Queen regnant
+1 SEX F
+1 BIRT
+2 DATE        1819
+1 DEAT
+2 DATE        1853
+1 FAMS @F1440@
+0 @I3093@ INDI
+1 NAME Luis_I //
+1 TITL King of Portugal
+1 SEX M
+1 BIRT
+2 DATE        1838
+1 DEAT
+2 DATE        1889
+1 FAMC @F1440@
+1 FAMS @F1441@
+0 @I3094@ INDI
+1 NAME Maria Pia //
+1 TITL Queen consort
+1 SEX F
+1 BIRT
+2 DATE        1847
+1 DEAT
+2 DATE        1911
+1 FAMS @F1441@
+0 @I3095@ INDI
+1 NAME Carlos_I //
+1 TITL King of Portugal
+1 SEX M
+1 BIRT
+2 DATE        1863
+1 DEAT
+2 DATE        1908
+1 FAMC @F1441@
+1 FAMS @F1442@
+0 @I3096@ INDI
+1 NAME Afonso //
+1 TITL Duke of Porto
+1 SEX M
+1 BIRT
+2 DATE        1865
+1 DEAT
+2 DATE        1920
+1 FAMC @F1441@
+0 @I3097@ INDI
+1 NAME Amelie of Orleans //
+1 TITL Princess
+1 SEX F
+1 BIRT
+2 DATE        1865
+1 DEAT
+2 DATE        1951
+1 FAMS @F1442@
+0 @I3098@ INDI
+1 NAME Luis Filipe //
+1 TITL Prince Royal of Portugal
+1 SEX M
+1 BIRT
+2 DATE        1887
+1 DEAT
+2 DATE        1908
+1 FAMC @F1442@
+0 @I3099@ INDI
+1 NAME Manuel_II //
+1 TITL King of Portugal
+1 SEX M
+1 BIRT
+2 DATE        1889
+1 DEAT
+2 DATE        1932
+1 FAMC @F1442@
 0 @F1@ FAM
 1 HUSB @I2@
 1 WIFE @I1@
@@ -24900,9 +25431,10 @@
 1 CHIL @I578@
 0 @F209@ FAM
 1 HUSB @I578@
-1 WIFE @I579@
+1 WIFE @I1088@
 1 CHIL @I580@
 1 CHIL @I459@
+1 CHIL @I1216@
 0 @F210@ FAM
 1 HUSB @I580@
 1 WIFE @I581@
@@ -25053,6 +25585,7 @@
 1 HUSB @I639@
 1 WIFE @I638@
 1 CHIL @I646@
+1 CHIL @I1438@
 0 @F234@ FAM
 1 HUSB @I640@
 1 WIFE @I642@
@@ -25066,6 +25599,10 @@
 1 WIFE @I647@
 1 CHIL @I640@
 1 CHIL @I641@
+1 CHIL @I3083@
+1 CHIL @I3084@
+1 CHIL @I3085@
+1 CHIL @I3086@
 0 @F237@ FAM
 1 HUSB @I648@
 1 WIFE @I641@
@@ -26956,6 +27493,7 @@
 1 CHIL @I1439@
 1 CHIL @I1440@
 1 CHIL @I1441@
+1 CHIL @I3082@
 1 MARR
 2 DATE        1854
 0 @F533@ FAM
@@ -29490,9 +30028,6 @@
 1 HUSB @I2435@
 1 WIFE @I2436@
 1 CHIL @I1614@
-0 @F1150@ FAM
-1 HUSB @I2437@
-1 CHIL @I1438@
 0 @F1151@ FAM
 1 HUSB @I838@
 1 WIFE @I2547@
@@ -30928,4 +31463,90 @@
 1 WIFE @I3037@
 1 CHIL @I3038@
 1 CHIL @I3039@
+0 @F1428@ FAM
+1 HUSB @I3018@
+1 WIFE @I3040@
+1 CHIL @I3041@
+1 CHIL @I3042@
+1 CHIL @I3043@
+1 CHIL @I3044@
+0 @F1429@ FAM
+1 HUSB @I691@
+1 WIFE @I3045@
+1 CHIL @I3046@
+1 CHIL @I3047@
+1 CHIL @I3048@
+1 CHIL @I3049@
+0 @F1430@ FAM
+1 HUSB @I3049@
+1 WIFE @I3050@
+1 CHIL @I3040@
+1 CHIL @I3051@
+1 CHIL @I3052@
+1 CHIL @I3053@
+1 CHIL @I3054@
+0 @F1431@ FAM
+1 HUSB @I3028@
+1 WIFE @I3055@
+0 @F1432@ FAM
+1 HUSB @I1128@
+1 WIFE @I3056@
+1 CHIL @I3057@
+1 CHIL @I3058@
+1 CHIL @I3059@
+1 CHIL @I3060@
+0 @F1433@ FAM
+1 HUSB @I1610@
+1 WIFE @I3061@
+1 CHIL @I3062@
+1 CHIL @I3063@
+1 CHIL @I3064@
+1 CHIL @I3065@
+0 @F1434@ FAM
+1 HUSB @I455@
+1 WIFE @I3066@
+1 CHIL @I3067@
+1 CHIL @I3068@
+0 @F1435@ FAM
+1 HUSB @I115@
+1 WIFE @I3069@
+1 CHIL @I3070@
+1 CHIL @I3071@
+0 @F1436@ FAM
+1 HUSB @I3072@
+1 WIFE @I2446@
+1 CHIL @I3073@
+1 CHIL @I3074@
+0 @F1437@ FAM
+1 HUSB @I444@
+1 WIFE @I3075@
+1 CHIL @I3076@
+1 CHIL @I3077@
+0 @F1438@ FAM
+1 HUSB @I1208@
+1 WIFE @I3078@
+1 CHIL @I3079@
+1 CHIL @I3080@
+1 CHIL @I3081@
+0 @F1439@ FAM
+1 HUSB @I3086@
+1 WIFE @I3087@
+1 CHIL @I3088@
+1 CHIL @I3089@
+1 CHIL @I3090@
+0 @F1440@ FAM
+1 HUSB @I3091@
+1 WIFE @I3092@
+1 CHIL @I1111@
+1 CHIL @I3093@
+0 @F1441@ FAM
+1 HUSB @I3093@
+1 WIFE @I3094@
+1 CHIL @I3095@
+1 CHIL @I3096@
+0 @F1442@ FAM
+1 HUSB @I3095@
+1 WIFE @I3097@
+1 CHIL @I3098@
+1 CHIL @I3099@
 0 TRLR
