@@ -44,7 +44,7 @@ d3.select("body")
   });
 
 var margin = {
-  top: -80,
+  top: -140,
   right: 90,
   bottom: 60,
   left: 120
@@ -259,7 +259,7 @@ var royalTextWrapper = labelWrapper.selectAll(".royal-label")
   .data(currentRoyalLeaders)
   .enter().append("g")
   .attr("class", "royal-label")
-  .attr("transform", function(d,i) { return "translate(" + (spreadScale(i)) + "," + yearScale(2030) + ")"; });
+  .attr("transform", function(d,i) { return "translate(" + (spreadScale(i)) + "," + yearScale(2020) + ")"; });
 
 royalTextWrapper.append("text")
   .attr("class", "royal-name")
