@@ -120,7 +120,7 @@
               <p>And that's when I finally started to see some potential. I decided that I had to focus on that connection to a current royal leader more and see where that would take me. The visual still needed about 2500px in width to have a nice spread of the nodes, but horizontal scrolling is not preferred, so I turned it 90 degrees so it would be a vertical scroll. To pull apart the network even more I calculated the (average) royal to which each node was closest. I used that info to generate a slight horizontal pull of the nodes to their closest royal descendants. As you can see in the image below right this genealogy is mostly focused on the English bloodline :)</p>
               <a class="fancybox" href="sketches/nadieh/network_vertical_phase.png"> <img src="sketches/nadieh/network_vertical_phase_small.png" class="img-responsive img-month" alt="Screenshots of the switch to a vertical layout and royal gravity"></a>
 
-              <p>I wasn't really interested in the people born more than ±300 years ago, because it was already apparent that the current royals are most highly connected in the last 200 years, so I decided to remove everybody with an (estimated) birth date from before 1000. I also squished the vertical date scale even more towards older times to make the total visual less high and more focused on the last 2 centuries.</p> 
+              <p>I wasn't really interested in the people born more than ±300 years ago, because it was already apparent that the current royals are most highly connected in the last 200 years, so I decided to remove everybody with an (estimated) birth date from before 1000. I also squished the vertical date scale even more towards older times to make the total visual less high and more focused on the last 2 centuries.</p>
               <a class="fancybox" href="sketches/nadieh/network_final_sketch_phase.png"> <img src="sketches/nadieh/network_final_sketch_phase_small.jpg" class="img-responsive img-month" alt="Screenshot of the final phase that finally convinced me that there was potential enough in the network"></a>
 
               <p>And that's when I finally ended up with a network structure that I was happy with. That even in a static state already showed some insight into how connected the current royal leaders are. Now I could finally move on from my digital <i>sketching</i> and think about the details & interactivity to make the closest connection between people more apparent.</p>
@@ -146,8 +146,34 @@
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-              <p></p>
-              
+              <p>
+                Originally Nadieh and I had October slotted for the elections, so that we could potentially have something ready by voting day.  But as October approached, I realized more and more that I wanted absolutely nothing to do with the election other than to...vote not-Trump.  So as October approached and we were musing what to do instead, I realized: a future president getting voted in also means a current president leaving the White House.
+              </p>
+
+              <p>
+                And we may not all agree on what the Obama administration has or hasn't done politically, but I think most of us can agree: the Obamas are one damn cool couple.  Like, the slightly dorky parents that I wouldn't mind associating with if they were my friends' parents.  Like that time last year when Mr. President recorded <a href='https://www.buzzfeed.com/andrewgauthier/the-president-uses-a-selfie-stick?utm_term=.vkE0Z8E9e#.hoM0Ar1wO' target='_new'>a video of himself talking to a mirror</a> so that he could plug his new healthcare.gov.  Or when recently Madame First Lady <a href='https://www.youtube.com/watch?v=ln3wAdRAim4' target='_new'>Carpool Karaoke'd with James Corden</a> and she was so hilariously relatable.  And then I realized that weirdly perhaps I was going to miss them being our POTUS and FLOTUS.
+              </p>
+
+              <p>
+                So I wanted to do something silly and light-hearted to thank them for their eight years in office.  And the first thing I could think of was all of their appearance on late-night talk shows I watched on Youtube (that <a href='https://www.youtube.com/watch?v=ziwYbVx_-qg' target='_new'>slow jam the news</a> so good).  I started digging around to see if there was a list of talk show appearances for both Barack and Michelle - and it was IMDb to the rescue again!  Both of them had their own IMDb pages, and after going through <a href='http://www.imdb.com/name/nm1682433/' target='_new'>Barack Obama's 214 credits as self</a> and <a href='http://www.imdb.com/name/nm2349292/?ref_=nv_sr_1' target='_new'>Michelle's 123</a> while cross-referencing the <a href='https://en.wikipedia.org/wiki/List_of_late-night_American_network_TV_programs' target='_new'>Wikipedia article on the list of late-night American network TV programs</a> I was able to get this list:
+                <a class="fancybox" href="data/shirley/all_appearances.png"> <img src="data/shirley/all_appearances.png" class="img-responsive img-month"></a>
+                (<a href='https://github.com/sxywu/obamas/blob/master/data/shows.txt' target='_new'>Full list of appearances</a>)
+              </p>
+
+              <p>
+                Using that information, I was able to use the <a href='https://developers.google.com/youtube/v3/docs/search/list' target='_new'>Youtube Search API</a> to search for keyword "obama", filtered down by channelId and published within 5 days of the interview date (<a href='https://github.com/sxywu/obamas/blob/master/data/getVideos.js' target='_new'>code</a>).  Unfortunately, because I wasn't sure how many videos were published for each interview (if at all), I set the maxResults to 15.  This meant that I would get back videos within those days that had nothing to do with the Obamas, and I had to <a href='http://bl.ocks.org/sxywu/877fcab8c7f02789a7c03413ec800c58' target='_new'>manually go through all of the videos</a> to weed out the irrelevant ones (there were 244 videos and 186 were ultimately filtered out).
+              </p>
+
+              <p>
+                Here is the final list (it loads quite slowly because of all the embedded videos, for which I apologize):
+                <a class="fancybox" href="data/shirley/all_videos.png"> <img src="data/shirley/all_videos.png" class="img-responsive img-month"></a>
+                (<a href='http://bl.ocks.org/sxywu/raw/2aaf535cd8a68c056f4646235f005ab7' target='_new'>Full list of videos</a>)
+              </p>
+
+              <p>
+                The list is unfortunately incomplete, since there were interviews with past shows/hosts like the Late Show with David Letterman and the Tonight Show with Jay Leno that weren't on Youtube.  I chose to keep them out instead of trying to find the videos on other websites or on unofficial channels, in the hopes that this would make for cleaner data.
+              </p>
+
               <!-- <a class="fancybox" href="data/shirley/.png"> <img src="data/shirley/.png" class="img-responsive img-month" alt=""></a> -->
 
               <h3>week 2 <span class="light-grey">|</span> sketches</h3>
