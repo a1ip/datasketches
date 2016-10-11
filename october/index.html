@@ -77,7 +77,7 @@
               <div class="time kingBasil"></div>
               <div class="location quicksand">amsterdam</div>
 
-  			     <!-- <a href="code/nadieh/"><img src="code/nadieh/img/.png" class="img-responsive img-month-top" alt=""></a> -->
+  			     <a href="code/nadieh/"><img src="code/nadieh/img/royal_constellations_header.png" class="img-responsive img-month-top" alt="Royal constellations"></a>
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
@@ -87,7 +87,7 @@
 
               <p>The first thing that came to mind when I thought about the royals, was their bloodlines. Due to all of that intermarriage I was sure most royals in Europe would be relatives of each other. The question was then, how close of a relative? As always I was pretty sure there would be loads of nice datasets to find about the royal bloodlines. But, as in the previous months, that turned out differently. Sure, many people had drawn some images of the closest relatives of some royals in Europe. But I really didn't want to do too much manual data gathering this month.</p>
 
-              <p>Luckily there was <a href="http://www.daml.org/2001/01/gedcom/royal92.ged">1 file</a> that I found that seems to be <i>the</i> information source in terms of royal genealogy. However, it was made in 1992 so it is missing some of the recent additions to the royal families. I therefore manually added a few extra people to the file (which was a bit of a challenge because the file is in a strange format; a <i>gedcom</i> file), but only the current royals, their children and the children of the 1st in line (if these already exist).</p>
+              <p>Luckily there was <a href="http://www.daml.org/2001/01/gedcom/royal92.ged">1 file</a> that I found that seems to be <i>the</i> information source in terms of royal genealogy. However, it was made in 1992 so it is missing the recent additions to the royal families. Also, when I was looking for "interesting" royals to highlight, such as the last king of Italy, or Franz Ferdinand (who's assassination sparked WWI) I found that often these lines stopped a few generations before. I therefore manually added about ±150 people to the file (which was a bit of a challenge because the file is in a strange format; a <i>gedcom</i> file) that took at least 5 hours over the two weeks...</p>
 
               <p>I did the data preparation in R as usual. Family trees are something for a network layout, so the odd format (see the screenshot below, it contained lines on individuals & families) had to be transformed into a nodes & links file that d3's force layout knows how to handle. Not too difficult, but it still required quite some lines of code to eventually be able to run through the whole file and get the info out and into some data sets.</p>
               <a class="fancybox" href="data/nadieh/royal_gedcom_file_structure.jpg"> <img src="data/nadieh/royal_gedcom_file_structure.png" class="img-responsive img-month" alt="The individuals and family section of the royal gedcom file structure"></a>
@@ -96,7 +96,7 @@
 
               <p>For example, I wanted to do something with the birth year of a person, but this wasn't know for everybody. I therefore wrote a small script that tries to find a good guess; either by looking if the death date is know (and then subtracting about 60 years), or looking at the birth or death date of the spouse, children or parents, in that order (again subtracting or adding some years to account for generational differences). Not perfect, but I didn't need perfect dates for the idea that I had in mind.</p>
 
-              <p>My final addition to the data was to calculate the smallest distance to each of the 12 current royal leaders for each person & who was the royal each person was most closely related to (and within how many steps). I wanted to have this pre-calculated so that I had access to this beforehand in the visualization. Saves a lot of calculation time :)</p>
+              <p>My final addition to the data was to calculate who was the royal each person was most closely related to (and within how many steps). I wanted to have this pre-calculated so that I had access to this beforehand in the visualization. Saves a lot of calculation time :)</p>
 
               <p>You can read a more elaborate account of the preparation on <a href="https://github.com/nbremer/datasketches/tree/gh-pages/october/data/nadieh">the GitHub page of the dataset</a></p>
 
@@ -127,8 +127,33 @@
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
+              <p>There's definitely a very vague line between this month's sketching and coding, since the sketching already took quite a bit of coding. But after getting the layout in the right position I focused on getting the interactions in there. There were two main things I wanted to achieve; showing how far "6-degrees of separation" (i.e. 6 generations back & 6 generations forward) would spread from a hovered over person into the network: "To which other current royal leaders is the King of Spain connected within 6 steps?" for example. The second thing was showing the shortest path. When I had a basic hover working I saw that some people had very big networks within 6 steps, so it was difficult to really see how two people were connected. I therefore wanted to be able to click on a person and then click on some other person in the network to see the shortest path between those people.</p>
+
+              <p>I usually start out very simple, so to look for 6 steps beyond a person I just wrote a while loop that ran 6 times and looked at the people connected to the selected persons from the previous loop. Not very smart or performing. But it's easy, fast to set up and then I could determine if the result on the visual was as I'd hoped. Only after I saw that the hover of 6 steps had potential did I look into using key-value maps to quickly request all the people connected to one person, which made the calculation almost instant.</p>
+              <a class="fancybox" href="code/nadieh/img/royal_constellations_hover_colors.png"> <img src="code/nadieh/img/royal_constellations_hover_colors_small.jpg" class="img-responsive img-month" alt="The result of a hover over a person"></a>
+
+              <p>I'm sure some people think my choice of color for the hovers is a non optimal one, going from a blue to white to red; not very intuitive. But this was a very deliberate choice. Since I was seeing the network as stars & constellations I thought it would be a nice analogy to color the "stars" to the colors that actual stars shine in. The very hottest, biggest stars are blue, going to white, yellow, orange and then red stars which are the coolest (& smallest) stars. Due to my Astronomy background this color scheme is straightforward to me (and I build these projects as experiments for myself foremost 😄 ).</p>
+
+              <p>Due to more of a mistake I ended up with a version in which you see the steps grow, from 1 step away from a person to 2, 3 and so on. And this was giving a much better intuitive feel about what these colors represented that I actually put it into the final version. I'm still stumped that I didn't think of doing that from the start 😳</p>
+
+              <p>Because the nodes are a bit small I found that hovering over a node exactly was a bit of a chore. So I used the voronoi technique (<a href="http://www.visualcinnamon.com/2015/07/voronoi.html">I wrote a blog</a> about this a year ago) in which I attach bigger, but clipped, circles underneath the nodes that capture the mouseover event. In the image below I've made them visible when I was investigating an error (the straight vertical line in there was wrong).</p>
+              <a class="fancybox" href="code/nadieh/img/voronoi_applied_to_nodes.png"> <img src="code/nadieh/img/voronoi_applied_to_nodes_small.png" class="img-responsive img-month" alt="A voronoi technique applied to the nodes"></a>
+
+              <p>At first I was afraid that with almost 3000 nodes in the network that a shortest path calculation would take too much time. I nevertheless wanted to first actually make it work and only then see if it was something that might survive until the final version. I knew about Dijkstra's algorithm, but no need to invent the wheel again, so I found <a href="https://github.com/julianbrowne/dijkstra/blob/master/javascripts/ShortestPathCalculator.js">a script on Github</a> that I adjusted to my needs. Surprisingly enough it performed amazingly well, it returned a path before I could blink. Personally, I very much like the small dotted rings that rotate around the two selected people 😃</p>
+              <a class="fancybox" href="code/nadieh/img/shortest_path_visualized.png"> <img src="code/nadieh/img/shortest_path_visualized_small.jpg" class="img-responsive img-month" alt="The visual representation of the shortest path"></a>
+
+              <p>What caused me most headaches this month was performance in general. How to make sure that something like a mouseover would only trigger when somebody was hovering over a node instead of just moving their mouse over the grid of nodes. How to only run a mouseout when the 6-degrees-animation had kicked in and not on every switch from node to node (and thus performing a transitions from an already yellow end state to the same end state). And even more of these things, all to make sure the browser only did things when a visual change was needed (and then only on the "affected" parts of the visual). This did cause the end result to work very smooth on my 0.5 year old Macbook in Chrome, but strangely enough it is taking significantly longer to do the visual updates in both Firefox and Safari (if somebody can explain why please let me know!). Of course it's also slower on my personal 6 year old Macbook, but not <i>too</i> bad.</p>
+
+              <p>The animated gif below shows the interactions available; hover, click and 2nd click (It's a bit slow because I have to capture gifs on my 6 year old Mac and my browser slows down during a capture).</p>
+              <a class="fancybox" href="code/nadieh/img/royals_hover_click_small.gif"> <img src="code/nadieh/img/royals_hover_click_small.gif" class="img-responsive img-month" alt="Animated gif of the hover and click effects"></a>
+
+              <p>Which brings me to the final section. Like August I again did this month in half the alloted time. This time because I'm going on vacation for 3 weeks (yay!). But... <i>if I had had 2 more weeks</i>: I would try to create a version in canvas (and figure out how to do the interactions in there) that would hopefully be more performing. I would want to create a search function where you can find any royal in the data (although the names aren't always in there spelled perfectly, but it would be a start). And finally I would want to look into making the network even more squished so that you would be able to see more of the total height at once.</p>
+
+              <a href="code/nadieh"> <img src="code/nadieh/img/royal_constellations_final.jpg" class="img-responsive img-month" alt="The final result of the Royal Constellations"></a>
+
+              <p>But I'm happy with what I managed in 2 weeks (while also having other obligations in my free time). It may not be as smooth in terms of interactions as I had hoped, it does do exactly what I wanted: showing how interconnected the European royal families really are, who the "linking pins" are in this network and what the shortest path is between two persons. And I learned a heck of a lot more about d3v4's force options. You can find the final result <a href="code/nadieh">here</a>.</p>
+
               <p></p>
-              <!-- <a class="fancybox" href="code/nadieh/img/.png"> <img src="code/nadieh/img/.png" class="img-responsive img-month" alt=""></a> -->
 
             </div>
           </div>
