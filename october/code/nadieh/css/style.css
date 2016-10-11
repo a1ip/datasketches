@@ -135,6 +135,12 @@ a, a:link, a:visited, a:active {
 	fill: #7e7b72;
 }
 
+.birth-year-label {
+	text-anchor: end;
+	font-size: 12px;
+	fill: #7e7b72;
+}
+
 /* --- Tooltip --- */
 
 .tooltip-wrapper {
