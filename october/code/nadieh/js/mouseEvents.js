@@ -35,7 +35,7 @@ function mouseOvered(d, nodes) {
       clearTimeout(connectionsLooper);
       startSearch = setTimeout(function() { 
         if(repeatSearch) initiateConnectionSearch(d, nodes); 
-      }, 500);
+      }, 1000);
     }//if
 
     //Stop propagation to the SVG
