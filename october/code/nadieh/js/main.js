@@ -104,7 +104,9 @@ var interestingRoyal = [
   {id: "I1196", country: "Austria",         title: "Queen of Austria",    name: "Elisabeth 'Sissi'", note:"Was considered one of the greatest beauties of her time"},
   {id: "I3086", country: "Austria",         title: "Heir to Austria",     name: "Franz Ferdinand", note:"His assassination was the last drop that started World War I"},
   {id: "I643",  country: "Austria",         title: "Emperor of Austria",  name: "Karl I", note:"The last Emperor/King of Austria & Hungary"},
-  {id: "I3099", country: "Portugal",        title: "King of Portugal",    name: "Manuel II", note:"The last King of Portugal"}
+  {id: "I3099", country: "Portugal",        title: "King of Portugal",    name: "Manuel II", note:"The last King of Portugal"},
+  {id: "I1", 	country: "United Kingdom",  title: "Queen of England",    name: "Victoria", note:"Known as 'the grandmother of Europe' after her 9 children married into royal and noble houses across Europe"},
+  {id: "I849", 	country: "United Kingdom",  title: "Queen of England",    name: "Elizabeth I", note:"The Virgin Queen was the last monarch of the Tudor dynasty"}	
 ];
 var royalsInteresting = interestingRoyal.map(function(d) { return d.id; });
 
