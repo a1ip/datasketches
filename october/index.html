@@ -251,7 +251,53 @@
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p></p>
+              <p>
+                So as soon as I figured out that the Google Vision API gave me the bounds of faces and heads, I knew I had to put emojis on the faces:
+                <a class="fancybox" href="code/shirley/emoji_head.png"> <img src="code/shirley/emoji_head.png" class="img-responsive img-month"></a>
+                And boy, do I not regret; it brought me so much joy.  The rest of the visualization is basically just a build up to the end tool to explore all the photos with emojis on their faces.
+                <a class="fancybox" href="code/shirley/emoji_head2.png"> <img src="code/shirley/emoji_head2.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                But before I get into the details of the implementation, let me just say: I am NEVER getting this ambitious for a one-month *side* project ever again.  This month's implementation brought me through quite a few first-time technical challenges:
+                <ul>
+                  <li>Animation based on scroll</li>
+                  <li>Cropping SVG images</li>
+                  <li>Horizontal fisheye with images</li>
+                  <li>MOBILE</li>
+                  <li>MAKING SCRUBBING THE FISHEYE SMOOTH ON MOBILE</li>
+                </ul>
+                And because I was just trying to get it all done, I didn't take much time to take screenshots of my progress (which I regret ☹️).
+              </p>
+
+              <p>
+                The first thing I wanted to do was to implement animation tied to scrolling like <a href='https://twitter.com/tonyhschu' target='_new'>Tony</a>'s <a href='http://www.r2d3.us/visual-intro-to-machine-learning-part-1/'>A Visual Introduction to Machine Learning</a> - it always seemed like a fun technical challenge.  The key is to interpolate between two sections, and I worked out the logic to be:
+                <a class="fancybox" href="code/shirley/code_calculation.jpg"> <img src="code/shirley/code_calculation.jpg" class="img-responsive img-month"></a>
+                So when the user got to be halfway down the section (I actually ended up using 25% instead), I would calculate the elements' positions for the current section and for the next section and interpolate between them.  From there until the user entered the top of the next section, I would pass the amount scrolled into the interpolation to get the x/y positions (and even, for the videos, the radius).  <a href='https://github.com/sxywu/obamas/blob/master/src/App.js#L163-L263' target='_new'>Here is the code</a>, which took quite a bit of fiddling.
+                <a class="fancybox" href="code/shirley/scrolling.gif"> <img src="code/shirley/scrolling.gif" class="img-responsive img-month"></a>
+                (It's much smoother on the website - I ran the Chrome Dev Tools Profiler religiously to weed out any unperformant code!)  One of my favorite parts is when I scroll to the first timeline, and the links animate between the host and the Obamas to connect them.
+              </p>
+
+              <p>
+                Another interaction that made me really happy was hovering the hosts to see the corresponding guest appearances.  A very simple implementation, but helped so much in making the tangle of links easier to navigate:
+                <a class="fancybox" href="code/shirley/hover_host.png"> <img src="code/shirley/hover_host.png" class="img-responsive img-month"></a>
+                Another favorite; This one's showing all the videos with captions, and the filled circle radius is the number of views, and the other ring radius is the duration of the video.  It's fun to see that some of the videos got a lot of views despite being shorter in duration, or vice versa.  The small dots on the ring is every time Google Vision API said there were expressions of joy, so you can see whether the laughter was even throughout the video, or were concentrated in specific blocks.  My favorite part about this though, is actually in the description, where I calculate the number of times there were laughs for the POTUS and FLOTUS and finding out that the FLOTUS has significantly more laughter:
+                <a class="fancybox" href="code/shirley/show_captions.png"> <img src="code/shirley/show_captions.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                And here is the timeline with the emojis on their faces:
+                <a class="fancybox" href="code/shirley/timeline.png"> <img src="code/shirley/timeline.png" class="img-responsive img-month"></a>
+                And as soon as I saw that timeline, I knew I needed to have a fisheye effect.  I had seen the <a href='http://www.nytimes.com/newsgraphics/2014/02/14/fashion-week-editors-picks/' target='_new'>New York Times implementation</a> of the horizontal fisheye to navigate through fashion week images, and Nadieh had <a href='http://bl.ocks.org/nbremer/e73086c0c3ebd2693a95962b561cbf05' target='_new'>adjusted that code</a> a few months ago when we were considering using the effect for the front page of datasketches.  But the code was for canvas, and I was already committed with SVG; it took a bit of digging to find an SVG equivalent for cropping images (<a href='https://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute' target='_new'>preserveAspectRatio</a> and the <a href='https://github.com/sxywu/obamas/blob/master/src/visualizations/SelectedVideo.js#L214-L220' target='_new'>key is to set the viewBox width the same as the image width</a>).  It took a few more passes of Nadieh's code and the original <a href='https://github.com/d3/d3-plugins/blob/master/fisheye/fisheye.js' target='_new'>fisheye code</a> to realize that all I needed was the <a href='https://github.com/sxywu/obamas/blob/master/src/visualizations/SelectedVideo.js#L17-L26' target='_new'>little bit of code</a> that mapped an x-coordinate to its new position based on the distortion.  From there, it was just <a href='https://github.com/sxywu/obamas/blob/master/src/visualizations/SelectedVideo.js#L279-L302' target='_new'>passing in the hovered x-position and re-rendering</a>.
+                <a class="fancybox" href="code/shirley/fisheye.gif"> <img src="code/shirley/fisheye.gif" class="img-responsive img-month"></a>
+                What I'm happiest about with this fisheye though, is that I made it work on mobile!  When I used touchmove by myself, scrubbing was extremely buggy and finicky on mobile.  After thinking the whole day of a different interaction I could have with the timeline on mobile, I realized that d3 already had a great touch implementation with <a href='https://github.com/d3/d3-drag' target='_new'>d3.drag()</a>; the interaction on mobile using d3 drag for the fisheye was so smooth it was magical butter 😍
+              </p>
+
+              <p>
+                And finally, here is the (intro of the) finished piece:
+                <a href='http://sxywu.com/obamas/' target='_new'><img src="code/shirley/header.png" class="img-responsive img-month"></a>
+                This month was definitely killer, but I am also super happy I stuck it through.  I'm really proud of all that I was able to figure out, and that I now have a completed scrollytelling under my belt.  The most suprising though, is my newly acquired sense of fearlessness, where I really feel that if there's something I want to implement, I'll be able to figure out how to do it given enough time and the right Google searches.
+              </p>
             </div>
           </div>
 
