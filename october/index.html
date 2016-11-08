@@ -203,7 +203,31 @@
 
               <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-              <p></p>
+              <p>
+                <a href='http://visfest.com/d3unconf-2016/' target='_new'>D3.unconf</a> was on the 16th and 17th of this month, and the second day was dedicated to hacking - a perfect opportunity to work on datasketches.  But I was feeling a little lost on what to do with the data and mentioned this to both <a href='https://twitter.com/enjalot' target='_new'>Ian</a> and <a href='https://twitter.com/trinary' target-'_new'>Erik</a>.
+              </p>
+
+              <p>
+                Which, in retrospect, was probably a big mistake.  Because Ian was like, "you should get the captions for each video and do something with the words!" and Erik was like, "wouldn't it be cool if you could run facial detection on the video and correlate their emotions with what they're saying?".  And I was like, "GUYS you know I only have a month to do this?!"
+              </p>
+
+              <p>
+                But Alas, like a poor version of Inception, the idea was planted and it took root.
+              </p>
+
+              <p>
+                I couldn't find an affordable way to pass whole videos into any facial recognition software, but thankfully I was at the very resourceful D3.unconf.  Within a few minutes an alternative was suggested: take screenshots of the video and pass the images into <a href='https://cloud.google.com/vision/' target='_new'>Google's Vision API</a> (provided by <a href='https://cloud.google.com/' target='_new'>Google Cloud</a>, who just happened to be one of the sponsors for the unconference).  Here's what I did:
+
+                <ol>
+                  <li>Take the list of all videos, and download them (and their captions, if available) with <a href='https://github.com/fent/node-youtube-dl' target='_new'>youtube-dl</a> (<a href='https://github.com/sxywu/obamas/blob/master/data/downloadVideos.js' target='_new'>code: downloadVideos.js</a>)</li>
+                  <li>Use <a href='https://github.com/joegesualdo/vtt-to-json' target='_new'>vtt-to-json</a> to convert the captions into JSON and get the timestamp of every time someone talked, and use that timestamp to screenshot the video with <a href='https://github.com/fluent-ffmpeg/node-fluent-ffmpeg' target='_new'>fluent-ffmpeg</a> (<a href='https://github.com/sxywu/obamas/blob/master/data/screenshotVideos.js' target='_new'>code: screenshotVideos.js</a>)</li>
+                  <li>For each screenshot, upload it to Google Vision API (https://cloud.google.com/vision/), which gave back data of any faces it found in the image as well as the bounds of the face and head:
+                    <a class="fancybox" href="sketches/shirley/google_vision.png"> <img src="sketches/shirley/google_vision.png" class="img-responsive img-month"></a>
+                  And much more, like what it thinks the picture is of, and what famous locations it might contain.  (<a href='https://github.com/sxywu/obamas/blob/master/data/annotateImages.js' target='_new'>code: annotateImages.js</a>)
+                  </li>
+                  <li>Save the videos' captions into one JSON file (<a href='https://github.com/sxywu/obamas/blob/master/data/getSubtitles.js' target='_new'>code: getSubtitles.js</a>), then join them with the annotated image data from the Vision API (<a href='https://github.com/sxywu/obamas/blob/master/data/annotationSubtitles.js' target='_new'>code: annotationSubtitles.js</a>)</li>
+                </ol>
+              </p>
               <!-- <a class="fancybox" href="sketches/shirley/.png"> <img src="sketches/shirley/.png" class="img-responsive img-month" alt=""></a> -->
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
