@@ -1,0 +1,50 @@
+body {
+	font-family: 'Tangerine', cursive;
+/*	font-family: 'La Belle Aurore', cursive;*/
+}
+
+.svgViz {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* --- Book chart --- */
+
+/*.term {
+	font-family: 'Eagle Lake', cursive;
+	cursor: default;
+	text-anchor: middle;
+}*/
+
+.book-title {
+	cursor: default;
+	fill: #343434;
+	text-anchor: middle;
+	opacity: 0.9;
+	font-family: 'Tangerine', cursive;
+}
+
+.author-path, .letter-path {
+	fill: none;
+}
+
+/* --- Tooltip --- */
+
+.tooltip-wrapper {
+	font-family: 'Eagle Lake', cursive;
+	font-size: 11px;
+	pointer-events: none;
+	text-anchor: middle;
+	text-shadow: 0 1px 4px white, 1px 0 4px white, -1px 0 4px white, 0 -1px 4px white;
+}
+
+.tooltip-name {
+	font-size: 19px;
+	/*fill: white;*/
+}
+
+.tooltip-rank {
+	font-size: 11px;
+	/*fill: white;*/
+}
