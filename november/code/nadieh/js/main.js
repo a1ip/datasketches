@@ -1,4 +1,21 @@
 
+var margin = {
+  top: 60,
+  right: 10,
+  bottom: 10,
+  left: 60
+};
+var size = 1600;
+var width = size - 10 - margin.right;
+var height = size - 10 - margin.bottom;
+
+var actualWidth = window.innerWidth - 10 - margin.right - 50;
+var scaling =  Math.max(+round2(actualWidth / (width+150)), 0.5);
+
+//Adjust the width of the HTML for smaller windows that otherwise get extra white space to the right...
+d3.select("html").style("width", ((width+150)*scaling + 40 + (isMobile ? 20 : 0)) + "px");
+
+
 //Remove all inline SVGs and don't draw any SVGs if it's mobile
 //Instead draw an image
 if(isMobile) {
@@ -14,23 +31,6 @@ if(isMobile) {
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Adjust SVG containers //////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-
-
-var margin = {
-  top: 60,
-  right: 10,
-  bottom: 10,
-  left: 60
-};
-var size = 1600;
-var width = size - 10 - margin.right;
-var height = size - 10 - margin.bottom;
-
-var actualWidth = window.innerWidth - 10 - margin.right - 50;
-var scaling =  Math.max(+round2(actualWidth / (width+150)), 0.5);
-
-//Adjust the width of the HTML for smaller windows that otherwise get extra white space to the right...
-d3.select("html").style("width", ((width+150)*scaling + 40) + "px");
 
 //SVG container
 var svg = d3.select('#bookChart')
@@ -454,6 +454,8 @@ function mouseOutAll(d) {
 		.style("opacity", function(b) { return b.values[0].favAuthor === 1 ? 0.9 : 0.4; });
 }//function mouseOutAll
 
+}//else isMobile
+
 ///////////////////////////////////////////////////////////////////////////
 /////////////////////////// Extra functions ///////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -462,5 +464,3 @@ function mouseOutAll(d) {
 function round2(num) {
 	return (Math.round(num * 100)/100).toFixed(2);
 }//round2
-
-}//else isMobile
