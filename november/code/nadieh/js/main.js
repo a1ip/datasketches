@@ -7,68 +7,102 @@ var margin = {
 var size = 1600;
 var width = size - 10 - margin.right;
 var height = size - 10 - margin.bottom;
+
+var actualWidth = window.innerWidth - 10 - margin.right - 50;
+var scaling =  Math.max(+round2(actualWidth / (width+150)), 0.5);
 	
 //SVG container
 var svg = d3.select('#bookChart')
 	.append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom)
+	.attr("width", width*scaling + margin.left + margin.right)
+	.attr("height", height*scaling + margin.top + margin.bottom)
+	//.attr("viewBox", "0 0 " + actualWidth + " " + height)
 	.on("mouseover", function(d) { 
 		clearTimeout(highlightBookTimer);
 	})
-	.on("mouseout", mouseOutAll);
+	.on("mouseout", mouseOutAll)
+	// .call(d3.zoom()
+ //    	.scaleExtent([0.8, 5])
+ //    	.on("zoom", zoomed))
+	.append("g")
+	.attr("class", "scale-wrapper");
 
-var g = svg.append("g").attr("class", "top-wrapper")
-	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")")
-	.style("isolation", "isolate");	
+var gScale = svg.append("g").attr("class", "margin-wrapper")
+	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
+var g = gScale.append("g").attr("class", "top-wrapper");
 
 //SVG container 2
 var svgb = d3.select('#lineChart')
 	.append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom);
+	.attr("width", width*scaling + margin.left + margin.right)
+	.attr("height", height*scaling + margin.top + margin.bottom)
+	.append("g")
+	.attr("class", "scale-wrapper");
 
-var gb = svgb.append("g").attr("class", "top-wrapper-lines")
-	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")")
-	.style("isolation", "isolate");		
+var gbScale = svgb.append("g").attr("class", "margin-wrapper")
+	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
+var gb = gbScale.append("g").attr("class", "top-wrapper");
 
-// svg.call(d3.zoom()
-//     .scaleExtent([0.5, 10])
-//     .on("zoom", zoomed));
+//Adjust the sizes of the two inline SVGs
+d3.selectAll("#areaChart, #termChart").select("svg")
+	.attr("width", width*(scaling*1660/1600) + margin.left + margin.right)
+	.attr("height", height*(scaling*1660/1600) + margin.top + margin.bottom);
+
+//Rescale the two SVGs that will get build up below, since I build it around 1600px
+d3.selectAll("#bookChart, #lineChart").select(".scale-wrapper")
+	.attr("transform", "scale(" + scaling + ")");	
+
+d3.selectAll("#totalChartWrapper")
+	.style("width", (width+150)*scaling + "px")
+	.style("height", (height+150)*scaling + "px");	
+
 
 // function zoomed() {
-//   g.attr("transform", d3.event.transform);
+// 	if (d3.event.sourceEvent.type === 'mousemove') {
+// 		console.log(d3.event.transform)
+// 	  	g.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
+// 	  	gb.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
+	  	
+// 	  	//var newScale = JSON.parse(JSON.stringify(d3.event.transform.k));
+// 	  	//newScale *= 1660/1600;
+// 	  	d3.select("#areaChart").select("#term-areas")
+// 	  		.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
+// 	  	d3.select("#termChart").select("#terms")
+// 	  		.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
+//   	}
 // }
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////// Create the filter ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-//Container for the gradients
-var defs = svg.append("defs");
+// //Container for the gradients
+// var defs = svg.append("defs");
 
-//Filter for the outside glow
-defs.append("filter")
-	.attr("id", "blur")
-	.attr("height", "300%")	
-	.attr("width", "300%")	//increase the width of the filter region to remove blur "boundary"
-	.attr("x", "-100%")
-	.attr("y", "-100%")
-	.append("feGaussianBlur")
-	.attr("stdDeviation", 40);
+// //Filter for the outside glow
+// defs.append("filter")
+// 	.attr("id", "blur")
+// 	.attr("height", "300%")	
+// 	.attr("width", "300%")	//increase the width of the filter region to remove blur "boundary"
+// 	.attr("x", "-100%")
+// 	.attr("y", "-100%")
+// 	.append("feGaussianBlur")
+// 	.attr("stdDeviation", 40);
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////// Adjust a few things of the inline SVGs //////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-d3.select("#term-areas").selectAll("ellipse")
-	//.style("mix-blend-mode", "multiply")
-	.style("opacity", 0.4)
-	.style("filter", "url(#blur)");
+// d3.select("#term-areas").selectAll("ellipse")
+// 	//.style("mix-blend-mode", "multiply")
+// 	.style("opacity", 0.4)
+// 	.style("filter", "url(#blur)");
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Create the scales //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
+
+var hoverColor = "#260f4c";
 
 //Position scale
 var posScale = d3.scaleLinear()
@@ -115,11 +149,16 @@ var rMiniScale = d3.scaleSqrt()
 
 var highlightBookTimer;
 
+function waitABit(delay, callback) {
+	setTimeout(function() { callback(null); }, delay);
+};
+
 d3.queue() 
-  .defer(d3.csv, "../../data/nadieh/topAuthorBooksLocationsUpdated.csv")
+  .defer(d3.csv, "../../data/nadieh/topAuthorBooksLocationsUpdated.csv") //"../../data/nadieh/data.csv"
+  .defer(waitABit, 500)
   .await(draw);
   	
-function draw(error, books) {
+function draw(error, books, universe) {
 
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////// Final data prep /////////////////////////////
@@ -199,7 +238,6 @@ function draw(error, books) {
 	///////////////////////////////////////////////////////////////////////////
 						
 	var bookGroup = g.append("g").attr("class","book-wrapper");
-	var hoverColor = "#260f4c";
 
 	var bookElements = bookGroup.selectAll(".book")
 		.data(books.sort(function(a,b) { return a.favAuthor - b.favAuthor || b.num_ratings - a.num_ratings; }), function(d) { return d.id; })

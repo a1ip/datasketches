@@ -1,12 +1,102 @@
 body {
 	font-family: 'Tangerine', cursive;
+	/*text-align: center;*/
 /*	font-family: 'La Belle Aurore', cursive;*/
 }
 
 .svgViz {
 	position: absolute;
-	top: 0;
-	left: 0;
+	/*top: 200;*/
+	/*left: 0;*/
+}
+
+#totalChartWrapper {
+	position: relative;
+	margin: 0 auto;
+}
+
+/* --- Title --- */
+
+#headerTitle {
+	text-align: center;
+	font-family: 'Tangerine', cursive;
+	text-anchor: middle;
+	fill: #4c4c4c;
+}
+
+.title-magic {
+	font-size: 140px;
+	font-weight: 700;
+}
+
+.title-rest {
+	font-size: 50px;	
+}
+
+/* --- Intro text --- */
+
+#subtitle {
+	max-width: 1000px;
+	padding: 40px 50px;
+	margin: 0 auto;
+	font-family: 'Ek Mukta', sans-serif;
+	font-size: 15px;
+	font-weight: 300;
+	line-height: 170%;
+	text-align: left;
+	color: #353535;	
+	-webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+}
+
+#subtitle p {
+	margin-top: 0px;
+	margin-bottom: 20px;
+}
+
+.fw400 {
+	font-weight: 400;
+}
+
+.fw600 {
+	font-weight: 600;
+}
+
+.fw700 {
+	font-weight: 700;
+}
+
+.eagle {
+	font-family: 'Eagle Lake', cursive;
+	font-size: 0.9em;
+}
+
+.tang {
+	font-family: 'Tangerine', cursive;
+	font-size: 1.8em;
+}
+
+.fs090 {
+	font-size: 0.9em;
+}
+.fs125 {
+	font-size: 1.25em;
+}
+.fs150 {
+	font-size: 1.5em;
+}
+
+.blue {
+	color: #1581d7;
+}
+.grey {
+	color: #959595;
+}
+
+.subtitle-intro {
+	font-weight: 600;
+	font-size: 22px;
 }
 
 /* --- Book chart --- */
