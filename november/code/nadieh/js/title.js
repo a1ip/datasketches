@@ -7,8 +7,10 @@ var margin = {
 var width = 720;
 var height = 200;
 
+var widthFont = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
 //Sort of based on :https://www.smashingmagazine.com/2016/05/fluid-typography/
-d3.select("#subtitle").style("font-size", Math.min( Math.max(11 + (15 - 11) * (window.screen.width - 400)/(1000 - 400),11), 15) + "px" );
+d3.select("#subtitle").style("font-size", Math.min( Math.max(11 + (15 - 11) * (widthFont - 400)/(1000 - 400),11), 15) + "px" );
 
 //SVG container
 var svg = d3.select('#headerTitle')

@@ -23,7 +23,10 @@ if(isMobile) {
 
 	var elem = document.createElement("img");
 	//elem.setAttribute("height", "768");
-	elem.setAttribute("width", window.innerWidth - 10);
+	var width = window.innerWidth
+		|| document.documentElement.clientWidth
+		|| document.body.clientWidth;
+	elem.setAttribute("width", width - 10);
 	elem.src = 'img/magic-is-everywhere-mobile-small.jpg';
 	document.getElementById("totalChartWrapper").appendChild(elem);
 } else {
