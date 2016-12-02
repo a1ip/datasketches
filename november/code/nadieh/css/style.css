@@ -1,6 +1,11 @@
+html {
+    margin:    0 auto;
+    /*max-width: 900px;*/
+}
+
 body {
 	font-family: 'Tangerine', cursive;
-	/*text-align: center;*/
+	text-align: center;
 /*	font-family: 'La Belle Aurore', cursive;*/
 }
 
@@ -58,11 +63,9 @@ body {
 .fw400 {
 	font-weight: 400;
 }
-
 .fw600 {
 	font-weight: 600;
 }
-
 .fw700 {
 	font-weight: 700;
 }
@@ -71,7 +74,6 @@ body {
 	font-family: 'Eagle Lake', cursive;
 	font-size: 0.9em;
 }
-
 .tang {
 	font-family: 'Tangerine', cursive;
 	font-size: 1.8em;
@@ -94,9 +96,19 @@ body {
 	color: #959595;
 }
 
-.subtitle-intro {
-	font-weight: 600;
-	font-size: 22px;
+.mobile {
+	display: none;
+}
+
+a, a:link, a:visited, a:active {
+  color: #1581d7;
+  border-bottom: 1px dotted rgba(23, 165, 84, .5);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #1581d7;
 }
 
 /* --- Book chart --- */

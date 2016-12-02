@@ -7,6 +7,9 @@ var margin = {
 var width = 720;
 var height = 200;
 
+//Sort of based on :https://www.smashingmagazine.com/2016/05/fluid-typography/
+d3.select("#subtitle").style("font-size", Math.min( Math.max(11 + (15 - 11) * (window.screen.width - 400)/(1000 - 400),11), 15) + "px" );
+
 //SVG container
 var svg = d3.select('#headerTitle')
 	.append("svg")
@@ -15,37 +18,20 @@ var svg = d3.select('#headerTitle')
 	.append("g")
 	.attr("transform", "translate(" + (margin.left + width/2) + "," + (margin.top) + ")");
 
-///////////////////////////////////////////////////////////////////////////
-////////////////////////// Create the gradient ////////////////////////////
-///////////////////////////////////////////////////////////////////////////
+var isMobile = window.screen.width < 400 ? true : false;
 
-// var defs = svg.append("defs");
-
-// var colors = ["#FFE600", "#FFDC00","#FFCA00","#FFA400","#FF7900","#FF5600","#FF3400","#FF1C00","#D90000","#C52B00","#8F1A31","#AC0062",
-// 		"#8D0358","#860062","#72217E","#53357E","#30357F","#254688","#3050B3","#0054E3","#0081E2","#2DACE1","#00C5ED","#00CDD4","#00DECF","#00CDC5",
-// 		"#0AB197","#0AB197","#0AB15D","#0AA200","#35BD00","#77E100","#A9E100","#CDE600","#F2F500"];
-// var colorScale = d3.scaleLinear()
-// 	.range(colors)
-// 	.domain(d3.range(colors.length));
-
-// //Create the gradient
-// defs.append("linearGradient")
-// 	.attr("id", "rainbow")
-// 	.attr("x1", "0%").attr("y1", "0%")
-// 	.attr("x2", "100%").attr("y2", "0%")
-// 	.selectAll("stop") 
-// 	.data(colorScale.range())                  
-//    	.enter().append("stop")
-// 	.attr("offset", function(d,i) { return i/(colorScale.range().length-1); })   
-//     .attr("stop-color", function(d) { return d; });
+if(isMobile) {
+	d3.selectAll(".mobile").style("display", "block");
+	d3.selectAll(".desktop").style("display", "none");
+}
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////// Create the text //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
 svg.append("image")
-	.attr("xlink:href", "img/fuzzy-magic-3.jpg")
-	.attr("x", -250)
+	.attr("xlink:href", "img/fuzzy-magic-4.jpg")
+	.attr("x", -240)
 	.attr("y", -70)
 	.attr("width", 500)
 	.attr("height", 300)

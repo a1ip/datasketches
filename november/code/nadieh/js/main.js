@@ -1,3 +1,21 @@
+
+//Remove all inline SVGs and don't draw any SVGs if it's mobile
+//Instead draw an image
+if(isMobile) {
+	d3.select("#totalChartWrapper").selectAll("svg").remove();
+
+	var elem = document.createElement("img");
+	//elem.setAttribute("height", "768");
+	elem.setAttribute("width", window.innerWidth - 10);
+	elem.src = 'img/magic-is-everywhere-mobile-small.jpg';
+	document.getElementById("totalChartWrapper").appendChild(elem);
+} else {
+
+///////////////////////////////////////////////////////////////////////////
+////////////////////////// Adjust SVG containers //////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+
 var margin = {
   top: 60,
   right: 10,
@@ -10,20 +28,17 @@ var height = size - 10 - margin.bottom;
 
 var actualWidth = window.innerWidth - 10 - margin.right - 50;
 var scaling =  Math.max(+round2(actualWidth / (width+150)), 0.5);
-	
+
+//Adjust the width of the HTML for smaller windows that otherwise get extra white space to the right...
+d3.select("html").style("width", ((width+150)*scaling + 40) + "px");
+
 //SVG container
 var svg = d3.select('#bookChart')
 	.append("svg")
 	.attr("width", width*scaling + margin.left + margin.right)
 	.attr("height", height*scaling + margin.top + margin.bottom)
-	//.attr("viewBox", "0 0 " + actualWidth + " " + height)
-	.on("mouseover", function(d) { 
-		clearTimeout(highlightBookTimer);
-	})
+	.on("mouseover", function(d) { clearTimeout(highlightBookTimer); })
 	.on("mouseout", mouseOutAll)
-	// .call(d3.zoom()
- //    	.scaleExtent([0.8, 5])
- //    	.on("zoom", zoomed))
 	.append("g")
 	.attr("class", "scale-wrapper");
 
@@ -56,22 +71,6 @@ d3.selectAll("#totalChartWrapper")
 	.style("width", (width+150)*scaling + "px")
 	.style("height", (height+150)*scaling + "px");	
 
-
-// function zoomed() {
-// 	if (d3.event.sourceEvent.type === 'mousemove') {
-// 		console.log(d3.event.transform)
-// 	  	g.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
-// 	  	gb.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
-	  	
-// 	  	//var newScale = JSON.parse(JSON.stringify(d3.event.transform.k));
-// 	  	//newScale *= 1660/1600;
-// 	  	d3.select("#areaChart").select("#term-areas")
-// 	  		.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
-// 	  	d3.select("#termChart").select("#terms")
-// 	  		.attr("transform", "translate(" + d3.event.transform.x + "," + d3.event.transform.y + ")");
-//   	}
-// }
-
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////// Create the filter ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -97,6 +96,9 @@ d3.selectAll("#totalChartWrapper")
 // 	//.style("mix-blend-mode", "multiply")
 // 	.style("opacity", 0.4)
 // 	.style("filter", "url(#blur)");
+
+d3.select("#terms").selectAll("text")
+	.style("font-family","EagleLake-Regular, cursive");
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Create the scales //////////////////////////////
@@ -461,4 +463,4 @@ function round2(num) {
 	return (Math.round(num * 100)/100).toFixed(2);
 }//round2
 
-
+}//else isMobile
