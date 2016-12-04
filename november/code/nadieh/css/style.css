@@ -4,9 +4,21 @@ html {
 }
 
 body {
-	font-family: 'Tangerine', cursive;
+	/*font-family: 'Tangerine', cursive;*/
+	font-family: 'Ek Mukta', sans-serif;
 	text-align: center;
 /*	font-family: 'La Belle Aurore', cursive;*/
+}
+
+a, a:link, a:visited, a:active {
+  color: #1581d7;
+  border-bottom: 1px dotted rgba(23, 165, 84, .5);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #1581d7;
 }
 
 .svgViz {
@@ -40,9 +52,8 @@ body {
 
 /* --- Intro text --- */
 
-#subtitle {
+.explanation-text {
 	max-width: 1000px;
-	padding: 40px 50px;
 	margin: 0 auto;
 	font-family: 'Ek Mukta', sans-serif;
 	font-size: 15px;
@@ -50,14 +61,35 @@ body {
 	line-height: 170%;
 	text-align: left;
 	color: #353535;	
+	display: inline-block;
+}
+
+#subtitle {
+	padding: 40px 50px;
 	-webkit-column-count: 2; /* Chrome, Safari, Opera */
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
 }
 
-#subtitle p {
+#explanation {
+	padding: 40px 50px;
+}
+
+.explanation-text p {
 	margin-top: 0px;
 	margin-bottom: 20px;
+}
+
+.half-width {
+	width: 48%;
+}
+.paddingR10 {
+	padding-right: 2%;
+	float: left;
+}
+.paddingL10 {
+	padding-left: 2%;
+	float: right;
 }
 
 .fw400 {
@@ -81,6 +113,7 @@ body {
 
 .fs090 {
 	font-size: 0.9em;
+	line-height: 1.6em;
 }
 .fs125 {
 	font-size: 1.25em;
@@ -100,24 +133,140 @@ body {
 	display: none;
 }
 
-a, a:link, a:visited, a:active {
-  color: #1581d7;
-  border-bottom: 1px dotted rgba(23, 165, 84, .5);
-  text-decoration: none;
+/* --- Legend --- */
+
+#bookTitle {
+	text-align: center;
+	cursor: default;
+	color: #343434;
+	opacity: 0.9;
+	font-family: 'Tangerine', cursive;
+	padding-top: 10px;
 }
 
-a:hover {
-  text-decoration: none;
-  border-bottom: 1px solid #1581d7;
+#span-visible, #span-become-visible {
+	color: #343434;
 }
+#span-invisible {
+	color: white;
+}
+
+.span-hidden {
+	color: rgba(0,0,0,0);
+}
+
+.letter-legend {
+	/*font-family: 'Eagle Lake', cursive;*/
+	font-family: 'Ek Mukta', sans-serif;
+	/*font-family: 'Tangerine', cursive;*/
+	font-weight: 400;
+	fill: white;
+	text-anchor: middle;
+}
+
+.text-circle-legend {
+	text-anchor: middle;
+	fill: #343434;
+	cursor: default;
+}
+.subtext-circle-legend {
+	fill: #959595;
+	text-anchor: middle;
+	cursor: default;
+}
+
+/* --- Author images section --- */
+
+#authorImages {
+	/*padding: 0% 10%;*/
+	width: 100%;
+}
+
+.author-row {
+	/*width: 100%;*/
+	padding-bottom: 20px;
+	display: inline-block;
+}
+
+.author-img {
+	width: 22%;
+	padding-right: 3%;
+}
+.author-text {
+	width: 74%;
+	text-align: left
+}
+
+.author-img, .author-text {
+	float: left;
+}
+
+.author-row p {
+	font-size: 0.8em;
+	line-height: 1.5em;
+	margin-bottom: 0px;
+}
+
+.author-row h3, .legend-top-title {
+	margin-top: 0px;
+    margin-bottom: 0.5em;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.brandon {
+	color: #00c176;
+}
+.patrick {
+	color: #FABE28;
+}
+.rowling {
+	color: #FF003C;
+}
+.terry {
+	font-weight: 400;
+	color: #34ceed;
+}
+.brent {
+	font-weight: 400;
+	color: #FF8A00;
+}
+
+/* --- Credits --- */
+
+#credits {
+	padding: 5px 50px 25px 50px;
+	text-align: center;
+}
+
+.credit-bold {
+	font-weight: 600;
+	font-size: 0.9em;
+	/*color: #1581d7;*/
+}
+
+.credit-divider {
+	color: #b7b7b7;
+	font-weight: 600;
+	font-size: 0.9em;
+	padding: 0px 5px;
+}
+
+.credit-note {
+	margin-top: 0px;
+	font-size: 0.8em;
+	font-weight: 400;
+	/*color: #656565;*/
+}
+
 
 /* --- Book chart --- */
 
-/*.term {
+.term {
 	font-family: 'Eagle Lake', cursive;
 	cursor: default;
 	text-anchor: middle;
-}*/
+}
 
 .book-title {
 	cursor: default;
@@ -127,7 +276,7 @@ a:hover {
 	font-family: 'Tangerine', cursive;
 }
 
-.author-path, .letter-path {
+.author-path, .letter-path, .letter-path-legend {
 	fill: none;
 }
 

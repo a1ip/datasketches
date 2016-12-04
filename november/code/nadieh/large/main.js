@@ -1,4 +1,3 @@
-
 var margin = {
   top: 60,
   right: 10,
@@ -8,101 +7,68 @@ var margin = {
 var size = 1600;
 var width = size - 10 - margin.right;
 var height = size - 10 - margin.bottom;
-
-var actualWidth = window.innerWidth - 10 - margin.right - 50;
-var scaling =  Math.max(+round2(actualWidth / (width+150)), 0.5);
-
-//Adjust the width of the HTML for smaller windows that otherwise get extra white space to the right...
-d3.select("html").style("width", ((width+150)*scaling + 40 + (isMobile ? 20 : 0)) + "px");
-
-//Angle scale for the letter
-var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-var angleScale = d3.scaleOrdinal()
-	.domain(alphabet)
-	.range(d3.range(-0.5*Math.PI,1.5*Math.PI, 2*Math.PI/26));
-
-//Remove all inline SVGs and don't draw any SVGs if it's mobile
-//Instead draw an image
-if(isMobile) {
-	d3.select("#totalChartWrapper").selectAll("svg").remove();
-
-	var link = document.createElement('a');
-	// link.setAttribute('href', 'www.example.com'); // set link path
-    link.href = "img/magic-is-everywhere-mobile-large.jpg"; //can be done this way too
-
-	var elem = document.createElement("img");
-	//elem.setAttribute("height", "768");
-	var width = window.innerWidth
-		|| document.documentElement.clientWidth
-		|| document.body.clientWidth;
-
-	elem.setAttribute("width", width - 10);
-	elem.src = "img/magic-is-everywhere-mobile-small.jpg";
-	//document.getElementById("totalChartWrapper").appendChild(elem);
-
-   	link.appendChild(elem);
-   	document.getElementById("totalChartWrapper").appendChild(link);
-
-   	//Create the legend, but make it static
-	 createLegend(legendBook.title, angleScale, alphabet);
-
-} else {
-
-///////////////////////////////////////////////////////////////////////////
-////////////////////////// Adjust SVG containers //////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
+	
 //SVG container
 var svg = d3.select('#bookChart')
 	.append("svg")
-	.attr("width", width*scaling + margin.left + margin.right)
-	.attr("height", height*scaling + margin.top + margin.bottom)
-	.on("mouseover", function(d) { clearTimeout(highlightBookTimer); })
-	.on("mouseout", mouseOutAll)
-	.append("g")
-	.attr("class", "scale-wrapper");
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom)
+	.on("mouseover", function(d) { 
+		clearTimeout(highlightBookTimer);
+	})
+	.on("mouseout", mouseOutAll);
 
-var gScale = svg.append("g").attr("class", "margin-wrapper")
-	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
-var g = gScale.append("g").attr("class", "top-wrapper");
+var g = svg.append("g").attr("class", "top-wrapper")
+	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")")
+	.style("isolation", "isolate");	
 
 //SVG container 2
 var svgb = d3.select('#lineChart')
 	.append("svg")
-	.attr("width", width*scaling + margin.left + margin.right)
-	.attr("height", height*scaling + margin.top + margin.bottom)
-	.append("g")
-	.attr("class", "scale-wrapper");
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom);
 
-var gbScale = svgb.append("g").attr("class", "margin-wrapper")
-	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
-var gb = gbScale.append("g").attr("class", "top-wrapper");
+var gb = svgb.append("g").attr("class", "top-wrapper-lines")
+	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")")
+	.style("isolation", "isolate");		
 
-//Adjust the sizes of the two inline SVGs
-d3.selectAll("#areaChart, #termChart").select("svg")
-	.attr("width", width*(scaling*1660/1600) + margin.left + margin.right)
-	.attr("height", height*(scaling*1660/1600) + margin.top + margin.bottom);
+// svg.call(d3.zoom()
+//     .scaleExtent([0.5, 10])
+//     .on("zoom", zoomed));
 
-//Rescale the two SVGs that will get build up below, since I build it around 1600px
-d3.selectAll("#bookChart, #lineChart").select(".scale-wrapper")
-	.attr("transform", "scale(" + scaling + ")");	
+// function zoomed() {
+//   g.attr("transform", d3.event.transform);
+// }
 
-d3.selectAll("#totalChartWrapper")
-	.style("width", (width+150)*scaling + "px")
-	.style("height", (height+150)*scaling + "px");	
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////// Create the filter ////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+//Container for the gradients
+var defs = svg.append("defs");
+
+//Filter for the outside glow
+defs.append("filter")
+	.attr("id", "blur")
+	.attr("height", "300%")	
+	.attr("width", "300%")	//increase the width of the filter region to remove blur "boundary"
+	.attr("x", "-100%")
+	.attr("y", "-100%")
+	.append("feGaussianBlur")
+	.attr("stdDeviation", 40);
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////// Adjust a few things of the inline SVGs //////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-d3.select("#terms").selectAll("text")
-	.style("font-family","'Eagle Lake', cursive");
+// d3.select("#term-areas").selectAll("ellipse")
+// 	//.style("mix-blend-mode", "multiply")
+// 	.style("opacity", 0.4)
+// 	.style("filter", "url(#blur)");
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Create the scales //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-
-var hoverColor = "#260f4c";
 
 //Position scale
 var posScale = d3.scaleLinear()
@@ -133,6 +99,11 @@ var favStrokecale = d3.scaleOrdinal()
 	.range(favColors)
 	.unknown("#f2f2f2");
 
+//Angle scale for the letter
+var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+var angleScale = d3.scaleOrdinal()
+	.domain(alphabet)
+	.range(d3.range(-0.5*Math.PI,1.5*Math.PI, 2*Math.PI/26));
 //Scale of the mini circles around the bigger ones
 var rMiniScale = d3.scaleSqrt()
 	.domain(rScale.range())
@@ -143,18 +114,12 @@ var rMiniScale = d3.scaleSqrt()
 ///////////////////////////////////////////////////////////////////////////
 
 var highlightBookTimer;
-var legendBook;
-
-function waitABit(delay, callback) {
-	setTimeout(function() { callback(null); }, delay);
-};
 
 d3.queue() 
-  .defer(d3.csv, "../../data/nadieh/topAuthorBooksLocationsUpdated.csv") //"../../data/nadieh/data.csv"
-  .defer(waitABit, 500)
+  .defer(d3.csv, "../../../data/nadieh/topAuthorBooksLocationsUpdated.csv") //"../../data/nadieh/data.csv"
   .await(draw);
   	
-function draw(error, books, universe) {
+function draw(error, books) {
 
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////// Final data prep /////////////////////////////
@@ -172,9 +137,6 @@ function draw(error, books, universe) {
 		d.favAuthor = +d.favAuthor;
 		d.pathOrder = +d.pathOrder;
 	});//forEach
-
-	//Save the first for the legend
-	legendBook = books[0];
 	
 	//Nest the books per author
 	var booksAuthor = d3.nest()
@@ -237,6 +199,7 @@ function draw(error, books, universe) {
 	///////////////////////////////////////////////////////////////////////////
 						
 	var bookGroup = g.append("g").attr("class","book-wrapper");
+	var hoverColor = "#260f4c";
 
 	var bookElements = bookGroup.selectAll(".book")
 		.data(books.sort(function(a,b) { return a.favAuthor - b.favAuthor || b.num_ratings - a.num_ratings; }), function(d) { return d.id; })
@@ -433,12 +396,6 @@ function draw(error, books, universe) {
 	  .attr("y", 17)
 	  .text("");
 
-	///////////////////////////////////////////////////////////////////////////
-	/////////////////////////// Create the legend /////////////////////////////
-	///////////////////////////////////////////////////////////////////////////
-
-	 createLegend(legendBook.title, angleScale, alphabet);
-
 }//draw
 
 ///////////////////////////////////////////////////////////////////////////
@@ -457,8 +414,6 @@ function mouseOutAll(d) {
 		.style("opacity", function(b) { return b.values[0].favAuthor === 1 ? 0.9 : 0.4; });
 }//function mouseOutAll
 
-}//else isMobile
-
 ///////////////////////////////////////////////////////////////////////////
 /////////////////////////// Extra functions ///////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -468,10 +423,4 @@ function round2(num) {
 	return (Math.round(num * 100)/100).toFixed(2);
 }//round2
 
-//Function to only run once after the last transition ends
-function endall(transition, callback) { 
-	var n = 0; 
-	transition 
-		.each(function() { ++n; }) 
-		.each("end", function() { if (!--n) callback.apply(this, arguments); }); 
-}//endall
+

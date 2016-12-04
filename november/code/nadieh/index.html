@@ -24,13 +24,13 @@
 
 		<div id="headerTitle"></div>
 
-		<div id="subtitle">
+		<div id="subtitle" class="explanation-text">
 			<p><span class="fw600 fs125 blue">Patterns in Fantasy book titles </span> Fantasy books are a wonderful genre within literature. With their brick sized formats and series spanning a dozen books or more, many amazing worlds, very different than ours, have been created by their writers.</p>
 			<p>I've been a fan of the genre since my teenage years and I've always had the idea that the titles of Fantasy books seem to follow certain patterns. To investigate further, I took the top 100 best-selling Fantasy authors from Amazon (± Nov '16) and the top 10 (max) books of each of these authors from Goodreads. This resulted in a dataset of about 850 books. Using text-mining on the titles of the books I looked for general subjects/terms, such as <span class="fw400">fire</span>, <span class="fw400">royal</span>, <span class="fw400">blood</span>, & more. Finally, these titles were clustered in a 2-dimensional plane to be visualized, which placed books with similar themed titles together.</p>
 			<p>Magic is the most common word in all titles. And titles relating directly to magic can be found throughout the visual, indicating that the one thing that binds fantasy books together is, not surprisingly, <span class="tang fw700">Magic</span></p>
 			<p class="fs090 grey">The visual below shows the resulting patterns found. Each <span class="fs150 blue">●</span> represents a book. A <span class="fs125 blue">⌒</span> connects books by the same author. Areas of similar subjects in titles have been highlighted by colored oval areas and the corresponding <span class="eagle">term</span>. See a more extensive legend below the visual.</p>
-			<p class="fs090 grey desktop">Tip: use your mouse- or trackpad or ctrl/cmd+ to zoom in on the visual so all the titles become readable, or go to <a href="" target = "_new">a very large standalone version</a> (or see <a href="img/magic-is-everywhere-mobile-large.jpg" target = "_new">a large image</a> if things are loading too slow).</p>
-			<p class="fs090 grey mobile">Tip: use your fingers to pinch/zoom into the visual so more the titles become readable, or go to <a href="img/magic-is-everywhere-mobile-large.jpg" target = "_new">a very large standalone image</a>. The desktop version is mcuh sharper & interactive!</p>
+			<p class="fs090 grey desktop">Tip: use your mouse- or trackpad or ctrl/cmd+ to zoom in on the visual so all the titles become readable, or go to for <a href="large/index.html" target = "_new">a very large standalone version</a> (or see <a href="img/magic-is-everywhere-mobile-large.jpg" target = "_new">a large image</a> if things are loading too slow).</p>
+			<p class="fs090 grey mobile">Tip: use your fingers to pinch/zoom into the visual so more titles become readable. Or go to for <a href="img/magic-is-everywhere-mobile-large.jpg" target = "_new">a very large standalone image</a>. The desktop version is much sharper & interactive!</p>
 		</div>
 
 		<div id="totalChartWrapper">
@@ -80,7 +80,7 @@
 			<!-- The term texts of the blurred areas -->
 			<div class="svgViz" id="termChart">
 				<svg x="0px" y="0px" width="1750px" height="1750px" viewBox="-50 -50 1750 1750">
-					<g class="scale-wrapper" id="terms" style="font-family:'EagleLake-Regular, cursive'; opacity: 0.6;">
+					<g class="scale-wrapper" id="terms" style="font-family: 'Eagle Lake', cursive; opacity: 0.6;">
 						<text transform="matrix(1 0 0 1 832.6064 754.2277)" style="fill:#06514A; font-size:49px; letter-spacing:6;">Magic</text>
 						<text transform="matrix(1 0 0 1 528.722 1005.4401)" style="fill:#933309; font-size:42px; letter-spacing:5;">Name</text>
 						<text transform="matrix(1 0 0 1 1078.7457 550.7402)" style="fill:#5E083B; font-size:43px; letter-spacing:5;">Bad</text>
@@ -122,7 +122,66 @@
 			<div class="svgViz" id="bookChart"></div>
 		</div>
 
+		<div id="explanation" class="explanation-text">
+
+			<div class="half-width paddingR10">
+				<p>Since books by the same author are connected through curved lines I wanted to add a personal touch by highlighting my favorite authors & books. The colors below correspond to those in the visual above.</p>
+
+				<div id="authorImages">
+					<div class="author-row">
+						<img class="author-img" src="img/author_brandonSanderson_small.jpg">
+						<div class="author-text">
+							<h3 class="brandon">Brandon Sanderson</h3>
+							<p>My absolute favorite author. I started with Mistborn, intrigued by the concept of how the world continues when the "hero" wasn't able to save the day. But it was so much more than that; epic, funny, wonderful magic system. I truly like/love all of Brandon's books. His masterwork <i>the Stormlight Archive</i> especially.</p>
+						</div>
+					</div>
+
+					<div class="author-row">
+						<img class="author-img" src="img/author_patrickRothfuss_small.jpg">
+						<div class="author-text">
+							<h3 class="patrick">Patrick Rothfuss</h3>
+							<p>Started reading <i>the Name of the Wind</i> (part of the Kingkiller Chronicle) when I saw that Brandon recommended him on his site and my gosh what a great story! It's for the same reasons as Brandon; epic & complex magic systems, funny, fast paced & filled with small references to a bigger story.</p>
+						</div>
+					</div>
+
+					<div class="author-row">
+						<img class="author-img" src="img/author_jkRowling_small.jpg">
+						<div class="author-text">
+							<h3 class="rowling">J.K. Rowling</h3>
+							<p>Yes, I was about 11 when I discovered Harry Potter... So she's one of my favorites due to the nostalgic feelings I still get when thinking about this series.</p>
+						</div>
+					</div>
+				</div>
+
+				<p>But besides these 3 authors I have highlighted several favorite books from <span class="terry">Terry Goodkind's <i>Sword of Truth</i> series</span> that started my love for the fantasy genre and recently I also enjoyed <span class="brent">Brent Week's <i>Night Angel</i> trilogy</span>.</p>
+
+				<p>If you're also a fantasy fan you may have noticed that some big names are not part of my favorite group. This is most likely due to me not having read them. Even though I love fantasy, I don't actually read that often, there are so many other things that I spend my time on (such as creating these kinds of visuals).</p>
+				<p>So if your favorite fantasy author isn't part of my top 3, try to think about the titles of their books and search for their general themes in the map above. Hopefully you'll be able to pick up the "thread" that connects your favorite author's books.</p>
+			</div>
+
+			<div class="half-width paddingR10">
+				<h3 class="legend-top-title">Understanding the swooshes</h3>
+				<p class="fs090 grey">The <span class="desktop">animation</span><span class="mobile">image</span> below shows how to interpret the smaller circles and lines that surround the large book circles. Each letter of the title is marked as a small dot around the big main circle, where <i>a</i> is on top. The other letters are located evenly around the circle. Letters within a word are connected by swooshing arcs. This results in unique patterns for each book title and highlights which letters are most common in a title.</p>
+				<div id="bookTitle">
+					<span class="span-hidden">_</span><span id="span-visible"></span><span id="span-become-visible"></span><span class="span-hidden">_</span><span id="span-invisible"></span>
+				</div>
+				<div id="bookLegend"></div>
+				<p class="fs090 grey" style="padding-top: 20px">I've made a distinction between favorite books, which are completely filled with a color. And books by one of my favorite 3 authors, but which are not truly my favorite books (or I haven't read them). The latter are only stroked with the author's color, but the circle itself is white.</p>
+				<div id="bookLegendCircles"></div>
+				<p class="fs090 grey" style="padding-top: 20px">Finally, the books are scaled according to how many ratings it has on Goodreads. The author links between the books are also scaled, the higher in the Amazon author top 100 the thicker the line between books.</p>
+
+			</div>
+
+		</div>
+
+		<!-- Credits & Data -->
+		<div id="credits" class="explanation-text">
+			<div class="credit-bold">Design, data wrangling in R, & coding with d3.v4.js by <a href="https://twitter.com/NadiehBremer">Nadieh Bremer</a> <span class="credit-divider">|</span> <a href="http://www.visualcinnamon.com/">Visual Cinnamon</a></div>
+			<div class="credit-note">You can get a print of the visualization <a href="../..">in my Society6 store</a> <span class="credit-divider">|</span> Go back to <a href="../..">datasketches' November month</a></div>
+		</div>
+
 		<script src="js/title.js"></script>	
-		<script src="js/main.js"></script>	
+		<script src="js/bookLegend.js"></script>
+		<script src="js/main.js"></script>		
 	</body>
 </html>
