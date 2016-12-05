@@ -58,7 +58,7 @@ a.image-link {
 	max-width: 1000px;
 	margin: 0 auto;
 	font-family: 'Ek Mukta', sans-serif;
-	font-size: calc(11px + (15 - 11) * (100vw - 400px)/(1000 - 400));
+	/*font-size: calc(11px + (15 - 11) * (100vw - 400px)/(1000 - 400));*/
 	font-weight: 300;
 	line-height: 170%;
 	text-align: left;
@@ -291,9 +291,15 @@ a.image-link {
 
 #credits {
 	/*font-size: 15px;*/
+	min-width: 800px;
 	padding-bottom: 25px;
 	text-align: center !important;
 	line-height: normal !important;
+}
+
+#credits p {
+	margin-top: 0px;
+	margin-bottom: 5px;
 }
 
 .credit-bold {

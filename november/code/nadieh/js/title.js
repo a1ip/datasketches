@@ -3,11 +3,12 @@ var isMobile = window.screen.width < 400 ? true : false;
 if(isMobile) {
 	d3.selectAll(".mobile").style("display", "inline-block");
 	d3.selectAll(".desktop").style("display", "none");
-}//if
-
-var widthFont = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-//Sort of based on :https://www.smashingmagazine.com/2016/05/fluid-typography/
-//d3.selectAll(".explanation-text").style("font-size", Math.min( Math.max(11 + (15 - 11) * (widthFont - 400)/(1000 - 400),11), 15) + "px" );
+	d3.selectAll(".explanation-text").style("font-size", 13 + "px" );
+} else {
+	var widthFont = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	//Sort of based on :https://www.smashingmagazine.com/2016/05/fluid-typography/
+	d3.selectAll(".explanation-text").style("font-size", Math.min( Math.max(11 + (15 - 11) * (widthFont - 400)/(1000 - 400),11), 15) + "px" );
+}
 
 //Make the top title
 createTitle();
