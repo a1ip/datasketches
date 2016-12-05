@@ -377,7 +377,7 @@ function createLegend(legendTitle, angleScale, alphabet) {
 					.style("opacity", 1);
 
 				//Repeat the animation
-				//setTimeout(repeatLegend, 5000);
+				setTimeout(repeatLegend, 5000);
 			}//showLetters
 
 		}//repeatLegend

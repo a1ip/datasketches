@@ -1,18 +1,17 @@
 var margin = {
   top: 60,
-  right: 10,
-  bottom: 10,
+  right: 60,
+  bottom: 60,
   left: 60
 };
 var size = 1600;
-var width = size - 10 - margin.right;
-var height = size - 10 - margin.bottom;
+var finalSize = 1750;
 	
 //SVG container
 var svg = d3.select('#bookChart')
 	.append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom)
+	.attr("width", finalSize)
+	.attr("height", finalSize)
 	.on("mouseover", function(d) { 
 		clearTimeout(highlightBookTimer);
 	})
@@ -25,46 +24,19 @@ var g = svg.append("g").attr("class", "top-wrapper")
 //SVG container 2
 var svgb = d3.select('#lineChart')
 	.append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom);
+	.attr("width", finalSize)
+	.attr("height", finalSize);
 
 var gb = svgb.append("g").attr("class", "top-wrapper-lines")
 	.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")")
 	.style("isolation", "isolate");		
 
-// svg.call(d3.zoom()
-//     .scaleExtent([0.5, 10])
-//     .on("zoom", zoomed));
-
-// function zoomed() {
-//   g.attr("transform", d3.event.transform);
-// }
-
-///////////////////////////////////////////////////////////////////////////
-//////////////////////////// Create the filter ////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
-//Container for the gradients
-var defs = svg.append("defs");
-
-//Filter for the outside glow
-defs.append("filter")
-	.attr("id", "blur")
-	.attr("height", "300%")	
-	.attr("width", "300%")	//increase the width of the filter region to remove blur "boundary"
-	.attr("x", "-100%")
-	.attr("y", "-100%")
-	.append("feGaussianBlur")
-	.attr("stdDeviation", 40);
-
 ///////////////////////////////////////////////////////////////////////////
 ///////////////// Adjust a few things of the inline SVGs //////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-// d3.select("#term-areas").selectAll("ellipse")
-// 	//.style("mix-blend-mode", "multiply")
-// 	.style("opacity", 0.4)
-// 	.style("filter", "url(#blur)");
+d3.select("#terms").selectAll("text")
+	.style("font-family","'Eagle Lake', cursive");
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Create the scales //////////////////////////////
@@ -208,6 +180,7 @@ function draw(error, books) {
 		.attr("transform", function(d) { return "translate(" + posScale(d.x) + "," + posScale(d.y) + ")"; })
 		.on("mouseover", function(d) { 
 
+			var el = d3.select(this);
 			//Clear any timer that might still be running
 			clearTimeout(highlightBookTimer);
 			//Don't let it bubble upwards to the SVG element
@@ -219,6 +192,14 @@ function draw(error, books) {
 			//Hover over the title for at least X milliseconds to start this event
 			//Otherwise you get flashing
 			highlightBookTimer = setTimeout( function() {
+
+				//Make the hovered title more readable
+				el.select(".book-title")
+					.style("text-shadow", "0 1px 4px white, 1px 0 4px white, -1px 0 4px white, 0 -1px 4px white")
+					//.moveToFront()
+					.transition().duration(400)
+					.style("opacity", 1)
+					.style("font-size", fontTitleScale.range()[1] + "px");
 
 				//Move the tooltip to the right location
 		      	tooltipName.text(d.author);
@@ -243,7 +224,15 @@ function draw(error, books) {
 		})
 		.on("mouseout", function(d) {
 
+			var el = d3.select(this);
 			clearTimeout(highlightBookTimer);
+
+			//Make the hovered title normal again
+			el.select(".book-title")
+				.style("text-shadow", null)
+				.transition().duration(200)
+				.style("opacity", 0.9)
+				.style("font-size", fontTitleScale(d.num_ratings) + "px");
 
 			//Hide the tooltip
 		    tooltipWrapper.style("opacity", 0);
@@ -375,6 +364,7 @@ function draw(error, books) {
 		})
 		.attr("y", function(d) { return d.titleY; })
 		.style("font-size", function(d) { return fontTitleScale(d.num_ratings) + "px"; })
+		.style("opacity", 0.9)
 		.text(function(d) { return d.title; });
 
 	///////////////////////////////////////////////////////////////////////////

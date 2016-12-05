@@ -115,7 +115,7 @@ a.image-link {
 
 .fs090 {
 	font-size: 0.9em;
-	line-height: 1.6em;
+	/*line-height: 1.6em;*/
 }
 .fs125 {
 	font-size: 1.25em;
@@ -148,7 +148,7 @@ a.image-link {
 	cursor: default;
 	fill: #343434;
 	text-anchor: middle;
-	opacity: 0.9;
+	/*opacity: 0.9;*/
 	font-family: 'Tangerine', cursive;
 	pointer-events: none;
 }
@@ -278,8 +278,9 @@ a.image-link {
 /* --- Credits --- */
 
 #credits {
-	padding: 5px 50px 25px 50px;
-	text-align: center;
+	padding-bottom: 25px;
+	text-align: center !important;
+	line-height: normal !important;
 }
 
 .credit-bold {
