@@ -54,7 +54,7 @@ function createLegend(legendTitle, angleScale, alphabet) {
 		.range([0.2,1.75]);	
 
 	var radiusCircle = rMiniScale(bookLegendRadius);
-	var colorBook = favColorScale(1);
+	var colorBook = "#FF003C";
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////// Draw the fav/non-fav circle legend ///////////////////
@@ -246,8 +246,7 @@ function createLegend(legendTitle, angleScale, alphabet) {
 
 	if(isMobile) {
 		d3.selectAll(".letter-circle-legend, .letter-legend")
-				.transition().duration(1000)
-				.style("opacity", 0);
+				.style("opacity", 1);
 
 		d3.selectAll(".letter-path-legend")
 				.style("opacity", 0.7);
@@ -378,7 +377,7 @@ function createLegend(legendTitle, angleScale, alphabet) {
 					.style("opacity", 1);
 
 				//Repeat the animation
-				setTimeout(repeatLegend, 5000);
+				//setTimeout(repeatLegend, 5000);
 			}//showLetters
 
 		}//repeatLegend

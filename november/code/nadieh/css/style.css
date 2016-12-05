@@ -1,5 +1,5 @@
 html {
-    margin:    0 auto;
+    margin: 0 auto;
     /*max-width: 900px;*/
 }
 
@@ -21,10 +21,12 @@ a:hover {
   border-bottom: 1px solid #1581d7;
 }
 
+a.image-link {
+	border-bottom: none;
+}
+
 .svgViz {
 	position: absolute;
-	/*top: 200;*/
-	/*left: 0;*/
 }
 
 #totalChartWrapper {
@@ -133,6 +135,47 @@ a:hover {
 	display: none;
 }
 
+/* --- Book chart --- */
+
+.term {
+	font-family: 'Eagle Lake', cursive;
+	cursor: default;
+	text-anchor: middle;
+	pointer-events: none;
+}
+
+.book-title {
+	cursor: default;
+	fill: #343434;
+	text-anchor: middle;
+	opacity: 0.9;
+	font-family: 'Tangerine', cursive;
+	pointer-events: none;
+}
+
+.author-path, .letter-path, .letter-path-legend {
+	fill: none;
+	pointer-events: none;
+}
+
+/* --- Tooltip --- */
+
+.tooltip-wrapper {
+	font-family: 'Eagle Lake', cursive;
+	font-size: 11px;
+	pointer-events: none;
+	text-anchor: middle;
+	text-shadow: 0 1px 4px white, 1px 0 4px white, -1px 0 4px white, 0 -1px 4px white;
+}
+
+.tooltip-name {
+	font-size: 19px;
+}
+
+.tooltip-rank {
+	font-size: 11px;
+}
+
 /* --- Legend --- */
 
 #bookTitle {
@@ -224,11 +267,11 @@ a:hover {
 	color: #FF003C;
 }
 .terry {
-	font-weight: 400;
+	/*font-weight: 400;*/
 	color: #34ceed;
 }
 .brent {
-	font-weight: 400;
+	/*font-weight: 400;*/
 	color: #FF8A00;
 }
 
@@ -257,45 +300,4 @@ a:hover {
 	font-size: 0.8em;
 	font-weight: 400;
 	/*color: #656565;*/
-}
-
-
-/* --- Book chart --- */
-
-.term {
-	font-family: 'Eagle Lake', cursive;
-	cursor: default;
-	text-anchor: middle;
-}
-
-.book-title {
-	cursor: default;
-	fill: #343434;
-	text-anchor: middle;
-	opacity: 0.9;
-	font-family: 'Tangerine', cursive;
-}
-
-.author-path, .letter-path, .letter-path-legend {
-	fill: none;
-}
-
-/* --- Tooltip --- */
-
-.tooltip-wrapper {
-	font-family: 'Eagle Lake', cursive;
-	font-size: 11px;
-	pointer-events: none;
-	text-anchor: middle;
-	text-shadow: 0 1px 4px white, 1px 0 4px white, -1px 0 4px white, 0 -1px 4px white;
-}
-
-.tooltip-name {
-	font-size: 19px;
-	/*fill: white;*/
-}
-
-.tooltip-rank {
-	font-size: 11px;
-	/*fill: white;*/
 }

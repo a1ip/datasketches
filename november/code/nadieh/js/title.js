@@ -1,7 +1,7 @@
 var isMobile = window.screen.width < 400 ? true : false;
 
 if(isMobile) {
-	d3.selectAll(".mobile").style("display", "block");
+	d3.selectAll(".mobile").style("display", "inline-block");
 	d3.selectAll(".desktop").style("display", "none");
 }//if
 

@@ -27,8 +27,8 @@ if(isMobile) {
 	d3.select("#totalChartWrapper").selectAll("svg").remove();
 
 	var link = document.createElement('a');
-	// link.setAttribute('href', 'www.example.com'); // set link path
-    link.href = "img/magic-is-everywhere-mobile-large.jpg"; //can be done this way too
+	link.setAttribute('class', 'image-link');
+    link.href = "img/magic-is-everywhere-mobile-large.jpg";
 
 	var elem = document.createElement("img");
 	//elem.setAttribute("height", "768");
@@ -44,7 +44,7 @@ if(isMobile) {
    	document.getElementById("totalChartWrapper").appendChild(link);
 
    	//Create the legend, but make it static
-	 createLegend(legendBook.title, angleScale, alphabet);
+	 createLegend("Harry Potter and the Sorcerer's Stone", angleScale, alphabet);
 
 } else {
 
@@ -245,6 +245,8 @@ function draw(error, books, universe) {
 		.attr("transform", function(d) { return "translate(" + posScale(d.x) + "," + posScale(d.y) + ")"; })
 		.on("mouseover", function(d) { 
 
+			var el = d3.select(this);
+
 			//Clear any timer that might still be running
 			clearTimeout(highlightBookTimer);
 			//Don't let it bubble upwards to the SVG element
@@ -256,6 +258,13 @@ function draw(error, books, universe) {
 			//Hover over the title for at least X milliseconds to start this event
 			//Otherwise you get flashing
 			highlightBookTimer = setTimeout( function() {
+
+				//Make the hovered title more readable
+				el.select(".book-title")
+					.style("text-shadow", "0 1px 4px white, 1px 0 4px white, -1px 0 4px white, 0 -1px 4px white")
+					//.moveToFront()
+					.transition().duration(400)
+					.style("font-size", fontTitleScale.range()[1] + "px");
 
 				//Move the tooltip to the right location
 		      	tooltipName.text(d.author);
@@ -280,7 +289,14 @@ function draw(error, books, universe) {
 		})
 		.on("mouseout", function(d) {
 
+			var el = d3.select(this);
 			clearTimeout(highlightBookTimer);
+
+			//Make the hovered title normal again
+			el.select(".book-title")
+				.style("text-shadow", null)
+				.transition().duration(200)
+				.style("font-size", fontTitleScale(d.num_ratings) + "px");
 
 			//Hide the tooltip
 		    tooltipWrapper.style("opacity", 0);
@@ -468,10 +484,17 @@ function round2(num) {
 	return (Math.round(num * 100)/100).toFixed(2);
 }//round2
 
-//Function to only run once after the last transition ends
-function endall(transition, callback) { 
-	var n = 0; 
-	transition 
-		.each(function() { ++n; }) 
-		.each("end", function() { if (!--n) callback.apply(this, arguments); }); 
-}//endall
+// //Function to only run once after the last transition ends
+// function endall(transition, callback) { 
+// 	var n = 0; 
+// 	transition 
+// 		.each(function() { ++n; }) 
+// 		.each("end", function() { if (!--n) callback.apply(this, arguments); }); 
+// }//endall
+
+// //Bring the clicked thing to the front
+// d3.selection.prototype.moveToFront = function() {
+//   return this.each(function(){
+//     this.parentNode.appendChild(this);
+//   });
+// };	
