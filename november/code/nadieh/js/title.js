@@ -7,7 +7,7 @@ if(isMobile) {
 
 var widthFont = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 //Sort of based on :https://www.smashingmagazine.com/2016/05/fluid-typography/
-d3.selectAll(".explanation-text").style("font-size", Math.min( Math.max(11 + (15 - 11) * (widthFont - 400)/(1000 - 400),11), 15) + "px" );
+//d3.selectAll(".explanation-text").style("font-size", Math.min( Math.max(11 + (15 - 11) * (widthFont - 400)/(1000 - 400),11), 15) + "px" );
 
 //Make the top title
 createTitle();
