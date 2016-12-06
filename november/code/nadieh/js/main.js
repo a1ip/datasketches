@@ -244,7 +244,6 @@ if(isMobile) {
 			.attr("transform", function(d) { return "translate(" + posScale(d.x) + "," + posScale(d.y) + ")"; })
 			.on("mouseover", function(d) { 
 
-				var el = d3.select(this);
 				//Clear any timer that might still be running
 				clearTimeout(highlightBookTimer);
 				//Don't let it bubble upwards to the SVG element
@@ -258,12 +257,13 @@ if(isMobile) {
 				highlightBookTimer = setTimeout( function() {
 
 					//Make the hovered title more readable
-					el.select(".book-title")
+					bookTitles
+						.filter(function(b) { return b.authorRank === d.authorRank; })
 						.style("text-shadow", "0 1px 4px white, 1px 0 4px white, -1px 0 4px white, 0 -1px 4px white")
 						//.moveToFront()
 						.transition().duration(400)
 						.style("opacity", 1)
-						.style("font-size", fontTitleScale.range()[1] + "px");
+						.style("font-size", Math.max(fontTitleScale(d.num_ratings), 25) + "px");
 
 					//Move the tooltip to the right location
 			      	tooltipName.text(d.author);
@@ -288,11 +288,11 @@ if(isMobile) {
 			})
 			.on("mouseout", function(d) {
 
-				var el = d3.select(this);
 				clearTimeout(highlightBookTimer);
 
 				//Make the hovered title normal again
-				el.select(".book-title")
+				bookTitles
+					.filter(function(b) { return b.authorRank === d.authorRank; })
 					.style("text-shadow", null)
 					.transition().duration(200)
 					.style("opacity", 0.9)
@@ -420,8 +420,11 @@ if(isMobile) {
 		///////////////////////////////////////////////////////////////////////////
 			
 		//Place titles above the book circles
-		var bookTitles = bookElements.append("text")
+		var bookTitles = bookGroup.selectAll(".book-title")
+			.data(books.sort(function(a,b) { return a.favAuthor - b.favAuthor || b.num_ratings - a.num_ratings; }), function(d) { return d.id; })
+			.enter().append("text")
 			.attr("class","book-title")
+			.attr("transform", function(d) { return "translate(" + posScale(d.x) + "," + posScale(d.y) + ")"; })
 			.each(function(d) {
 				if(!d.titleX) { d.titleX = 0; }
 				if(!d.titleY) { d.titleY = -(rScale(d.num_ratings)*1.4); }

@@ -68,13 +68,13 @@ a.image-link {
 
 @media screen and (min-width: 1000px) {
   .explanation-text {
-    font-size: 15px;
+    font-size: 15px !important;
   }
 }
 
 @media screen and (max-width: 400px) {
   .explanation-text {
-    font-size: 11px;
+    font-size: 11px !important;
   }
 }
 
@@ -299,7 +299,7 @@ a.image-link {
 
 #credits p {
 	margin-top: 0px;
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 }
 
 .credit-bold {
