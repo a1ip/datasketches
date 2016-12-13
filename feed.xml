@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
+
+	<channel>
+		<title>data sketch|es</title>
+		<atom:link href="http://www.datasketch.es/feed" rel="self" type="application/rss+xml" />
+		<link>http://www.datasketch.es</link>
+		<description>A Nadieh and Shirley collaboration - Creating a data visualization a month on the same topic and sharing the data, sketching and coding steps along the way</description>
+		<image>
+	    	<url>http://www.datasketch.es/img/logo.png</url>
+	      	<link>http://www.datasketch.es</link>
+	  	</image>
+	  	<category>Data Visualization</category>
+	  	<category>Data Art</category>
+	  	<language>en-US</language>
+		
+		<item>
+			<title>July - Movies</title>
+			<link>http://www.datasketch.es/july</link>
+			<guid>http://www.datasketch.es/july</guid>
+			<description><![CDATA[<img width="900" height="400" src="http://www.datasketch.es/img/july-nadieh.jpg" alt="The final July visuals" style="display: block; margin: auto; margin-bottom: 5px;" />
+			<img width="900" height="400" src="http://www.datasketch.es/img/july-shirley.jpg" alt="The final July visuals" style="display: block; margin: auto; margin-bottom: 5px;" />
+			<p>For our very first month we looked into movies that have a personal connection to us. For Nadieh that turned out to be a deep dive into the number of words spoken in all 3 extended editions of the Lord of the Rings. Shirley looked into the top summer movies since the year of her birth. Read more about the exact data + sketch + code that we performed in our write-up...</p>]]></description>
+		</item>
+
+	</channel>
+</rss>
