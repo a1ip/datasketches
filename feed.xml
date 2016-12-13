@@ -20,7 +20,16 @@
 	  	<category>Data Visualization</category>
 	  	<category>Data Art</category>
 	  	<language>en-US</language>
-		
+
+		<item>
+			<title>August - Olympics</title>
+			<link>http://www.datasketch.es/august</link>
+			<guid>http://www.datasketch.es/august</guid>
+			<pubDate>Wed, 31 August 2016 08:00:00 GMT</pubDate>
+			<description><![CDATA[<img width="1020" height="400" src="http://www.datasketch.es/img/august.jpg" alt="The final August visuals" style="display: block; margin: auto; margin-bottom: 5px;" />
+			<p>With both of us Olympics fans we couldn't have any other topic this month. Shirley focused on creating an artful representation of the diving routines, while Nadieh visualized all 5000 gold medal winners of the summer editions since the very first Olympic Games in 1896. Read more about the exact data + sketch + code that we performed in our write-up...</p>]]></description>
+		</item>
+
 		<item>
 			<title>July - Movies</title>
 			<link>http://www.datasketch.es/july</link>
