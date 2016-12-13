@@ -608,8 +608,9 @@ footer a:hover {
 /*-------------- NEWSLETTER -----------------*/
 
 #newsletter {
+  background-color: #fefdfc;
   margin-top: 0px;
-  margin-bottom: 50px;
+  padding-bottom: 50px;
   font-size: 13px;
 }
 
@@ -619,6 +620,7 @@ footer a:hover {
 }
 
 #newsletter #tlemail {
+    background-color: #fefdfc;
     width: 250px;
     height: 29px;
     border: none;
