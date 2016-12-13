@@ -603,3 +603,41 @@ footer a:hover {
   background: -webkit-linear-gradient(to right, rgba(66, 10, 14, 0.2) 1, rgba(0, 0, 0, 0));
   background: linear-gradient(to right, rgba(66, 10, 14, 0.2) 1, rgba(0, 0, 0, 0));
 }*/
+
+
+/*-------------- NEWSLETTER -----------------*/
+
+#newsletter {
+  margin-top: 0px;
+  margin-bottom: 50px;
+  font-size: 13px;
+}
+
+#newsletter label {
+  margin-right: 10px;
+  /*font-weight: 400;*/
+}
+
+#newsletter #tlemail {
+    width: 250px;
+    height: 29px;
+    border: none;
+    border-bottom: 1px solid #33383b;
+    outline: none;
+    padding: 0 10px;
+    color: #e0a390;
+    margin-right: 10px;
+}
+
+#newsletter input[type=submit] {
+    outline: none;
+    border: none;
+    color: white;
+    background-color: #e0a390;
+    height: 40px;
+    width: 120px;
+    padding: 0px;
+    letter-spacing: 2px;
+    margin-top: 10px;
+}
+
