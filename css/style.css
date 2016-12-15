@@ -489,6 +489,12 @@ footer a:hover {
   padding: 5px 0px;
 }
 
+footer .pipe-divider {
+  white-space:pre;
+  color: #9d9d9d;
+  font-weight: bold;
+}
+
 /*------------------ ABOUT PAGE -----------------*/
 
 .about-page-title {
