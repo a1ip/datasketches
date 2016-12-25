@@ -153,9 +153,33 @@
 
               <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
 
-              <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+              <h3 class="margin-top-10">start of forever <span class="light-grey">|</span> data</h3>
 
-              <p>So looking forward to this month!</p>
+              <p>
+                I have so many things to say and feels to declare for this month, it has been a long and arduous journey.  First, I took out the "week 1" part of the header because I started this thing in the last week of August.  And it took until second week of December.  It's been a long time.  Second, my November was Hamilton the musical - not quite a book, unless you count Hamilton the Revolution (aka. the Hamiltome).  Third, this Hamilton project is actually a contract for <a href='http://polygraph.cool' target='_new'>Polygraph</a>, published on their site.
+              </p>
+
+              <p>
+                So I want to thank Nadieh and <a href='http://twitter.com/mattdaniels' target='_new'>Matt</a> from Polygraph a bucket load, for letting me finish Hamilton as my November data sketch.  It helped me loads, because there was no way I was going to be able to finish Hamilton <em>and</em> another data sketch in November, with my travels to Singapore taking up half the month.  It also worked out well because I had wanted to do a write-up for all the things I went through for Hamilton anyways, and Nadieh was encouraging of that.
+              </p>
+
+              <p>
+                The first thing I did was go through the Hamiltome, and mark any recurring phrases with a corresponding number.
+                [IMAGE OF BOOK WITH SKETCH]
+                After that, I had to manually enter all the data.  Thankfully, there were already the full set of lyrics online (LINK TO LYRICS), but I had to go through all the lyrics again to enter the characters, the conversations, and themes in a format that I could use.  This whole process took a painstaking three days (and then afterwards Boyfriend wondered if I could have done it in a more automated fashion and I glared at him).
+                [HAMILTOME WITH PRINTED NOTES]
+                [SCREENSHOTS OF DATA]
+                (<em><a href='https://github.com/sxywu/hamilton/tree/master/data/meta/characters.csv' target='_new'>Raw characters and conversations data</a></em>)<br />
+                (<em><a href='https://github.com/sxywu/hamilton/tree/master/data/meta/themes.csv' target='_new'>Raw themes data</a></em>)<br />
+              </p>
+
+              <p>
+                Now that I had all the raw data, I wanted to join the metadata (characters.csv and themes.csv) with the actual lyrics.  At first, I gave each line a key and mapped the data onto that, but after seeing how messy and abundant the small dots were, I decided to group the lines by a consecutive set of lines by a singer.
+                [LINES BEFORE AND AFTER GROUPING]
+                The code for joining the metadata to the lines can be found in <a href='https://github.com/sxywu/hamilton/tree/master/merge.js' target='_new'>merge.js</a>, and the resulting processed data can be found in <a href='https://github.com/sxywu/hamilton/tree/master/src/data' target='_new'>src/data</a> (which has a README).
+                [README OF DATA FORMAT]
+                The format of the processed data is unfortunately convoluted, since I had to deal with the fact that themes could start in the middle of a set of lines and span several of them.
+              </p>
 
               <!-- <a class="fancybox" href="data/shirley/all_appearances.png"> <img src="data/shirley/all_appearances.png" class="img-responsive img-month"></a> -->
 
