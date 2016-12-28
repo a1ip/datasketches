@@ -14,10 +14,22 @@ a:hover {
   border-bottom: 1px solid #CB272E;
 }
 
+a.image-link {
+	border-bottom: none;
+}
+
+.mobile {
+	display: none;
+}
+
+.outer-margin {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
 /* --- Intro --- */
 
 #intro {
-	margin-left: 50px;
 	margin-top: 25px;
 }
 
@@ -95,7 +107,6 @@ a:hover {
 
 #credit {
 	padding-bottom: 25px;
-	margin-left: 50px;
 }
 
 #credit p {
@@ -123,7 +134,7 @@ a:hover {
 }
 
 .credit-data-note {
-	max-width: 750px;
+	max-width: 600px;
 	margin-top: 20px !important;
 	line-height: 170%;
 	font-size: 0.7em;
