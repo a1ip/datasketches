@@ -1,4 +1,3 @@
-console.log(window.screen.width)
 var isMobile = window.screen.width < 400 ? true : false;
 
 if(isMobile) {
@@ -13,13 +12,14 @@ if(isMobile) {
 	//////////////////////////// Set up the SVG ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	var margin = {
-	  top: 0,
+	  top: 120,
 	  right: 150,
 	  bottom: 0,
-	  left: 100
+	  left: -350
 	};
-	var width = 2150 - margin.left - margin.right;
-	var height = 500 - margin.top - margin.bottom;
+	var widthOriginal = 2150 - 100 - 150;
+	var width = 1700 - margin.left - margin.right;
+	var height = 620 - margin.top - margin.bottom;
 		
 	//SVG container
 	var svg = d3.select('#chart')
@@ -35,7 +35,7 @@ if(isMobile) {
 
 	var yearScale = d3.scaleLinear()
 		.domain([1939, 2016])
-	    .range([0, width]);
+	    .range([0, widthOriginal]);
 		
 	var rScale = d3.scaleSqrt()
 		.domain([1,10,25,50,100,250,500,1000,2000])
@@ -257,7 +257,7 @@ if(isMobile) {
 
 		var sizeLegend = svg.append("g")
 			.attr("class", "size-legend")
-			.attr("transform", "translate(" + -35 + "," + 80 + ")");
+			.attr("transform", "translate(" + 415 + "," + -40 + ")");
 
 		sizeLegend.append("text")
 			.attr("class", "legend-title")
@@ -301,7 +301,7 @@ if(isMobile) {
 
 		var colorLegend = svg.append("g")
 			.attr("class", "color-legend")
-			.attr("transform", "translate(" + 320 + "," + 80 + ")");
+			.attr("transform", "translate(" + 790 + "," + -40 + ")");
 
 		colorLegend.append("text")
 			.attr("class", "legend-title")
