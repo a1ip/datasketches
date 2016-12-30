@@ -101,7 +101,7 @@
                 <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
                 <p>Throughout the data preparation part I was thinking about how I wanted to visualize the results. From the get-go I already had the idea to place the books in a plane representing similarity in titles, hence the clustering. But how to get an interesting shape for the books?</p>
-                <p>Since I was looking at titles, I thought it would be fun to somehow base the resulting "shape" of a book on the title as well. I could split the 360 degrees of a circle in 26 parts, one for each letter in the alphabet (the English language thankfully doesn't really use any accented or "odd" letters), and then place small circles on the correct angles, one for each letter in a title. I would then connect all the letters from a word with curved lines. In the sketch below you can see the idea, where I was still deciding if I wanted the lines, connecting the letters, to only go round around the outside, or through the middle of the circle as well (if the distance between letters was too great).</p> 
+                <p>Since I was looking at titles, I thought it would be fun to somehow base the resulting "shape" of a book on the title as well. I could split the 360 degrees of a circle in 26 parts, one for each letter in the alphabet (the English language thankfully doesn't really use any accented or "odd" letters), and then place small circles on the correct angles, one for each letter in a title. I would then connect all the letters from a word with curved lines. In the sketch below you can see the idea, where I was still deciding if I wanted the lines, connecting the letters, to only go round around the outside, or through the middle of the circle as well (if the distance between letters was too great).</p>
                 <a class="fancybox" href="sketches/nadieh/fantasy_books_sketch_1.jpg"> <img src="sketches/nadieh/fantasy_books_sketch_1_small.jpg" class="img-responsive img-month" alt="Figuring out how to visualize the books in an interesting manner"></a>
 
                 <p>I knew that the lines between the letters would eventually be made through a self written function that creates SVG arc paths. One of the elements that I had to figure out for theses paths is the <i>sweepflag</i> (when you draw a curved line between two points, should you draw it clockwise or counterclockwise? See <a href="http://www.visualcinnamon.com/2015/09/placing-text-on-arcs.html" target="_new">my blog on placing text on arcs</a> for a much more elaborate explanation of what makes up an SVG arc path). Not too difficult, but much easier to figure out if you draw it.</p>
@@ -183,7 +183,54 @@
 
               <h3>forever <span class="light-grey">|</span> sketch, code, repeat</h3>
 
+              <p>
+                <a class="fancybox" href="sketches/shirley/sketch1.jpg"> <img src="sketches/shirley/sketch1.jpg" class="img-responsive img-month"></a>
+                Once I had the data, I knew I wanted to lay out the lines in a way I could get a sense of who was singing when and for how long.  To do that, I thought of two versions of how to depict a line: a circle and a long, narrow bar.  To indicate when a line was a recurring phrase, I played around with the idea of a diamond that stretched across lines.  And to deal with multiple singers in a line, I thought of overlapping narrower bars on top of each other.
+              </p>
 
+              <p>
+                (Looking at the original sketches, I am amazed by how foolishly ambitious I was; to think that I wanted to switch between views grouped by characters, songs, and layed out by song, and then also have filter capabilities in all those views.  I was young and naive.)
+              </p>
+
+              <p>
+                <a class="fancybox" href="code/shirley/position.jpg"> <img src="code/shirley/position.jpg" class="img-responsive img-month"></a>
+                (<em><a href='https://github.com/sxywu/hamilton/blob/28c7986e4cc582d1229d10836afc89861fdd3caa/src/PositionGraph.js' target='_new'>The convoluted code for positioning the lines</a></em>)
+              </p>
+
+              <p>
+                The first thing I did when I got back to the computer was to figure out how to lay out the lines by song.  Positioning things always always turns out more painful than I give it credit for, and after some bugs and mishaps (<em>math</em> and <em>svg paths</em>) I ended up with the first vertical version, and eventually the horizontal version with the themed diamonds.  (That last one has a <em>super</em> subtle bug that took me a while to notice - any Hamilton fans notice it?)
+              </p>
+
+              <p>
+                Now if I thought the positioning was bad (that thing only took a few days), the filters were a nightmare.  It took me a few weeks on and off to work through all the logic and bugs - I paced around my bedroom and around my living room muttering to myself (the whole freelancing and working by myself thing has had an interesting effect on my social skills).  I hadn't felt so frustrated and happy and alive with a piece of code in a long time.
+              </p>
+
+              <p>
+                <a class="fancybox" href="code/shirley/filter.jpg"> <img src="code/shirley/filter.jpg" class="img-responsive img-month"></a>
+                The final logic I ended up with:
+                <ul>
+                  <li>filtering by characters is an AND operation; I only keep the songs with <em>all</em> the selected characters</li>
+                  <li>filtering by conversations is an OR operation; I keep any song with even one of the selected conversations</li>
+                  <li>filtering by themes is an OR operation; I keep any song with even one of the selected themes</li>
+                  <li>filtering between the categories is an AND operation</li>
+                </ul>
+                (Again, I've no idea why I chose something so convoluted...)
+              </p>
+
+              <p>
+                And the interaction that stumped me a bit when filtering: after a certain combination of filters, there are characters, conversations, and themes that can no longer be selected.  Take, for example, if we filter by Philip Hamilton (#4 in the above image): notice that some characters, conversations, and themes are missing, denoted only with dotted outlines.  This is because Philip doesn't have that many lines, so the songs that he is in (Take a Break, Schuyler Defeated, Stay Alive (Reprise)) don't have many other characters singing.  If I allow a user to select any of those characters that don't have a line in those songs, no songs will show up and confuse the user, so after a bit of consideration, I decided to simply disable those users if they no longer appear in the songs.
+              </p>
+
+              <p>
+                I worked out four states that a character, conversation, or theme could be in:
+                <ul>
+                  <li>it is selected (colored and 100% opacity)</li>
+                  <li>at least one of its corresponding lines are highlighted because of some other filter applied (colored and partial opacity).  For example, if Eliza the character is selected, her corresponding conversations and themes should be highlighted.</li>
+                  <li>at least one of its corresponding lines are in the song, but not highlighted (gray and partial opacity)</li>
+                  <li>none of its corresponding lines are in the song (missing with dotted outline)</li>
+                </ul>
+                (The only difference between this and the final version is that for missing characters, conversations, and themes, I don't show them all together.)
+              </p>
             </div>
           </div>
 
