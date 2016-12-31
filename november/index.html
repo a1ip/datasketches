@@ -292,6 +292,33 @@
               <p>
                 <center>✨✨✨</center>
               </p>
+
+              <p>
+                When I was almost to the finish line, I showed <a href='https://twitter.com/sarah_edo' target='_new'>Sarah Drasner</a> (who I got to meet at JSConf Asia and she was such an awesome individual) for feedback on the animation, and her immediate reaction was, "Canvas!  You need Canvas."  At ~1700 path elements, SVG was doing alright.  But on scroll, you could start to see the lag in update.
+              </p>
+
+              <p>
+                So I started on converting all the SVG to Canvas.  And as <a href='https://twitter.com/syntagmatic' target='_new'>Kai</a> always says, when Canvas breaks, it breaks in the most wonderful way; my very first attempt, it broke and made very Jackson Pollock art (be patient with the gif, it's large and may take a bit to load):
+                <a class="fancybox" href="code/shirley/hamilton_broke.gif"> <img src="code/shirley/hamilton_broke.gif" class="img-responsive img-month"></a>
+                Once I got Canvas rendering everything as it did before, the performance was indeed so much better.  The next step was to add in the interaction with hidden Canvas (if you're not familiar, Nadieh has a great explanation <a href='http://www.visualcinnamon.com/2015/11/learnings-from-a-d3-js-addict-on-starting-with-canvas.html' target='_new'>here</a>):
+                <a class="fancybox" href="code/shirley/canvas_interaction.jpg"> <img src="code/shirley/canvas_interaction.jpg" class="img-responsive img-month"></a>
+                This is where I encountered the most frustrating bug I've had in a while.  I would hover over a line, and though the Canvas and hidden Canvas were clearly positioned at the same x and y, the tooltip would react incorrectly:
+                <a class="fancybox" href="code/shirley/hamilton_hover_bug.gif"> <img src="code/shirley/hamilton_hover_bug.gif" class="img-responsive img-month"></a>
+                It took me hours of agony to realize that, because I had scaled both of the canvases by 2x to make sure Canvas would display crisply on retina, the underlying Canvas image data was also scaled by 2x.  But I was getting the x- and y-positions and instead of multiplying those numbers by 2, was directly querying for the data.  Which is why when I hovered, the tooltips that popped up were all at about half the x and y-positions of where I was truly hovering.
+              </p>
+
+              <p>
+                Once I had that figured out, everything was relatively smooth after.  I made final edits to my content, fixed some more positioning bugs with the tooltip, and spent another agonizing day making everything mobile-friendly.  (Making things mobile-friendly is always emotionally draining for me.)  One of my favorite final things I did, was to highlight the corresponding song that I mention in the analysis as user scrolls:
+                <a class="fancybox" href="code/shirley/hamilton_focus.gif"> <img src="code/shirley/hamilton_focus.gif" class="img-responsive img-month"></a>
+                And one more Canvas broke and made beautiful art:
+                <a class="fancybox" href="code/shirley/canvas_bug.png"> <img src="code/shirley/canvas_bug.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                Here's the (filter tool) I ended up with.  Click on the gif to read and explore:
+                <a href="http://polygraph.cool/hamilton" target='_new'> <img src="code/shirley/hamilton5.gif" class="img-responsive img-month"></a>
+                Hamilton has been a journey.  While working on the project, I also designed and coded the first version of <a href='http://sxywu.com/' target='_new'>my portfolio website</a>, partially designed the data sketch|es website, helped organize <a href='http://visfest.com/d3unconf-2016/' target='_new'>d3.unconf</a>, finished <a href='http://datasketch.es/august' target='_new'>August</a>, <a href='http://datasketch.es/september' target='_new'>September</a>, and <a href='http://datasketch.es/october' target='_new'>October</a> data sketches, went to Singapore for JSConf Asia, and worked on two other contracts (one of which was a <a href='http://politics.andyourbrain.com/debate/' target='_new'>visualization of viewer response to the second presidential debate</a>, which I thoroughly enjoyed).  It was hard and I got stuck quite a few times, but I'm so glad to have the experience and am ridiculously happy with how it turned out.
+              </p>
             </div>
           </div>
 
