@@ -1,0 +1,161 @@
+body {
+	font-size: 14px;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+h1 {
+	font-family: 'Anton', sans-serif;
+}
+
+a, a:link, a:visited, a:active {
+  color: #f27c07;
+  border-bottom: 1px dotted rgba(203, 39, 46, .5);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #f27c07;
+}
+
+a.image-link {
+	border-bottom: none;
+}
+
+.mobile {
+	display: none;
+}
+
+.outer-margin {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+/* --- Intro --- */
+
+
+/* --- Chart --- */
+
+@media screen and (max-width: 300px) {
+  #chart {
+    font-size: 8px !important;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #chart {
+    font-size: 12px !important;
+  }
+}
+#chart{
+	text-align: center;
+	font-size: calc(8px + (12 - 8) * (100vw - 450px)/(1000 - 450));
+	/*font-size: 12px;*/
+}
+
+.saga-line {
+    stroke: #c5c5c5;
+    stroke-width: 1px;
+    stroke-dasharray: 2 6;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+.saga-name-wrapper {
+	pointer-events: none;
+}
+.subsaga-name {
+	font-size: 1.5em;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+.saga-name {
+	font-size: 1em;
+	font-family: 'PT Sans', sans-serif;
+	fill: #a7a6a6;
+}
+.saga-episode {
+	font-size: 0.8em;
+	font-family: 'PT Sans', sans-serif;
+	fill: #777777;
+	font-style: italic;
+}
+
+.character-line-wrapper {
+	isolation: isolate;
+}
+
+.character-path-group {
+	opacity: 0.4;
+}
+.character-path {
+	/*fill: none;*/
+	/*pointer-events: none;*/
+	mix-blend-mode: multiply;
+	/*opacity: 0.3;*/
+}
+
+.fight-background {
+	pointer-events: all;
+	fill: none;
+	/*opacity: 0.6;*/
+}
+
+.fight-background-circle {
+	pointer-events: none;
+	fill: white;
+}
+
+.character-circle {
+	mix-blend-mode: multiply;
+	pointer-events: none;
+	opacity: 1;
+}
+
+.majin-text {
+	font-size: 5px;
+	text-anchor: middle;
+	pointer-events: none;
+}
+
+/* --- Tooltip --- */
+
+.tooltip-wrapper-line {
+	pointer-events: none;
+	text-anchor: middle;
+	text-shadow: 0 1px 2px white, 1px 0 2px white, -1px 0 2px white, 0 -1px 2px white;
+}
+
+.tooltip-character-line {
+	font-size: 1.5em;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+/* --- Credits --- */
+
+#credit {
+	padding-bottom: 25px;
+}
+
+#credit p {
+	margin-top: 0px;
+	margin-bottom: 3px;
+}
+
+.credit-bold {
+	font-weight: 600;
+	font-size: 1em;
+}
+
+.credit-divider {
+	color: #b7b7b7;
+	font-weight: 600;
+	font-size: 0.9em;
+	padding: 0px 5px;
+}
+
+.credit-note {
+	line-height: 140%;
+	font-size: 0.8em;
+	font-weight: 400;
+	color: #656565;
+}
