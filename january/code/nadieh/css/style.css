@@ -80,6 +80,12 @@ a.image-link {
 	font-style: italic;
 }
 
+.annotation-text {
+	font-size: 1em;
+	font-family: 'PT Sans', sans-serif;
+	fill: #777777;
+}
+
 .character-line-wrapper {
 	isolation: isolate;
 }
