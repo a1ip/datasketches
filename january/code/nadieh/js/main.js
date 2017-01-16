@@ -10,7 +10,9 @@ if(isMobile) {
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the SVG ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
-	var outerWidth = Math.max(450, Math.min(window.innerWidth - 30,1000));
+	var minWidth = 450,
+		maxWidth = 1000;
+	var outerWidth = Math.max(minWidth, Math.min(window.innerWidth - 30, maxWidth));
 	var widthScale = d3.scaleLinear()
 		.domain([450, 1000])
 	    .range([60, 150]);
@@ -104,21 +106,20 @@ if(isMobile) {
 
 	//Special fights
 	var specialFights = [
-		{fightID: 4, fightSaga: "Raditz Saga", horizontalOffset: 8, hExtra: -0.3, img_url: "Raditz_is_killed.gif", stroke: "#f27c07", fightText: "Goku sacrifices himself so Piccolo can kill his evil brother Raditz", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 18, fightSaga: "Vegeta Saga", horizontalOffset: 4, hExtra: 0.75, img_url: "Vegeta_over_9000.gif", stroke: "#1D75AD", fightText: "The most famous DBZ meme is when Vegeta measures Goku's power level (who's back from the dead) and screams in anger 'It's over 9000!'", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 19, fightSaga: "Vegeta Saga", horizontalOffset: -3, hExtra: 0.2, img_url: "Goku_fights_Vegeta.gif", stroke: "#f27c07", fightText: "An epic battle ensues between Goku and Vegeta lasting several episodes", textX: -1.25, textY: 1.25, textAnchor: "start" },
-		{fightID: 55, fightSaga: "Frieza Saga", horizontalOffset: 3, hExtra: 0.2, img_url: "Goku_fights_Frieza.gif", stroke: "#82307E", fightText: "Goku and the others (although Vegeta was just killed by Frieza) try valiantly but they're no match for Frieza", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 60, fightSaga: "Frieza Saga", horizontalOffset: 5, hExtra: 0.2, img_url: "Goku_goes_Super_Saiyan.gif", stroke: "#f27c07", fightText: "After seeing his friend Krillin get destroyed by Frieza, Goku finally loses it and magnificently turns into a Super Saiyan", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 67, fightSaga: "Trunks Saga", horizontalOffset: 6, hExtra: 0.2, img_url: "Trunks_kills_Frieza.gif", stroke: "#D8A3FA", fightText: "A cybernetically enhanced Frieza comes to Earth to kill all, but is swiftly sliced in half by Future Trunks", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 69, fightSaga: "Trunks Saga", horizontalOffset: -4.5, hExtra: 0.6, img_url: "Trunks_tests_Goku.gif", stroke: "#D8A3FA", fightText: "Trunks spars with Goku to test Goku's strength", textX: -1.25, textY: 1.25, textAnchor: "start" },
-		{fightID: 104, fightSaga: "Cell Games Saga", horizontalOffset: -6, hExtra: 0.4, img_url: "Gohan_goes_SSJ2.gif", stroke: "#3e216d", fightText: "Enraged with Cell for killing Android 16, and the Cell Juniors' beating his friends, Gohan's hidden power erupts, transforming him into a Super Saiyan 2", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 108, fightSaga: "Cell Games Saga", horizontalOffset: 2, hExtra: 0.4, img_url: "Gohan_kills_Cell.gif", stroke: "#3e216d", fightText: "Releasing all the energy he has, Gohan's Father-Son Kamehameha is strong enough to vaporize every cell in Cell's body", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 128, fightSaga: "Babidi Saga", horizontalOffset: -8, hExtra: 0.8, img_url: "Goku_fights_Majin_Vegeta.gif", stroke: "#f27c07", fightText: "After Vegeta lets Babidi control him so he could become evil again the second epic battle between Goku and Majin Vegeta starts", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 134, fightSaga: "Majin Buu Saga", horizontalOffset: -5, hExtra: 0.2, img_url: "Vegeta_sacrifice.gif", stroke: "#1D75AD", fightText: "One of the best DBZ moments happens when Vegeta sacrifices himself for his family to destroy Majin Buu (which sadly doesn't work)", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 147, fightSaga: "Fusion Saga", horizontalOffset: -7, hExtra: 0.5, img_url: "Vegito_fights_Super_Buu.gif", stroke: "url(#vegito-gradient)", fightText: "After nothing else works, Goku and Vegeta fuse to become Vegito who then dominates over Super Buu, even when turned into a jawbreaker", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 156, fightSaga: "Kid Buu Saga", horizontalOffset: -10, hExtra: -0.1, img_url: "Goku_fights_Kid_Buu.gif", stroke: "#f27c07", fightText: "Goku unleashes his Super Saiyan 3 form to fight Kid Buu, but it is still not enough", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 162, fightSaga: "Kid Buu Saga", horizontalOffset: -7, hExtra: -0.3, img_url: "Goku_kills_Kid_Buu.gif", stroke: "#F390A4", fightText: "After getting the energy from everybody on Earth (thanks to Mr. Satan) Goku finally kills Kid Buu with a massive Spirit Bomb", textX: -1.5, textY: -1, textAnchor: "end" },
-
+		{fightID: 4, fightSaga: "Raditz Saga", horizontalOffset: 8, hExtra: -0.3, hExtraMobile: 0.2, img_url: "Raditz_is_killed.gif", stroke: "#f27c07", fightText: "Goku sacrifices himself so Piccolo can kill his evil brother Raditz", textX: 1.5, textY: -1, textAnchor: "start" },
+		{fightID: 18, fightSaga: "Vegeta Saga", horizontalOffset: 4, hExtra: 0.75, hExtraMobile: 0.65, img_url: "Vegeta_over_9000.gif", stroke: "#1D75AD", fightText: "The most famous DBZ meme is when Vegeta measures Goku's power level (who's back from the dead) and screams in anger 'It's over 9000!'", textX: 1.5, textY: -1, textAnchor: "start" },
+		{fightID: 19, fightSaga: "Vegeta Saga", horizontalOffset: -3, hExtra: 0.2, hExtraMobile: 0.95, img_url: "Goku_fights_Vegeta.gif", stroke: "#f27c07", fightText: "An epic battle ensues between Goku and Vegeta lasting several episodes", textX: -1.25, textY: 1.25, textAnchor: "start" },
+		{fightID: 55, fightSaga: "Frieza Saga", horizontalOffset: 3, hExtra: 0.2, hExtraMobile: 0.8, img_url: "Goku_fights_Frieza.gif", stroke: "#82307E", fightText: "Goku and the others (although Vegeta was just killed by Frieza) try valiantly but they're no match for Frieza", textX: 1.5, textY: -1, textAnchor: "start" },
+		{fightID: 60, fightSaga: "Frieza Saga", horizontalOffset: 5, hExtra: 0.2, hExtraMobile: 0.7, img_url: "Goku_goes_Super_Saiyan.gif", stroke: "#f27c07", fightText: "After seeing his friend Krillin get destroyed by Frieza, Goku finally loses it and magnificently turns into a Super Saiyan", textX: 1.5, textY: -1, textAnchor: "start" },
+		{fightID: 67, fightSaga: "Trunks Saga", horizontalOffset: 6, hExtra: 0.2, hExtraMobile: 0.3, img_url: "Trunks_kills_Frieza.gif", stroke: "#D8A3FA", fightText: "A cybernetically enhanced Frieza comes to Earth to kill all, but is swiftly sliced in half by Future Trunks", textX: 1.5, textY: -1, textAnchor: "start" },
+		{fightID: 69, fightSaga: "Trunks Saga", horizontalOffset: -4.5, hExtra: 0.6, hExtraMobile: 0, img_url: "Trunks_tests_Goku.gif", stroke: "#D8A3FA", fightText: "Trunks spars with Goku to test Goku's strength", textX: -1.25, textY: 1.25, textAnchor: "start" },
+		{fightID: 104, fightSaga: "Cell Games Saga", horizontalOffset: -6, hExtra: 0.4, hExtraMobile: 0.9, img_url: "Gohan_goes_SSJ2.gif", stroke: "#3e216d", fightText: "Enraged with Cell for killing Android 16, and the Cell Juniors' beating his friends, Gohan's hidden power erupts, transforming him into a Super Saiyan 2", textX: -1.5, textY: -1, textAnchor: "end" },
+		{fightID: 108, fightSaga: "Cell Games Saga", horizontalOffset: 2, hExtra: 0.4, hExtraMobile: 0.3, img_url: "Gohan_kills_Cell.gif", stroke: "#3e216d", fightText: "Releasing all the energy he has, Gohan's Father-Son Kamehameha is strong enough to vaporize every cell in Cell's body", textX: 1.5, textY: -1, textAnchor: "start" },
+		{fightID: 128, fightSaga: "Babidi Saga", horizontalOffset: -8, hExtra: 0.8, hExtraMobile: 0.3, img_url: "Goku_fights_Majin_Vegeta.gif", stroke: "#f27c07", fightText: "After Vegeta lets Babidi control him so he could become evil again the second epic battle between Goku and Majin Vegeta starts", textX: -1.5, textY: -1, textAnchor: "end" },
+		{fightID: 134, fightSaga: "Majin Buu Saga", horizontalOffset: -5, hExtra: 0.2, hExtraMobile: 0.9, img_url: "Vegeta_sacrifice.gif", stroke: "#1D75AD", fightText: "One of the best DBZ moments happens when Vegeta sacrifices himself for his family to destroy Majin Buu (which sadly doesn't work)", textX: -1.5, textY: -1, textAnchor: "end" },
+		{fightID: 147, fightSaga: "Fusion Saga", horizontalOffset: -7, hExtra: 0.5, hExtraMobile: 0.9, img_url: "Vegito_fights_Super_Buu.gif", stroke: "url(#vegito-gradient)", fightText: "After nothing else works, Goku and Vegeta fuse to become Vegito who then dominates over Super Buu, even when turned into a jawbreaker", textX: -1.5, textY: -1, textAnchor: "end" },
+		{fightID: 156, fightSaga: "Kid Buu Saga", horizontalOffset: -10, hExtra: -0.1, hExtraMobile: 0.3, img_url: "Goku_fights_Kid_Buu.gif", stroke: "#f27c07", fightText: "Goku unleashes his Super Saiyan 3 form to fight Kid Buu, but it is still not enough", textX: -1.5, textY: -1, textAnchor: "end" },
+		{fightID: 162, fightSaga: "Kid Buu Saga", horizontalOffset: -7, hExtra: -0.3, hExtraMobile: 0.4, img_url: "Goku_kills_Kid_Buu.gif", stroke: "#F390A4", fightText: "After getting the energy from everybody on Earth (thanks to Mr. Satan) Goku finally kills Kid Buu with a massive Spirit Bomb", textX: -1.5, textY: -1, textAnchor: "end" },
 	];
 
 	///////////////////////////////////////////////////////////////////////////
@@ -149,6 +150,10 @@ if(isMobile) {
 		.domain([300,600,1200])
 	    .range([3,4,8]);
 
+	var strokeWidthScale = d3.scaleLinear()
+		.domain([minWidth, maxWidth])
+		.range([1, 4]);
+
 	///////////////////////////////////////////////////////////////////////////
 	////////////////////////// Create defs elements ///////////////////////////
 	///////////////////////////////////////////////////////////////////////////
@@ -169,8 +174,8 @@ if(isMobile) {
 		.attr("height", "100%")
 		.attr("width", "100%")
 		.append("image")
-			.attr("xlink:href", function(d) { return "img/" + d.img_url; })
-			.attr("x", function(d) { return sagaScale(d.hExtra); })
+			.attr("xlink:href", function(d) { return "img/" + (isMobile ? d.img_url.replace(".gif", ".jpg") : d.img_url); })
+			.attr("x", function(d) { return isMobile ? sagaScale(d.hExtraMobile) : sagaScale(d.hExtra); })
 			.attr("height", 2*annotationCircleSize);
 
 	// //Code taken from http://stackoverflow.com/questions/9630008/how-can-i-create-a-glow-around-a-rectangle-with-svg
@@ -190,6 +195,46 @@ if(isMobile) {
 	//   .attr("in","coloredBlur");
 	// feMerge.append("feMergeNode")
 	//   .attr("in","SourceGraphic");
+
+	//Create a gradient to fill the lines from the annotations circles to the fights
+	var annotationLineGradient = defs.selectAll(".annotation-line-gradient")
+		.data(specialFights.filter(function(d) { return d.fightID !== 147; }))
+		.enter().append("linearGradient") 
+		.attr("class", "annotation-line-gradient")              
+		.attr("id", function(d) { return "gradient-id-" + d.fightID; })   
+		.attr("x1", function(d) { return d.horizontalOffset > 0 ? 1 : 0; })
+		.attr("y1", 0)         
+		.attr("x2", function(d) { return d.horizontalOffset > 0 ? 0 : 1; })
+		.attr("y2", 0);
+	annotationLineGradient
+		.append("stop")
+		.attr("offset", "60%")
+		.attr("stop-color", function(d) { return d.stroke; });
+	annotationLineGradient
+		.append("stop")
+		.attr("offset", "90%")
+		.attr("stop-opacity", 0)
+		.attr("stop-color", function(d) { return d.stroke; });
+
+	//Create special gradient for Vegito annotation line
+	var vegitoLineGradient = defs.append("linearGradient")
+		.attr("class", "annotation-line-gradient")              
+		.attr("id",  "gradient-id-147")   
+		.attr("x1", 0).attr("y1", 0)         
+		.attr("x2", 1).attr("y2", 0);
+	vegitoLineGradient
+		.append("stop")
+		.attr("offset", "50%")
+		.attr("stop-color", "#1D75AD");
+	vegitoLineGradient
+		.append("stop")
+		.attr("offset", "50%")
+		.attr("stop-color", "#f27c07");
+	vegitoLineGradient
+		.append("stop")
+		.attr("offset", "90%")
+		.attr("stop-opacity", 0)
+		.attr("stop-color", "#f27c07");
 
 	//Create a gradient for the fused Goku and Vegeta
 	var vegitoGradient = defs.append("linearGradient")    
@@ -219,6 +264,7 @@ if(isMobile) {
 		//Set the first and final fight id
 		fightScale.domain( d3.extent(data, function(d) { return d.id; }) );
 
+		//Pre-calculate the x and y location of the fight annotations
 		specialFights.forEach(function(d) {
 			d.x = Math.round(sagaScale( sagaData[sagaNames.indexOf(d.fightSaga)].id + d.horizontalOffset));
 			d.y = fightScale(d.fightID) - annotationCircleSize;
@@ -246,8 +292,7 @@ if(isMobile) {
 		////////////////////////// Create a line per saga /////////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
-		var sagaLine = svg.append("g")
-			.attr("class","saga-line-wrapper");
+		var sagaLine = svg.append("g").attr("class","saga-line-wrapper");
 
 		//Add a vertical line per saga
 		sagaLine.selectAll(".saga-line")
@@ -259,33 +304,8 @@ if(isMobile) {
 			.attr("x2", function(d,i) { return Math.round(sagaScale( i+1 )); })
 			.attr("y2", height);
 
-		//Add the name of the saga
-		var sagaText = sagaLine.selectAll(".saga-name-wrapper")
-			.data(sagaData)
-			.enter().append("g")
-			.attr("class", "saga-name-wrapper")
-			.attr("transform", function(d,i) {
-				var x = sagaScale(i+1) + 4*xSwoopDist*(i <= 9 ? 1 : -1),
-					y = fightScale(+sagaNestedData[i].values[0].key);
-				return "translate(" + x + "," + y + ")";
-
-			})
-			.style("text-anchor", function(d,i) { return i <= 9 ? "start" : "end"; });
-
-		sagaText.append("text")
-			.attr("class", "subsaga-name")
-			.text(function(d) { return d.subSaga; });
-
-		sagaText.append("text")
-			.attr("class", "saga-name")
-			.attr("y", "1.6em")
-			.text(function(d) { return "part of the " + d.saga + " saga"; });
-
-		sagaText.append("text")
-			.attr("class", "saga-episode")
-			.attr("y", "3.3em")
-			.text(function(d) { return "episodes " + d.firstEpisode + " - " + d.lastEpisode; });
-
+		if(isMobile) d3.selectAll(".saga-line").style("stroke", "#e1e1e1").style("stroke-dasharray", "2 5");
+		
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////////// Create the character paths ///////////////////////
 		///////////////////////////////////////////////////////////////////////////
@@ -467,12 +487,26 @@ if(isMobile) {
 			.attr("class", "annotation-group")
 			.attr("transform", function(d) { return "translate(" + (d.x + annotationCircleSize) + "," + (d.y + annotationCircleSize) + ")"; });
 
+		//Add lines from about the fight to the circle
+		annotations.append("line")
+			.attr("class", "annotation-line")
+			.attr("x1", function(d) { return 0; })
+			.attr("y1", function(d) { return 0; })
+			.attr("x2", function(d) { 
+				var extra = d.horizontalOffset > 0 ? 1.5 : 2.5;
+				return -1 * Math.round(sagaScale(d.horizontalOffset + 2)); 
+			})
+			.attr("y2", function(d) { return 0.01; })
+			//.style("stroke", function(d) { return d.stroke; })
+			.style("stroke", function(d) { return "url(#gradient-id-" + d.fightID + ")"; })
+			.style("stroke-width", strokeWidthScale(width) );
+
 		//Add the circles that will be filled with images
 		annotations.append("circle")
 			.style("fill", function(d) { return "url(#circle-image-" + d.fightID + ")"; })
 			.attr("r", annotationCircleSize)
 			.style("stroke", function(d) { return d.stroke; })
-			.style("stroke-width", 4);
+			.style("stroke-width", strokeWidthScale(width) );
 
 		//Add the text to the images
 		annotations.append("text")
@@ -484,6 +518,39 @@ if(isMobile) {
 			.style("fill", function(d) { return d.stroke; })
 			.text(function(d) { return d.fightText; })
 			.call(wrap, annotationCircleSize*3);
+
+		///////////////////////////////////////////////////////////////////////////
+		/////////////////////// Create the text for each saga /////////////////////
+		///////////////////////////////////////////////////////////////////////////
+
+		var sagaTextWrapper = svg.append("g").attr("class","saga-text-wrapper");
+
+		//Add the name of the saga
+		var sagaText = sagaTextWrapper.selectAll(".saga-name-group")
+			.data(sagaData)
+			.enter().append("g")
+			.attr("class", "saga-name-group")
+			.attr("transform", function(d,i) {
+				var x = sagaScale(i+1) + 4*xSwoopDist*(i <= 9 ? 1 : -1),
+					y = fightScale(+sagaNestedData[i].values[0].key);
+				return "translate(" + x + "," + y + ")";
+
+			})
+			.style("text-anchor", function(d,i) { return i <= 9 ? "start" : "end"; });
+
+		sagaText.append("text")
+			.attr("class", "subsaga-name")
+			.text(function(d) { return d.subSaga; });
+
+		sagaText.append("text")
+			.attr("class", "saga-name")
+			.attr("y", "1.6em")
+			.text(function(d) { return "part of the " + d.saga + " saga"; });
+
+		sagaText.append("text")
+			.attr("class", "saga-episode")
+			.attr("y", "3.3em")
+			.text(function(d) { return "episodes " + d.firstEpisode + " - " + d.lastEpisode; });
 
 		///////////////////////////////////////////////////////////////////////////
 		///////////////////////// Create a group per saga /////////////////////////

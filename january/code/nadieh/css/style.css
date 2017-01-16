@@ -61,7 +61,7 @@ a.image-link {
     pointer-events: none;
 }
 
-.saga-name-wrapper {
+.saga-name-group {
 	pointer-events: none;
 }
 .subsaga-name {
@@ -84,6 +84,9 @@ a.image-link {
 	font-size: 1em;
 	font-family: 'PT Sans', sans-serif;
 	fill: #777777;
+}
+.annotation-line {
+	stroke-linecap: round;
 }
 
 .character-line-wrapper {
