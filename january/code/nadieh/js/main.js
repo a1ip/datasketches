@@ -106,20 +106,20 @@ if(isMobile) {
 
 	//Special fights
 	var specialFights = [
-		{fightID: 4, fightSaga: "Raditz Saga", horizontalOffset: 8, hExtra: -0.3, hExtraMobile: 0.2, img_url: "Raditz_is_killed.gif", stroke: "#f27c07", fightText: "Goku sacrifices himself so Piccolo can kill his evil brother Raditz", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 18, fightSaga: "Vegeta Saga", horizontalOffset: 4, hExtra: 0.75, hExtraMobile: 0.65, img_url: "Vegeta_over_9000.gif", stroke: "#1D75AD", fightText: "The most famous DBZ meme is when Vegeta measures Goku's power level (who's back from the dead) and screams in anger 'It's over 9000!'", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 19, fightSaga: "Vegeta Saga", horizontalOffset: -3, hExtra: 0.2, hExtraMobile: 0.95, img_url: "Goku_fights_Vegeta.gif", stroke: "#f27c07", fightText: "An epic battle ensues between Goku and Vegeta lasting several episodes", textX: -1.25, textY: 1.25, textAnchor: "start" },
-		{fightID: 55, fightSaga: "Frieza Saga", horizontalOffset: 3, hExtra: 0.2, hExtraMobile: 0.8, img_url: "Goku_fights_Frieza.gif", stroke: "#82307E", fightText: "Goku and the others (although Vegeta was just killed by Frieza) try valiantly but they're no match for Frieza", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 60, fightSaga: "Frieza Saga", horizontalOffset: 5, hExtra: 0.2, hExtraMobile: 0.7, img_url: "Goku_goes_Super_Saiyan.gif", stroke: "#f27c07", fightText: "After seeing his friend Krillin get destroyed by Frieza, Goku finally loses it and magnificently turns into a Super Saiyan", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 67, fightSaga: "Trunks Saga", horizontalOffset: 6, hExtra: 0.2, hExtraMobile: 0.3, img_url: "Trunks_kills_Frieza.gif", stroke: "#D8A3FA", fightText: "A cybernetically enhanced Frieza comes to Earth to kill all, but is swiftly sliced in half by Future Trunks", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 69, fightSaga: "Trunks Saga", horizontalOffset: -4.5, hExtra: 0.6, hExtraMobile: 0, img_url: "Trunks_tests_Goku.gif", stroke: "#D8A3FA", fightText: "Trunks spars with Goku to test Goku's strength", textX: -1.25, textY: 1.25, textAnchor: "start" },
-		{fightID: 104, fightSaga: "Cell Games Saga", horizontalOffset: -6, hExtra: 0.4, hExtraMobile: 0.9, img_url: "Gohan_goes_SSJ2.gif", stroke: "#3e216d", fightText: "Enraged with Cell for killing Android 16, and the Cell Juniors' beating his friends, Gohan's hidden power erupts, transforming him into a Super Saiyan 2", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 108, fightSaga: "Cell Games Saga", horizontalOffset: 2, hExtra: 0.4, hExtraMobile: 0.3, img_url: "Gohan_kills_Cell.gif", stroke: "#3e216d", fightText: "Releasing all the energy he has, Gohan's Father-Son Kamehameha is strong enough to vaporize every cell in Cell's body", textX: 1.5, textY: -1, textAnchor: "start" },
-		{fightID: 128, fightSaga: "Babidi Saga", horizontalOffset: -8, hExtra: 0.8, hExtraMobile: 0.3, img_url: "Goku_fights_Majin_Vegeta.gif", stroke: "#f27c07", fightText: "After Vegeta lets Babidi control him so he could become evil again the second epic battle between Goku and Majin Vegeta starts", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 134, fightSaga: "Majin Buu Saga", horizontalOffset: -5, hExtra: 0.2, hExtraMobile: 0.9, img_url: "Vegeta_sacrifice.gif", stroke: "#1D75AD", fightText: "One of the best DBZ moments happens when Vegeta sacrifices himself for his family to destroy Majin Buu (which sadly doesn't work)", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 147, fightSaga: "Fusion Saga", horizontalOffset: -7, hExtra: 0.5, hExtraMobile: 0.9, img_url: "Vegito_fights_Super_Buu.gif", stroke: "url(#vegito-gradient)", fightText: "After nothing else works, Goku and Vegeta fuse to become Vegito who then dominates over Super Buu, even when turned into a jawbreaker", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 156, fightSaga: "Kid Buu Saga", horizontalOffset: -10, hExtra: -0.1, hExtraMobile: 0.3, img_url: "Goku_fights_Kid_Buu.gif", stroke: "#f27c07", fightText: "Goku unleashes his Super Saiyan 3 form to fight Kid Buu, but it is still not enough", textX: -1.5, textY: -1, textAnchor: "end" },
-		{fightID: 162, fightSaga: "Kid Buu Saga", horizontalOffset: -7, hExtra: -0.3, hExtraMobile: 0.4, img_url: "Goku_kills_Kid_Buu.gif", stroke: "#F390A4", fightText: "After getting the energy from everybody on Earth (thanks to Mr. Satan) Goku finally kills Kid Buu with a massive Spirit Bomb", textX: -1.5, textY: -1, textAnchor: "end" },
+		{fightID: 4, fightSaga: "Raditz Saga", horizontalOffset: 8, hExtra: -0.3, hExtraMobile: 0.2, img_url: "Raditz_is_killed.gif", stroke: "#f27c07", fightText: "Goku sacrifices himself so Piccolo can kill Goku's evil brother Raditz", textX: 1.25, textY: -1, textAnchor: "start" },
+		{fightID: 18, fightSaga: "Vegeta Saga", horizontalOffset: 4, hExtra: 0.75, hExtraMobile: 0.65, img_url: "Vegeta_over_9000.gif", stroke: "#1D75AD", fightText: "The most famous DBZ meme is when Vegeta measures Goku's power level (who's back from the dead) and screams in anger 'It's over 9000!'", textX: 1.25, textY: -1, textAnchor: "start" },
+		{fightID: 19, fightSaga: "Vegeta Saga", horizontalOffset: -3.5, hExtra: 0.2, hExtraMobile: 0.95, img_url: "Goku_fights_Vegeta.gif", stroke: "#f27c07", fightText: "An epic battle ensues between Goku and Vegeta lasting several episodes", textX: -1.25, textY: 1.25, textAnchor: "start" },
+		{fightID: 55, fightSaga: "Frieza Saga", horizontalOffset: 3, hExtra: 0.2, hExtraMobile: 0.8, img_url: "Goku_fights_Frieza.gif", stroke: "#82307E", fightText: "Goku and the others (although Vegeta was just killed by Frieza) try valiantly but they're no match for Frieza", textX: 1.25, textY: -1, textAnchor: "start" },
+		{fightID: 60, fightSaga: "Frieza Saga", horizontalOffset: 5, hExtra: 0.2, hExtraMobile: 0.7, img_url: "Goku_goes_Super_Saiyan.gif", stroke: "#f27c07", fightText: "After seeing his friend Krillin get destroyed by Frieza, Goku finally loses it and magnificently turns into a Super Saiyan", textX: 1.25, textY: -1, textAnchor: "start" },
+		{fightID: 67, fightSaga: "Trunks Saga", horizontalOffset: -4.5, hExtra: 0.2, hExtraMobile: 0.3, img_url: "Trunks_kills_Frieza.gif", stroke: "#D8A3FA", fightText: "A cybernetically enhanced Frieza comes to Earth to kill all, but is swiftly sliced in half by Future Trunks", textX: -1.25, textY: 1.25, textAnchor: "start" },
+		{fightID: 69, fightSaga: "Trunks Saga", horizontalOffset: 6, hExtra: 0.6, hExtraMobile: 0, img_url: "Trunks_tests_Goku.gif", stroke: "#D8A3FA", fightText: "Trunks spars with Goku to test Goku's strength", textX: 1.25, textY: -1, textAnchor: "start" },
+		{fightID: 104, fightSaga: "Cell Games Saga", horizontalOffset: -6, hExtra: 0.4, hExtraMobile: 0.9, img_url: "Gohan_goes_SSJ2.gif", stroke: "#3e216d", fightText: "Enraged with Cell for killing Android 16, and the Cell Juniors' beating his friends, Gohan's hidden power erupts, transforming him into a Super Saiyan 2", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 108, fightSaga: "Cell Games Saga", horizontalOffset: 2.5, hExtra: 0.4, hExtraMobile: 0.3, img_url: "Gohan_kills_Cell.gif", stroke: "#3e216d", fightText: "Releasing all the energy he has, Gohan's Father-Son Kamehameha is strong enough to vaporize every cell in Cell's body", textX: 1.25, textY: -1, textAnchor: "start" },
+		{fightID: 128, fightSaga: "Babidi Saga", horizontalOffset: -8, hExtra: 0.8, hExtraMobile: 0.3, img_url: "Goku_fights_Majin_Vegeta.gif", stroke: "#f27c07", fightText: "After Vegeta lets Babidi control him so he could become evil again the second epic battle between Goku and Majin Vegeta starts", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 134, fightSaga: "Majin Buu Saga", horizontalOffset: -5, hExtra: 0.2, hExtraMobile: 0.9, img_url: "Vegeta_sacrifice.gif", stroke: "#1D75AD", fightText: "One of the best DBZ moments happens when Vegeta sacrifices himself for his family to destroy Majin Buu (which sadly doesn't work)", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 147, fightSaga: "Fusion Saga", horizontalOffset: -7, hExtra: 0.5, hExtraMobile: 0.9, img_url: "Vegito_fights_Super_Buu.gif", stroke: "url(#vegito-gradient)", fightText: "After nothing else works, Goku and Vegeta fuse to become Vegito who then dominates over Super Buu, even when turned into a jawbreaker", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 156, fightSaga: "Kid Buu Saga", horizontalOffset: -10, hExtra: -0.1, hExtraMobile: 0.3, img_url: "Goku_fights_Kid_Buu.gif", stroke: "#f27c07", fightText: "Goku unleashes his Super Saiyan 3 form to fight Kid Buu, but it is still not enough", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 162, fightSaga: "Kid Buu Saga", horizontalOffset: -7, hExtra: -0.3, hExtraMobile: 0.4, img_url: "Goku_kills_Kid_Buu.gif", stroke: "#F390A4", fightText: "After getting the energy from everybody on Earth (thanks to Mr. Satan) Goku finally kills Kid Buu with a massive Spirit Bomb", textX: -1.25, textY: -1, textAnchor: "end" },
 	];
 
 	///////////////////////////////////////////////////////////////////////////
@@ -304,8 +304,8 @@ if(isMobile) {
 			.attr("x2", function(d,i) { return Math.round(sagaScale( i+1 )); })
 			.attr("y2", height);
 
-		if(isMobile) d3.selectAll(".saga-line").style("stroke", "#e1e1e1").style("stroke-dasharray", "2 5");
-		
+		if(isMobile) d3.selectAll(".saga-line").style("stroke-dasharray", "2 5");
+
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////////// Create the character paths ///////////////////////
 		///////////////////////////////////////////////////////////////////////////
@@ -582,6 +582,7 @@ if(isMobile) {
 			.style("isolation", "isolate")
 			.each(function(d) {
 				d.numFighters = d.values.length;
+				if( /Vegito/.test(d.values[0].state) ) d.numFighters -=1;
 			})
 			.on("mouseover", function(d) {
 				var el = d3.select(this);
@@ -695,7 +696,9 @@ if(isMobile) {
 
 				var el = d3.select(this);
 
-				var loc = names.indexOf(d.name);
+				//If the state contains Vegito, use Vegito's color
+				var name = /Vegito/.test(d.state) ? "Vegito" : d.name;
+				var loc = names.indexOf(name);
 				var charColor = loc > -1 ? characters[loc].color === "#" ? "#515151" : characters[loc].color : "#c1c1c1";
 
 				el.append("circle")
@@ -704,7 +707,7 @@ if(isMobile) {
 					.style("fill", charColor);
 
 				//Add extra elements depending on the state of the character
-				if(d.state === "Super Saiyan" || d.state === "Second Form" || d.state === "Semi-Perfect Form" || d.state === "Super") {
+				if(d.state === "Super Saiyan" || d.state === "Vegito Super Saiyan" || d.state === "Second Form" || d.state === "Semi-Perfect Form" || d.state === "Super") {
 					firstPower(el, charColor, 1.5, 1);
 				} else if(d.state === "2nd Grade Super Saiyan") {
 					firstPower(el, charColor, 1.5, 1.5);
@@ -739,7 +742,7 @@ if(isMobile) {
 					firstPower(el, "#361607", 1.5, 1); 
 				} else if(d.state === "Great Saiyaman") { //Gohan
 					firstPower(el, "#6DD903", 1.5, 1); 
-				} else if(d.state === "Candy") { //Vegito
+				} else if(d.state === "Vegito Candy") { //Vegito
 					firstPower(el, "#39100A", 1.5, 1); 
 				} else if(d.state === "Mighty Mask") { //Goten & Trunks
 					firstPower(el, "#005758", 1.5, 1); 

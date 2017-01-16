@@ -54,7 +54,7 @@ a.image-link {
 }
 
 .saga-line {
-    stroke: #c5c5c5;
+    stroke: #e1e1e1;
     stroke-width: 1px;
     stroke-dasharray: 2 6;
     stroke-linecap: round;
@@ -80,6 +80,9 @@ a.image-link {
 	font-style: italic;
 }
 
+.annotation-wrapper {
+	pointer-events: none;
+}
 .annotation-text {
 	font-size: 1em;
 	font-family: 'PT Sans', sans-serif;
