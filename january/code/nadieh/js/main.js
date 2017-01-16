@@ -18,9 +18,9 @@ if(isMobile) {
 	    .range([60, 150]);
 
 	var margin = {
-	  top: 50,
+	  top: 100,
 	  right: widthScale(outerWidth),
-	  bottom: 50,
+	  bottom: 100,
 	  left: widthScale(outerWidth)
 	};
 	var width = outerWidth - margin.left - margin.right;
@@ -39,25 +39,25 @@ if(isMobile) {
 	///////////////////////////////////////////////////////////////////////////
 
 	var sagaData = [
-		{id: 1, subSaga: 'Raditz Saga', saga: 'Saiyan', firstEpisode: 1, lastEpisode: 7, numEpisodes: 7 },
-		{id: 2, subSaga: 'Vegeta Saga', saga: 'Saiyan', firstEpisode: 7, lastEpisode: 35, numEpisodes: 29 },
-		{id: 3, subSaga: 'Namek Saga', saga: 'Frieza', firstEpisode: 36, lastEpisode: 67, numEpisodes: 32 },
-		{id: 4, subSaga: 'Captain Ginyu Saga', saga: 'Frieza', firstEpisode: 68, lastEpisode: 74, numEpisodes: 7 },
-		{id: 5, subSaga: 'Frieza Saga', saga: 'Frieza', firstEpisode: 75, lastEpisode: 107, numEpisodes: 33 },
+		{id: 1, subSaga: 'Raditz Saga', saga: 'Saiyan', firstEpisode: 1, lastEpisode: 7, numEpisodes: 7, firstFight: 1, lastFight: 4 },
+		{id: 2, subSaga: 'Vegeta Saga', saga: 'Saiyan', firstEpisode: 7, lastEpisode: 35, numEpisodes: 29, firstFight: 5, lastFight: 25 },
+		{id: 3, subSaga: 'Namek Saga', saga: 'Frieza', firstEpisode: 36, lastEpisode: 67, numEpisodes: 32, firstFight: 26, lastFight: 37 },
+		{id: 4, subSaga: 'Captain Ginyu Saga', saga: 'Frieza', firstEpisode: 68, lastEpisode: 74, numEpisodes: 7, firstFight: 38, lastFight: 44 },
+		{id: 5, subSaga: 'Frieza Saga', saga: 'Frieza', firstEpisode: 75, lastEpisode: 107, numEpisodes: 33, firstFight: 45, lastFight: 65 },
 		//{id: 0, subSaga: 'Garlic Jr. Saga', saga: 'Cell', firstEpisode: 108, lastEpisode: 117, numEpisodes: 10 }, //filler saga
-		{id: 6, subSaga: 'Trunks Saga', saga: 'Cell', firstEpisode: 118, lastEpisode: 125, numEpisodes: 8 },
-		{id: 7, subSaga: 'Androids Saga', saga: 'Cell', firstEpisode: 126, lastEpisode: 139, numEpisodes: 14 },
-		{id: 8, subSaga: 'Imperfect Cell Saga', saga: 'Cell', firstEpisode: 140, lastEpisode: 152, numEpisodes: 13 },
-		{id: 9, subSaga: 'Perfect Cell Saga', saga: 'Cell', firstEpisode: 153, lastEpisode: 165, numEpisodes: 13 },
-		{id: 10, subSaga: 'Cell Games Saga', saga: 'Cell', firstEpisode: 166, lastEpisode: 194, numEpisodes: 29 },
+		{id: 6, subSaga: 'Trunks Saga', saga: 'Cell', firstEpisode: 118, lastEpisode: 125, numEpisodes: 8, firstFight: 66, lastFight: 72 },
+		{id: 7, subSaga: 'Androids Saga', saga: 'Cell', firstEpisode: 126, lastEpisode: 139, numEpisodes: 14, firstFight: 73, lastFight: 80 },
+		{id: 8, subSaga: 'Imperfect Cell Saga', saga: 'Cell', firstEpisode: 140, lastEpisode: 152, numEpisodes: 13, firstFight: 81, lastFight: 87 },
+		{id: 9, subSaga: 'Perfect Cell Saga', saga: 'Cell', firstEpisode: 153, lastEpisode: 165, numEpisodes: 13, firstFight: 88, lastFight: 98 },
+		{id: 10, subSaga: 'Cell Games Saga', saga: 'Cell', firstEpisode: 166, lastEpisode: 194, numEpisodes: 29, firstFight: 99, lastFight: 110 },
 		//{id: 0, subSaga: 'Other World Saga', saga: 'Buu', firstEpisode: 195, lastEpisode: 199, numEpisodes: 5 }, //filler saga
-		{id: 11, subSaga: 'Great Saiyaman Saga', saga: 'Buu', firstEpisode: 200, lastEpisode: 209, numEpisodes: 10 },
-		{id: 12, subSaga: 'World Tournament Saga', saga: 'Buu', firstEpisode: 210, lastEpisode: 219, numEpisodes: 10 },
-		{id: 13, subSaga: 'Babidi Saga', saga: 'Buu', firstEpisode: 220, lastEpisode: 231, numEpisodes: 12 },
-		{id: 14, subSaga: 'Majin Buu Saga', saga: 'Buu', firstEpisode: 232, lastEpisode: 253, numEpisodes: 22 },
-		{id: 15, subSaga: 'Fusion Saga', saga: 'Buu', firstEpisode: 254, lastEpisode: 275, numEpisodes: 22 },
-		{id: 16, subSaga: 'Kid Buu Saga', saga: 'Buu', firstEpisode: 276, lastEpisode: 287, numEpisodes: 12 },
-		{id: 17, subSaga: 'Peaceful World Saga', saga: 'Buu', firstEpisode: 288, lastEpisode: 291, numEpisodes: 4 },
+		{id: 11, subSaga: 'Great Saiyaman Saga', saga: 'Buu', firstEpisode: 200, lastEpisode: 209, numEpisodes: 10, firstFight: 111, lastFight: 113 },
+		{id: 12, subSaga: 'World Tournament Saga', saga: 'Buu', firstEpisode: 210, lastEpisode: 219, numEpisodes: 10, firstFight: 114, lastFight: 118 },
+		{id: 13, subSaga: 'Babidi Saga', saga: 'Buu', firstEpisode: 220, lastEpisode: 231, numEpisodes: 12, firstFight: 119, lastFight: 128 },
+		{id: 14, subSaga: 'Majin Buu Saga', saga: 'Buu', firstEpisode: 232, lastEpisode: 253, numEpisodes: 22, firstFight: 129, lastFight: 138 },
+		{id: 15, subSaga: 'Fusion Saga', saga: 'Buu', firstEpisode: 254, lastEpisode: 275, numEpisodes: 22, firstFight: 139, lastFight: 152 },
+		{id: 16, subSaga: 'Kid Buu Saga', saga: 'Buu', firstEpisode: 276, lastEpisode: 287, numEpisodes: 12, firstFight: 153, lastFight: 162 },
+		{id: 17, subSaga: 'Peaceful World Saga', saga: 'Buu', firstEpisode: 288, lastEpisode: 291, numEpisodes: 4, firstFight: 163, lastFight: 166 },
 	];
 	var sagaNames = sagaData.map(function(d) { return d.subSaga; });
 		
@@ -74,7 +74,7 @@ if(isMobile) {
 		{character: "Goten", color: "#f2b252"}, //unique
 		{character: "Trunks", color: "#D8A3FA"}, //Trunks unique
 		{character: "Gotenks", color: "#6ED3C1"}, //unique
-		{character: "Vegito", color: "url(#vegito-gradient)"},
+		{character: "Vegito", color: "url(#vegito-gradient)"}, //unique combined gradient of Goku & Vegeta
 		{character: "Raditz", color: "#0B2D52"}, //Raditz & Nappa
 		{character: "Nappa", color: "#0B2D52"}, //Raditz & Nappa
 		{character: "Frieza", color: "#82307E"}, //unique
@@ -115,11 +115,11 @@ if(isMobile) {
 		{fightID: 69, fightSaga: "Trunks Saga", horizontalOffset: 6, hExtra: 0.6, hExtraMobile: 0, img_url: "Trunks_tests_Goku.gif", stroke: "#D8A3FA", fightText: "Trunks spars with Goku to test Goku's strength", textX: 1.25, textY: -1, textAnchor: "start" },
 		{fightID: 104, fightSaga: "Cell Games Saga", horizontalOffset: -6, hExtra: 0.4, hExtraMobile: 0.9, img_url: "Gohan_goes_SSJ2.gif", stroke: "#3e216d", fightText: "Enraged with Cell for killing Android 16, and the Cell Juniors' beating his friends, Gohan's hidden power erupts, transforming him into a Super Saiyan 2", textX: -1.25, textY: -1, textAnchor: "end" },
 		{fightID: 108, fightSaga: "Cell Games Saga", horizontalOffset: 2.5, hExtra: 0.4, hExtraMobile: 0.3, img_url: "Gohan_kills_Cell.gif", stroke: "#3e216d", fightText: "Releasing all the energy he has, Gohan's Father-Son Kamehameha is strong enough to vaporize every cell in Cell's body", textX: 1.25, textY: -1, textAnchor: "start" },
-		{fightID: 128, fightSaga: "Babidi Saga", horizontalOffset: -8, hExtra: 0.8, hExtraMobile: 0.3, img_url: "Goku_fights_Majin_Vegeta.gif", stroke: "#f27c07", fightText: "After Vegeta lets Babidi control him so he could become evil again the second epic battle between Goku and Majin Vegeta starts", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 128, fightSaga: "Babidi Saga", horizontalOffset: -8, hExtra: 0.8, hExtraMobile: 0.3, img_url: "Goku_fights_Majin_Vegeta.gif", stroke: "#f27c07", fightText: "After Vegeta lets Babidi control him so he could become evil again the second epic battle between Goku and (Majin) Vegeta starts", textX: -1.25, textY: -1, textAnchor: "end" },
 		{fightID: 134, fightSaga: "Majin Buu Saga", horizontalOffset: -5, hExtra: 0.2, hExtraMobile: 0.9, img_url: "Vegeta_sacrifice.gif", stroke: "#1D75AD", fightText: "One of the best DBZ moments happens when Vegeta sacrifices himself for his family to destroy Majin Buu (which sadly doesn't work)", textX: -1.25, textY: -1, textAnchor: "end" },
-		{fightID: 147, fightSaga: "Fusion Saga", horizontalOffset: -7, hExtra: 0.5, hExtraMobile: 0.9, img_url: "Vegito_fights_Super_Buu.gif", stroke: "url(#vegito-gradient)", fightText: "After nothing else works, Goku and Vegeta fuse to become Vegito who then dominates over Super Buu, even when turned into a jawbreaker", textX: -1.25, textY: -1, textAnchor: "end" },
-		{fightID: 156, fightSaga: "Kid Buu Saga", horizontalOffset: -10, hExtra: -0.1, hExtraMobile: 0.3, img_url: "Goku_fights_Kid_Buu.gif", stroke: "#f27c07", fightText: "Goku unleashes his Super Saiyan 3 form to fight Kid Buu, but it is still not enough", textX: -1.25, textY: -1, textAnchor: "end" },
-		{fightID: 162, fightSaga: "Kid Buu Saga", horizontalOffset: -7, hExtra: -0.3, hExtraMobile: 0.4, img_url: "Goku_kills_Kid_Buu.gif", stroke: "#F390A4", fightText: "After getting the energy from everybody on Earth (thanks to Mr. Satan) Goku finally kills Kid Buu with a massive Spirit Bomb", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 147, fightSaga: "Fusion Saga", horizontalOffset: -7, hExtra: 0.5, hExtraMobile: 0.9, img_url: "Vegito_fights_Super_Buu.gif", stroke: "url(#vegito-gradient)", fightText: "After nothing else works, Goku and Vegeta fuse to become Vegito, who dominates over Super Buu, even when turned into a jawbreaker", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 156, fightSaga: "Kid Buu Saga", horizontalOffset: -10, hExtra: -0.1, hExtraMobile: 0.3, img_url: "Goku_fights_Kid_Buu.gif", stroke: "#F390A4", fightText: "Goku unleashes his Super Saiyan 3 form to fight Kid Buu, but it's still not enough", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 162, fightSaga: "Kid Buu Saga", horizontalOffset: -7, hExtra: -0.3, hExtraMobile: 0.4, img_url: "Goku_kills_Kid_Buu.gif", stroke: "#f27c07", fightText: "After getting the energy from everybody on Earth (thanks to Mr. Satan) Goku finally kills Kid Buu with a massive Spirit Bomb", textX: -1.25, textY: -1, textAnchor: "end" },
 	];
 
 	///////////////////////////////////////////////////////////////////////////
@@ -152,11 +152,16 @@ if(isMobile) {
 
 	var strokeWidthScale = d3.scaleLinear()
 		.domain([minWidth, maxWidth])
-		.range([1, 4]);
+		.range([1.5, 4]);
 
 	///////////////////////////////////////////////////////////////////////////
 	////////////////////////// Create defs elements ///////////////////////////
 	///////////////////////////////////////////////////////////////////////////
+
+	//Add gradient on first fight
+	var extraOffset = outerWidth === 1000 ? (window.innerWidth - 1000)/2 : 0;
+	//d3.select("body").style("background","radial-gradient(circle closest-corner at " + Math.round(margin.left + extraOffset) + "px " + Math.round(margin.top) + "px, #fdf0db 0%, #fdf6db 100%, #FFFFFF 300%)");
+	//d3.select("body").style("background","radial-gradient(circle closest-corner at " + Math.round(margin.left + extraOffset) + "px " + Math.round(margin.top) + "px, #0e4948 0%, #00081c 700%)");
 
 	//Container for the gradients
 	var defs = svg.append("defs");
@@ -178,23 +183,33 @@ if(isMobile) {
 			.attr("x", function(d) { return isMobile ? sagaScale(d.hExtraMobile) : sagaScale(d.hExtra); })
 			.attr("height", 2*annotationCircleSize);
 
-	// //Code taken from http://stackoverflow.com/questions/9630008/how-can-i-create-a-glow-around-a-rectangle-with-svg
-	// //Filter for the outside glow
-	// var filter = defs.append("filter")
-	//   .attr("width", "300%")
-	//   .attr("x", "-100%")
-	//   .attr("height", "300%")
-	//   .attr("y", "-100%")
-	//   .attr("id","glow");
+	//Code taken from http://stackoverflow.com/questions/9630008/how-can-i-create-a-glow-around-a-rectangle-with-svg
+	//Filter for the outside glow
+	var filter = defs.append("filter")
+	  .attr("id","glow");
 
-	// filter.append("feGaussianBlur")
-	//   .attr("stdDeviation","3");
+	filter.append("feColorMatrix")
+		.attr("type", "matrix")
+		.attr("values", "0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 0 0.4 0")
+	filter.append("feGaussianBlur")
+	  .attr("stdDeviation","3")
+	  .attr("result","coloredBlur");;
 
-	// var feMerge = filter.append("feMerge");
-	// feMerge.append("feMergeNode")
-	//   .attr("in","coloredBlur");
-	// feMerge.append("feMergeNode")
-	//   .attr("in","SourceGraphic");
+	var feMerge = filter.append("feMerge");
+	feMerge.append("feMergeNode")
+	  .attr("in","coloredBlur");
+	feMerge.append("feMergeNode")
+	  .attr("in","SourceGraphic");
+
+	//Create a gradient for the saga lines, from transparent to grey to transparent again
+	var sagaLineGradient = defs.append("linearGradient")    
+		.attr("x1", 0).attr("y1", 0)         
+		.attr("x2", 0).attr("y2", 1)                 
+		.attr("id", "saga-line-gradient");
+	sagaLineGradient.append("stop").attr("offset", "0%").attr("stop-color", "#e1e1e1").attr("stop-opacity", 0);
+	sagaLineGradient.append("stop").attr("offset", "10%").attr("stop-color", "#e1e1e1");
+	sagaLineGradient.append("stop").attr("offset", "90%").attr("stop-color", "#e1e1e1");
+	sagaLineGradient.append("stop").attr("offset", "100%").attr("stop-color", "#e1e1e1").attr("stop-opacity", 0);
 
 	//Create a gradient to fill the lines from the annotations circles to the fights
 	var annotationLineGradient = defs.selectAll(".annotation-line-gradient")
@@ -271,8 +286,7 @@ if(isMobile) {
 		});
 
 		//Nest the data on saga and then on fight
-		var sagaNestedData = d3.nest()
-			.key(function(d) { return d.subSaga; })
+		var fightNestedData = d3.nest()
 			.key(function(d) { return d.id; })
 			.entries(data);
 
@@ -296,15 +310,16 @@ if(isMobile) {
 
 		//Add a vertical line per saga
 		sagaLine.selectAll(".saga-line")
-			.data(sagaNames)
+			.data(sagaData)
 			.enter().append("line")
 			.attr("class", "saga-line")
 			.attr("x1", function(d,i) { return Math.round(sagaScale( i+1 )); })
-			.attr("y1", 0)
-			.attr("x2", function(d,i) { return Math.round(sagaScale( i+1 )); })
-			.attr("y2", height);
+			.attr("y1", function(d) { return fightScale(d.firstFight - 1.5); })
+			.attr("x2", function(d,i) { return Math.round(sagaScale( i+1 ))+0.01; })
+			.attr("y2", function(d) { return fightScale(d.lastFight + 1.5); })
+			.style("stroke", "url(#saga-line-gradient)");
 
-		if(isMobile) d3.selectAll(".saga-line").style("stroke-dasharray", "2 5");
+		if(isMobile) d3.selectAll(".saga-line").style("stroke-width", 0.5);
 
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////////// Create the character paths ///////////////////////
@@ -316,6 +331,7 @@ if(isMobile) {
 			.data(characterNestedData)
 			.enter().append("g")
 			.attr("class", function(d) { return "character-path-group " + d.key.replace(" ", "_").toLowerCase(); })
+			.style("opacity", function(d) { return d.key === "Goku" ? 1 : 0.4; })
 			.each(function(d,k) {
 
 				//if(k > 0) return;
@@ -427,17 +443,26 @@ if(isMobile) {
 				//Make the hovered line more visible and rest less
 				characterLines
 					.transition("fade").duration(300)
-					.style("opacity", 0.2);
+					.style("opacity", 0.05);
 				d3.select(this)
 					.transition("fade").duration(300)
 					.style("opacity", 0.8);
 
+				//Hide saga lines & annotation a bit
+				sagaLine
+					.transition("visible").duration(300)
+		        	.style("opacity", 0.3);
+		        annotationWrapper
+					.transition("visible").duration(300)
+		        	.style("opacity", 0.1);
+		    	sagaTextWrapper
+		        	.transition("visible").duration(300)
+		        	.style("opacity", 0.3);
+
 				//Hide all the battles that do not feature the hovered over person
-				fights.filter(function(c) { 
-						return c.values.map(function(f) { return f.name; }).indexOf(d.key) === -1;
-					})
+				fights.filter(function(c) { return c.values.map(function(f) { return f.name; }).indexOf(d.key) === -1; })
 					.transition("fade").duration(300)
-					.style("opacity", 0.3);
+					.style("opacity", 0.1);
 
 				//Move the line tooltip to the right location
 		  		tooltipCharacterLine.text(d.key);
@@ -471,6 +496,17 @@ if(isMobile) {
 				tooltipWrapperLine
 					.transition().duration(200)
 					.style("opacity", 0);
+
+				//Reveal saga lines & annotations
+				sagaLine
+					.transition("visible").duration(300)
+		        	.style("opacity", 1);
+		        annotationWrapper
+					.transition("visible").duration(300)
+		        	.style("opacity", 1);
+		        sagaTextWrapper
+		        	.transition("visible").duration(300)
+		        	.style("opacity", 1);
 
 			});
 
@@ -531,8 +567,8 @@ if(isMobile) {
 			.enter().append("g")
 			.attr("class", "saga-name-group")
 			.attr("transform", function(d,i) {
-				var x = sagaScale(i+1) + 4*xSwoopDist*(i <= 9 ? 1 : -1),
-					y = fightScale(+sagaNestedData[i].values[0].key);
+				var x = sagaScale(i+1) + 3*xSwoopDist*(i <= 9 ? 1 : -1),
+					y = fightScale(d.firstFight);
 				return "translate(" + x + "," + y + ")";
 
 			})
@@ -553,27 +589,20 @@ if(isMobile) {
 			.text(function(d) { return "episodes " + d.firstEpisode + " - " + d.lastEpisode; });
 
 		///////////////////////////////////////////////////////////////////////////
-		///////////////////////// Create a group per saga /////////////////////////
-		///////////////////////////////////////////////////////////////////////////
-
-		var sagas = svg.selectAll(".saga")
-			.data(sagaNestedData)
-			.enter().append("g")
-			.attr("class", "saga");
-
-		///////////////////////////////////////////////////////////////////////////
 		///////////////////////// Create a group per fight ////////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
+		var fightOuterWrapper = svg.append("g").attr("class", "fight-outer-wrapper");
+
 		//Outer wrapper that will stay in place
-		var fightWrapper = sagas.selectAll(".fight-wrapper")
-			.data(function(d) { return d.values; })
+		var fightWrapper = fightOuterWrapper.selectAll(".fight-wrapper")
+			.data(fightNestedData, function(d) { return d.key; })
 			.enter().append("g")
 			.attr("class","fight-wrapper")
 			.attr("transform", function(d) { 
-				var x = Math.round(sagaScale( sagaData[sagaNames.indexOf(this.parentNode.__data__.key)].id )),
-					y = fightScale(+d.key);
-				return "translate(" + x + "," + y + ")"; 
+				d.x = Math.round(sagaScale( sagaData[sagaNames.indexOf(d.values[0].subSaga)].id ));
+				d.y = fightScale(+d.key);
+				return "translate(" + d.x + "," + d.y + ")"; 
 			});
 
 		//Inner fight wrapper that can be scaled on hover
@@ -589,6 +618,18 @@ if(isMobile) {
 
 				//Move the parent group to the front
 				d3.select(this.parentNode).moveToFront();
+				//this.parentNode.appendChild(this); //doesn't work
+
+				// //Insert a rectangle that will overlay everything but the fight
+				// d3.select(this).insert("rect", ":first-child")
+				// 	.attr("id","overlay-rect")
+				// 	.attr("x", -d.x)
+				// 	.attr("y", -d.y)
+				// 	.attr("width", width)
+				// 	.attr("height", height)
+				// 	.style("opacity", 0)
+				// 	.transition("visible").duration(500)
+				// 	.style("opacity", 0.6);
 
 				//Make the fight elements bigger
 				el
@@ -599,8 +640,8 @@ if(isMobile) {
 				el.selectAll(".character-circle-group")
 					.transition("move").duration(700)
 					.attr("transform", function(c,i) { 
-						var x = baseRadius*2 * Math.cos( i * Math.PI * 2 / d.numFighters ),
-							y = baseRadius*2 * Math.sin( i * Math.PI * 2 / d.numFighters );
+						var x = baseRadius*3 * Math.cos( i * Math.PI * 2 / d.numFighters ),
+							y = baseRadius*3 * Math.sin( i * Math.PI * 2 / d.numFighters );
 						return "translate(" + x + "," + y + ")"; 
 					});
 
@@ -612,19 +653,36 @@ if(isMobile) {
 
 				//Make the background circle visible
 				el.select(".fight-background-circle")
+					.style("filter", "url(#glow)")
 					.transition().duration(500)
-					.style("opacity", 0.7);
+					.style("opacity", 1);
 
 				//Make all the character lines less visible, except for those in the fight
 				characterLines
 					.transition("fade").duration(300)
 					.style("opacity", function(c) {
 						if( d.values.map(function(f) { return f.name; }).indexOf(c.key) === -1 ) {
-							return 0.1;
+							return 0.05;
 						} else {
-							return 0.9;
+							return 1;
 						}//else
 					});
+
+				// //Hide all the battles that do not feature the hovered over person
+				// fights.filter(function(c) { return c.values.map(function(f) { return f.name; }).indexOf(d.name) === -1; })
+				// 	.transition("fade").duration(300)
+				// 	.style("opacity", 0.1);
+
+				//Hide saga lines & annotation a bit
+				sagaLine
+					.transition("visible").duration(300)
+		        	.style("opacity", 0.3);
+		        annotationWrapper
+					.transition("visible").duration(300)
+		        	.style("opacity", 0.1);
+		        sagaTextWrapper
+		        	.transition("visible").duration(300)
+		        	.style("opacity", 0.3);
 
 				//Names of the fighters involved
 				console.log(d.key, d.values.map(function(c) { return c.name; }));
@@ -632,6 +690,12 @@ if(isMobile) {
 			})
 			.on("mouseout", function(d) {
 				var el = d3.select(this);
+
+				// //Remove overlay rect that hid the rest except for the fight
+				// el.select("#overlay-rect")
+				// 	.transition("visible").duration(500)
+				// 	.style("opacity", 0)
+				// 	.remove();
 
 				//Return to the normal scale
 				el
@@ -656,12 +720,26 @@ if(isMobile) {
 				//Hide the background circle
 				el.select(".fight-background-circle")
 					.transition().duration(500)
-					.style("opacity", 0);
+					.style("opacity", 0)
+					.on("end", function() { d3.select(this).style("filter", null); })
 
 				//Turn all character lines normal
 				characterLines
 					.transition("fade").duration(300)
 					.style("opacity", 0.4);
+
+
+				//Reveal saga lines & annotations
+				sagaLine
+					.transition("visible").duration(300)
+		        	.style("opacity", 1);
+		        annotationWrapper
+					.transition("visible").duration(300)
+		        	.style("opacity", 1);
+		        sagaTextWrapper
+		        	.transition("visible").duration(300)
+		        	.style("opacity", 1);
+
 			});
 
 		///////////////////////////////////////////////////////////////////////////
@@ -679,7 +757,7 @@ if(isMobile) {
 		//Extra background that becomes visible on hover
 		var fightCircleBackground = fights.append("circle")
 			.attr("class", "fight-background-circle")
-			.attr("r", baseRadius*4.5)
+			.attr("r", baseRadius*7)
 			.style("opacity", 0);
 
 		//Create circles along the saga lines
@@ -696,10 +774,15 @@ if(isMobile) {
 
 				var el = d3.select(this);
 
+				//Check for fused Vegito
+				var isVegito = /Vegito/.test(d.state);
+				//Move to the next if this is the last person in the Vegito fight (which is Vegeta, but he is already represented by Goku)
+				if(isVegito && i >= this.parentNode.__data__.numFighters) return;
+
 				//If the state contains Vegito, use Vegito's color
-				var name = /Vegito/.test(d.state) ? "Vegito" : d.name;
+				var name = isVegito ? "Vegito" : d.name;
 				var loc = names.indexOf(name);
-				var charColor = loc > -1 ? characters[loc].color === "#" ? "#515151" : characters[loc].color : "#c1c1c1";
+				var charColor = loc > -1 ? characters[loc].color : "#c1c1c1";
 
 				el.append("circle")
 					.attr("class", "character-circle")
@@ -810,11 +893,20 @@ function round2(num) {
 }//round2
 
 //Bring the mousovered fight to the front
+//http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3
 d3.selection.prototype.moveToFront = function() {
   return this.each(function(){
     this.parentNode.appendChild(this);
   });
 };	
+// d3.selection.prototype.moveToBack = function() { 
+//     return this.each(function() { 
+//         var firstChild = this.parentNode.firstChild; 
+//         if (firstChild) { 
+//             this.parentNode.insertBefore(this, firstChild); 
+//         } 
+//     }); 
+// };
 
 /*Taken from http://bl.ocks.org/mbostock/7555321
 //Wraps SVG text*/
