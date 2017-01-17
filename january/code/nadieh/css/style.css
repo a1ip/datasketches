@@ -1,6 +1,6 @@
 body {
 	font-size: 14px;
-	font-family: 'PT Sans Narrow', sans-serif;
+	font-family: 'PT Sans', sans-serif;
 }
 
 h1 {
@@ -36,7 +36,7 @@ a.image-link {
 
 /* --- Chart --- */
 
-@media screen and (max-width: 300px) {
+@media screen and (max-width: 450px) {
   #chart {
     font-size: 8px !important;
   }
@@ -151,6 +151,94 @@ a.image-link {
 .tooltip-character-line {
 	font-size: 1.5em;
 	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+
+@media screen and (max-width: 450px) {
+  #tooltip {
+    font-size: 8px !important;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #tooltip {
+    font-size: 12px !important;
+  }
+}
+
+#tooltip {
+  pointer-events: none;
+  text-align:center;  
+  z-index: 1000;
+  position: absolute;
+  opacity: 0;
+  font-size: calc(8px + (12 - 8) * (100vw - 450px)/(1000 - 450));
+  position: absolute;
+  cursor: default;
+}
+
+#tooltip-container {
+  position: relative;
+  top: 50%;
+  /*left: 50%;*/ /*Done in the code*/
+  transform: translate(-50%, -50%);
+  /*width: 230px;*/
+  /*left: -115px; /* 230/2*/
+  max-width: 300px;
+  font-size: 1em;
+  padding: 15px 25px;
+  border-radius: 3px;
+  background: white;
+  color: #000;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.3);  
+  border: 1px solid rgba(200,200,200,0.7);
+}
+
+.tooltip-rule {
+  height: 1px;
+  margin: 1px auto 3px;
+  background: #ddd;
+  width: 130px;
+}
+
+.tooltip-saga {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  /*margin-bottom: 0.5em;*/
+  color: #a4a4a4; 
+}
+
+.tooltip-characters {
+  color: #aeaeae;
+  font-size: 1.3em;  
+  font-family: 'PT Sans Narrow', sans-serif;  
+}
+.tooltip-characters.good {
+  margin-top: 0.7em;
+}
+.tooltip-characters.bad {   
+  margin-bottom: 0em;  
+}
+
+.tooltip-vs {
+  color: #a8a8a8;
+  font-size: 0.9em;   
+  margin-top: 0.3em;
+  margin-bottom: 0.2em; 
+}
+
+.tooltip-info {
+  color: #a8a8a8;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.tooltip-extra {
+  color: #333333;
+  font-size: 0.8em; 
+  margin-top: 1em;
+  margin-bottom: 0.5em;
 }
 
 /* --- Credits --- */

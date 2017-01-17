@@ -26,6 +26,9 @@ if(isMobile) {
 	var width = outerWidth - margin.left - margin.right;
 	var height = 6.5*width; //Math.max(width*5,4500) - margin.top - margin.bottom;
 		
+	//Offset for the centering of the SVG
+	var tooltipOffset = (window.innerWidth - outerWidth)/2;
+
 	//SVG container
 	var svg = d3.select('#chart')
 		.append("svg")
@@ -65,18 +68,18 @@ if(isMobile) {
 		{character: "Goku", color: "#f27c07"}, //unique
 		{character: "Vegeta", color: "#1D75AD"}, //unique
 		{character: "Gohan", color: "#3e216d"}, //unique
-		{character: "Krillin", color: "#FFCEB5"}, //unique
+		{character: "Krillin", color: "#E3A688"}, //unique
 		{character: "Piccolo", color: "#56B13E"}, //unique
 		{character: "Future Trunks", color: "#D8A3FA"}, //Trunks unique
 		{character: "Tien Shinhan", color: "#C30703"}, //Tien & Chiaotzu
 		{character: "Chiaotzu", color: "#C30703"}, //Tien & Chiaotzu
-		{character: "Yamcha", color: "#ABACB9"}, //uniquw
+		{character: "Yamcha", color: "#F53B00"}, //unique
+		{character: "Gotenks", color: "#6ED3C1"}, //unique
 		{character: "Goten", color: "#f2b252"}, //unique
 		{character: "Trunks", color: "#D8A3FA"}, //Trunks unique
-		{character: "Gotenks", color: "#6ED3C1"}, //unique
-		{character: "Vegito", color: "url(#vegito-gradient)"}, //unique combined gradient of Goku & Vegeta
 		{character: "Raditz", color: "#0B2D52"}, //Raditz & Nappa
 		{character: "Nappa", color: "#0B2D52"}, //Raditz & Nappa
+		{character: "Captain Ginyu", color: "#B0A6BE"}, //unique
 		{character: "Frieza", color: "#82307E"}, //unique
 		{character: "Android 16", color: "#383838"},
 		{character: "Android 17", color: "#383838"},
@@ -86,23 +89,40 @@ if(isMobile) {
 		{character: "Android 19", color: "#383838"},
 		{character: "Android 20", color: "#383838"},
 		{character: "Cell", color: "#9DBD2A"}, //unique
-		{character: "Cell Jr. 1", color: "#b5d63e"},
-		{character: "Cell Jr. 2", color: "#b5d63e"},
-		{character: "Cell Jr. 3", color: "#b5d63e"},
-		{character: "Cell Jr. 4", color: "#b5d63e"},
-		{character: "Cell Jr. 5", color: "#b5d63e"},
-		{character: "Cell Jr. 6", color: "#b5d63e"},
-		{character: "Cell Jr. 7", color: "#b5d63e"},
+		{character: "Cell Jr.", color: "#b5d63e"},
 		{character: "Future Cell", color: "#9DBD2A"},
-		{character: "Buu", color: "#F390A4"}, //unique
+		{character: "Babidi", color: "#D4AB03"}, //unique
+		{character: "Dabura", color: "#E67152"}, //unique
 		{character: "Evil Buu", color: "#C8B4C0"},
-		{character: "Good (Majin) Buu", color: "#FFBBBE"}
+		{character: "Good (Majin) Buu", color: "#FFBBBE"},
+		{character: "Buu", color: "#F390A4"}, //unique
+		{character: "Vegito", color: "url(#vegito-gradient)"}, //unique combined gradient of Goku & Vegeta
 	];
 	var names = characters.map(function(d) { return d.character; });
+	
+	//For the tooltip
+	var charColors = characters.map(function(d) { return d.color; });
+	//Remove "Buu" & "Good (Majin) Buu" & "Vegito"
+    var tooltipNames = names.slice(0, names.length-3);
+    //Add the Buu forms (in regex) & Vegito in 1 color
+    tooltipNames = tooltipNames.concat(["Good \\(Majin\\) Buu","Majin Buu","Super Buu","Kid Buu","Vegito"]);
+    var tooltipColors = charColors.slice(0, charColors.length-1);
+    tooltipColors = tooltipColors.concat(["#F390A4","#F390A4","#39100A"]);
 
 	//Characters to follow across sub sagas
 	var fullCharacters = ["Goku","Vegeta","Gohan","Krillin","Buu","Piccolo","Cell","Frieza","Future Trunks","Gotenks"];
-	//Possible extra: ["Tien Shinhan","Yamcha",,"Chiaotzu","Trunks"]
+	//Possible extra: ["Tien Shinhan","Yamcha","Chiaotzu","Trunks","Goten"]
+
+	var oddStatesData = [
+		{state: "Mecha", color: "#cccccc"}, //Frieza vs Future Trunks
+		{state: "Goku's body", color: "#f27c07"}, //By Captain Ginyu
+		{state: "Great Ape", color: "#361607"}, //Gohan and Vegeta
+		{state: "Great Saiyaman", color: "#6DD903"}, //Gohan
+		{state: "Candy", color: "#39100A"}, //Vegito
+		{state: "Mighty Mask", color: "#005758"}, //Goten & Trunks
+	];
+	var oddStates = oddStatesData.map(function(d) { return d.state; });
+	var oddStatesColor = oddStatesData.map(function(d) { return d.color; });
 
 	//Special fights
 	var specialFights = [
@@ -264,7 +284,12 @@ if(isMobile) {
 	//////////////////////////// Read in the data /////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	d3.csv('../../data/nadieh/dragonball_Z_fight_per_person.csv', function (error, data) {
+	d3.queue() 
+	  .defer(d3.csv, "../../data/nadieh/dragonball_Z_fight_per_person.csv")
+	  .defer(d3.csv, "../../data/nadieh/dragonball_Z_fights_cleaned.csv")
+	  .await(draw);
+
+	function draw(error, data, fightData) {
 
 		///////////////////////////////////////////////////////////////////////////
 		///////////////////////////// Final data prep /////////////////////////////
@@ -274,6 +299,13 @@ if(isMobile) {
 		
 		data.forEach(function(d) {
 			d.id = +d.id;
+		});
+
+		var fightLink = [];
+		//Create a mapping between the fights and fightData
+		fightData.forEach(function(d,i) {
+			d.id = +d.id;
+			fightLink[d.id] = i;
 		});
 
 		//Set the first and final fight id
@@ -299,8 +331,15 @@ if(isMobile) {
 		var baseRadius = rScale(width); //The default radius of the character circles
 		var baseDistanceRatio = 0.7; //The default distance that the circles are apart
 		var backgroundRectSize = height / (fightScale.domain()[1] - fightScale.domain()[0]); //The default size of the background rectangle
+		var backgroundCircleFactor = 7; //How many times the baseRadius should the background circle become
+		var hoverScaleIncrease = 3; //How much should the fight group be scaled up
+		var sagaDistance = sagaScale(2) - sagaScale(1); //Number of pixels between two sagas
 
-		var xSwoopDist = (sagaScale(2) - sagaScale(1))/2;
+		var xSwoopDist = sagaDistance/2;
+
+		//Make sure the tooltip doesn't become too wide
+		d3.select("#tooltip-container")
+			.style("max-width", (window.innerWidth/2 - 2*25 - baseRadius*backgroundCircleFactor*hoverScaleIncrease - sagaDistance/2) + "px");
 
 		///////////////////////////////////////////////////////////////////////////
 		////////////////////////// Create a line per saga /////////////////////////
@@ -610,7 +649,10 @@ if(isMobile) {
 			.attr("class","fight")
 			.style("isolation", "isolate")
 			.each(function(d) {
+				d.x = this.parentNode.__data__.x;
+				d.y = this.parentNode.__data__.y;
 				d.numFighters = d.values.length;
+				//Take one fighter from the Vegito fusion to make the circles spread correctly around 360 degrees
 				if( /Vegito/.test(d.values[0].state) ) d.numFighters -=1;
 			})
 			.on("mouseover", function(d) {
@@ -634,14 +676,14 @@ if(isMobile) {
 				//Make the fight elements bigger
 				el
 					.transition("grow").duration(500)
-					.attr("transform", "scale(3)");
+					.attr("transform", "scale(" + hoverScaleIncrease + ")");
 
 				//Move the circles apart
 				el.selectAll(".character-circle-group")
 					.transition("move").duration(700)
 					.attr("transform", function(c,i) { 
-						var x = baseRadius*3 * Math.cos( i * Math.PI * 2 / d.numFighters ),
-							y = baseRadius*3 * Math.sin( i * Math.PI * 2 / d.numFighters );
+						var x = -baseRadius*3 * Math.cos( i * Math.PI * 2 / d.numFighters ),
+							y = -baseRadius*3 * Math.sin( i * Math.PI * 2 / d.numFighters );
 						return "translate(" + x + "," + y + ")"; 
 					});
 
@@ -656,6 +698,58 @@ if(isMobile) {
 					.style("filter", "url(#glow)")
 					.transition().duration(500)
 					.style("opacity", 1);
+	
+				//Get the correct fight data
+				var fightInfo = fightData[fightLink[+d.key]];			
+
+				//Find the location of tooltip
+				var xpos = d.x + margin.left + tooltipOffset;
+				if(+d.key < 88) {
+					xpos = xpos + baseRadius*backgroundCircleFactor*hoverScaleIncrease + sagaDistance/2;
+					d3.select("#tooltip-container").style("left", "50%").style("right", null);
+				} else {
+					xpos = xpos - baseRadius*backgroundCircleFactor*hoverScaleIncrease - sagaDistance/2;
+					d3.select("#tooltip-container").style("left", null).style("right", "50%");
+				}//else
+				var ypos = d.y + margin.top;
+
+				//Change the texts inside the tooltip
+				d3.select(".tooltip-saga").html(fightInfo.subSaga);
+
+				//debugger;
+				//Check to see if any of the main characters are in the string
+				//and if yes, make sure they get the right color
+				d3.select(".tooltip-characters.good").html(tooltipNameColors(fightInfo.charactersGood));
+				//Do the same for the "bad" characters
+				d3.select(".tooltip-characters.bad").html(tooltipNameColors(fightInfo.charactersBad));
+
+				//Combine the info & anime variables into 1 row, if present at all
+				if (fightInfo.info === "" && fightInfo.anime === "") {
+					d3.select(".tooltip-info").style("display", "none").html("");
+				} else {
+					if (fightInfo.info !== "" && fightInfo.anime !== "") {
+						d3.select(".tooltip-info").html(fightInfo.info + " | " + fightInfo.anime);
+					} else if (fightInfo.info === "" && fightInfo.anime !== "") {
+						d3.select(".tooltip-info").html(fightInfo.anime);
+					} else if (fightInfo.info !== "" && fightInfo.anime === "") {
+						d3.select(".tooltip-info").html(fightInfo.info);
+					}//else if
+					d3.select(".tooltip-info").style("display", "inline-block")
+				}//else
+
+				//Only show the extra section if there is something to mention
+				if (fightInfo.extra === "") {
+					d3.select(".tooltip-extra").style("display", "none").html("");
+				} else {
+					d3.select(".tooltip-extra").style("display", "inline-block").html('"' + fightInfo.extra + '"');
+				}//else
+
+				//Show and move the tooltip
+				d3.select("#tooltip")
+					.transition("tooltip").duration(500)
+					.style("opacity", 1)
+					.style("top", ypos + "px")
+					.style("left", xpos + "px");
 
 				//Make all the character lines less visible, except for those in the fight
 				characterLines
@@ -668,7 +762,7 @@ if(isMobile) {
 						}//else
 					});
 
-				// //Hide all the battles that do not feature the hovered over person
+				// //Hide all the battles that do not feature any of the characters in this fight
 				// fights.filter(function(c) { return c.values.map(function(f) { return f.name; }).indexOf(d.name) === -1; })
 				// 	.transition("fade").duration(300)
 				// 	.style("opacity", 0.1);
@@ -706,8 +800,8 @@ if(isMobile) {
 				el.selectAll(".character-circle-group")
 					.transition("move").duration(500)
 					.attr("transform", function(c,i) { 
-						var x = baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / d.numFighters ),
-							y = baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / d.numFighters );
+						var x = -baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / d.numFighters ),
+							y = -baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / d.numFighters );
 						return "translate(" + x + "," + y + ")"; 
 					});
 
@@ -728,6 +822,9 @@ if(isMobile) {
 					.transition("fade").duration(300)
 					.style("opacity", 0.4);
 
+				//Hide tooltip
+				d3.select("#tooltip").transition("tooltip").duration(300)
+					.style("opacity", 0);
 
 				//Reveal saga lines & annotations
 				sagaLine
@@ -757,7 +854,7 @@ if(isMobile) {
 		//Extra background that becomes visible on hover
 		var fightCircleBackground = fights.append("circle")
 			.attr("class", "fight-background-circle")
-			.attr("r", baseRadius*7)
+			.attr("r", baseRadius*backgroundCircleFactor)
 			.style("opacity", 0);
 
 		//Create circles along the saga lines
@@ -766,8 +863,8 @@ if(isMobile) {
 			.enter().append("g")
 			.attr("class","character-circle-group")
 			.attr("transform", function(d,i) { 
-				var x = baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / this.parentNode.__data__.numFighters ),
-					y = baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
+				var x = -baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / this.parentNode.__data__.numFighters ),
+					y = -baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
 				return "translate(" + x + "," + y + ")"; 
 			})
 			.each(function(d,i) {
@@ -879,7 +976,7 @@ if(isMobile) {
 
 
 
-	});//d3.csv
+	}//draw
 
 //}//else
 
@@ -935,4 +1032,42 @@ function wrap(text, width) {
 	}
   });
 }//wrap
+
+//Function to take apart the names of the good and "bad" fighters and give each characters name
+//the right color using spans
+function tooltipNameColors(string) {
+
+	for(var j = 0; j < tooltipNames.length; j++) {
+		//Match the name (except for Goten, not ending on "ks", Cell not ending on Jr. and Goku not ending on Goku's)
+		//and if there is anything in ()
+		var reg = new RegExp(tooltipNames[j] + "( \\([-&%'\\d\\w\\s]+\\)|(?!ks| Jr|'s))","i");
+		string = string.replace(reg, function(k, match) {
+			console.log(k, match);
+			var newHTML;
+
+			//If the () is a match, check if it is one of the special states
+			//and if yes, replace this with the right color
+			if(match.length > 0) {
+				match.replace(/\(([-&%'\d\w\s]+)\)/i, function(m, matchInside) {
+					//console.log(m, matchInside);
+					var specialState = oddStates.indexOf(matchInside);
+					if(specialState >= 0) {
+						//remove the special state from k
+						k = k.replace(m," ");
+						newHTML = '<span style="color: ' + tooltipColors[j] + ';">' + k + '</span><span style="color: ' + oddStatesColor[specialState] + ';">(' + matchInside + ')</span>';
+					} else {
+						newHTML = '<span style="color: ' + tooltipColors[j] + ';">' + k + '</span>';
+					}
+				});//match replace
+
+			} else {
+				newHTML = '<span style="color: ' + tooltipColors[j] + ';">' + k + '</span>';
+			}//else
+
+			return newHTML;
+		});//string replace
+	}//for j
+
+	return string;
+}//function tooltipNameColors
 
