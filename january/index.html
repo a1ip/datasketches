@@ -152,23 +152,80 @@
               <div class="name-guest paddingBelow kingBasil">Nicholas Rougeux</div>
               <div class="time kingBasil"></div>
               <div class="location quicksand">chicago</div>
-
-  			        <!-- <a href="url_to_final_project"><img src="code/guest/700x460_image_of_final_result.jpg" class="img-responsive img-month-top" alt="Name of your project"></a> -->
-
-                <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
-
-                <p></p>
-	            <!-- <a class="fancybox" href="data/guest/image_name_full_size.png"> <img src="data/guest/image_name_small_size.jpg" class="img-responsive img-month" alt="Description of image"></a> -->
-								
-                <h3>week 2 <span class="light-grey">|</span> sketches</h3>
-
-                <p></p>
-                <!-- <a class="fancybox" href="sketches/guest/image_name_full_size.png"> <img src="sketches/guest/image_name_small_size.jpg" class="img-responsive img-month" alt="Description of image"></a> -->
-
-                <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
-				
-                <p></p>
-                <!-- <a class="fancybox" href="code/guest/image_name_full_size.png"> <img src="code/guest/image_name_small_size.jpg" class="img-responsive img-month" alt="Description of image"></a> -->
+              
+                <p><img alt="Snapshot of final project" class="img-responsive" src="code/guest/header.png" /></p>
+                <p>When Shirley and Nadieh asked me to make a guest post for Data Sketches, I jumped at the opportunity but immediately panicked a little because I had agreed to the daunting task of creating something like their wonderful projects over the past six months. Whether or not that happened will be left to the reader but below is the story of how it came to be.</p>
+                
+                <h3>year 1: data</h3>
+                
+                <p>Unlike many of my projects, I didn't need to start by collecting data because I had already done so...three years ago. Maybe I knew one day I would do more with it. Back in 2013, when I just started getting seriously interested in the artistic side of data visualization, I did what any newly-obsessed data junky would do: I picked a familiar subject and tracked it obsessively.</p>
+                <p>Taking a step back, it's important to mention that I play a lot of Scrabble. The game has been part of my family since before I was. My grandmother has is a force to be reckoned with in the game, my father has played for ages, and both of them taught me when I was about 12 as a way to build my language and math skills. (My father was an English teacher and I was always the scorekeeper.) They never let me win and for that I'm thankful but during the early years, they were formidable opponents&mdash;and still are!</p>
+                <p>Fast forward to 2013. I decided to track the weekly games with my father&mdash;hoping to chart our scores and find interesting patterns in our playing styles. After each game, I diligently entered the score data into my own MySQL database to query and generate a bare bones dashboard.</p>
+                <p><a class="fancybox" href="data/guest/database.png"><img alt="Screenshot of Scrabble database" class="img-responsive img-month" src="data/guest/database.png" /></a></p>
+                <p><a class="fancybox" href="data/guest/early-dashboard.png"><img alt="Screenshot of original dashboard" class="img-responsive img-month" src="data/guest/early-dashboard.png" /></a></p>
+                <p>I wish I had the foresight to track which words were played and did so for the first two games of 2014 but lost motivation because I was prolonging each game by pausing after each turn to record which word was played, where it was played, and how many points it was worth. I did take a few pictures of the final boards though:</p>
+                <p><a class="fancybox" href="data/guest/game-boards.jpg"><img alt="Photo of a few final Scrabble boards" class="img-responsive img-month" src="data/guest/game-boards.jpg" /></a></p>
+                
+                <h3>days 1 and 2: &ldquo;sketching&rdquo;</h3>
+                
+                <p>The day I was asked to work on a project about nostalgia, one of my first thoughts was that Scrabble dataset. It was personal, made me think of good times, and was detailed enough to generate some interesting results.</p>
+                <p>My goal was to explore the variety of points earned in each turn rather than who won or lost. I enjoy working with more experimental ways of visualizing data than creating graphics that strictly inform&mdash;though I do enjoy a well-made chart.</p>
+                <p>I've never felt sketching out ideas on paper worked for me. I enjoy seeing others&rsquo; sketches and have nothing against it but I do most &ldquo;sketching&rdquo; in my mind and feel sketching on paper slows me down. I enjoy brainstorming with real data&mdash;either a sample or the full set&mdash;to see if my ideas are realistic before polishing them. <a href="https://www.nodebox.net/">NodeBox</a> is great for this because I don't get bogged down with coding and I can see instant results after creating a few nodes to manipulate the data. <a href="http://raw.densitydesign.org/">Density Design's Raw</a> is another tool I frequently use. With every new idea that pops in my head, I save a new version so my &ldquo;sketches&rdquo; are reusable and adjustable if I want to examine a new direction based on an earlier version.</p>
+                <p><a class="fancybox" href="sketches/guest/version-files.png"><img alt="Screenshot of file versions" class="img-responsive img-month" src="sketches/guest/version-files.png" /></a></p>
+                <p>My first idea was to take the turn-by-turn step charts from my original dashboard and overlap them to see if any general trends emerged beyond the obvious. Seeing the result was personally satisfying but not very visually interesting. I left it be without bothering to add the steps.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-1.png"><img alt="First version" class="img-responsive img-month" src="sketches/guest/scrabble-1.png" /></a></p>
+                <p>Next, I wanted to see exactly when I played Scrabble throughout the year so I made an ugly but informative "date wheel" just showing dates of each game. I was surprised to see the large gaps since I thought we played just about every week. Some were expected like when I took vacations with family but the two in late winter/early spring were unexpected. I think those gaps were when my father was traveling at conferences or visiting friends.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-2.png"><img alt="Second version" class="img-responsive img-month" src="sketches/guest/scrabble-2.png" /></a></p>
+                <p>The next logical step was to combine the first two sketches and see the turn-by-turn charts on the date wheel. The image below shows that but confused me at first because the gaps weren't in the same spots as before. Then I realized that the lines weren't straight but angled at about 45 degrees from each point&mdash;so they were in the correct spots but the angles shifted the gaps. This version reminded me of those <a href="https://www.google.com/search?tbm=isch&amp;q=plasma+globe">plasma globe toys</a>.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-3.png"><img alt="Third version" class="img-responsive img-month" src="sketches/guest/scrabble-3.png" /></a></p>
+                <p>Differentiating games from one another was difficult so I created straight spokes around the wheel with circles representing each turn, color-coded by player and sized based on how many points were earned. Distance from the center corresponded to which turn was played (first turn closest to the center, last turn farthest). The results were genuinely interesting but reminded me too much of a previous project I created so I didn't pursue it much. The gaps for when I didn't play also started to get distracting.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-4.png"><img alt="Fourth version" class="img-responsive img-month" src="sketches/guest/scrabble-4.png" /></a></p>
+                <p>However, creating this version resulted in a reusable setup for NodeBox for parsing my data using network nodes. Using a single flat dataset, I could now easily parse each game, each player, and each turn.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-4-nodebox.png"><img alt="NodeBox configuration for fourth version" class="img-responsive img-month" src="sketches/guest/scrabble-4-nodebox.png" /></a></p>
+                <p>Once I had a reusable setup, I quickly created a version of the charts from my original dashboard just to see if I could. Without adding steps, the result was lots of wiggly lines. I would eventually come back to this version occasionally to play with this more.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-5.png"><img alt="Fifth version" class="img-responsive img-month" src="sketches/guest/scrabble-5.png" /></a></p>
+                <p>Looking for a different approach, I created plainer design focusing on the process of inching toward a final score. This version showed each game as a group of horizontal lines with dots spaced out based on the points earned during each turn. I liked the relative even distribution but it was too busy and difficult to differentiate games and even players.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-6.png"><img alt="Sixth version" class="img-responsive img-month" src="sketches/guest/scrabble-6.png" /></a></p>
+                <p>The next version is where I finally started seeing potential. Instead of fitting all turns from all games on a single spoked wheel, I created separate spoked wheels for each game. Each turn is a spoke and reading clockwise from the top, a dot color-coded by player is positioned farther from the center the more points were earned. I really liked seeing the wide variety of each game and where big plays were made&mdash;likely with bingos (playing all seven tiles at once in a turn). This would eventually become the basis for one of the final visuals.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-7.png"><img alt="Seventh version" class="img-responsive img-month" src="sketches/guest/scrabble-7.png" /></a></p>
+                <p>Still looking for more ideas, I decided to try an idea based on <a href="http://www.stefanieposavec.co.uk/writing-without-words/">Stephanie Posavec's Writing Without Words project</a> where wandering paths were created by drawing lines between points following a simple algorithm: draw a line for the first turn based on points earned, turn 90 degrees, and draw another and repeat. I loved this idea when I first saw Stephanie's project. It can be easily applied to so many topics with fascinating results. Applying it to Scrabble games produced very fun results and I decided to use them in one of the final visuals.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-8.png"><img alt="Eighth version" class="img-responsive img-month" src="sketches/guest/scrabble-8.png" /></a></p>
+                <p>In an attempt to build on the wandering paths, created a quick-and-dirty variation that drew lines based on a ping-pong like algorithm: draw a line pointing left or right and alternate between the two moving up with every turn. The results weren't great but I saved the idea nonetheless.</p>
+                <p><a class="fancybox" href="sketches/guest/scrabble-9.png"><img alt="Ninth version" class="img-responsive img-month" src="sketches/guest/scrabble-9.png" /></a></p>
+                <p>After feeling a little maxed out with NodeBox, I threw the data into <a href="http://raw.densitydesign.org/">Raw</a> to see what there was to see. I created a couple treemaps of points per game color-coded on a linear scale and color-coded by player. I also created a bump chart showing ranking of players for the entire year.</p>
+                <p><a class="fancybox" href="sketches/guest/treemaps.png"><img alt="Treemaps" class="img-responsive img-month" src="sketches/guest/treemaps.png" /></a></p>
+                <p><a class="fancybox" href="sketches/guest/bumpchart.png"><img alt="" class="img-responsive img-month" src="sketches/guest/bumpchart.png" /></a></p>
+                
+                <h3>day 3: polishing and code</h3>
+                
+                <p>I knew I wanted to use the spoked wheel design so I experimented with different ways of trying to combine them into one giant graphic resembling fireworks. I also started playing with different color ideas. In these combinations, the distance from the common baseline of an entire game is based on how many total points were earned that game. (More points = farther from baseline.)</p>
+                <p>NodeBox has a node for creating stars and just for fun, I replaced the dots with stars and configured the number of points on the star to correspond to the number of points earned on a turn, which resulted in a fuzzy appearance. It was a little silly but I liked it.</p>
+                <p><a class="fancybox" href="code/guest/scrabble-10-11-12.png"><img alt="Versions 10, 11, and 12" class="img-responsive img-month" src="code/guest/scrabble-10-11-12.png" /></a></p>
+                <p>The more I played with a giant graphic, the more I realized that while it was appealing in theory, the details were lost and there was too many overlapping points&mdash;even when using a horizontal baseline instead of a radial one.</p>
+                <p>I wanted to find a different way of arranging the games and remembered that for an earlier project, I found <a href="http://hydra.nat.uni-magdeburg.de/packing/">Packomania</a> when looking for a way to tightly arrange circles in a specific shape. This site offers a mindboggling number of diagrams showing how circles of varying or consistent sizes can be packed into squares, circles, and other shapes when the number of circles from just a few to over two thousand. The best part is that each diagram is available in a PDF with the original vector shapes. This is an incredibly valuable resource for people like me who don't feel like coding packing algorithms.</p>
+                <p><a class="fancybox" href="code/guest/packomania.png"><img alt="Sample Packomania diagrams" class="img-responsive img-month" src="code/guest/packomania.png" /></a></p>
+                <p>NodeBox supports importing SVGs so it's possible to use one of these diagrams to use as a guide for placing shapes. Here's the general process:</p>
+                
+                <ol style="text-align: left;">
+                    <li>Download a PDF of a diagram with the appropriate number of shapes. In my case, found diagrams with 47 circles for the 47 games I played.</li>
+                    <li>Open the PDF in Illustrator and extract just the circles&mdash;removing all other shapes.</li>
+                    <li>Reorder the shape objects in the order they should be parsed by NodeBox: first at the bottom, last at the top. In my case, the first corresponded to the first game I played in 2013.</li>
+                    <li>Export the file as an SVG.</li>
+                    <li>Use the import SVG node in NodeBox to import the SVG, connect it to an ungroup node and connect that to a centroid node. This finds the center points of each circle which can be used to position shapes.</li>
+                </ol>
+                
+                <p><a class="fancybox" href="code/guest/nodebox-positions.png"><img alt="NodeBox configuration for using SVG to position shapes" class="img-responsive img-month" src="code/guest/nodebox-positions.png" /></a></p>
+                <p>At this point, it was just a matter of finding a symmetrical arrangement of 47 circles that I liked and that would fit well on a screen. After manually moving circles around in Illustrator for longer than I care to admit, I found a good arrangement. I also used the connect node to draw a faint line connecting all the centroids to illustrate the path from beginning of the year to the end. The same arrangement was used for both main visuals.</p>
+                <p>Below are the NodeBox configurations for the two main visuals.</p>
+                <p><a class="fancybox" href="code/guest/nodebox-stars.png"><img alt="Annotated diagram of NodeBox configuration for stars image" class="img-responsive img-month" src="code/guest/nodebox-stars.png" /></a></p>
+                <p><a class="fancybox" href="code/guest/nodebox-paths.png"><img alt="Annotated diagram of NodeBox configuration for paths image" class="img-responsive img-month" src="code/guest/nodebox-paths.png" /></a></p>
+                <p>I knew I wanted to keep the original stepped line charts for a more analytical view of how games unfold as a type of appendix. These were created with <a href="http://www.highcharts.com/">Highcharts</a>. Highcharts is my go-to tool for creating charts because it's relatively easy for me to use and I can focus more on how the charts look without worrying how they work under the hood. I really enjoy customizing the options to configure the colors, data, how they behave, and more&mdash;mostly because its documentation is some of the best I've seen with good explanations, easy navigation, and working examples of almost every option.</p>
+                <p><a class="fancybox" href="code/guest/highcharts.png"><img alt="Highcharts charts" class="img-responsive img-month" src="code/guest/highcharts.png" /></a></p>
+                
+                <h3>reflections</h3>
+                
+                <p>The <a href="http://www.c82.net/scrabble">final result</a> is a visual experiment of one of many years of Scrabble that I hold dear. I can't remember every game I've played but looking at the visuals helps me remember the excitement of surging ahead with a bingo or the slogging along with a rack full of vowels playing turns worth only a few points.</p>
+                <p>Analyzing these games has helped me fondly remember a time when I looked forward to my weekly visit with my parents to have dinner and play a good game of Scrabble. Geography may separate us now but I still play with my father twice a week and we're still just as dedicated to the game as we ever were.</p>
 
             </div>
           </div>
