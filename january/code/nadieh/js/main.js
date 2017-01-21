@@ -11,31 +11,38 @@ if(isMobile) {
 	//////////////////////////// Set up the SVG ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	var minWidth = 450,
-		maxWidth = 1000;
-	var outerWidth = Math.max(minWidth, Math.min(window.innerWidth - 30, maxWidth));
+		maxWidth = document.documentElement.clientWidth > 1200 ? 1000 : 800,
+		scrollBarPadding = 10,
+		outerWidth = Math.max(minWidth, Math.min(document.documentElement.clientWidth - scrollBarPadding, maxWidth));
+
+	//Scale to figure out the optimum left and right margins
 	var widthScale = d3.scaleLinear()
 		.domain([450, 1000])
 	    .range([60, 150]);
 
 	var margin = {
-	  top: 100,
-	  right: widthScale(outerWidth),
-	  bottom: 100,
-	  left: widthScale(outerWidth)
+	  top: 120,
+	  right: Math.round(widthScale(outerWidth)),
+	  bottom: 120,
+	  left: Math.round(widthScale(outerWidth))
 	};
+	//Finally the actual width and height of the fight visual
 	var width = outerWidth - margin.left - margin.right;
-	var height = 6.5*width; //Math.max(width*5,4500) - margin.top - margin.bottom;
+	var height = 6.5*width;
 		
 	//Offset for the centering of the SVG
-	var tooltipOffset = (window.innerWidth - outerWidth)/2;
+	var tooltipOffset = window.innerWidth > maxWidth ? (window.innerWidth - outerWidth)/2 : scrollBarPadding/2;
+
+	//Adjust the width of the explanation text to the visual itself
+	d3.selectAll(".visual-explanation").style("max-width", width + "px");
 
 	//SVG container
-	var svg = d3.select('#chart')
+	var svg = d3.select('#fight-visual')
 		.append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g").attr("class", "top-wrapper")
-		.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")")
+		.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////// Create extra information /////////////////////////
@@ -89,7 +96,7 @@ if(isMobile) {
 		{character: "Android 19", color: "#383838"},
 		{character: "Android 20", color: "#383838"},
 		{character: "Cell", color: "#9DBD2A"}, //unique
-		{character: "Cell Jr.", color: "#b5d63e"},
+		{character: "Cell Jr.", color: "#0EC1F8"},
 		{character: "Future Cell", color: "#9DBD2A"},
 		{character: "Babidi", color: "#D4AB03"}, //unique
 		{character: "Dabura", color: "#E67152"}, //unique
@@ -110,7 +117,7 @@ if(isMobile) {
     tooltipColors = tooltipColors.concat(["#F390A4","#F390A4","#39100A"]);
 
 	//Characters to follow across sub sagas
-	var fullCharacters = ["Goku","Vegeta","Gohan","Krillin","Buu","Piccolo","Cell","Frieza","Future Trunks","Gotenks"];
+	var fullCharacters = ["Goku","Piccolo","Krillin","Gohan","Future Trunks","Gotenks","Vegeta","Frieza","Cell","Buu"];
 	//Possible extra: ["Tien Shinhan","Yamcha","Chiaotzu","Trunks","Goten"]
 
 	var oddStatesData = [
@@ -126,7 +133,7 @@ if(isMobile) {
 
 	//Special fights
 	var specialFights = [
-		{fightID: 4, fightSaga: "Raditz Saga", horizontalOffset: 8, hExtra: -0.3, hExtraMobile: 0.2, img_url: "Raditz_is_killed.gif", stroke: "#f27c07", fightText: "Goku sacrifices himself so Piccolo can kill Goku's evil brother Raditz", textX: 1.25, textY: -1, textAnchor: "start" },
+		{fightID: 4, fightSaga: "Raditz Saga", horizontalOffset: 7, hExtra: -0.3, hExtraMobile: 0.2, img_url: "Raditz_is_killed.gif", stroke: "#f27c07", fightText: "Goku sacrifices himself so Piccolo can kill Goku's evil brother Raditz", textX: 1.25, textY: -1, textAnchor: "start" },
 		{fightID: 18, fightSaga: "Vegeta Saga", horizontalOffset: 4, hExtra: 0.75, hExtraMobile: 0.65, img_url: "Vegeta_over_9000.gif", stroke: "#1D75AD", fightText: "The most famous DBZ meme is when Vegeta measures Goku's power level (who's back from the dead) and screams in anger 'It's over 9000!'", textX: 1.25, textY: -1, textAnchor: "start" },
 		{fightID: 19, fightSaga: "Vegeta Saga", horizontalOffset: -3.5, hExtra: 0.2, hExtraMobile: 0.95, img_url: "Goku_fights_Vegeta.gif", stroke: "#f27c07", fightText: "An epic battle ensues between Goku and Vegeta lasting several episodes", textX: -1.25, textY: 1.25, textAnchor: "start" },
 		{fightID: 55, fightSaga: "Frieza Saga", horizontalOffset: 3, hExtra: 0.2, hExtraMobile: 0.8, img_url: "Goku_fights_Frieza.gif", stroke: "#82307E", fightText: "Goku and the others (although Vegeta was just killed by Frieza) try valiantly but they're no match for Frieza", textX: 1.25, textY: -1, textAnchor: "start" },
@@ -179,7 +186,7 @@ if(isMobile) {
 	///////////////////////////////////////////////////////////////////////////
 
 	//Add gradient on first fight
-	var extraOffset = outerWidth === 1000 ? (window.innerWidth - 1000)/2 : 0;
+	//var extraOffset = outerWidth === 1000 ? (window.innerWidth - 1000)/2 : 0;
 	//d3.select("body").style("background","radial-gradient(circle closest-corner at " + Math.round(margin.left + extraOffset) + "px " + Math.round(margin.top) + "px, #fdf0db 0%, #fdf6db 100%, #FFFFFF 300%)");
 	//d3.select("body").style("background","radial-gradient(circle closest-corner at " + Math.round(margin.left + extraOffset) + "px " + Math.round(margin.top) + "px, #0e4948 0%, #00081c 700%)");
 
@@ -188,7 +195,7 @@ if(isMobile) {
 
 	var annotationCircleSize = sagaScale(2) - sagaScale(1);
 	//Create wrapper for the clip paths
-	var imageWrapper = defs.append("g").attr("class", "clip-group-wrapper");
+	var imageWrapper = defs.append("g").attr("class", "image-group-wrapper");
 
 	imageWrapper.selectAll(".circle-image")
 		.data(specialFights)
@@ -206,7 +213,7 @@ if(isMobile) {
 	//Code taken from http://stackoverflow.com/questions/9630008/how-can-i-create-a-glow-around-a-rectangle-with-svg
 	//Filter for the outside glow
 	var filter = defs.append("filter")
-	  .attr("id","glow");
+	  .attr("id","shadow");
 
 	filter.append("feColorMatrix")
 		.attr("type", "matrix")
@@ -226,10 +233,10 @@ if(isMobile) {
 		.attr("x1", 0).attr("y1", 0)         
 		.attr("x2", 0).attr("y2", 1)                 
 		.attr("id", "saga-line-gradient");
-	sagaLineGradient.append("stop").attr("offset", "0%").attr("stop-color", "#e1e1e1").attr("stop-opacity", 0);
-	sagaLineGradient.append("stop").attr("offset", "10%").attr("stop-color", "#e1e1e1");
-	sagaLineGradient.append("stop").attr("offset", "90%").attr("stop-color", "#e1e1e1");
-	sagaLineGradient.append("stop").attr("offset", "100%").attr("stop-color", "#e1e1e1").attr("stop-opacity", 0);
+	sagaLineGradient.append("stop").attr("offset", "0%").attr("stop-color", "#d3d3d3").attr("stop-opacity", 0);
+	sagaLineGradient.append("stop").attr("offset", "10%").attr("stop-color", "#d3d3d3");
+	sagaLineGradient.append("stop").attr("offset", "90%").attr("stop-color", "#d3d3d3");
+	sagaLineGradient.append("stop").attr("offset", "100%").attr("stop-color", "#d3d3d3").attr("stop-opacity", 0);
 
 	//Create a gradient to fill the lines from the annotations circles to the fights
 	var annotationLineGradient = defs.selectAll(".annotation-line-gradient")
@@ -279,6 +286,17 @@ if(isMobile) {
 	vegitoGradient.append("stop").attr("offset", "50%").attr("stop-color", "#f27c07");
 	vegitoGradient.append("stop").attr("offset", "50%").attr("stop-color", "#1D75AD");
 
+	//Create arrow marker for the saga line legend
+	defs.append("marker")
+	    .attr("id", "triangle")
+	    .attr("refX", 6)
+	    .attr("refY", 6)
+	    .attr("markerWidth", 30)
+	    .attr("markerHeight", 30)
+	    .attr("orient", "auto")
+	    .append("path")
+	    .attr("class", "saga-line-legend-arrow")
+	    .attr("d", "M 0 0 12 6 0 12 3 6");
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Read in the data /////////////////////////////
@@ -338,8 +356,9 @@ if(isMobile) {
 		var xSwoopDist = sagaDistance/2;
 
 		//Make sure the tooltip doesn't become too wide
+		var tooltipWidth = window.innerWidth < minWidth ? outerWidth/2 : window.innerWidth/2;
 		d3.select("#tooltip-container")
-			.style("max-width", (window.innerWidth/2 - 2*25 - baseRadius*backgroundCircleFactor*hoverScaleIncrease - sagaDistance/2) + "px");
+			.style("max-width", Math.min(300, (tooltipWidth - 2*25 - baseRadius*backgroundCircleFactor*hoverScaleIncrease - sagaDistance/2)) + "px");
 
 		///////////////////////////////////////////////////////////////////////////
 		////////////////////////// Create a line per saga /////////////////////////
@@ -360,24 +379,74 @@ if(isMobile) {
 
 		if(isMobile) d3.selectAll(".saga-line").style("stroke-width", 0.5);
 
+		//Add a legend for the sagas
+		sagaLine.append("text")
+			.attr("class","saga-legend-text")
+			.attr("x", sagaScale(sagaScale.domain()[0]))
+			.attr("y", fightScale(-1.5))
+			.attr("dy", "0.3em")
+			.text("First saga");
+
+		sagaLine.append("text")
+			.attr("class","saga-legend-text")
+			.attr("x", sagaScale(sagaScale.domain()[1]))
+			.attr("y", fightScale(-1.5))
+			.attr("dy", "0.3em")
+			.text("Last saga");
+
+		sagaLine.append("line")
+			.attr("class", "saga-line-legend")
+			.attr("x1", sagaScale(sagaScale.domain()[0] + 1) )
+			.attr("y1", fightScale(-1.5))
+			.attr("x2", sagaScale(sagaScale.domain()[1] - 1) )
+			.attr("y2", fightScale(-1.5))
+			.attr("marker-end", "url(#triangle)");
+
+		//Sloghtly adjust the width to include the legend text as well
+		d3.selectAll(".visual-explanation").style("max-width", (document.getElementsByClassName("saga-line-wrapper")[0].getBBox().width) + "px");
+
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////////// Create the character paths ///////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
 		var characterLineWrapper = svg.append("g").attr("class", "character-line-wrapper");
 
+		//Save the path information for later use in the mini map
+		var characterPaths = [],
+			counter = 0;
+
 		var characterLines = characterLineWrapper.selectAll(".character-path-group")
 			.data(characterNestedData)
 			.enter().append("g")
-			.attr("class", function(d) { return "character-path-group " + d.key.replace(" ", "_").toLowerCase(); })
-			.style("opacity", function(d) { return d.key === "Goku" ? 1 : 0.4; })
+			.attr("class", function(d) {
+				d.className = d.key.replace(" ", "_").toLowerCase();
+				return "character-path-group " + d.className; 
+			})
+			.style("stroke", function(d,i) {
+				var loc = names.indexOf(d.key);
+				d.color = loc > -1 ? characters[loc].color === "#" ? "#515151" : characters[loc].color : "#c1c1c1";
+				return d.color;
+			})
+			.style("stroke-width", 1)
+			.style("fill", function(d,i) { return d.color; })
+			.style("opacity", function(d) { 
+				d.opacity = d.key === "Goku" ? 1 : 0.4;
+				return d.opacity; 
+			})
 			.each(function(d,k) {
 
 				//if(k > 0) return;
 
 				var el = d3.select(this);
 				var sagaFights = d.values;
+
+				//Is the character a main character that should be followed across saga's?
 				var fullChar = fullCharacters.indexOf(d.key) > -1;
+
+				//Save the path & metadata for later use in the mini map
+				characterPaths.push([]);
+				characterPaths[counter].key = d.key;
+				characterPaths[counter].color = d.color;
 
 				//To what side of the saga line should the line swoop (-1 left, 1 right)
 				var xSwing = Math.random() > 0.5 ? 1 : -1;
@@ -388,11 +457,12 @@ if(isMobile) {
 				var path,
 					pathUp;
 
+				//Loop over each saga to calculate the custom path
 				sagaFights.forEach(function(s,i) {
 					var charFights = s.values;
 
+					//If this isn't a full character and there is only 1 fight in this saga, don't create a line
 					if(!fullChar && charFights.length === 1) return;
-					//if(i === 11) debugger;
 
 					var j = 0;
 					var x = Math.round(sagaScale( sagaData[sagaNames.indexOf(charFights[j].subSaga)].id )),
@@ -460,7 +530,12 @@ if(isMobile) {
 						xSwing = xSwing * -1;
 					}//for j
 
+					//Draw the path if this is either the last saga for a main character
+					//or the last fight within a saga for the others
 					if(!fullChar || (fullChar && i === sagaFights.length-1)) {
+						//Save the information into a variable for re-use in the mini map
+						characterPaths[counter].push(path + pathUp);
+
 						el.append("path")
 							.attr("class","character-path")
 							.attr("d", path + pathUp);						
@@ -468,24 +543,27 @@ if(isMobile) {
 
 				});
 
+				counter += 1;
+
 			})
-			.style("stroke", function(d,i) {
-				var loc = names.indexOf(d.key);
-				d.charColor = loc > -1 ? characters[loc].color === "#" ? "#515151" : characters[loc].color : "#c1c1c1";
-				return d.charColor;
-			})
-			.style("stroke-width", function(d) { return 1; })
-			.style("fill", function(d,i) { return d.charColor; })
 			//.style("filter", function(d) { return d.key === "Goku" ? "url(#glow)" : "none"; })
 			.on("mouseover", function(d) {
 
-				//Make the hovered line more visible and rest less
-				characterLines
+				//Make the hovered line more visible and rest less (also in the mini map)
+				d3.selectAll(".character-path-group")
 					.transition("fade").duration(300)
 					.style("opacity", 0.05);
-				d3.select(this)
+				d3.selectAll(".character-path-group." + d.className)
 					.transition("fade").duration(300)
-					.style("opacity", 0.8);
+					.style("opacity", 1);
+
+				//Hide all the battles that do not feature the hovered over person
+				//fights.filter(function(c) { return c.values.map(function(f) { return f.name; }).indexOf(d.key) === -1; })
+				d3.selectAll(".fight")
+					.classed("nonactive", function(c) { return c.values.map(function(f) { return f.name; }).indexOf(d.key) === -1; });
+				d3.selectAll(".fight.nonactive")
+					.transition("fade").duration(300)
+					.style("opacity", 0.1);
 
 				//Hide saga lines & annotation a bit
 				sagaLine
@@ -497,11 +575,6 @@ if(isMobile) {
 		    	sagaTextWrapper
 		        	.transition("visible").duration(300)
 		        	.style("opacity", 0.3);
-
-				//Hide all the battles that do not feature the hovered over person
-				fights.filter(function(c) { return c.values.map(function(f) { return f.name; }).indexOf(d.key) === -1; })
-					.transition("fade").duration(300)
-					.style("opacity", 0.1);
 
 				//Move the line tooltip to the right location
 		  		tooltipCharacterLine.text(d.key);
@@ -522,12 +595,12 @@ if(isMobile) {
 			.on("mouseout", function(d) {
 
 				//Hovered lines back to default
-				characterLines
+				d3.selectAll(".character-path-group")
 					.transition("fade").duration(300)
-					.style("opacity", 0.4);
+					.style("opacity", function(c) { return c.opacity; });
 
 				//Fights back to default
-				fights
+				d3.selectAll(".fight")
 					.transition("fade").duration(300)
 					.style("opacity", 1);
 
@@ -552,6 +625,8 @@ if(isMobile) {
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////// Add extra fights and annotations /////////////////////
 		///////////////////////////////////////////////////////////////////////////
+
+		createCharacterLegend(characters, names, fullCharacters);
 
 		var annotationWrapper = svg.append("g").attr("class", "annotation-wrapper");
 
@@ -609,7 +684,6 @@ if(isMobile) {
 				var x = sagaScale(i+1) + 3*xSwoopDist*(i <= 9 ? 1 : -1),
 					y = fightScale(d.firstFight);
 				return "translate(" + x + "," + y + ")";
-
 			})
 			.style("text-anchor", function(d,i) { return i <= 9 ? "start" : "end"; });
 
@@ -646,7 +720,11 @@ if(isMobile) {
 
 		//Inner fight wrapper that can be scaled on hover
 		var fights = fightWrapper.append("g")
-			.attr("class","fight")
+			.attr("class", function(d,i) { 
+				//Give a class of each person in the fight
+				var fighters = d.values.map(function(f) { return f.name.replace(" ", "_").toLowerCase(); });
+				return "fight " + fighters.join(" "); 
+			})
 			.style("isolation", "isolate")
 			.each(function(d) {
 				d.x = this.parentNode.__data__.x;
@@ -659,8 +737,7 @@ if(isMobile) {
 				var el = d3.select(this);
 
 				//Move the parent group to the front
-				d3.select(this.parentNode).moveToFront();
-				//this.parentNode.appendChild(this); //doesn't work
+				d3.select(this.parentNode).raise();
 
 				// //Insert a rectangle that will overlay everything but the fight
 				// d3.select(this).insert("rect", ":first-child")
@@ -672,6 +749,8 @@ if(isMobile) {
 				// 	.style("opacity", 0)
 				// 	.transition("visible").duration(500)
 				// 	.style("opacity", 0.6);
+
+				///////////////////////// Adjust the fight circle ////////////////////////
 
 				//Make the fight elements bigger
 				el
@@ -695,10 +774,12 @@ if(isMobile) {
 
 				//Make the background circle visible
 				el.select(".fight-background-circle")
-					.style("filter", "url(#glow)")
+					.style("filter", "url(#shadow)")
 					.transition().duration(500)
 					.style("opacity", 1);
 	
+				///////////////////////// Adjust the tooltip ////////////////////////
+
 				//Get the correct fight data
 				var fightInfo = fightData[fightLink[+d.key]];			
 
@@ -716,7 +797,6 @@ if(isMobile) {
 				//Change the texts inside the tooltip
 				d3.select(".tooltip-saga").html(fightInfo.subSaga);
 
-				//debugger;
 				//Check to see if any of the main characters are in the string
 				//and if yes, make sure they get the right color
 				d3.select(".tooltip-characters.good").html(tooltipNameColors(fightInfo.charactersGood));
@@ -751,21 +831,23 @@ if(isMobile) {
 					.style("top", ypos + "px")
 					.style("left", xpos + "px");
 
-				//Make all the character lines less visible, except for those in the fight
-				characterLines
-					.transition("fade").duration(300)
-					.style("opacity", function(c) {
-						if( d.values.map(function(f) { return f.name; }).indexOf(c.key) === -1 ) {
-							return 0.05;
-						} else {
-							return 1;
-						}//else
-					});
+				///////////////////////// Hide other aspects ////////////////////////
 
-				// //Hide all the battles that do not feature any of the characters in this fight
-				// fights.filter(function(c) { return c.values.map(function(f) { return f.name; }).indexOf(d.name) === -1; })
-				// 	.transition("fade").duration(300)
-				// 	.style("opacity", 0.1);
+				//Names of the people in the fight
+				var combatants = d.values.map(function(f) { return f.name; });
+
+				//Make all the character lines less visible, except for those in the fight
+				d3.selectAll(".character-path-group")
+					.transition("fade").duration(300)
+					.style("opacity", function(c) { return combatants.indexOf(c.key) === -1 ? 0.05 : 1; });
+
+				//Hide all the battles that do not feature any of the characters in this fight
+				//fights.filter(function(c) { return c.values.filter(function(n) { return combatants.indexOf(n.name) != -1; }).length === 0; })
+				d3.selectAll(".fight")
+					.classed("nonactive", function(c) { return c.values.filter(function(n) { return combatants.indexOf(n.name) != -1; }).length === 0; });
+				d3.selectAll(".fight.nonactive")
+					.transition("fade").duration(300)
+					.style("opacity", 0.1);
 
 				//Hide saga lines & annotation a bit
 				sagaLine
@@ -818,9 +900,14 @@ if(isMobile) {
 					.on("end", function() { d3.select(this).style("filter", null); })
 
 				//Turn all character lines normal
-				characterLines
+				d3.selectAll(".character-path-group")
 					.transition("fade").duration(300)
-					.style("opacity", 0.4);
+					.style("opacity", function(c) { return c.opacity; });
+
+				//Make all the fights visible
+				d3.selectAll(".fight")
+					.transition("fade").duration(300)
+					.style("opacity", 1);
 
 				//Hide tooltip
 				d3.select("#tooltip").transition("tooltip").duration(300)
@@ -863,9 +950,9 @@ if(isMobile) {
 			.enter().append("g")
 			.attr("class","character-circle-group")
 			.attr("transform", function(d,i) { 
-				var x = -baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / this.parentNode.__data__.numFighters ),
-					y = -baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
-				return "translate(" + x + "," + y + ")"; 
+				d.x = -baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
+				d.y = -baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
+				return "translate(" + d.x + "," + d.y + ")"; 
 			})
 			.each(function(d,i) {
 
@@ -879,39 +966,39 @@ if(isMobile) {
 				//If the state contains Vegito, use Vegito's color
 				var name = isVegito ? "Vegito" : d.name;
 				var loc = names.indexOf(name);
-				var charColor = loc > -1 ? characters[loc].color : "#c1c1c1";
+				d.color = loc > -1 ? characters[loc].color : "#c1c1c1";
 
 				el.append("circle")
 					.attr("class", "character-circle")
 					.attr("r", baseRadius)
-					.style("fill", charColor);
+					.style("fill", d.color);
 
 				//Add extra elements depending on the state of the character
 				if(d.state === "Super Saiyan" || d.state === "Vegito Super Saiyan" || d.state === "Second Form" || d.state === "Semi-Perfect Form" || d.state === "Super") {
-					firstPower(el, charColor, 1.5, 1);
+					firstPower(el, d.color, 1.5, 1);
 				} else if(d.state === "2nd Grade Super Saiyan") {
-					firstPower(el, charColor, 1.5, 1.5);
+					firstPower(el, d.color, 1.5, 1.5);
 				} else if(d.state === "3rd Grade Super Saiyan") {
-					firstPower(el, charColor, 1.6, 2);
+					firstPower(el, d.color, 1.6, 2);
 				} else if(d.state === "Full-Power Super Saiyan") {
-					firstPower(el, charColor, 1.75, 2.5);
+					firstPower(el, d.color, 1.75, 2.5);
 				} else if(d.state === "Super Saiyan 2" || d.state === "Third Form" || d.state === "Perfect Form" || d.state === "Kid") {
-					firstPower(el, charColor, 1.5, 1);
-					secondPower(el, charColor, 2, 1);
+					firstPower(el, d.color, 1.5, 1);
+					secondPower(el, d.color, 2, 1);
 				} else if(d.state === "Majin Super Saiyan 2") { //Vegeta
-					firstPower(el, charColor, 1.5, 1);
-					secondPower(el, charColor, 2, 1);
+					firstPower(el, d.color, 1.5, 1);
+					secondPower(el, d.color, 2, 1);
 					el.append("text")
 						.attr("class", "majin-text")
 						.attr("dy","0.35em")
 						.text("M");
 				} else if(d.state === "Perfect and Power-weighted Form") { //Cell
-					firstPower(el, charColor, 1.5, 1);
-					secondPower(el, charColor, 2.1, 1.5);
+					firstPower(el, d.color, 1.5, 1);
+					secondPower(el, d.color, 2.1, 1.5);
 				} else if(d.state === "Super Saiyan 3" || d.state === "Final Form" || d.state === "Super Perfect Form" ) {
-					firstPower(el, charColor, 1.5, 1);
-					secondPower(el, charColor, 2, 1);
-					thirdPower(el, charColor);
+					firstPower(el, d.color, 1.5, 1);
+					secondPower(el, d.color, 2, 1);
+					thirdPower(el, d.color);
 				} else if(d.state === "Mecha") { //Frieza vs Future Trunks
 					firstPower(el, "#cccccc", 1.5, 1);
 					secondPower(el, "#cccccc", 2, 1);
@@ -974,7 +1061,11 @@ if(isMobile) {
 		  .attr("class", "tooltip-character-line")
 		  .text("");
 
+		///////////////////////////////////////////////////////////////////////////
+		/////////////////////// Add the mini map to the right /////////////////////
+		///////////////////////////////////////////////////////////////////////////
 
+		createFightMap(width, height, margin, characterPaths, fightNestedData, baseRadius);
 
 	}//draw
 
@@ -989,13 +1080,13 @@ function round2(num) {
 	return (Math.round(num * 100)/100).toFixed(2);
 }//round2
 
-//Bring the mousovered fight to the front
-//http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3
-d3.selection.prototype.moveToFront = function() {
-  return this.each(function(){
-    this.parentNode.appendChild(this);
-  });
-};	
+// //Bring the mousovered fight to the front
+// //http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3
+// d3.selection.prototype.moveToFront = function() {
+//   return this.each(function(){
+//     this.parentNode.appendChild(this);
+//   });
+// };	
 // d3.selection.prototype.moveToBack = function() { 
 //     return this.each(function() { 
 //         var firstChild = this.parentNode.firstChild; 
@@ -1042,7 +1133,7 @@ function tooltipNameColors(string) {
 		//and if there is anything in ()
 		var reg = new RegExp(tooltipNames[j] + "( \\([-&%'\\d\\w\\s]+\\)|(?!ks| Jr|'s))","i");
 		string = string.replace(reg, function(k, match) {
-			console.log(k, match);
+			//console.log(k, match);
 			var newHTML;
 
 			//If the () is a match, check if it is one of the special states

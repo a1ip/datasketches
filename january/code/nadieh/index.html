@@ -5,46 +5,91 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <!-- <meta name="viewport" content="user-scalable = yes"> -->
 
-	    <title>The Fights from Dragonball Z</title>
+	    <title>The Fights from Dragon Ball Z</title>
 	    <meta name="author" content="Nadieh Bremer">
 	    <meta name="description" content="Data Sketches - January - Nostalgia - Nadieh">
 	    <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
 		
+		<!-- JavaScript files -->
+		<link href="../../../plugins/bootstrap.min.css" rel="stylesheet">
+		<!-- <script src="../../../plugins/bootstrap.min.js"></script> -->
+		<script src="../../../plugins/d3.js"></script>
+
 		<!-- Styling -->
 		<link href="css/style.css" rel="stylesheet">
 
 		<!-- Google fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Anton|PT+Sans:400,400i|PT+Sans+Narrow" rel="stylesheet">
-
-		<!-- JavaScript files -->
-		<script src="../../../plugins/d3.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i|PT+Sans+Narrow:400,700" rel="stylesheet">
 	
 	</head>
 	<body>
 
-		<div id="chart"></div>
-
-		<!-- Create div structure for the tooltip -->
-		<div id="tooltip">
-			<div id="tooltip-container">
-				<div class="tooltip-saga">Imperfect Cell Saga</div>
-				<div class="tooltip-rule"></div>
-				<div class="tooltip-characters good">Goku (Super Saiyan) and Vegeta</div>
-				<div class="tooltip-vs">vs</div>
-				<div class="tooltip-characters bad">Majin Buu</div>
-				<div class="tooltip-info">anime only</div>
-				<div class="tooltip-extra">testing some short info</div>
+		<div id="intro" class="container">
+        	<div class="row">
+          		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div id="sub-title">All fights from</div>
+					<div id="main-title">Dragon Ball Z</div>
+				</div>
+			
+				<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 intro-text">
+					<p class="bold-start">More than 5000 Olympic events have had a winner, rewarded with a gold medal from 1904 onwards, in the Summer Olympics since the first games of 1896. Investigate the visuals below to see how each of these medals has been won in the 56 different sporting disciplines that have competed at the games, of which 41 are still held at Rio 2016.</p>
+					<p>Most of the Olympic sports started out being a men only event. Thankfully this started to change during the 2nd half of the last century. Even the number of medals that can be won for one discipline is slowly becoming the same for both genders. Today at Rio there are 3 disciplines left in which only one gender can compete; the Greco-Roman wrestling, already at the games since the very first edition, is done solely by men. Rhythmic gymnastics & synchronized swimming on the other hand, both at the Olympics since 1984, are only performed by women.</p>
+					<div id="character-legend"></div>
+				</div>
 			</div>
+
+        	<div class="row">
+          		<div class="visual-explanation intro-text">
+					<p>Below you can browse through all ±200 fights from Dragon Ball Z <span class="divider">  |  </span> They are horizontally ordered per saga, with the 1st on the left and the last on the right <span class="divider">  |  </span> Each fight consists of a group of circles, where each circle represents one fighter <span class="divider">  |  </span> The main characters have been given their own color; Goku is the signature <span style="color: #f27c07">orange</span> color of his tunic for example <span class="divider">  |  </span> The swooshing paths each follow a character from fight to fight <span class="divider">  |  </span> Hover over the fights and paths to see more information and discover who was fighting whom and in what other fights they appeared.</p>
+				</div>
+			</div>
+		</div>		
+
+		<div id="chart">
+
+			<div id="fight-visual"></div>
+
+			<!-- Create div structure for the tooltip -->
+			<div id="tooltip">
+				<div id="tooltip-container">
+					<div class="tooltip-saga"></div>
+					<div class="tooltip-rule"></div>
+					<div class="tooltip-characters good"></div>
+					<div class="tooltip-vs">vs</div>
+					<div class="tooltip-characters bad"></div>
+					<div class="tooltip-info"></div>
+					<div class="tooltip-extra"></div>
+				</div>
+			</div>
+
+			<div id="map"></div>
+
 		</div>
+
+		
+		<div id="credit" class="container">
+        	<div class="row">
+        		<div class="visual-explanation data-explanation">
+					<p>The fight info was taken from the Dragonball Wikia pages for each saga. For relevance, a few fights were taken out of the above visual; the <i>Garlic Jr.</i> and <i>Other World Tournament</i> filler sagas were completely removed. Also the ±5 fights that happened in the anime only <i>and</i> didn't feature any of the Z fighters, happened in a nightmare or flashback were taken out.</p>
+				</div>
+          		<div class="visual-explanation">
+					<p class="credit-bold" style="margin-bottom: 8px;">Created by <a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a> <span class="divider">|</span> <a href="http://www.visualcinnamon.com/" target="_new">Visual Cinnamon</a></p>
+					<p class="credit-note">Data from the very extensive <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragonball Wikia</a> <span class="divider">|</span> Go back to <a href="../..">datasketches' January month</a> to read about the data preparation & more</p>
+				</div>
+			</div>
+		</div>		
+	
 
 		<!-- Credits & Data -->
-		<div id="credit" class="outer-margin">
+<!-- 		<div id="credit" class="outer-margin">
 			<p class="credit-bold" style="margin-bottom: 8px;">Created by <a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a> <span class="credit-divider">|</span> <a href="http://www.visualcinnamon.com/" target="_new">Visual Cinnamon</a></p>
 			<p class="credit-note">Data from the very extensive <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragonball Wikia</a> <span class="credit-divider">|</span> Go back to <a href="../..">datasketches' January month</a> to read about the data preparation & more</p>
-			<!-- <p class="credit-note">You can get a Dutch & English print of the visualization in my <a href="https://www.inprnt.com/gallery/visualcinnamon/top-2000-loves-70s-80s-dutch/" target="_new">INPRNT</a> or <a href="https://society6.com/product/top-2000-loves-the-70s-80s-dutch_print#s6-6372158p4a1v45" target="_new">Society6</a> store <span class="credit-divider">|</span> -->
-		</div>
+		</div> -->
 
 		</div>
-		<script src="js/main.js"></script>	
+		<script src="js/main.js"></script>
+		<script src="js/createCharacterLegend.js"></script>
+		<script src="js/createFightMap.js"></script>
+
 	</body>
 </html>

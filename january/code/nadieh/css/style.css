@@ -3,10 +3,6 @@ body {
 	font-family: 'PT Sans', sans-serif;
 }
 
-h1 {
-	font-family: 'Anton', sans-serif;
-}
-
 a, a:link, a:visited, a:active {
   color: #f27c07;
   border-bottom: 1px dotted rgba(203, 39, 46, .5);
@@ -33,6 +29,51 @@ a.image-link {
 
 /* --- Intro --- */
 
+#intro {
+  max-width: 1000px;
+  padding-top: 25px;
+}
+
+
+#sub-title {
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-size: 28px;
+  color: #FFC200;
+  margin-bottom: -15px;
+}
+#main-title {
+  /*font-family: 'Anton', sans-serif;*/
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  color: #ff6c00;
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(-45deg, #FFC200 0%,#ff6c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.intro-text {
+  font-size: 12px;
+  color: #292929;
+}
+
+.visual-explanation {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.divider {
+  color: #c7c7c7;
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-weight: 700;
+  font-size: 0.9em;
+  padding: 0px 5px;
+}
+
+.character-legend-text {
+  font-size: 14px;
+}
 
 /* --- Chart --- */
 
@@ -47,7 +88,8 @@ a.image-link {
     font-size: 12px !important;
   }
 }
-#chart{
+#chart {
+  position: relative;
 	text-align: center;
 	font-size: calc(8px + (12 - 8) * (100vw - 450px)/(1000 - 450));
 	/*font-size: 12px;*/
@@ -59,6 +101,17 @@ a.image-link {
     /*stroke-dasharray: 2 6;*/
     stroke-linecap: round;
     pointer-events: none;
+}
+.saga-legend-text {
+  text-anchor: middle;
+}
+.saga-line-legend {
+  stroke: #cccccc;
+  stroke-linecap: round;
+  /*shape-rendering: crispEdges;*/
+}
+.saga-line-legend-arrow {
+  fill: #cccccc;
 }
 
 .saga-name-group {
@@ -90,24 +143,22 @@ a.image-link {
 }
 .annotation-line {
 	stroke-linecap: round;
+  shape-rendering: crispEdges;
 }
 
 .character-line-wrapper {
 	isolation: isolate;
 }
 
-.character-path-group {
-	opacity: 0.4;
+.character-path-group,
+.character-path-map-group {
+	/*opacity: 0.4;*/
 }
 .character-path {
 	/*fill: none;*/
 	/*pointer-events: none;*/
 	mix-blend-mode: multiply;
 	/*opacity: 0.3;*/
-}
-
-.character-path-group.goku {
-	box-shadow: 10px 10px 5px #888888;
 }
 
 .fight-background {
@@ -135,9 +186,30 @@ a.image-link {
 }
 
 .majin-text {
-	font-size: 5px;
+	font-size: 0.5em;
 	text-anchor: middle;
 	pointer-events: none;
+}
+
+/* --- Fight map --- */
+
+#map { 
+  position: absolute; 
+  /*top: 0px;*/
+  /*right: 0px;*/
+  z-index: 1;
+}
+
+#map .character-line-wrapper, #map .fight-wrapper, #map .background-rect {
+  pointer-events: none;
+}
+
+.map-line-top, .map-line-bottom {
+  stroke: #b0b0b0;
+  stroke-linecap: round;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+  opacity: 0.7;
 }
 
 /* --- Tooltip --- */
@@ -169,7 +241,7 @@ a.image-link {
 #tooltip {
   pointer-events: none;
   text-align:center;  
-  z-index: 1000;
+  z-index: 5;
   position: absolute;
   opacity: 0;
   font-size: calc(8px + (12 - 8) * (100vw - 450px)/(1000 - 450));
@@ -185,6 +257,7 @@ a.image-link {
   /*width: 230px;*/
   /*left: -115px; /* 230/2*/
   max-width: 300px;
+  min-width: 100px;
   font-size: 1em;
   padding: 15px 25px;
   border-radius: 3px;
@@ -199,7 +272,7 @@ a.image-link {
   height: 1px;
   margin: 1px auto 3px;
   background: #ddd;
-  width: 130px;
+  width: 100%;
 }
 
 .tooltip-saga {
@@ -247,6 +320,12 @@ a.image-link {
 	padding-bottom: 25px;
 }
 
+.data-explanation {
+  color: #a5a5a5;
+  font-size: 12px;
+  padding-bottom: 20px;
+}
+
 #credit p {
 	margin-top: 0px;
 	margin-bottom: 3px;
@@ -255,13 +334,6 @@ a.image-link {
 .credit-bold {
 	font-weight: 600;
 	font-size: 1em;
-}
-
-.credit-divider {
-	color: #b7b7b7;
-	font-weight: 600;
-	font-size: 0.9em;
-	padding: 0px 5px;
 }
 
 .credit-note {
