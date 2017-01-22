@@ -81,7 +81,15 @@
 
                 <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-                <p></p>
+                <p>I had a few choices for this month's topic of nostalgia and I didn't know which one would provide the most interesting dataset, so I actually scoured the web a while for all topics. I loved playing <i>Zelda</i>, but only on the Game boy variants, especially <i>Minish cap</i> & the <i>Oracle of Ages/Seasons</i> combo. There was something about the top view that worked exceptionally well for me, whereas in the 3D games I just kept falling off bridges and running into corners. But I couldn't find any interesting data. I looked at <i>Cardcaptor Sakura</i>, but only the manga. I was very happy to find out they are currently doing a new series! But there was actually too little data for me to build something elaborate with (if you're familiar with the manga, there are actually only about 19 cards she collects). <i>Neopets</i> is where I had my first HTML & CSS experience when I was 14 (although I completely dropped it again for 10 years after I got a boyfriend and went studying Astronomy 😁 ). Since Neopets is now really only a ghost of what it was, and I found out my account was hacked and my pet stolen I wasn't in the mood to investigate that further. Which brings me to the last subject I had in mind: <i>Dragonball Z</i>. This anime was my very first introduction to the Japanese animation scene. Although I quickly turned solely to manga in general, I did stay loyal to DBZ and loved watching it all the way to the Fusion Saga (not sure why I stopped watching. I think I was just greatly annoyed by the Majin Buu & Gotenks character).</p>
+                <a class="fancybox" href="data/nadieh/img/DBZ.jpg"> <img src="data/nadieh/img/DBZ_small.jpg" class="img-responsive img-month" alt="Dragonball Z"></a>
+
+                <p>While randomly going through the extensive <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragonball Wikia</a>, I learned that even though Dragonball Z was aired about 20 years ago, it's still very much alive. With <i>Dragonball Kai</i> now airing in the US, which is a filler-free version of Dragonball Z (and thus about 1/3 less episodes) and <i>Dragonball Super</i>, a brand new series taking place right after DBZ. I came across the page to each DBZ saga and saw a list all of the (major) fights that took place during that saga, in order. And that stuck immediately. It felt just so appropriate to the series to map out all of the fights that took place during DBZ; who fought who, was it anime only, any special conditions (say, fighting while in Super Saiyan "mode").</p>
+
+                <p>So I manually went through all ±17 sagas that comprise the 291 episodes and copy-pasted the fights into Excel (yes I do use Excel from time to time to do highly manual stuff ^^). With the help of some Excel functions to split up the fights into the separate characters and 2 more hours of manual cleaning I had <a href="data/nadieh/Dragonball_Z_fights.xlsx" target="_new">a nice list of the 200 fights</a>; who fought and were they in a special state. However, I needed the data in a slightly different order. Right now, each fight was on 1 row, but I needed <i>each character</i> per fight on one row. And that's where R came in. I wrote <a href="data/nadieh/Reshape_DBZ_fight_data.R" target="_new">a tiny script</a> to loop through the Excel sheet and create <a href="data/nadieh/dragonball_Z_fight_per_person.csv" target="_new">the final dataset</a>.</p>
+
+                <p>Another "data" gathering step that came up a bit later in the process, was finding appropriate animated gifs to highlight the most special moments and fights & nice shots of the main characters for a legend. I went through hundreds and hundreds of gifs & images, trying to find some decent stuff. But I also came across some wonderful funny gifs, short comics and images. Although not the funniest I saw, the two below belong to my favorites 😆  (I definitely discovered this month that I find Vegeta a way more interesting character than I used to).</p>
+                <a class="fancybox" href="data/nadieh/img/DBZ_interesting_images.jpg"> <img src="data/nadieh/img/DBZ_interesting_images_small.png" class="img-responsive img-month" alt="Some funny DBZ images found on the web"></a>
 
                 <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
@@ -151,12 +159,12 @@
 			  <div class="guest-introduction quicksand">introducing our guest</div>
               <div class="name-guest paddingBelow kingBasil">Nicholas Rougeux</div>
               <div class="time kingBasil"></div>
-              <div class="location quicksand">chicago</div>
+              <div class="location quicksand paddingBelow">chicago</div>
               
                 <p><img alt="Snapshot of final project" class="img-responsive" src="code/guest/header.png" /></p>
                 <p>When Shirley and Nadieh asked me to make a guest post for Data Sketches, I jumped at the opportunity but immediately panicked a little because I had agreed to the daunting task of creating something like their wonderful projects over the past six months. Whether or not that happened will be left to the reader but below is the story of how it came to be.</p>
                 
-                <h3>year 1: data</h3>
+                <h3>year 1 <span class="light-grey">|</span> data</h3>
                 
                 <p>Unlike many of my projects, I didn't need to start by collecting data because I had already done so...three years ago. Maybe I knew one day I would do more with it. Back in 2013, when I just started getting seriously interested in the artistic side of data visualization, I did what any newly-obsessed data junky would do: I picked a familiar subject and tracked it obsessively.</p>
                 <p>Taking a step back, it's important to mention that I play a lot of Scrabble. The game has been part of my family since before I was. My grandmother has is a force to be reckoned with in the game, my father has played for ages, and both of them taught me when I was about 12 as a way to build my language and math skills. (My father was an English teacher and I was always the scorekeeper.) They never let me win and for that I'm thankful but during the early years, they were formidable opponents&mdash;and still are!</p>
@@ -166,7 +174,7 @@
                 <p>I wish I had the foresight to track which words were played and did so for the first two games of 2014 but lost motivation because I was prolonging each game by pausing after each turn to record which word was played, where it was played, and how many points it was worth. I did take a few pictures of the final boards though:</p>
                 <p><a class="fancybox" href="data/guest/game-boards.jpg"><img alt="Photo of a few final Scrabble boards" class="img-responsive img-month" src="data/guest/game-boards.jpg" /></a></p>
                 
-                <h3>days 1 and 2: &ldquo;sketching&rdquo;</h3>
+                <h3>days 1 and 2 <span class="light-grey">|</span> &ldquo;sketching&rdquo;</h3>
                 
                 <p>The day I was asked to work on a project about nostalgia, one of my first thoughts was that Scrabble dataset. It was personal, made me think of good times, and was detailed enough to generate some interesting results.</p>
                 <p>My goal was to explore the variety of points earned in each turn rather than who won or lost. I enjoy working with more experimental ways of visualizing data than creating graphics that strictly inform&mdash;though I do enjoy a well-made chart.</p>
@@ -196,7 +204,7 @@
                 <p><a class="fancybox" href="sketches/guest/treemaps.png"><img alt="Treemaps" class="img-responsive img-month" src="sketches/guest/treemaps.png" /></a></p>
                 <p><a class="fancybox" href="sketches/guest/bumpchart.png"><img alt="" class="img-responsive img-month" src="sketches/guest/bumpchart.png" /></a></p>
                 
-                <h3>day 3: polishing and code</h3>
+                <h3>day 3 <span class="light-grey">|</span> polishing and code</h3>
                 
                 <p>I knew I wanted to use the spoked wheel design so I experimented with different ways of trying to combine them into one giant graphic resembling fireworks. I also started playing with different color ideas. In these combinations, the distance from the common baseline of an entire game is based on how many total points were earned that game. (More points = farther from baseline.)</p>
                 <p>NodeBox has a node for creating stars and just for fun, I replaced the dots with stars and configured the number of points on the star to correspond to the number of points earned on a turn, which resulted in a fuzzy appearance. It was a little silly but I liked it.</p>
