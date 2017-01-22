@@ -54,8 +54,10 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
 		.attr("id", "section-rect-gradient")   
 		.attr("x1", 0).attr("y1", 0)         
 		.attr("x2", 1).attr("y2", 1);
-	sectionGradient.append("stop").attr("offset", "0%").attr("stop-color", "#e5e5e5");
-	sectionGradient.append("stop").attr("offset", "100%").attr("stop-color", "#f7f7f7");
+	sectionGradient.append("stop").attr("offset", "0%").attr("stop-color", "#ff4800"); //.attr("stop-opacity", 0.15);
+	sectionGradient.append("stop").attr("offset", "20%").attr("stop-color", "#ff6c00"); //.attr("stop-opacity", 0.15);
+	sectionGradient.append("stop").attr("offset", "80%").attr("stop-color", "#FFC200"); //.attr("stop-opacity", 0.15);
+	sectionGradient.append("stop").attr("offset", "100%").attr("stop-color", "#ffe500"); //.attr("stop-opacity", 0.15);
 
 	///////////////////////////////////////////////////////////////////////////
 	/////////////////////// Add background rectangles /////////////////////////
@@ -77,6 +79,8 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
 		.attr("y", 0)
 		.attr("width", width + 2*marginNeeded)
 		.attr("height", 100)
+		.style("opacity", 0.15)
+		//.style("fill", "#FFC200")
 		.style("fill", "url(#section-rect-gradient)");
 
 	///////////////////////////////////////////////////////////////////////////
