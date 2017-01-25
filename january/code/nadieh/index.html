@@ -19,11 +19,12 @@
 		<link href="css/style.css" rel="stylesheet">
 
 		<!-- Google fonts -->
-		<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i|PT+Sans+Narrow:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i|PT+Sans+Narrow:400,700" rel="stylesheet">
 	
 	</head>
 	<body>
 
+		<!-- Intro & Legend -->
 		<div id="intro" class="container">
         	<div class="row">
           		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
@@ -32,19 +33,36 @@
 				</div>
 			
 				<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 intro-text">
-					<p class="bold-start">More than 5000 Olympic events have had a winner, rewarded with a gold medal from 1904 onwards, in the Summer Olympics since the first games of 1896. Investigate the visuals below to see how each of these medals has been won in the 56 different sporting disciplines that have competed at the games, of which 41 are still held at Rio 2016.</p>
-					<p>Most of the Olympic sports started out being a men only event. Thankfully this started to change during the 2nd half of the last century. Even the number of medals that can be won for one discipline is slowly becoming the same for both genders. Today at Rio there are 3 disciplines left in which only one gender can compete; the Greco-Roman wrestling, already at the games since the very first edition, is done solely by men. Rhythmic gymnastics & synchronized swimming on the other hand, both at the Olympics since 1984, are only performed by women.</p>
-					<div id="character-legend"></div>
+					<p class="bold-start">Based on the manga by Akira Toriyama, the first episode of <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragon Ball Z</a> aired in Japan on April 26, 1989. Even after more than 25 years, the anime is still extremely popular, with <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z_Kai" target="_new">a filler-free refresh</a> of the series coming out in 2009 and <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z_Kai" target="_new">a follow-up series</a> airing right now.</p>
+					<p>Dragon Ball Z follows Goku and his family & friends as they fight ever more powerful foes that want to rule the Universe / want to show they're the best / destroy Earth. Being a <i>fighting</i> anime many battles take place during the 291 episodes. Characters get stronger through battles and training. A typical aspect of DBZ is that sudden increases of power can be unlocked through transformations, the different <a href="http://dragonball.wikia.com/wiki/Super_Saiyan" target="_new"><i>Super Saiyan</i></a> levels being the most well known. The first person to unlock a new transformation often achieves this through an intense event, such as the death of a friend in battle. Although successive characters typically manage to achieve the same level with less effort.</p>
 				</div>
 			</div>
 
         	<div class="row">
-          		<div class="visual-explanation intro-text">
-					<p>Below you can browse through all ±200 fights from Dragon Ball Z <span class="divider">  |  </span> They are horizontally ordered per saga, with the 1st on the left and the last on the right <span class="divider">  |  </span> Each fight consists of a group of circles, where each circle represents one fighter <span class="divider">  |  </span> The main characters have been given their own color; Goku is the signature <span style="color: #f27c07">orange</span> color of his tunic for example <span class="divider">  |  </span> The swooshing paths follow a character from fight to fight <span class="divider">  |  </span> Hover over the fights and paths to see more information and discover who was fighting whom and in what other fights they appeared.</p>
+
+        		<div class="visual-width">
+
+        			<div id="character-legend"></div>
+
+        			<div class="intro-text">
+						<p>By following characters from fight to fight you can recognize distinct moments from Dragon Ball Z. Goku, although appearing in most fights overall, is still missing in action for very large periods of time. The reasons are the fact that he's dead during the start of the Vegeta saga, recovering from injuries (twice) during the Frieza arc, suffering from a heart disease at the start of the Cell arc, and, well, dead again during the start of the Buu arc.</p>
+						<p>And, if you've seen the show, were you aware of how often Krillin participates in a fight? or ... Browse through all ±200 fights below to investigate the path of your own favorite character or, if you're new to the show, get an understanding of <i>DBZ</i> through its fights.</p>
+					</div>
+
+					<div class="explanation-text">
+						<p>Each group of circles is a fight, where one circle represents one fighter <span class="divider orange">  |  </span> The main characters have been given their own color; <span class="goku-bold">Goku</span> is the signature <span class="goku-bold">orange</span> color of his tunic, whereas <span class="vegeta-bold">Vegeta</span> is <span class="vegeta-bold">blue</span> of course.</p>
+					</div>
+
+					<div id="fight-legend"></div>
+
+	          		<div class="explanation-text">
+						<p>The fights are horizontally ordered per saga, with the first saga on the far left and last saga on the far right <span class="divider orange">  |  </span> The colored swooshing paths follow a character from fight to fight (looking slightly different on each page refresh) <span class="divider orange">  |  </span> <span class="desktop">Hover over</span><span class="mobile">Tab</span> the fights & paths to see more information and discover who was fighting whom and in what other fights they appeared</p>
+					</div>
 				</div>
 			</div>
 		</div>		
 
+		<!-- The DBZ visual -->
 		<div id="chart">
 
 			<div id="fight-visual"></div>
@@ -67,28 +85,22 @@
 		</div>
 
 		
+		<!-- Credits & Data -->
 		<div id="credit" class="container">
         	<div class="row">
-        		<div class="visual-explanation data-explanation">
+        		<div class="visual-width data-explanation">
 					<p>The fight info was taken from the Dragonball Wikia pages for each saga. For relevance, a few fights were taken out of the above visual; the <i>Garlic Jr.</i> and <i>Other World Tournament</i> filler sagas were completely removed. Also the ±5 fights that happened in the anime only <i>and</i> didn't feature any of the Z fighters, happened in a nightmare or flashback were taken out.</p>
 				</div>
-          		<div class="visual-explanation">
-					<p class="credit-bold" style="margin-bottom: 8px;">Created by <a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a> <span class="divider">|</span> <a href="http://www.visualcinnamon.com/" target="_new">Visual Cinnamon</a></p>
-					<p class="credit-note">Data from the very extensive <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragonball Wikia</a> <span class="divider">|</span> Go back to <a href="../..">datasketches' January month</a> to read about the data preparation & more</p>
+          		<div class="visual-width">
+					<p class="credit-bold" style="margin-bottom: 8px;">Created by <a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a> <span class="divider grey">|</span> <a href="http://www.visualcinnamon.com/" target="_new">Visual Cinnamon</a></p>
+					<p class="credit-note">Data from the very extensive <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragonball Wikia</a> <span class="divider grey">|</span> Go back to <a href="../..">datasketches' January month</a> to read about the data preparation & more</p>
 				</div>
 			</div>
 		</div>		
-	
 
-		<!-- Credits & Data -->
-<!-- 		<div id="credit" class="outer-margin">
-			<p class="credit-bold" style="margin-bottom: 8px;">Created by <a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a> <span class="credit-divider">|</span> <a href="http://www.visualcinnamon.com/" target="_new">Visual Cinnamon</a></p>
-			<p class="credit-note">Data from the very extensive <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragonball Wikia</a> <span class="credit-divider">|</span> Go back to <a href="../..">datasketches' January month</a> to read about the data preparation & more</p>
-		</div> -->
-
-		</div>
 		<script src="js/main.js"></script>
 		<script src="js/createCharacterLegend.js"></script>
+		<script src="js/createFightLegend.js"></script>
 		<script src="js/createFightMap.js"></script>
 
 	</body>

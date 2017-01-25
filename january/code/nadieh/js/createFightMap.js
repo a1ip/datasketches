@@ -134,42 +134,40 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
 	///////////////////////// Draw the character circles //////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-		var fightWrapper = svg.append("g").attr("class", "fight-wrapper");
+	var fightWrapper = svg.append("g").attr("class", "fight-wrapper");
 
-		//Group for each fight
-		var fights = fightWrapper.selectAll(".fight")
-			.data(fightNestedData, function(d) { return d.key; })
-			.enter().append("g")
-			.attr("class", function(d,i) { 
-				//Give a class of each person in the fight
-				var fighters = d.values.map(function(f) { return f.name.replace(" ", "_").toLowerCase(); });
-				return "fight " + fighters.join(" "); 
-			})
-			.style("isolation", "isolate")
-			.attr("transform", function(d) { return "translate(" + (mr*d.x) + "," + (mr*d.y) + ")"; });
+	//Group for each fight
+	var fights = fightWrapper.selectAll(".fight")
+		.data(fightNestedData, function(d) { return d.key; })
+		.enter().append("g")
+		.attr("class", function(d,i) { 
+			//Give a class of each person in the fight
+			var fighters = d.values.map(function(f) { return f.name.replace(" ", "_").toLowerCase(); });
+			return "fight " + fighters.join(" "); 
+		})
+		.style("isolation", "isolate")
+		.attr("transform", function(d) { return "translate(" + (mr*d.x) + "," + (mr*d.y) + ")"; });
 
-		//Create circles for each character in a fight
-		var fightCharacter = fights.selectAll(".character-circle-group")
-			.data(function(d) { return d.values; })
-			.enter().append("circle")
-			.attr("class", "character-circle")
-			.attr("cx", function(d) { return mr*d.x; })
-			.attr("cy", function(d) { return mr*d.y; })
-			.attr("r", mr*baseRadius)
-			.style("fill", function(d,i) {
-				//Check for fused Vegito
-				var isVegito = /Vegito/.test(d.state);
-				//Move to the next if this is the last person in the Vegito fight 
-				//(which is Vegeta, but he is already represented by Goku)
-				if(isVegito && i >= this.parentNode.__data__.numFighters) return "none";
-				else return d.color;
-			});
+	//Create circles for each character in a fight
+	var fightCharacter = fights.selectAll(".character-circle-group")
+		.data(function(d) { return d.values; })
+		.enter().append("circle")
+		.attr("class", "character-circle")
+		.attr("cx", function(d) { return mr*d.x; })
+		.attr("cy", function(d) { return mr*d.y; })
+		.attr("r", mr*baseRadius)
+		.style("fill", function(d,i) {
+			//Check for fused Vegito
+			var isVegito = /Vegito/.test(d.state);
+			//Move to the next if this is the last person in the Vegito fight 
+			//(which is Vegeta, but he is already represented by Goku)
+			if(isVegito && i >= this.parentNode.__data__.numFighters) return "none";
+			else return d.color;
+		});
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Make the map sticky //////////////////////////
 	///////////////////////////////////////////////////////////////////////////
-
-	//d3.select("body").on("mousemove", function() { console.log(d3.event.pageX, d3.event.pageY, pageYOffset); });
 
 	//Based on http://stackoverflow.com/questions/1216114/how-can-i-make-a-div-stick-to-the-top-of-the-screen-once-its-been-scrolled-to
     map.style.position = 'absolute';
@@ -183,22 +181,15 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
 
     var yTop, yBottom;
 
-  //   //Create two lines to section off what is in the screen
-  //   svg.append("line")
-  //   	.attr("class", "map-line-top")
-		// .attr("x1", round2(-marginNeeded)).attr("y1", 0)
-		// .attr("x2", round2(width + marginNeeded)).attr("y2", 0);
-
-  //   svg.append("line")
-  //   	.attr("class", "map-line-bottom")
-		// .attr("x1", round2(-marginNeeded)).attr("y1", 100)
-		// .attr("x2", round2(width + marginNeeded)).attr("y2", 100);
-
+    //Move the map and colored rect on scroll
     window.onscroll = function() { moveMap() };
     moveMap();
 
+	///////////////////////////////////////////////////////////////////////////
+	/////////////////////// Functions to calculate movement ///////////////////
+	///////////////////////////////////////////////////////////////////////////
+
     function moveMap() {
-    	//console.log((pageYOffset + height + margin.top), (endFightPos + margin.bottom), pageYOffset, (startMapPos + topOffset));
 
     	if (pageYOffset + height + margin.top >= endFightPos + margin.bottom) { //When the bottom of the fight map is above the fold
         	map.style.position = 'absolute';
@@ -207,9 +198,6 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
 
             //Move the boundary
             yTop = round2(Math.min(1, (pageYOffset - startMapPos - originalMargin.top)/originalHeight) * height);
-            //svg.select(".map-line-top").attr("y1", yTop).attr("y2", yTop);
-            //svg.select(".map-line-bottom").attr("y1", height).attr("y2", height);
-
             sectionRect.attr("y", yTop).attr("height", height - yTop);
 
         } else if (pageYOffset >= startMapPos + topOffset){ //When the fight map fills the window
@@ -218,11 +206,8 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
             map.style.bottom = "auto";
 
             //Move the boundary
-             yTop = round2(Math.max(0, (pageYOffset - startMapPos - originalMargin.top)/originalHeight) * height);
-            //svg.select(".map-line-top").attr("y1", yTop).attr("y2", yTop);
+            yTop = round2(Math.max(0, (pageYOffset - startMapPos - originalMargin.top)/originalHeight) * height);
             yBottom = round2(Math.min(1, (pageYOffset - startMapPos - originalMargin.top + windowHeight)/originalHeight) * height);
-            //svg.select(".map-line-bottom").attr("y1", yBottom).attr("y2", yBottom);
-
             sectionRect.attr("y", yTop).attr("height", yBottom - yTop);
 
        } else { //When the top of the page is higher than the top of the map
@@ -231,14 +216,12 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
             map.style.bottom = "auto";
 
             //Move the boundary
-            //svg.select(".map-line-top").attr("y1", 0).attr("y2", 0);
             yBottom = round2(Math.max(0, (windowHeight + pageYOffset - startMapPos - originalMargin.top)/originalHeight * height));
-            //svg.select(".map-line-bottom").attr("y1", yBottom).attr("y2", yBottom);
-
             sectionRect.attr("y", 0).attr("height", yBottom);
+
         }//else
-        //console.log(pageYOffset, startMapPos);
-    };//onscroll
+
+    }//function moveMap
 
     function findPosY(obj) {
         var curtop = 0;

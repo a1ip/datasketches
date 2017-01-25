@@ -3,13 +3,14 @@ var isMobile = window.screen.width < 400 ? true : false;
 if(isMobile) {
 	d3.selectAll(".mobile").style("display", "inline-block");
 	d3.selectAll(".desktop").style("display", "none");
-	//d3.selectAll(".outer-margin").style("margin-left", "10px").style("margin-right", "10px");
 }
 //else {
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the SVG ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
+	var windowWidth = document.documentElement.clientWidth;
+
 	var minWidth = 450,
 		maxWidth = document.documentElement.clientWidth > 1200 ? 1000 : 800,
 		scrollBarPadding = 10,
@@ -21,9 +22,9 @@ if(isMobile) {
 	    .range([60, 150]);
 
 	var margin = {
-	  top: 120,
+	  top: Math.round(widthScale(outerWidth)),
 	  right: Math.round(widthScale(outerWidth)),
-	  bottom: 120,
+	  bottom: Math.round(widthScale(outerWidth)),
 	  left: Math.round(widthScale(outerWidth))
 	};
 	//Finally the actual width and height of the fight visual
@@ -33,8 +34,9 @@ if(isMobile) {
 	//Offset for the centering of the SVG
 	var tooltipOffset = window.innerWidth > maxWidth ? (window.innerWidth - outerWidth)/2 : scrollBarPadding/2;
 
-	//Adjust the width of the explanation text to the visual itself
-	d3.selectAll(".visual-explanation").style("max-width", width + "px");
+	//Adjust the width of the explanation text to the visual itself of the page is big enough
+	if(windowWidth >= 768) d3.selectAll(".visual-width").style("max-width", width + "px");
+	else d3.selectAll(".visual-width").style("padding-right", "15px").style("padding-left", "15px"); 
 
 	//SVG container
 	var svg = d3.select('#fight-visual')
@@ -396,14 +398,14 @@ if(isMobile) {
 
 		sagaLine.append("line")
 			.attr("class", "saga-line-legend")
-			.attr("x1", sagaScale(sagaScale.domain()[0] + 1) )
+			.attr("x1", sagaScale(sagaScale.domain()[0] + 1.5) )
 			.attr("y1", fightScale(-1.5))
-			.attr("x2", sagaScale(sagaScale.domain()[1] - 1) )
+			.attr("x2", sagaScale(sagaScale.domain()[1] - 1.5) )
 			.attr("y2", fightScale(-1.5))
 			.attr("marker-end", "url(#triangle)");
 
 		//Sloghtly adjust the width to include the legend text as well
-		d3.selectAll(".visual-explanation").style("max-width", (document.getElementsByClassName("saga-line-wrapper")[0].getBBox().width) + "px");
+		if(windowWidth >= 768) d3.selectAll(".visual-width").style("max-width", (document.getElementsByClassName("saga-line-wrapper")[0].getBBox().width) + "px");
 
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////////// Create the character paths ///////////////////////
@@ -626,7 +628,8 @@ if(isMobile) {
 		//////////////////// Add extra fights and annotations /////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
-		createCharacterLegend(characters, names, fullCharacters);
+		createCharacterLegend(characters);
+		createFightLegend();
 
 		var annotationWrapper = svg.append("g").attr("class", "annotation-wrapper");
 
@@ -694,7 +697,7 @@ if(isMobile) {
 		sagaText.append("text")
 			.attr("class", "saga-name")
 			.attr("y", "1.6em")
-			.text(function(d) { return "part of the " + d.saga + " saga"; });
+			.text(function(d) { return "part of the " + d.saga + " arc"; });
 
 		sagaText.append("text")
 			.attr("class", "saga-episode")

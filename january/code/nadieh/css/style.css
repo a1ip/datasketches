@@ -31,7 +31,7 @@ a.image-link {
 
 #intro {
   max-width: 1000px;
-  padding-top: 25px;
+  padding-top: 35px;
 }
 
 
@@ -41,6 +41,7 @@ a.image-link {
   color: #FFC200;
   margin-bottom: -15px;
 }
+
 #main-title {
   /*font-family: 'Anton', sans-serif;*/
   font-family: 'PT Sans Narrow', sans-serif;
@@ -52,27 +53,85 @@ a.image-link {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+@media screen and (max-width: 768px) {
+  #main-title {
+    background: -webkit-linear-gradient(-45deg, #FFC200 0%,#ff6c00 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
 
 .intro-text {
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 160%;
   color: #292929;
 }
 
-.visual-explanation {
+.explanation-text {
+  font-size: 13px;
+  line-height: 160%;
+  color: #a5a5a5;
+  font-style: italic;
+  position: relative; /* So the SVG sits below them */
+}
+
+.visual-width {
   margin-left: auto;
   margin-right: auto;
+  /*padding-right: 15px;*/
+  /*padding-left: 15px;*/
+}
+
+/* --- Legends --- */
+
+#character-legend svg,
+#fight-legend svg,
+#chart svg {
+  overflow:visible;
 }
 
 .divider {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-weight: 700;
+    font-size: 1em;
+    padding: 0px 5px;
+    font-style: normal;
+}
+.orange {
+    color: #f27c07;
+}
+.grey {
   color: #c7c7c7;
-  font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.goku-bold {
+  color: #f27c07; 
   font-weight: 700;
-  font-size: 0.9em;
-  padding: 0px 5px;
+}
+
+.vegeta-bold {
+  color: #1D75AD; 
+  font-weight: 700;
 }
 
 .character-legend-text {
-  font-size: 14px;
+  font-size: 18px;
+  text-anchor: middle;
+  font-family: 'PT Sans Narrow', sans-serif;
+  fill: #252525;
+}
+
+.fight-legend-text {
+  font-size: 18px;
+  text-anchor: middle;
+  font-family: 'PT Sans Narrow', sans-serif;
+  fill: #252525;
+}
+
+.fight-legend-circle-text {
+  font-size: 5px;
+  text-anchor: middle;
+  font-family: 'PT Sans Narrow', sans-serif;
 }
 
 /* --- Chart --- */
@@ -167,11 +226,10 @@ a.image-link {
 	/*opacity: 0.6;*/
 }
 
-.fight-background-circle {
+.fight-background-circle,
+.fight-background-circle-legend {
 	pointer-events: none;
 	fill: white;
-	/*stroke: #e1e1e1;*/
-	/*stroke-width: 1px;*/
 }
 
 #overlay-rect {
@@ -179,7 +237,8 @@ a.image-link {
 	fill: white;
 }
 
-.character-circle {
+.character-circle,
+.character-circle-legend {
 	mix-blend-mode: multiply;
 	pointer-events: none;
 	opacity: 1;
@@ -329,6 +388,11 @@ a.image-link {
 #credit p {
 	margin-top: 0px;
 	margin-bottom: 3px;
+}
+
+.bold-start {
+  font-weight: 700;
+  color: black;
 }
 
 .credit-bold {
