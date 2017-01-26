@@ -88,6 +88,14 @@ a.image-link {
   /*padding-left: 15px;*/
 }
 
+#chrome-note {
+  margin-top: 25px;
+  text-align: center;
+  color: #292929;
+  font-size: 13px;
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+
 /* --- Legends --- */
 
 #character-legends,

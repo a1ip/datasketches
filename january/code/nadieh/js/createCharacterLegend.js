@@ -25,7 +25,7 @@ function createCharacterLegend(characters) {
 	//Videl, Chi-Chi, Kibito
 
 	var mainAntagonists = [
-		{character: "Raditz", fights: 4, text: "The older brother of Goku, he comes to Earth at the start of <i>DBZ</i> to recruit him in conquering other planets."},
+		{character: "Raditz", fights: 4, text: "The older brother of Goku, he comes to Earth at the start of <i>DBZ</i> to recruit him into conquering other planets together with him, Nappa and Vegeta."},
 		{character: "Vegeta", fights: 40, text: "Prince of the Saiyans, Vegeta starts out as a main antagonist, but his persistence to become stronger than Goku eventually results in him fighting for what's good, mostly..."},
 		{character: "Frieza", fights: 20, text: "A galactic tyrant that wants the Dragon Balls so he can wish for eternal life. Destroyed the Saiyan planet in fear of the legendary Super Saiyan but is still eventually killed by one."},
 		{character: "Cell", fights: 22, text: "He is an artificial life form created using the cells of the strongest fighters, including Goku, Vegeta, Piccolo and Frieza. Very vain, he holds the Cell Games to show off his power."},
@@ -71,6 +71,8 @@ function createCharacterLegend(characters) {
 		.domain([10, 50])
 		.range([1, 4]);
 
+	var hoveredCircle;
+
 	var heightOffset = drawLegend(mainProtagonists, subProtagonists, "Protagonists", 0);
 	drawLegend(mainAntagonists, subAntagonists, "Antagonists", heightOffset);
 
@@ -106,6 +108,8 @@ function createCharacterLegend(characters) {
 				yExtraOffset = heightOffset;
 			}//else
 		}//if
+
+		d3.select("#character-legend-" + title.toLowerCase() + " svg").on("click", mouseOutLegend);
 
 		///////////////////////////////////////////////////////////////////////////
 		////////////////////////// Create defs elements ///////////////////////////
@@ -233,12 +237,15 @@ function createCharacterLegend(characters) {
 				return d.color ; 
 			})
 			.style("stroke-width", strokeScale(s) )
+			.on("click", function() { d3.event.stopPropagation(); })
 			.on("mouseover", function(d) {
+
+				hoveredCircle = d3.select(this);
 
 				//Move the circle to the front
 				d3.select(this.parentNode).raise();
 				//Increase the scale of the image
-				d3.select(this)
+				hoveredCircle
 					.style("filter", "url(#glow)")
 					.transition("grow").duration(600)
 					.attr("transform", "scale(" + d.scaleIncrease + ")");
@@ -262,21 +269,23 @@ function createCharacterLegend(characters) {
 					.style("top", ypos + "px")
 					.style("left", xpos + "px");
 			})
-			.on("mouseout", function(d) {
-				//Decrease the scale of the image
-				d3.select(this)
-					.style("filter", null)
-					.transition("grow").duration(400)
-					.attr("transform", "scale(1)");
-
-				//Hide tooltip
-				d3.select("#tooltip-legend").transition("tooltip").duration(300)
-					.style("opacity", 0);
-			});
+			.on("mouseout", mouseOutLegend);
 
 		return finalRow;
 
 	}//function drawCircles
+
+	function mouseOutLegend(d) {
+		//Decrease the scale of the image
+		hoveredCircle
+			.style("filter", null)
+			.transition("grow").duration(400)
+			.attr("transform", "scale(1)");
+
+		//Hide tooltip
+		d3.select("#tooltip-legend").transition("tooltip").duration(300)
+			.style("opacity", 0);
+	}//mouseOutLegend
 
 }//createCharacterLegend
 

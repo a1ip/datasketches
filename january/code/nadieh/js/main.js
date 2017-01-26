@@ -6,6 +6,34 @@ if(isMobile) {
 }
 //else {
 
+	// http://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome
+	// please note, 
+	// that IE11 now returns undefined again for window.chrome
+	// and new Opera 30 outputs true for window.chrome
+	// and new IE Edge outputs to true now for window.chrome
+	// and if not iOS Chrome check
+	// so use the below updated condition
+	var isChromium = window.chrome,
+	    winNav = window.navigator,
+	    vendorName = winNav.vendor,
+	    isOpera = winNav.userAgent.indexOf("OPR") > -1,
+	    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+	    isIOSChrome = winNav.userAgent.match("CriOS");
+
+	var isChrome;
+	if(isIOSChrome){
+	   isChrome = true;
+	} else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+	   isChrome = true;
+	} else { 
+	   isChrome = false;
+	}//else
+
+	//Hide Chrome notification if it is already Chrome
+	if(isChrome && !isMobile) {
+	  d3.select("#chrome-note").style("display", "none");
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the SVG ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
@@ -22,9 +50,9 @@ if(isMobile) {
 	    .range([60, 150]);
 
 	var margin = {
-	  top: Math.round(widthScale(outerWidth)),
+	  top: Math.round(widthScale(outerWidth))*0.8,
 	  right: Math.round(widthScale(outerWidth)),
-	  bottom: Math.round(widthScale(outerWidth)),
+	  bottom: Math.round(widthScale(outerWidth))*0.8,
 	  left: Math.round(widthScale(outerWidth))
 	};
 	//Finally the actual width and height of the fight visual
@@ -577,6 +605,7 @@ if(isMobile) {
 				counter += 1;
 
 			})
+			.on("click", function() { d3.event.stopPropagation(); })
 			.on("mouseover", function(d) {
 
 				//Make the hovered line more visible and rest less (also in the mini map)
@@ -612,6 +641,9 @@ if(isMobile) {
 		      		.transition("move").duration(200)
 		        	.attr("transform", "translate(" + (d3.event.offsetX - margin.left) + "," + (d3.event.offsetY - margin.top - 20) + ")")
 		        	.style("opacity", 1);
+
+		        //Save the mouse hovered path
+				hoveredFight = d3.select(this);
 
 			})
 			.on("mousemove", function(d) {
@@ -764,12 +796,14 @@ if(isMobile) {
 				//Take one fighter from the Vegito fusion to make the circles spread correctly around 360 degrees
 				if( /Vegito/.test(d.values[0].state) ) d.numFighters -=1;
 			})
+			.on("click", function() { d3.event.stopPropagation(); })
 			.on("mouseover", function(d) {
 				var el = d3.select(this);
 
 				//Move the parent group to the front
 				d3.select(this.parentNode).raise();
 
+				d3.event.stopPropagation();
 				// //Insert a rectangle that will overlay everything but the fight
 				// d3.select(this).insert("rect", ":first-child")
 				// 	.attr("id","overlay-rect")
@@ -894,69 +928,70 @@ if(isMobile) {
 				//Names of the fighters involved
 				console.log(d.key, d.values.map(function(c) { return c.name; }));
 
+				//Save the mouse hovered fight
+				hoveredFight = el;
+
 			})
-			.on("mouseout", function(d) {
-				var el = d3.select(this);
+			.on("mouseout", mouseOutFight);
 
-				// //Remove overlay rect that hid the rest except for the fight
-				// el.select("#overlay-rect")
-				// 	.transition("visible").duration(500)
-				// 	.style("opacity", 0)
-				// 	.remove();
+		var hoveredFight;
+		d3.select("#chart svg").on("click", mouseOutFight);
 
-				//Return to the normal scale
-				el
-					.transition("grow").duration(500)
-					.attr("transform", "scale(1)");
+		function mouseOutFight(d) {
+			var el = hoveredFight; //d3.select(this);
 
-				//Move circles back together
-				el.selectAll(".character-circle-group")
-					.transition("move").duration(500)
-					.attr("transform", function(c,i) { 
-						var x = -baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / d.numFighters ),
-							y = -baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / d.numFighters );
-						return "translate(" + x + "," + y + ")"; 
-					});
+			//Return to the normal scale
+			el
+				.transition("grow").duration(500)
+				.attr("transform", "scale(1)");
 
-				//Make the background rect normal
-				el.select(".fight-background")
-					.transition().duration(500)
-					.attr("y", -backgroundRectSize/2)
-					.attr("height", backgroundRectSize);
+			//Move circles back together
+			el.selectAll(".character-circle-group")
+				.transition("move").duration(500)
+				.attr("transform", function(c,i) { 
+					var x = -baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / this.parentNode.__data__.numFighters ),
+						y = -baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
+					return "translate(" + x + "," + y + ")"; 
+				});
 
-				//Hide the background circle
-				el.select(".fight-background-circle")
-					.transition().duration(500)
-					.style("opacity", 0)
-					.on("end", function() { d3.select(this).style("filter", null); })
+			//Make the background rect normal
+			el.select(".fight-background")
+				.transition().duration(500)
+				.attr("y", -backgroundRectSize/2)
+				.attr("height", backgroundRectSize);
 
-				//Turn all character lines normal
-				d3.selectAll(".character-path-group")
-					.transition("fade").duration(300)
-					.style("opacity", function(c) { return c.opacity; });
+			//Hide the background circle
+			el.select(".fight-background-circle")
+				.transition().duration(500)
+				.style("opacity", 0)
+				.on("end", function() { d3.select(this).style("filter", null); })
 
-				//Make all the fights visible
-				d3.selectAll(".fight")
-					.transition("fade").duration(300)
-					.style("opacity", 1);
+			//Turn all character lines normal
+			d3.selectAll(".character-path-group")
+				.transition("fade").duration(300)
+				.style("opacity", function(c) { return c.opacity; });
 
-				//Hide tooltip
-				d3.select("#tooltip").transition("tooltip").duration(300)
-					.style("opacity", 0);
+			//Make all the fights visible
+			d3.selectAll(".fight")
+				.transition("fade").duration(300)
+				.style("opacity", 1);
 
-				//Reveal saga lines & annotations
-				sagaLine
-					.transition("visible").duration(300)
-		        	.style("opacity", 1);
-		        annotationWrapper
-					.transition("visible").duration(300)
-		        	.style("opacity", 1);
-		        sagaTextWrapper
-		        	.transition("visible").duration(300)
-		        	.style("opacity", 1);
+			//Hide tooltip
+			d3.select("#tooltip").transition("tooltip").duration(300)
+				.style("opacity", 0);
 
-			});
-
+			//Reveal saga lines & annotations
+			sagaLine
+				.transition("visible").duration(300)
+	        	.style("opacity", 1);
+	        annotationWrapper
+				.transition("visible").duration(300)
+	        	.style("opacity", 1);
+	        sagaTextWrapper
+	        	.transition("visible").duration(300)
+	        	.style("opacity", 1);
+		
+		}//function mouseOutFight
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////// Create the circles per character /////////////////////
 		///////////////////////////////////////////////////////////////////////////
