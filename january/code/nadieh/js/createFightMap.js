@@ -20,7 +20,7 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
 	margin.bottom = 30;
 	//What would be the optimal dimensions
 	var height = windowHeight - margin.top - margin.bottom,
-		width = Math.min(height/6.5, availWidth*0.9);
+		width = Math.min(height/6.5, availWidth*0.70);
 
 	//Recalculate the height & margins needed now that we know the width
 	height = width*6.5;
@@ -33,9 +33,9 @@ function createFightMap(originalWidth, originalHeight, originalMargin, character
     
     //Place the mini map just to the right of the main visual
     var totalWidth = width + margin.left + margin.right,
-    	inbetweenPadding = Math.max(30, totalWidth*0.75);
+    	inbetweenPadding = Math.min(100, Math.max(30, totalWidth*0.5));
     var map = document.getElementById('map');
-    map.style.right = Math.max(0, (document.documentElement.clientWidth - totalWidthOriginal - totalWidth - inbetweenPadding)/2) + "px";
+    map.style.right = Math.max(0, (document.documentElement.clientWidth - totalWidthOriginal - totalWidth)/2 - inbetweenPadding) + "px";
 
 	//If there is not enough space available, don't make the map - old version
 	//if(document.documentElement.clientWidth - totalWidthOriginal - totalWidth - inbetweenPadding < 0) return;

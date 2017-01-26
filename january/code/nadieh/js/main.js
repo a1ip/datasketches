@@ -1,4 +1,5 @@
 var isMobile = document.documentElement.clientWidth < 400 ? true : false; //window.screen.width < 400 ? true : false;
+var isTouch = navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
 
 if(isMobile) {
 	d3.selectAll(".mobile").style("display", "inline-block");
@@ -238,10 +239,10 @@ if(isMobile) {
 		.attr("height", "100%")
 		.attr("width", "100%")
 		.append("image")
-			.attr("xlink:href", function(d) { return "img/" + (isMobile ? d.img_url.replace(".gif", ".jpg") : d.img_url); })
-			.attr("x", function(d) { return isMobile ? sagaScale(d.hExtraMobile) : sagaScale(d.hExtra); })
+			.attr("xlink:href", function(d) { return "img/" + (isMobile || !isChrome || isTouch ? d.img_url.replace(".gif", ".jpg") : d.img_url); })
+			.attr("x", function(d) { return isMobile || !isChrome || isTouch ? sagaScale(d.hExtraMobile) : sagaScale(d.hExtra); })
 			.attr("height", 2*annotationCircleSize)
-			.attr("width", function(d) { return (isMobile ? d.imgRatioMobile : d.imgRatio) * 2*annotationCircleSize; });
+			.attr("width", function(d) { return (isMobile || !isChrome || isTouch ? d.imgRatioMobile : d.imgRatio) * 2*annotationCircleSize; });
 
 	//Code taken from http://stackoverflow.com/questions/9630008/how-can-i-create-a-glow-around-a-rectangle-with-svg
 	//Filter for the outside glow

@@ -60,7 +60,7 @@ function createCharacterLegend(characters) {
 
 	var marginSize = Math.round(1.2*size);
 	var margin = {
-	  top: marginSize*1.75, //To fit title
+	  top: marginSize*1.9, //To fit title
 	  right: marginSize,
 	  bottom: marginSize,
 	  left: marginSize
@@ -183,13 +183,15 @@ function createCharacterLegend(characters) {
 			var scaleIncrease = 3;
 			var s = size/2;
 			var cr = 1.2;
-			var extraWidth = marginSize;
+			var extraWidth = size;
 		} else {
 			var scaleIncrease = 2;
 			var s = size;
 			var cr = circleRatio;
 			var extraWidth = 0;
 		}//else
+		//Very manual change
+		if(type === "small" && className === "sub-protagonists") extraWidth = -size*1.5;
 
 		//Save the location of the final row, so the next group can be placed under it in the next function call
 		var finalRow;
