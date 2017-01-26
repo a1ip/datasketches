@@ -85,7 +85,7 @@
 
                 <p>Not to worry if you're not Dutch, the Top 2000 is probably 90% English songs, with Queen often on 1st place, and many Beatles, U2 and Michael Jackson songs, so the list should seem familiar to most of you.</p>
 
-                <p><a href="http://www.nporadio2.nl/top2000" target="_new">The Top 2000 website</a> thankfully shares an Excel file of the 2000 songs containing the name, artist and year of release. This year it was released on December 19th. However, I needed another important variable; the highest rank ever reached in the normal weekly charts. There are a few of these in the Netherlands, but I chose to go with the Top 40, since this has been going non-stop since 1965. But also because <a href="https://www.top40.nl/" target="_new">the Top 40 website</a> seemed scrape-able. So I wrote a small scraper that would go through 50 years of charts lists and save the artist's name, song title, URL to the song's page and position. This data was then aggregated to make it unique per song (the URL of the song was the unique key) and save some extra info, such as the highest position ever reached and number of weeks in the Top 40.</p> 
+                <p><a href="http://www.nporadio2.nl/top2000" target="_new">The Top 2000 website</a> thankfully shares an Excel file of the 2000 songs containing the name, artist and year of release. This year it was released on December 19th. However, I needed another important variable; the highest rank ever reached in the normal weekly charts. There are a few of these in the Netherlands, but I chose to go with the Top 40, since this has been going non-stop since 1965. But also because <a href="https://www.top40.nl/" target="_new">the Top 40 website</a> seemed scrape-able. So I wrote a small scraper that would go through 50 years of charts lists and save the artist's name, song title, URL to the song's page and position. This data was then aggregated to make it unique per song (the URL of the song was the unique key) and save some extra info, such as the highest position ever reached and number of weeks in the Top 40.</p>
 
                 <p>Next came the tricky bit, matching those artists and songs to those in the Top 2000 list. Of course I first tried a merge on an exact match of artist and title. That connected about 60% of the songs. Browsing through the remaining songs I saw that sometimes one of the two lists was using more words than the other, such as <i>John Lennon-Plastic Ono Band</i> versus just <i>John Lennon</i>. So I also searched for partial matches between the lists, as long as all the words of one song and artist were contained in the other list. That helped match 10% more.</p>
 
@@ -139,7 +139,7 @@
                 <a href="code/nadieh/img/Top2000PosterEnglish.png" target="_new"> <img src="code/nadieh/img/Top2000PosterEnglish.png" class="img-responsive img-month" alt="The final infographic about how the Top 2000 lives the 70s and 80s"></a>
 
                 <p>Another reason why I decided to create an infographic is because I just didn't have that much time this month; I only finished the November visual for data sketches on December 7th, I had a small vacation to London planned (where I met Shirley again after 8 months YAY!) and we have the holidays at the end of December of course. And making a static visualization is always much much faster for me, even if it is partly based on something that I started in d3.</p>
-                
+
                 <p>I think preparing and doing the data scraping & cleaning took about 20 hours, the ideation & sketching about 3 and the coding/creating about 20 - 30 hours (I keep telling myself to actually start keeping track, haha). After doing these static things I always remember how much I like making "printable" things :)</p>
 
             </div>
@@ -152,13 +152,48 @@
               <div class="time kingBasil"></div>
               <div class="location quicksand">san francisco</div>
 
-              <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
+              <a href="http://sxywu.com/ddr" target='_new'><img src="code/shirley/header.jpg" class="img-responsive img-month-top" alt=""></a>
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-              <p>Received some amazing data :D</p>
+              <p>
+                When we first agreed on Music for December, I felt quite lost; I didn't know what I wanted to do, other than perhaps something about K-pop.  It wasn't until I was lamenting this lack of angle with <a href='https://twitter.com/kennethormandy' target='_new'>Kenneth Ormandy</a> that something he said stuck and I suddenly remembered DDR.
+              </p>
 
-              <!-- <a class="fancybox" href="data/shirley/all_appearances.png"> <img src="data/shirley/all_appearances.png" class="img-responsive img-month"></a> -->
+              <p>
+                DDR was a huge part of my teenage life.  I first saw it in 2001, at a friend of a friend's house.  Since there were no arcades with DDR anywhere near where I grew up, I begged my parents to buy me a set.  Easier said then done; there were absolutely no video games in our house at the time, so a DDR set meant not only the game itself, but the PS2 and the mat that came along with it.  It took me two years to convince my parents, and the summer I got it, I was on it every day for hours.  I was the type of kid that played the same song on the same difficulty over and over until I mastered it (with mastery defined as being able to clear the song at least twice in a row).  I played it regularly until I left for college 5 years later.
+              </p>
+
+              <p>
+                (I should say though that I was never <em>that great</em>, and the highest I was ever able to clear was an 8/10 difficulty, and I most comfortably played songs that were 6 or 7/10.)
+              </p>
+
+              <p>
+                When I first went out looking, I was excited for the data out there; with hundreds of songs (thousands?), each with at least three difficulty levels and BPMs and maybe even the values in the Groove Radar (Stream, Voltage, Air, Freeze, and Chaos), that's potentially a lot of data.  (By the way, never knew that pentagon was called a Groove Radar, I just learned it - thanks Google.)  Never in my wildest dreams though, did I imagine <em>all the steps from 645 songs</em> just there, available.  But then I came across the amazingness of <a href='http://www.ddrfreak.com/' target='_new'>DDR Freak</a> and their <a href='http://www.ddrfreak.com/stepcharts/stepcharts.php' target='_new'>step charts</a>:
+                <a class="fancybox" href="data/shirley/midnight.png"> <img src="data/shirley/midnight.png" class="img-responsive img-month"></a>
+                And I started talking to my Computer Vision friend about how I (he) would go about getting the data out of that image.  But Kenneth suggested I just email DDR Freak and ask if they had the raw data.  And I was skeptical (the site had been largely inactive for at least the last five years) but I found an email (Jason Ko, founder of DDR Freak) and was like, hey why not?  Never expecting a response.
+              </p>
+
+              <p>
+                And then Jason responds 18 (read: 18!!) minutes later with a zip of all the songs he had on hand.  <em>How awesome is he??</em>
+              </p>
+
+              <p>
+                His zip had several different data formats, including .dwi (Dance with Intensity) and .stp (their own proprietary format).  The .dwi files looked like this:
+                <a class="fancybox" href="data/shirley/midnite_dwi.png"> <img src="data/shirley/midnite_dwi.png" class="img-responsive img-month"></a>
+                The file format is <a href='http://dwi.ddruk.com/readme.php#4' target='_new'>explained here</a>, but at the very basic: 0 indicates no arrow, 2 is Down, 4 Left, 6 Right, and 8 Up.  Each character defaults to 1/8 of a beat, but <code>(...)</code> indicates a 1/16 step, <code>[...]</code> a 1/24 step, and so on.
+              </p>
+
+              <p>
+                With that information, I was able to quickly reverse-engineer the .stp files (which I found to be a bit more reader-friendly, and ended up using):
+                <a class="fancybox" href="data/shirley/midnite_stp.png"> <img src="data/shirley/midnite_stp.png" class="img-responsive img-month"></a>
+                The only difference I found here is that instead of <code>(...)</code>, <code>{...}</code> indicates 1/16, <code>{{...}}</code> indicates 1/24 (though I think in my code I assumed 1/32...), and so on.
+              </p>
+
+              <p>
+                Here is my (super straightforward) <a href='https://github.com/sxywu/ddr/blob/master/data/parse.js' target='_new'>parsing code</a>, and the resulting <a href='https://raw.githubusercontent.com/sxywu/ddr/master/data/songs.json' target='_new'>JSON file</a> if you ever want to play with the data 😁✌️
+              </p>
+
 
               <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
