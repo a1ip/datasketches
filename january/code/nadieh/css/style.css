@@ -228,6 +228,14 @@ a.image-link {
 	stroke-linecap: round;
   shape-rendering: crispEdges;
 }
+.annotation-image-link {
+  cursor: pointer;
+  pointer-events: all;
+}
+.annotation-image-circle {
+  cursor: pointer;
+  pointer-events: all;
+}
 
 .character-line-wrapper {
 	isolation: isolate;
@@ -401,7 +409,7 @@ a.image-link {
 
 .tooltip-extra {
   color: #333333;
-  font-size: 0.8em; 
+  font-size: 0.9em; 
   margin-top: 1em;
   margin-bottom: 0.5em;
 }
