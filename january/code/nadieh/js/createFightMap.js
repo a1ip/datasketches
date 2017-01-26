@@ -1,38 +1,47 @@
 function createFightMap(originalWidth, originalHeight, originalMargin, characterPaths, fightNestedData, baseRadius) {
 	
+	var totalWidthOriginal = originalWidth + originalMargin.left + originalMargin.right,
+		marginRatio = originalMargin.left/originalWidth;
+
+	var windowHeight = document.documentElement.clientHeight;
+	var margin = {};
+
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the SVG ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	var margin = {
-		top: 30,
-		bottom: 30
-	};
+	//How much width is available
+	var availWidth = (document.documentElement.clientWidth - totalWidthOriginal)/2;
+	//If there is not enough space available, don't make the map
+	if(availWidth < 100) return;
 
-	var windowHeight = document.documentElement.clientHeight,
-		height = windowHeight - margin.top - margin.bottom,
-		width = height/6.5,
-		marginRatio = originalMargin.left/originalWidth;
+	//Minimal margins required
+	margin.top = 30;
+	margin.bottom = 30;
+	//What would be the optimal dimensions
+	var height = windowHeight - margin.top - margin.bottom,
+		width = Math.min(height/6.5, availWidth*0.9);
 
-	//Ratio difference of the map, thus many values need to be multiplied by this to create the mini map, based on the big map
-	var mr = width/originalWidth;
+	//Recalculate the height & margins needed now that we know the width
+	height = width*6.5;
+	margin.top = margin.bottom = (windowHeight - height)/2;
 
 	var marginPadding = 20,
 		marginNeeded = Math.round(width*marginRatio);
-
 	margin.left = marginNeeded + marginPadding;
 	margin.right = marginNeeded + marginPadding;
-
-    var map = document.getElementById('map');
-
+    
     //Place the mini map just to the right of the main visual
-    var totalWidthOriginal = originalWidth + originalMargin.left + originalMargin.right,
-    	totalWidth = width + margin.left + margin.right,
+    var totalWidth = width + margin.left + margin.right,
     	inbetweenPadding = Math.max(30, totalWidth*0.75);
+    var map = document.getElementById('map');
     map.style.right = Math.max(0, (document.documentElement.clientWidth - totalWidthOriginal - totalWidth - inbetweenPadding)/2) + "px";
 
-	//If there is not enough space available, don't make the map
-	if(document.documentElement.clientWidth - totalWidthOriginal - totalWidth - inbetweenPadding < 0) return;
+	//If there is not enough space available, don't make the map - old version
+	//if(document.documentElement.clientWidth - totalWidthOriginal - totalWidth - inbetweenPadding < 0) return;
+
+	//Ratio difference of the map, thus many values need to be multiplied by this to create the mini map, based on the big map
+	var mr = width/originalWidth;
 
 	//SVG container
 	var svg = d3.select('#map')
