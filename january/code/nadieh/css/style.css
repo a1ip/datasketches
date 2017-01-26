@@ -27,6 +27,12 @@ a.image-link {
 	margin-right: 50px;
 }
 
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
 /* --- Intro --- */
 
 #intro {
@@ -84,7 +90,17 @@ a.image-link {
 
 /* --- Legends --- */
 
-#character-legend svg,
+#character-legends,
+#character-legend-protagonists,
+#character-legend-antagonists,
+#fight-legend,
+#chart {
+  text-align: center;
+  position: relative;
+}
+
+#character-legend-protagonists svg,
+#character-legend-antagonists svg,
 #fight-legend svg,
 #chart svg {
   overflow:visible;
@@ -148,8 +164,8 @@ a.image-link {
   }
 }
 #chart {
-  position: relative;
-	text-align: center;
+  /*position: relative;*/
+	/*text-align: center;*/
 	font-size: calc(8px + (12 - 8) * (100vw - 450px)/(1000 - 450));
 	/*font-size: 12px;*/
 }
@@ -209,21 +225,13 @@ a.image-link {
 	isolation: isolate;
 }
 
-.character-path-group,
-.character-path-map-group {
-	/*opacity: 0.4;*/
-}
 .character-path {
-	/*fill: none;*/
-	/*pointer-events: none;*/
 	mix-blend-mode: multiply;
-	/*opacity: 0.3;*/
 }
 
 .fight-background {
 	pointer-events: all;
 	fill: none;
-	/*opacity: 0.6;*/
 }
 
 .fight-background-circle,
@@ -297,7 +305,8 @@ a.image-link {
   }
 }
 
-#tooltip {
+#tooltip,
+#tooltip-legend {
   pointer-events: none;
   text-align:center;  
   z-index: 5;
@@ -308,17 +317,33 @@ a.image-link {
   cursor: default;
 }
 
-#tooltip-container {
-  position: relative;
+#tooltip .tooltip-container {
+  padding: 15px 25px;
   top: 50%;
   /*left: 50%;*/ /*Done in the code*/
   transform: translate(-50%, -50%);
+  max-width: 300px;
+}
+
+@media screen and (max-width: 400px) {
+  #tooltip-legend .tooltip-container {
+    width: 200px !important;
+  }
+}
+#tooltip-legend .tooltip-container {
+  padding: 10px 15px;
+  transform: translate(-50%, -100%);
+  width: 300px;
+}
+
+.tooltip-container {
+  position: relative;
   /*width: 230px;*/
   /*left: -115px; /* 230/2*/
   max-width: 300px;
   min-width: 100px;
   font-size: 1em;
-  padding: 15px 25px;
+  /*padding: 15px 25px;*/
   border-radius: 3px;
   background: white;
   color: #000;
@@ -371,6 +396,31 @@ a.image-link {
   font-size: 0.8em; 
   margin-top: 1em;
   margin-bottom: 0.5em;
+}
+
+/* ---- Character legend tooltip ---- */
+.tooltip-name {
+  font-family: 'PT Sans Narrow', sans-serif; 
+  font-size: 17px;
+}
+
+.tooltip-rule-max {
+  height: 1px;
+  max-width: 150px;
+  margin: 1px auto 3px;
+  background: #ddd;
+  width: 100%;
+}
+
+.tooltip-fights {
+  font-style: italic;
+  color: #b6b6b6;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+
+.tooltip-character-info {
+  font-size: 12px;
 }
 
 /* --- Credits --- */

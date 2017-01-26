@@ -16,7 +16,7 @@ function createFightLegend() {
 	  bottom: 10,
 	  left: 10
 	};
-	var width = document.getElementById("fight-legend").clientWidth - margin.left - margin.right;
+	var width = document.getElementById("fight-legend").clientWidth - 2*15 - margin.left - margin.right;
 	var height = 2*baseRadius*backgroundCircleFactor * 1.5; //2*baseRadius*backgroundCircleFactor * scaleIncrease * 1.1;
 		
 	//SVG container

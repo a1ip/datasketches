@@ -40,27 +40,42 @@
 
         	<div class="row">
 
+        		<div id="character-legends" class="row">
+        			<!-- Create div structure for the tooltip -->
+        			<div id="tooltip-legend">
+						<div class="tooltip-container">
+							<div class="tooltip-name"></div>
+							<div class="tooltip-rule-max"></div>
+							<div class="tooltip-fights"></div>
+							<div class="tooltip-character-info"></div>
+						</div>
+					</div>
+    				<div id="character-legend-protagonists" class="col-xs-12 col-md-6"></div>
+    				<div id="character-legend-antagonists" class="col-xs-12 col-md-6"></div>
+    			</div>
+
         		<div class="visual-width">
 
-        			<div id="character-legend"></div>
-
-        			<div class="intro-text">
+        			<div class="intro-text" style="position:relative; z-index: 3;">
 						<p>By following characters from fight to fight you can recognize distinct moments from Dragon Ball Z. Goku, although appearing in most fights overall, is still missing in action for very large periods of time. The reasons are the fact that he's dead during the start of the Vegeta saga, recovering from injuries (twice) during the Frieza arc, suffering from a heart disease at the start of the Cell arc, and, well, dead again during the start of the Buu arc.</p>
-						<p>And, if you've seen the show, were you aware of how often Krillin participates in a fight? or ... Browse through all ±200 fights below to investigate the path of your own favorite character or, if you're new to the show, get an understanding of <i>DBZ</i> through its fights.</p>
+						<p>And, if you've seen the show, were you aware of how often Krillin participates in a fight? Or that Gohan doesn't actually fight a bad guy in between the end of the Frieza saga and when he snaps and turns Super Saiyan 2 at the end of the Cell arc? (that's more than 50 episodes!) Browse through all ±200 fights below to investigate the path of your own favorite character or, if you're new to the show, get an understanding of <i>DBZ</i> through its fights.</p>
 					</div>
 
-					<div class="explanation-text">
-						<p>Each group of circles is a fight, where one circle represents one fighter <span class="divider orange">  |  </span> The main characters have been given their own color; <span class="goku-bold">Goku</span> is the signature <span class="goku-bold">orange</span> color of his tunic, whereas <span class="vegeta-bold">Vegeta</span> is <span class="vegeta-bold">blue</span> of course.</p>
-					</div>
 
-					<div id="fight-legend"></div>
+					<div class="row">
+						<div class="explanation-text col-xs-12 col-md-6 vcenter">
+							<p>Each group of circles is a fight, where one circle represents one fighter <span class="divider orange">  |  </span> The main characters have been given their own color; <span class="goku-bold">Goku</span> is the signature <span class="goku-bold">orange</span> color of his tunic, whereas <span class="vegeta-bold">Vegeta</span> is <span class="vegeta-bold">blue</span> of course.</p>
+						</div><!--
+    					--><div id="fight-legend" class="col-xs-12 col-md-6 vcenter"></div>
+					</div>
 
 	          		<div class="explanation-text">
-						<p>The fights are horizontally ordered per saga, with the first saga on the far left and last saga on the far right <span class="divider orange">  |  </span> The colored swooshing paths follow a character from fight to fight (looking slightly different on each page refresh) <span class="divider orange">  |  </span> <span class="desktop">Hover over</span><span class="mobile">Tab</span> the fights & paths to see more information and discover who was fighting whom and in what other fights they appeared</p>
+						<p>The fights below are horizontally ordered per saga, with the first saga on the far left and last saga on the far right <span class="divider orange">  |  </span> The colored swooshing paths follow a character from fight to fight (looking slightly different on each page refresh) <span class="divider orange">  |  </span> <span class="desktop">Hover over</span><span class="mobile">Tab</span> the fights & paths to see more information and discover who was fighting whom and in what other fights they appeared</p>
 					</div>
+
 				</div>
 			</div>
-		</div>		
+		</div>	
 
 		<!-- The DBZ visual -->
 		<div id="chart">
@@ -69,7 +84,7 @@
 
 			<!-- Create div structure for the tooltip -->
 			<div id="tooltip">
-				<div id="tooltip-container">
+				<div class="tooltip-container">
 					<div class="tooltip-saga"></div>
 					<div class="tooltip-rule"></div>
 					<div class="tooltip-characters good"></div>
