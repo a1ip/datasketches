@@ -93,8 +93,18 @@
 
                 <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-                <p></p>
-                <!-- <a class="fancybox" href="sketches/nadieh/Top_2000_Poster_idea.jpg"> <img src="sketches/nadieh/Top_2000_Poster_idea_small.jpg" class="img-responsive img-month" alt="The general idea for the Top 2000 poster"></a> -->
+                <p>I truly don't remember how I got the idea, but almost immediately after finding the <i>DBZ</i> fights information I had a concept in my mind of placing each fight on a line, one after another, where each saga in the series would have its own column. Lines would then be drawn through the fights from 1 character as if that person was flying from fight to fight. The image below shows my very first sketch of the idea. At the bottom of the image you can also see the sketch I made for Cardcaptor Sakura, because at that time I was still trying to figure out which topic might have the most interesting visual result.</p>
+                <a class="fancybox" href="sketches/nadieh/DBZ_CCS_initial_sketches.jpg"> <img src="sketches/nadieh/DBZ_CCS_initial_sketches_small.jpg" class="img-responsive img-month" alt="The first sketch of the DBZ and Cardcaptor Sakura visuals"></a>
+
+                <p>After deciding on <i>DBZ</i> I drew another image that was a bit more precise (below left). Since I already knew that I would have to create the formulas for the swooshing SVG paths myself I tried to see where to place the anchor points of the <a href="http://blogs.sitepointstatic.com/examples/tech/svg-curves/quadratic-curve.html" target="_new">SVG Quadratic Bézier Curves</a> (which makes the lines <i>swoosh</i>.</p>
+                <p>At first, I only looked at how to create the path from the first fight at the top through all other fights of the character all the way to the last fight at the bottom. This creates a path that you can stroke with a single width (there is no use filling the path, since it is not a closed path). Once I had that figured out, I looked at the result (which you can find in the <i>code</i> section below) and found a bit.... boring perhaps.</p>
+                <p>Instead I was looking for a way to have lines with different widths, as if pressure was being used to draw them. So I created another simple sketch (below right) that had the shape that I was looking for. I then figured out the SVG path "formula" that would be needed. It was as if I was drawing the path from top to bottom twice, but the flipping the 2nd half, so it would run from bottom to top, completing an SVG shape that I could then fill instead of stroke. This 2nd part would be slightly, randomly, offset from the first to create the appearance of a line with different widths.</p>
+                <a class="fancybox" href="sketches/nadieh/DBZ_sketch_investigating_arcs.png"> <img src="sketches/nadieh/DBZ_sketch_investigating_arcs_small.png" class="img-responsive img-month" alt="Investigating how to draw the arcs between fights"></a>
+
+                <p>One part that I was constantly struggling with (well, I struggle with it practically every month) is the overall layout, the stuff <i>other</i> than the visual itself. What fonts would fit this design? How to place the intro text and any legends? How to make it look a bit interesting? I have to admit I'm still not very happy with the end result, but it's the best I could come up with 😞 Maybe I just need to follow some layout design courses or something...</p>
+                <a class="fancybox" href="sketches/nadieh/DBZ_sketch_intro_layout.jpg"> <img src="sketches/nadieh/DBZ_sketch_intro_layout_small.jpg" class="img-responsive img-month" alt="Drawing the layout of the intro section"></a>
+
+                <p>As you can see, this month the sketches were very basic. It's really about getting the abstract shapes on paper. Any form of design was later done while I was already programming with the actual data.</p>
 
                 <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
