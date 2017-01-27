@@ -210,7 +210,44 @@
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
               <p>
-                
+                While still stuck, I went to sleep with only two goals for an interface in mind: I wanted each song to be compact, and I wanted the visual analogy for a song to be continuous.  I woke up the next day with spirals on my mind, and I was convinced that it was the answer to my problems; spirals like circles were very compact, and a spiral was basically one long continuous line that I could map my steps to.
+              </p>
+
+              <p>
+                I giddily set about looking into the math behind spirals, and was super happy to find that for an Archimedean spiral (a spiral where the distance between each spiral branch is the same) the radius was simply the angle:
+                <a class="fancybox" href="code/shirley/spiral_math.png"> <img src="code/shirley/spiral_math.png" class="img-responsive img-month"></a>
+                Until I realized that...if I used that formula, I would end up with something like this:
+                <a class="fancybox" href="code/shirley/not_equidistant.jpg"> <img src="code/shirley/not_equidistant.jpg" class="img-responsive img-month"></a>
+                When instead I wanted the points (the beats) to be equidistant along the length of the spiral, and realized that the problem wasn't as simple as I thought:
+                <a class="fancybox" href="code/shirley/math.png"> <img src="code/shirley/math.png" class="img-responsive img-month"></a>
+                (<em><a href='http://math.stackexchange.com/questions/1371668/equation-to-place-points-equidistantly-on-an-archimedian-spiral-using-arc-length' target='_new'>StackExchange: Equation to place points equidistantly on an Archimedian Spiral using arc-length</a></em>)
+              </p>
+
+              <p>
+                And bashed my head because it's been about a decade since I last touched an integral.  I spent an hour scribbling in my notebook trying to figure out all the steps in between the equations, so that I could understand how the final equation was derived.  No luck.
+              </p>
+
+              <p>
+                Then two miraculous things happened:
+                <ol>
+                  <li>I posted <a href='https://twitter.com/datasketches/status/822244700925018113' target='_new'>my plight</a> on Twitter, and <a href='https://twitter.com/aknauft' target='_new'>Andrew Knauft</a> <a href='https://twitter.com/aknauft/status/822408607828348928' target='_new'>came back</a> with his own <a href='https://www.desmos.com/calculator/xjmovaguu5' target='_new'>step-by-step derivation</a></li>.
+                  <li>I was <a href='https://twitter.com/visualisingdata/status/819637580086046724' target='_new'>waiting at a bar</a> at the time, and someone had sat down in the empty seat across from me.  I took the chance to ask how his math was (<a href='https://www.issackelly.com/blog/2017/01/20/mark-equidistant-points-on-a-spiral' target='_new'>here's the full story</a>), and after a few emails, he (<a href='https://twitter.com/issackelly' target='_new'>Issac Kelly</a>) had <a href='http://jsfiddle.net/issackelly/r679xfrk/12/' target='_new'>brute-forced</a> the <a href='http://jsfiddle.net/issackelly/qptnsL46/2/' target='_new'>answer</a>.</li>
+                </ol>
+                Because I was already far far behind on my month and completely out of time, I took Issac's brute-force approach and adopted it for the DDR steps:
+                <a class="fancybox" href="code/shirley/spiral1.png"> <img src="code/shirley/spiral1.png" class="img-responsive img-month"></a>
+                (<em><a href='https://github.com/sxywu/ddr/blob/master/src/Visualization.js#L60-L103' target='_new'>Adapted spiral code</a></em>)
+              </p>
+
+              <p>
+                I then added legends for each song that also doubled as the filter (I originally had the legends up top that acted as a filter for ALL the songs, but found it completely unperformant, so switched to filters for EACH song):
+                <a class="fancybox" href="code/shirley/ddr_filter.gif"> <img src="code/shirley/ddr_filter.gif" class="img-responsive img-month"></a>
+                Here is the final:
+                <a href="http://sxywu.com/ddr" target='_new'> <img src="code/shirley/final.png" class="img-responsive img-month"></a>
+                Overall, I'm happy with where I ended up given where I started.  With the spiral, I can now compare multiple songs, so both the big spirals (long songs) and teeny spirals stand out.  I can also see from a glance that some songs I used to love indeed had a lot of steps close together throughout the whole song with few breaks, so no wonder I was out of breadth all the time.  Having said that, I'm not 100% satisfied; for the sake of compactness, I sacrificed being able to see at a glance patterns <em>within</em> a song.  One of the funnest things about DDR is that a song will have many sets of steps that repeat throughout; with this viz, it's hard to find those.  I'm not sure if, given enough time, I would have been able to find a visualization that could show both trends between songs, as well as patterns within songs.
+              </p>
+
+              <p>
+                Either way, my favorite part about this month isn't at all the process or what I ended up with, but rather the kindness of (almost) perfect strangers willing to give a helping hand proving that (some) people are <em>awesome</em> ✌️
               </p>
 
             </div>
