@@ -124,9 +124,29 @@
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-              <p></p>
+              <p>
+                Alright I'll be honest, I conned Nadieh into doing Nostalgia for this month just so I could finally have a month for Harry Potter.  Harry Potter (and Toy Story) will always have a special place in my heart: when the first movie came out, I was also 11 waiting for my Hogwarts letter.  I'm the same age as Emma and Daniel, and I grew up alongside them and their movies.  When the final movie came out in 2011, and the screen went to black and the theatre got up in a standing ovation, I had the distinct feeling that my childhood had ended.
+              </p>
 
-              <!-- <a class="fancybox" href="data/shirley/all_appearances.png"> <img src="data/shirley/all_appearances.png" class="img-responsive img-month"></a> -->
+              <p>
+                Having said all that (sentimental stuff), I went through a few different ideas before ending up on my current; at first, I was thinking of doing something on Harry Potter and the Cursed Child, since I had just seen it in December, but then realized that there were probably copyright issues to the script.  I then bought a Marauder's Map hoping to visualize that somehow, but got stuck trying to figure out what kind of data I could extract from it.  And then one day I suddenly remembered my original November Harry Potter idea to scrape fan fiction and graph fan reactions to the movies and books.
+              </p>
+
+              <p>
+                I first got into fanfiction in middle school, when my friend showed me the first six episodes of <em>Fruits Basket</em>, but then couldn't get our hands on the rest of the episodes and needed a fix and found <a href='https://www.fanfiction.net/' target='_new'>fanfiction.net</a> instead.  I then went on to <em>Cardcaptor Sakura</em> (SxS 4EVA), and finally to <em>Harry Potter</em> in my high school years.  (The year I realized that I couldn't get into any of the new fanfiction being written because the grammar and plot were just too horrible, I realized I had "grown up" and wished dearly for my childhood back.)
+              </p>
+
+              <p>
+                For this data, I decided to scrape <a href='harrypotterfanfiction.com/storysearch.php?&srt=1&sctlab=1' target='_new'>harrypotterfanfiction.com</a> instead, because it had less stories (~80k vs. fanfiction.net's ~730k) and because it had better metadata (it has not only genres and characters, but also era and pairing).  I used <a href='https://www.npmjs.com/package/html2json' target='_new'>html2json</a> to turn the page response into JSON, and wrote a (really brittle) <a href='https://github.com/sxywu/hpff/blob/master/data/scraper.js' target='_new'>parser to get each story and its metadata</a>.  I was worried that the hpff servers might time me out requesting ~3300 pages from them, but it seemed that my (brittle, synchronous) code took just enough seconds between each page that I had no such problems.
+              </p>
+
+              <p>
+                A quick first look at the data already proved interesting:
+                <a class="fancybox" href="data/shirley/years.png"> <img src="data/shirley/years.png" class="img-responsive img-month"></a>
+                These are numbers by story publish year, which means that Harry potter fanfiction spiked in 2007 (when the final book and 5th movie came out) but have been dwindling to seriously sad numbers since.  Here's another one:
+                <a class="fancybox" href="data/shirley/pairings.png"> <img src="data/shirley/pairings.png" class="img-responsive img-month"></a>
+                Draco/Hermione is the top non-canon ship, which doesn't surprise me at all (I have this theory that the whole Draco/Hermione thing really took off after the third movie when Hermione punched Draco in the face.  Great scene.)
+              </p>
 
               <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
@@ -170,12 +190,12 @@
               <div class="name-guest paddingBelow kingBasil">Nicholas Rougeux</div>
               <div class="time kingBasil"></div>
               <div class="location quicksand paddingBelow">chicago</div>
-              
+
                 <p><img alt="Snapshot of final project" class="img-responsive" src="code/guest/header.png" /></p>
                 <p>When Shirley and Nadieh asked me to make a guest post for Data Sketches, I jumped at the opportunity but immediately panicked a little because I had agreed to the daunting task of creating something like their wonderful projects over the past six months. Whether or not that happened will be left to the reader but below is the story of how it came to be.</p>
-                
+
                 <h3>year 1 <span class="light-grey">|</span> data</h3>
-                
+
                 <p>Unlike many of my projects, I didn't need to start by collecting data because I had already done so...three years ago. Maybe I knew one day I would do more with it. Back in 2013, when I just started getting seriously interested in the artistic side of data visualization, I did what any newly-obsessed data junky would do: I picked a familiar subject and tracked it obsessively.</p>
                 <p>Taking a step back, it's important to mention that I play a lot of Scrabble. The game has been part of my family since before I was. My grandmother has is a force to be reckoned with in the game, my father has played for ages, and both of them taught me when I was about 12 as a way to build my language and math skills. (My father was an English teacher and I was always the scorekeeper.) They never let me win and for that I'm thankful but during the early years, they were formidable opponents&mdash;and still are!</p>
                 <p>Fast forward to 2013. I decided to track the weekly games with my father&mdash;hoping to chart our scores and find interesting patterns in our playing styles. After each game, I diligently entered the score data into my own MySQL database to query and generate a bare bones dashboard.</p>
@@ -183,9 +203,9 @@
                 <p><a class="fancybox" href="data/guest/early-dashboard.png"><img alt="Screenshot of original dashboard" class="img-responsive img-month" src="data/guest/early-dashboard.png" /></a></p>
                 <p>I wish I had the foresight to track which words were played and did so for the first two games of 2014 but lost motivation because I was prolonging each game by pausing after each turn to record which word was played, where it was played, and how many points it was worth. I did take a few pictures of the final boards though:</p>
                 <p><a class="fancybox" href="data/guest/game-boards.jpg"><img alt="Photo of a few final Scrabble boards" class="img-responsive img-month" src="data/guest/game-boards.jpg" /></a></p>
-                
+
                 <h3>days 1 and 2 <span class="light-grey">|</span> &ldquo;sketching&rdquo;</h3>
-                
+
                 <p>The day I was asked to work on a project about nostalgia, one of my first thoughts was that Scrabble dataset. It was personal, made me think of good times, and was detailed enough to generate some interesting results.</p>
                 <p>My goal was to explore the variety of points earned in each turn rather than who won or lost. I enjoy working with more experimental ways of visualizing data than creating graphics that strictly inform&mdash;though I do enjoy a well-made chart.</p>
                 <p>I've never felt sketching out ideas on paper worked for me. I enjoy seeing others&rsquo; sketches and have nothing against it but I do most &ldquo;sketching&rdquo; in my mind and feel sketching on paper slows me down. I enjoy brainstorming with real data&mdash;either a sample or the full set&mdash;to see if my ideas are realistic before polishing them. <a href="https://www.nodebox.net/">NodeBox</a> is great for this because I don't get bogged down with coding and I can see instant results after creating a few nodes to manipulate the data. <a href="http://raw.densitydesign.org/">Density Design's Raw</a> is another tool I frequently use. With every new idea that pops in my head, I save a new version so my &ldquo;sketches&rdquo; are reusable and adjustable if I want to examine a new direction based on an earlier version.</p>
@@ -213,9 +233,9 @@
                 <p>After feeling a little maxed out with NodeBox, I threw the data into <a href="http://raw.densitydesign.org/">Raw</a> to see what there was to see. I created a couple treemaps of points per game color-coded on a linear scale and color-coded by player. I also created a bump chart showing ranking of players for the entire year.</p>
                 <p><a class="fancybox" href="sketches/guest/treemaps.png"><img alt="Treemaps" class="img-responsive img-month" src="sketches/guest/treemaps.png" /></a></p>
                 <p><a class="fancybox" href="sketches/guest/bumpchart.png"><img alt="" class="img-responsive img-month" src="sketches/guest/bumpchart.png" /></a></p>
-                
+
                 <h3>day 3 <span class="light-grey">|</span> polishing and code</h3>
-                
+
                 <p>I knew I wanted to use the spoked wheel design so I experimented with different ways of trying to combine them into one giant graphic resembling fireworks. I also started playing with different color ideas. In these combinations, the distance from the common baseline of an entire game is based on how many total points were earned that game. (More points = farther from baseline.)</p>
                 <p>NodeBox has a node for creating stars and just for fun, I replaced the dots with stars and configured the number of points on the star to correspond to the number of points earned on a turn, which resulted in a fuzzy appearance. It was a little silly but I liked it.</p>
                 <p><a class="fancybox" href="code/guest/scrabble-10-11-12.png"><img alt="Versions 10, 11, and 12" class="img-responsive img-month" src="code/guest/scrabble-10-11-12.png" /></a></p>
@@ -223,7 +243,7 @@
                 <p>I wanted to find a different way of arranging the games and remembered that for an earlier project, I found <a href="http://hydra.nat.uni-magdeburg.de/packing/">Packomania</a> when looking for a way to tightly arrange circles in a specific shape. This site offers a mindboggling number of diagrams showing how circles of varying or consistent sizes can be packed into squares, circles, and other shapes when the number of circles from just a few to over two thousand. The best part is that each diagram is available in a PDF with the original vector shapes. This is an incredibly valuable resource for people like me who don't feel like coding packing algorithms.</p>
                 <p><a class="fancybox" href="code/guest/packomania.png"><img alt="Sample Packomania diagrams" class="img-responsive img-month" src="code/guest/packomania.png" /></a></p>
                 <p>NodeBox supports importing SVGs so it's possible to use one of these diagrams to use as a guide for placing shapes. Here's the general process:</p>
-                
+
                 <ol style="text-align: left;">
                     <li>Download a PDF of a diagram with the appropriate number of shapes. In my case, found diagrams with 47 circles for the 47 games I played.</li>
                     <li>Open the PDF in Illustrator and extract just the circles&mdash;removing all other shapes.</li>
@@ -231,7 +251,7 @@
                     <li>Export the file as an SVG.</li>
                     <li>Use the import SVG node in NodeBox to import the SVG, connect it to an ungroup node and connect that to a centroid node. This finds the center points of each circle which can be used to position shapes.</li>
                 </ol>
-                
+
                 <p><a class="fancybox" href="code/guest/nodebox-positions.png"><img alt="NodeBox configuration for using SVG to position shapes" class="img-responsive img-month" src="code/guest/nodebox-positions.png" /></a></p>
                 <p>At this point, it was just a matter of finding a symmetrical arrangement of 47 circles that I liked and that would fit well on a screen. After manually moving circles around in Illustrator for longer than I care to admit, I found a good arrangement. I also used the connect node to draw a faint line connecting all the centroids to illustrate the path from beginning of the year to the end. The same arrangement was used for both main visuals.</p>
                 <p>Below are the NodeBox configurations for the two main visuals.</p>
@@ -239,9 +259,9 @@
                 <p><a class="fancybox" href="code/guest/nodebox-paths.png"><img alt="Annotated diagram of NodeBox configuration for paths image" class="img-responsive img-month" src="code/guest/nodebox-paths.png" /></a></p>
                 <p>I knew I wanted to keep the original stepped line charts for a more analytical view of how games unfold as a type of appendix. These were created with <a href="http://www.highcharts.com/">Highcharts</a>. Highcharts is my go-to tool for creating charts because it's relatively easy for me to use and I can focus more on how the charts look without worrying how they work under the hood. I really enjoy customizing the options to configure the colors, data, how they behave, and more&mdash;mostly because its documentation is some of the best I've seen with good explanations, easy navigation, and working examples of almost every option.</p>
                 <p><a class="fancybox" href="code/guest/highcharts.png"><img alt="Highcharts charts" class="img-responsive img-month" src="code/guest/highcharts.png" /></a></p>
-                
+
                 <h3>reflections</h3>
-                
+
                 <p>The <a href="http://www.c82.net/scrabble">final result</a> is a visual experiment of one of many years of Scrabble that I hold dear. I can't remember every game I've played but looking at the visuals helps me remember the excitement of surging ahead with a bingo or the slogging along with a rack full of vowels playing turns worth only a few points.</p>
                 <p>Analyzing these games has helped me fondly remember a time when I looked forward to my weekly visit with my parents to have dinner and play a good game of Scrabble. Geography may separate us now but I still play with my father twice a week and we're still just as dedicated to the game as we ever were.</p>
 
@@ -260,7 +280,7 @@
 
       </div>
     </section>
-	
+
     <footer class="guest-month">
       <div class="container">
         <div>
