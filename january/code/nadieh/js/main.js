@@ -1,39 +1,104 @@
 var isMobile = document.documentElement.clientWidth < 400 ? true : false; //window.screen.width < 400 ? true : false;
 var isTouch = navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
 
-if(isMobile) {
-	d3.selectAll(".mobile").style("display", "inline-block");
-	d3.selectAll(".desktop").style("display", "none");
+// http://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome
+// please note, 
+// that IE11 now returns undefined again for window.chrome
+// and new Opera 30 outputs true for window.chrome
+// and new IE Edge outputs to true now for window.chrome
+// and if not iOS Chrome check
+// so use the below updated condition
+var isChromium = window.chrome,
+    winNav = window.navigator,
+    vendorName = winNav.vendor,
+    isOpera = winNav.userAgent.indexOf("OPR") > -1,
+    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+    isIOSChrome = winNav.userAgent.match("CriOS");
+
+var isChrome;
+if(isIOSChrome){
+   isChrome = true;
+} else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+   isChrome = true;
+} else { 
+   isChrome = false;
+}//else
+
+//Hide Chrome notification if it is already Chrome
+if(isChrome) {
+  d3.select("#chrome-note").style("display", "none");
 }
-//else {
 
-	// http://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome
-	// please note, 
-	// that IE11 now returns undefined again for window.chrome
-	// and new Opera 30 outputs true for window.chrome
-	// and new IE Edge outputs to true now for window.chrome
-	// and if not iOS Chrome check
-	// so use the below updated condition
-	var isChromium = window.chrome,
-	    winNav = window.navigator,
-	    vendorName = winNav.vendor,
-	    isOpera = winNav.userAgent.indexOf("OPR") > -1,
-	    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-	    isIOSChrome = winNav.userAgent.match("CriOS");
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////// Create legends //////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-	var isChrome;
-	if(isIOSChrome){
-	   isChrome = true;
-	} else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-	   isChrome = true;
-	} else { 
-	   isChrome = false;
-	}//else
+var characters = [
+	{character: "Goku", color: "#f27c07"}, //unique
+	{character: "Vegeta", color: "#1D75AD"}, //unique
+	{character: "Gohan", color: "#3e216d"}, //unique
+	{character: "Krillin", color: "#E3A688"}, //unique
+	{character: "Piccolo", color: "#56B13E"}, //Namek unique
+	{character: "Namekian", color: "#56B13E"}, //Namek unique
+	{character: "Nail", color: "#56B13E"}, //Namek unique
+	{character: "Future Trunks", color: "#D8A3FA"}, //Trunks unique
+	{character: "Tien Shinhan", color: "#C30703"}, //Tien & Chiaotzu
+	{character: "Chiaotzu", color: "#C30703"}, //Tien & Chiaotzu
+	{character: "Yamcha", color: "#F53B00"}, //unique
+	{character: "Gotenks", color: "#6ED3C1"}, //unique
+	{character: "Goten", color: "#f2b252"}, //unique
+	{character: "Trunks", color: "#D8A3FA"}, //Trunks unique
+	{character: "Mr. Satan", color: "#6B313A"}, //unique
+	{character: "Videl", color: "#FF8CFA"}, //unique
+	{character: "Kibito", color: "#F3A2AB"}, //unique
+	{character: "Supreme Kai", color: "#8DDBDD"}, //unique
+	{character: "Raditz", color: "#0B2D52"}, //Raditz & Nappa
+	{character: "Saibaman", color: "#D8E665"}, //unique
+	{character: "Saibamen", color: "#D8E665"}, //unique
+	{character: "Nappa", color: "#0B2D52"}, //Raditz & Nappa
+	{character: "Dodoria", color: "#E93B86"}, //unique
+	{character: "Zarbon", color: "#81C1B3"}, //unique
+	{character: "Recoome", color: "#121A03"}, //unique
+	{character: "Burter", color: "#6B88EE"}, //unique
+	{character: "Jeice", color: "#F8361B"}, //unique
+	{character: "Captain Ginyu", color: "#A287CD"}, //unique
+	{character: "Frieza", color: "#82307E"}, //unique
+	{character: "Android 16", color: "#383838"},
+	{character: "Android 17", color: "#383838"},
+	{character: "Future Android 17", color: "#383838"},
+	{character: "Android 18", color: "#383838"},
+	{character: "Future Android 18", color: "#383838"},
+	{character: "Android 19", color: "#383838"},
+	{character: "Android 20", color: "#383838"},
+	{character: "Cell", color: "#9DBD2A"}, //unique
+	{character: "Cell Jr.", color: "#0EC1F8"},
+	{character: "Future Cell", color: "#9DBD2A"},
+	{character: "Spopovich", color: "#C0A87C"}, //unique
+	{character: "Babidi", color: "#D4AB03"}, //unique
+	{character: "Dabura", color: "#E67152"}, //unique
+	{character: "Evil Buu", color: "#C8B4C0"},
+	{character: "Good (Majin) Buu", color: "#FFBBBE"},
+	{character: "Buu", color: "#F390A4"}, //unique
+	{character: "Vegito", color: "url(#vegito-gradient)"}, //unique combined gradient of Goku & Vegeta
+];
+var names = characters.map(function(d) { return d.character; });
+var allCharacters = createCharacterLegend(characters);
 
-	//Hide Chrome notification if it is already Chrome
-	if(isChrome && !isMobile) {
-	  d3.select("#chrome-note").style("display", "none");
-	}
+createFightLegend();
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////// Mobile or not ///////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+if(isMobile) {
+	d3.selectAll(".mobile").style("display", "block");
+	d3.selectAll(".desktop").style("display", "none");
+	d3.selectAll(".visual-width").style("padding-right", "15px").style("padding-left", "15px"); 
+	
+	//To make sure the gif is only loaded when needed
+	var img = document.getElementById("DBZ-desktop-experience-gif");
+	img.src = "img/DBZ_desktop_experience.gif";
+} else {
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the SVG ///////////////////////////////
@@ -61,12 +126,17 @@ if(isMobile) {
 	var height = 6.5*width;
 		
 	//Offset for the centering of the SVG
-	var tooltipOffset = window.innerWidth > maxWidth ? (window.innerWidth - outerWidth)/2 : scrollBarPadding/2;
+	var tooltipOffset = scrollBarPadding/2;
+	if( window.innerWidth > maxWidth) tooltipOffset = (window.innerWidth - outerWidth)/2;
+	else if (outerWidth === minWidth) tooltipOffset = 0;
 
 	//Adjust the width of the explanation text to the visual itself of the page is big enough
 	if(windowWidth >= 768) d3.selectAll(".visual-width").style("max-width", width + "px");
 	else d3.selectAll(".visual-width").style("padding-right", "15px").style("padding-left", "15px"); 
 
+	//Has to lie below the SVG
+	var annotationDivWrapper = d3.select("#fight-visual").append("div").attr("class","annotation-div-wrapper");
+	
 	//SVG container
 	var svg = d3.select('#fight-visual')
 		.append("svg")
@@ -97,47 +167,11 @@ if(isMobile) {
 		{id: 13, subSaga: 'Babidi Saga', saga: 'Buu', firstEpisode: 220, lastEpisode: 231, numEpisodes: 12, firstFight: 119, lastFight: 128 },
 		{id: 14, subSaga: 'Majin Buu Saga', saga: 'Buu', firstEpisode: 232, lastEpisode: 253, numEpisodes: 22, firstFight: 129, lastFight: 138 },
 		{id: 15, subSaga: 'Fusion Saga', saga: 'Buu', firstEpisode: 254, lastEpisode: 275, numEpisodes: 22, firstFight: 139, lastFight: 152 },
-		{id: 16, subSaga: 'Kid Buu Saga', saga: 'Buu', firstEpisode: 276, lastEpisode: 287, numEpisodes: 12, firstFight: 153, lastFight: 162 },
-		{id: 17, subSaga: 'Peaceful World Saga', saga: 'Buu', firstEpisode: 288, lastEpisode: 291, numEpisodes: 4, firstFight: 163, lastFight: 166 },
+		{id: 16, subSaga: 'Kid Buu Saga', saga: 'Buu', firstEpisode: 276, lastEpisode: 287, numEpisodes: 12, firstFight: 153, lastFight: 163 },
+		{id: 17, subSaga: 'Peaceful World Saga', saga: 'Buu', firstEpisode: 288, lastEpisode: 291, numEpisodes: 4, firstFight: 164, lastFight: 166 },
 	];
 	var sagaNames = sagaData.map(function(d) { return d.subSaga; });
 		
-	var characters = [
-		{character: "Goku", color: "#f27c07"}, //unique
-		{character: "Vegeta", color: "#1D75AD"}, //unique
-		{character: "Gohan", color: "#3e216d"}, //unique
-		{character: "Krillin", color: "#E3A688"}, //unique
-		{character: "Piccolo", color: "#56B13E"}, //unique
-		{character: "Future Trunks", color: "#D8A3FA"}, //Trunks unique
-		{character: "Tien Shinhan", color: "#C30703"}, //Tien & Chiaotzu
-		{character: "Chiaotzu", color: "#C30703"}, //Tien & Chiaotzu
-		{character: "Yamcha", color: "#F53B00"}, //unique
-		{character: "Gotenks", color: "#6ED3C1"}, //unique
-		{character: "Goten", color: "#f2b252"}, //unique
-		{character: "Trunks", color: "#D8A3FA"}, //Trunks unique
-		{character: "Raditz", color: "#0B2D52"}, //Raditz & Nappa
-		{character: "Nappa", color: "#0B2D52"}, //Raditz & Nappa
-		{character: "Captain Ginyu", color: "#A287CD"}, //unique
-		{character: "Frieza", color: "#82307E"}, //unique
-		{character: "Android 16", color: "#383838"},
-		{character: "Android 17", color: "#383838"},
-		{character: "Future Android 17", color: "#383838"},
-		{character: "Android 18", color: "#383838"},
-		{character: "Future Android 18", color: "#383838"},
-		{character: "Android 19", color: "#383838"},
-		{character: "Android 20", color: "#383838"},
-		{character: "Cell", color: "#9DBD2A"}, //unique
-		{character: "Cell Jr.", color: "#0EC1F8"},
-		{character: "Future Cell", color: "#9DBD2A"},
-		{character: "Babidi", color: "#D4AB03"}, //unique
-		{character: "Dabura", color: "#E67152"}, //unique
-		{character: "Evil Buu", color: "#C8B4C0"},
-		{character: "Good (Majin) Buu", color: "#FFBBBE"},
-		{character: "Buu", color: "#F390A4"}, //unique
-		{character: "Vegito", color: "url(#vegito-gradient)"}, //unique combined gradient of Goku & Vegeta
-	];
-	var names = characters.map(function(d) { return d.character; });
-	
 	//For the tooltip
 	var charColors = characters.map(function(d) { return d.color; });
 	//Remove "Buu" & "Good (Majin) Buu" & "Vegito"
@@ -148,15 +182,20 @@ if(isMobile) {
     tooltipColors = tooltipColors.concat(["#F390A4","#F390A4","#39100A"]);
 
 	//Characters to follow across sub sagas
-	var fullCharacters = ["Goku","Piccolo","Krillin","Gohan","Future Trunks","Gotenks","Vegeta","Frieza","Cell","Buu"];
+	var fullCharacters = ["Goku","Piccolo","Krillin","Gohan","Future Trunks","Gotenks","Vegeta","Frieza","Cell","Buu","Android 16","Android 17"];
 	//Possible extra: ["Tien Shinhan","Yamcha","Chiaotzu","Trunks","Goten"]
 
-	//Good guys
-	var goodGuys = ["Goku","Piccolo","Krillin","Gohan","Future Trunks","Tien Shinhan","Chiaotzu","Yamcha","Trunks","Goten","Gotenks","Vegito","Mr. Satan","Namekian","Videl","Yajirobe","Nail","Pan","Vegeta"];
-	//Bad guys
-	var badGuys = ["Raditz","Nappa","Saibaman","Dodoria","Zarbon","Guldo","Recoome","Burter","Jeice","Captain Ginyu","Frieza","Cell","Buu","Android 19","Android 20","Cell Jr.","Yakon","Pui Pui","Babidi","Dabura","Olibu"];
-	//Changing characters
-	var changeGuys = ["Vegeta","Android 16","Android 17","Android 18","Supreme Kai"];
+	//Divide characters with more than 1 fight into the different camps
+	//This will determine on what side the swooshes should be drawn
+	var goodGuys = ["Goku","Piccolo","Krillin","Gohan","Future Trunks","Tien Shinhan","Chiaotzu","Yamcha","Trunks","Goten","Gotenks","Vegito","Mr. Satan","Namekian","Videl","Yajirobe","Nail","Pan","Android 16"];
+	var badGuys = ["Raditz","Nappa","Saibaman","Dodoria","Zarbon","Guldo","Recoome","Burter","Jeice","Captain Ginyu","Frieza","Cell","Buu","Android 19","Android 20","Cell Jr.","Yakon","Dabura","Olibu"];
+	//Changing characters between good and bad side
+	var changeGuys = ["Vegeta","Android 17","Android 18"];
+	//The fight ids of the fights where the characters changing side were on the bad side
+	var badFights = [];
+	badFights["Vegeta"] = [19,20,21,22,23,24,25,27,30,31,33,43,91,128,129];
+	badFights["Android 17"] = [80,83];
+	badFights["Android 18"] = [78,79];
 
 	var oddStatesData = [
 		{state: "Mecha", color: "#cccccc"}, //Frieza vs Future Trunks
@@ -171,20 +210,20 @@ if(isMobile) {
 
 	//Special fights
 	var specialFights = [
-		{fightID: 4, fightSaga: "Raditz Saga", horizontalOffset: 7, hExtra: -0.3, imgRatio: 178/100, imgRatioMobile: 178/100, hExtraMobile: 0.2, img_url: "Raditz_is_killed.gif", stroke: "#f27c07", linkURL: "https://youtu.be/4bs0NWmIZ-8?t=3m15s", fightText: "Goku sacrifices himself so Piccolo can kill Goku's evil brother Raditz", textX: 1.25, textY: -1, textAnchor: "start" },
-		{fightID: 18, fightSaga: "Vegeta Saga", horizontalOffset: 4, hExtra: 0.75, imgRatio: 134/100, imgRatioMobile: 133/100, hExtraMobile: 0.65, img_url: "Vegeta_over_9000.gif", stroke: "#1D75AD", linkURL: "https://youtu.be/5196mjp9fcU?t=31s", fightText: "The most famous DBZ meme is when Vegeta measures Goku's power level (who's back from the dead) and screams in anger 'It's over 9000!'", textX: 1.25, textY: -1, textAnchor: "start" },
-		{fightID: 19, fightSaga: "Vegeta Saga", horizontalOffset: -3.5, hExtra: 0.2, imgRatio: 149/100, imgRatioMobile: 118/100, hExtraMobile: 0.95, img_url: "Goku_fights_Vegeta.gif", stroke: "#f27c07", linkURL: "https://youtu.be/QwR0qwPZeig", fightText: "An epic battle ensues between Goku and Vegeta lasting several episodes", textX: -1.25, textY: 1.25, textAnchor: "start" },
-		{fightID: 55, fightSaga: "Frieza Saga", horizontalOffset: 3, hExtra: 0.2, imgRatio: 187/100, imgRatioMobile: 134/100, hExtraMobile: 0.8, img_url: "Goku_fights_Frieza.gif", stroke: "#82307E", linkURL: "https://youtu.be/Ii08b3TlXoU?t=6m59s", fightText: "Goku and the others (although Vegeta was just killed by Frieza) try valiantly but they're no match for Frieza", textX: 1.25, textY: -1, textAnchor: "start" },
-		{fightID: 60, fightSaga: "Frieza Saga", horizontalOffset: 5, hExtra: 0.2, imgRatio: 178/100, imgRatioMobile: 133/100, hExtraMobile: 0.7, img_url: "Goku_goes_Super_Saiyan.gif", stroke: "#f27c07", linkURL: "https://youtu.be/BwrHGO7ljR0?t=1m09s", fightText: "After seeing his friend Krillin get destroyed by Frieza, Goku finally loses it and magnificently turns into a Super Saiyan", textX: 1.25, textY: -1, textAnchor: "start" },
-		{fightID: 67, fightSaga: "Trunks Saga", horizontalOffset: -4.5, hExtra: 0.2, imgRatio: 178/100, imgRatioMobile: 180/100, hExtraMobile: 0.3, img_url: "Trunks_kills_Frieza.gif", stroke: "#D8A3FA", linkURL: "https://youtu.be/iGMtXqo1N9E", fightText: "A cybernetically enhanced Frieza comes to Earth to kill all, but is swiftly sliced in half by Future Trunks", textX: -1.25, textY: 1.25, textAnchor: "start" },
-		{fightID: 69, fightSaga: "Trunks Saga", horizontalOffset: 6, hExtra: 0.6, imgRatio: 133/100, imgRatioMobile: 178/100, hExtraMobile: 0, img_url: "Trunks_tests_Goku.gif", stroke: "#D8A3FA", linkURL: "https://youtu.be/Y07W0RxClAo?t=1m18s", fightText: "Trunks spars with Goku to test Goku's strength", textX: 1.25, textY: -1, textAnchor: "start" },
-		{fightID: 104, fightSaga: "Cell Games Saga", horizontalOffset: -6, hExtra: 0.4, imgRatio: 178/100, imgRatioMobile: 126/100, hExtraMobile: 0.9, img_url: "Gohan_goes_SSJ2.gif", stroke: "#3e216d", linkURL: "https://youtu.be/gUuzYvTItNk?t=1m51s", fightText: "Enraged with Cell for killing Android 16, and the Cell Juniors' beating his friends, Gohan's hidden power erupts, transforming him into a Super Saiyan 2", textX: -1.25, textY: -1, textAnchor: "end" },
-		{fightID: 108, fightSaga: "Cell Games Saga", horizontalOffset: 2.5, hExtra: 0.4, imgRatio: 178/100, imgRatioMobile: 177/100, hExtraMobile: 0.3, img_url: "Gohan_kills_Cell.gif", stroke: "#3e216d", linkURL: "https://youtu.be/CWQzuDlU2W8", fightText: "Releasing all the energy he has, Gohan's Father-Son Kamehameha is strong enough to vaporize every cell in Cell's body", textX: 1.25, textY: -1, textAnchor: "start" },
-		{fightID: 128, fightSaga: "Babidi Saga", horizontalOffset: -8, hExtra: 0.8, imgRatio: 133/100, imgRatioMobile: 177/100, hExtraMobile: 0.3, img_url: "Goku_fights_Majin_Vegeta.gif", stroke: "#f27c07", linkURL: "https://youtu.be/3i3ydz5uUcM?t=31m", fightText: "After Vegeta lets Babidi control him so he could become evil again the second epic battle between Goku and (Majin) Vegeta starts", textX: -1.25, textY: -1, textAnchor: "end" },
-		{fightID: 134, fightSaga: "Majin Buu Saga", horizontalOffset: -5, hExtra: 0.2, imgRatio: 179/100, imgRatioMobile: 125/100, hExtraMobile: 0.9, img_url: "Vegeta_sacrifice.gif", stroke: "#1D75AD", linkURL: "https://youtu.be/7WM2PggmSp8?t=8m46s", fightText: "One of the best DBZ moments happens when Vegeta sacrifices himself for his family to destroy Majin Buu (which sadly doesn't work)", textX: -1.25, textY: -1, textAnchor: "end" },
-		{fightID: 147, fightSaga: "Fusion Saga", horizontalOffset: -7, hExtra: 0.5, imgRatio: 139/100, imgRatioMobile: 134/100, hExtraMobile: 0.9, img_url: "Vegito_fights_Super_Buu.gif", stroke: "url(#vegito-gradient)", linkURL: "https://youtu.be/wZZOYI1iXuU?t=8m17s", fightText: "After nothing else works, Goku and Vegeta fuse to become Vegito, who dominates over Super Buu, even when turned into a jawbreaker", textX: -1.25, textY: -1, textAnchor: "end" },
-		{fightID: 156, fightSaga: "Kid Buu Saga", horizontalOffset: -10, hExtra: -0.1, imgRatio: 178/100, imgRatioMobile: 178/100, hExtraMobile: 0.3, img_url: "Goku_fights_Kid_Buu.gif", stroke: "#F390A4", linkURL: "https://youtu.be/hpM4ngwrNX0", fightText: "Goku unleashes his Super Saiyan 3 form to fight Kid Buu, but it's still not enough", textX: -1.25, textY: -1, textAnchor: "end" },
-		{fightID: 162, fightSaga: "Kid Buu Saga", horizontalOffset: -7, hExtra: -0.3, imgRatio: 201/100, imgRatioMobile: 178/100, hExtraMobile: 0.4, img_url: "Goku_kills_Kid_Buu.gif", stroke: "#f27c07", linkURL: "https://youtu.be/0MsT356rIE4?t=3m15s", fightText: "After getting the energy from everybody on Earth (thanks to Mr. Satan) Goku finally kills Kid Buu with a massive Spirit Bomb", textX: -1.25, textY: -1, textAnchor: "end" },
+		{fightID: 4, fightSaga: "Raditz Saga", horizontalOffset: 8, hExtra: -0.3, imgRatio: 178/100, imgRatioMobile: 178/100, hExtraMobile: 0.2, img_url: "Raditz_is_killed.gif", stroke: "#f27c07", linkURL: "https://youtu.be/4bs0NWmIZ-8?t=3m15s", fightText: "Goku sacrifices himself so Piccolo can kill Goku's evil brother Raditz", textX: 1.25, textY: 0, textAnchor: "left", widthFactor: 0.8 },
+		{fightID: 18, fightSaga: "Vegeta Saga", horizontalOffset: 4, hExtra: 0.75, imgRatio: 134/100, imgRatioMobile: 133/100, hExtraMobile: 0.65, img_url: "Vegeta_over_9000.gif", stroke: "#1D75AD", linkURL: "https://youtu.be/5196mjp9fcU?t=31s", fightText: "The most famous DBZ meme is when Vegeta measures Goku's power level (who's back from the dead) and screams in anger 'It's over 9000!'", textX: 1.25, textY: 0, textAnchor: "left", widthFactor: 1.2 },
+		{fightID: 19, fightSaga: "Vegeta Saga", horizontalOffset: -3.5, hExtra: 0.2, imgRatio: 149/100, imgRatioMobile: 118/100, hExtraMobile: 0.95, img_url: "Goku_fights_Vegeta.gif", stroke: "#f27c07", linkURL: "https://youtu.be/QwR0qwPZeig", fightText: "An epic battle ensues between Goku and Vegeta lasting several episodes", textX: 0, textY: 1.25, textAnchor: "center", widthFactor: 0.7 },
+		{fightID: 55, fightSaga: "Frieza Saga", horizontalOffset: 3, hExtra: 0.2, imgRatio: 187/100, imgRatioMobile: 134/100, hExtraMobile: 0.8, img_url: "Goku_fights_Frieza.gif", stroke: "#82307E", linkURL: "https://youtu.be/Ii08b3TlXoU?t=6m59s", fightText: "Goku and the others (although Vegeta was just killed by Frieza) try valiantly but they're no match for Frieza", textX: 1.25, textY: 0, textAnchor: "left", widthFactor: 0.9 },
+		{fightID: 60, fightSaga: "Frieza Saga", horizontalOffset: 5, hExtra: 0.2, imgRatio: 178/100, imgRatioMobile: 133/100, hExtraMobile: 0.7, img_url: "Goku_goes_Super_Saiyan.gif", stroke: "#f27c07", linkURL: "https://youtu.be/BwrHGO7ljR0?t=1m09s", fightText: "After seeing his friend Krillin get destroyed by Frieza, Goku finally loses it and magnificently turns into a Super Saiyan", textX: 1.25, textY: 0, textAnchor: "left", widthFactor: 1 },
+		{fightID: 67, fightSaga: "Trunks Saga", horizontalOffset: -7, hExtra: 0.2, imgRatio: 178/100, imgRatioMobile: 180/100, hExtraMobile: 0.3, img_url: "Trunks_kills_Frieza.gif", stroke: "#D8A3FA", linkURL: "https://youtu.be/iGMtXqo1N9E", fightText: "A cybernetically enhanced Frieza comes to Earth to kill all, but is swiftly sliced in half by Future Trunks", textX: 0, textY: 1.25, textAnchor: "center", widthFactor: 0.9 },
+		{fightID: 69, fightSaga: "Trunks Saga", horizontalOffset: 6, hExtra: 0.6, imgRatio: 133/100, imgRatioMobile: 178/100, hExtraMobile: 0, img_url: "Trunks_tests_Goku.gif", stroke: "#D8A3FA", linkURL: "https://youtu.be/Y07W0RxClAo?t=1m18s", fightText: "Trunks spars with Goku to test Goku's strength", textX: 1.25, textY: 0, textAnchor: "left", widthFactor: 0.6 },
+		{fightID: 104, fightSaga: "Cell Games Saga", horizontalOffset: -6, hExtra: 0.4, imgRatio: 178/100, imgRatioMobile: 126/100, hExtraMobile: 0.9, img_url: "Gohan_goes_SSJ2.gif", stroke: "#3e216d", linkURL: "https://youtu.be/gUuzYvTItNk?t=1m51s", fightText: "Enraged with Cell for killing Android 16, and the Cell Juniors' beating his friends, Gohan's hidden power erupts, transforming him into a Super Saiyan 2", textX: -1.25, textY: 0, textAnchor: "right", widthFactor: 1.3 },
+		{fightID: 108, fightSaga: "Cell Games Saga", horizontalOffset: 2.5, hExtra: 0.4, imgRatio: 178/100, imgRatioMobile: 177/100, hExtraMobile: 0.3, img_url: "Gohan_kills_Cell.gif", stroke: "#3e216d", linkURL: "https://youtu.be/CWQzuDlU2W8", fightText: "Releasing all the energy he has, Gohan's Father-Son Kamehameha is strong enough to vaporize Cell completely", textX: 1.25, textY: 0, textAnchor: "left", widthFactor: 1.2 },
+		{fightID: 128, fightSaga: "Babidi Saga", horizontalOffset: -9, hExtra: 0.8, imgRatio: 133/100, imgRatioMobile: 177/100, hExtraMobile: 0.3, img_url: "Goku_fights_Majin_Vegeta.gif", stroke: "#f27c07", linkURL: "https://youtu.be/3i3ydz5uUcM?t=31m", fightText: "After Vegeta lets Babidi control him so he could become evil again the second epic battle between Goku and (Majin) Vegeta starts", textX: -1.25, textY: 0, textAnchor: "right", widthFactor: 1.1 },
+		{fightID: 134, fightSaga: "Majin Buu Saga", horizontalOffset: -7, hExtra: 0.2, imgRatio: 179/100, imgRatioMobile: 125/100, hExtraMobile: 0.9, img_url: "Vegeta_sacrifice.gif", stroke: "#1D75AD", linkURL: "https://youtu.be/7WM2PggmSp8?t=8m46s", fightText: "One of the best DBZ moments happens when Vegeta sacrifices himself for his family to destroy Majin Buu (which sadly doesn't work)", textX: -1.25, textY: 0, textAnchor: "right", widthFactor: 1.1 },
+		{fightID: 147, fightSaga: "Fusion Saga", horizontalOffset: -7, hExtra: 0.5, imgRatio: 139/100, imgRatioMobile: 134/100, hExtraMobile: 0.9, img_url: "Vegito_fights_Super_Buu.gif", stroke: "url(#vegito-gradient)", linkURL: "https://youtu.be/wZZOYI1iXuU?t=8m17s", fightText: "After nothing else works, Goku and Vegeta fuse to become Vegito, who dominates over Super Buu, even when turned into a jawbreaker", textX: -1.25, textY: 0, textAnchor: "right", widthFactor: 1.2 },
+		{fightID: 156, fightSaga: "Kid Buu Saga", horizontalOffset: -12, hExtra: -0.1, imgRatio: 178/100, imgRatioMobile: 178/100, hExtraMobile: 0.3, img_url: "Goku_fights_Kid_Buu.gif", stroke: "#F390A4", linkURL: "https://youtu.be/hpM4ngwrNX0", fightText: "Goku unleashes his Super Saiyan 3 form to fight Kid Buu, but it's still not enough", textX: -1.25, textY: 0, textAnchor: "right", widthFactor: 0.9 },
+		{fightID: 162, fightSaga: "Kid Buu Saga", horizontalOffset: -9, hExtra: -0.3, imgRatio: 201/100, imgRatioMobile: 178/100, hExtraMobile: 0.4, img_url: "Goku_kills_Kid_Buu.gif", stroke: "#f27c07", linkURL: "https://youtu.be/0MsT356rIE4?t=3m15s", fightText: "After getting the energy from everybody on Earth (thanks to Mr. Satan) Goku finally kills Kid Buu with a massive Spirit Bomb", textX: -1.25, textY: 0, textAnchor: "right", widthFactor: 1 },
 	];
 
 	///////////////////////////////////////////////////////////////////////////
@@ -220,12 +259,6 @@ if(isMobile) {
 		.range([1.5, 4]);
 
 	///////////////////////////////////////////////////////////////////////////
-	///////////////////////////// Create legends //////////////////////////////
-	///////////////////////////////////////////////////////////////////////////
-
-	var allCharacters = createCharacterLegend(characters);
-
-	///////////////////////////////////////////////////////////////////////////
 	////////////////////////// Create defs elements ///////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
@@ -236,6 +269,19 @@ if(isMobile) {
 
 	//Container for the gradients
 	var defs = svg.append("defs");
+
+	// //Background for goku's swoosh path
+	// var gokuBackground = defs.append("pattern")
+	// 	.attr("id", "goku-background")
+	// 	.attr("patternUnits","objectBoundingBox")
+	// 	.attr("height", 1)
+	// 	.attr("width", 1)
+	// 	.append("image")
+	// 		.attr("xlink:href", "img/DBZ-background.svg")
+	// 		.attr("x", 0)
+	// 		.attr("y", 0)
+	// 		.attr("height", height*1.4)
+	// 		.attr("width", width*1.4);
 
 	var annotationCircleSize = sagaScale(2) - sagaScale(1);
 	//Create wrapper for the clip paths
@@ -490,7 +536,7 @@ if(isMobile) {
 			.attr("y2", fightScale(-1.5))
 			.attr("marker-end", "url(#triangle)");
 
-		//Sloghtly adjust the width to include the legend text as well
+		//Slightly adjust the width to include the legend text as well
 		if(windowWidth >= 768) d3.selectAll(".visual-width").style("max-width", (document.getElementsByClassName("saga-line-wrapper")[0].getBBox().width) + "px");
 
 		///////////////////////////////////////////////////////////////////////////
@@ -513,6 +559,7 @@ if(isMobile) {
 			.style("stroke", function(d,i) {
 				var loc = names.indexOf(d.key);
 				d.color = loc > -1 ? characters[loc].color === "#" ? "#515151" : characters[loc].color : "#c1c1c1";
+				//if (d.key === "Goku") d.color = "url(#goku-background)";
 				return d.color;
 			})
 			.style("stroke-width", 1)
@@ -536,21 +583,29 @@ if(isMobile) {
 				characterPaths[counter].key = d.key;
 				characterPaths[counter].color = d.color;
 
-				//To what side of the saga line should the line swoop (-1 left, 1 right)
-				var xSwing = Math.random() > 0.5 ? 1 : -1;
+				//Add a bit of jitter to the paths so it is different throughout
 				var jitter = 0, maxJitter, minJitter, jitterUp = 0,
 					yDiff,
 					xOld, yOld,
 					xBaseline;
+				//Save the SVG path string
 				var path,
 					pathUp;
 
-				// var xSwing;
-				// if(goodGuys.indexOf(d.key) > -1) {
-				// 	xSwing = -1
-				// } else {
-				// 	xSwing = 1;
-				// }
+				//To what side of the saga line should the line swoop (-1 left, 1 right)
+				var xSwing = -1,
+					changing = 0;
+				if (goodGuys.indexOf(d.key) > -1) {
+					xSwing = -1
+				} else if (badGuys.indexOf(d.key) > -1) {
+					xSwing = 1;
+				} else if (changeGuys.indexOf(d.key) > -1) {
+					//The swing side needs to be decided per fight
+					changing = 1;
+				} else {
+					//If it is just one fight character, it doesn't matter
+					xSwing = 1;
+				}
 
 				//Loop over each saga to calculate the custom path
 				sagaFights.forEach(function(s,i) {
@@ -565,6 +620,10 @@ if(isMobile) {
 
 					//For the characters that have a line crossing the different sagas
 					if(fullChar && i > 0) { 
+
+						//Check if this is a changing character
+						if(changing) xSwing = badFights[d.key].indexOf(charFights[j].id) > -1 ? 1 : -1;
+
 						yDiff = y - yOld;
 						xDiff = x - xOld;
 						xBaseline = xSwing === 1 ? x : xOld;
@@ -586,7 +645,6 @@ if(isMobile) {
 							pathUp = x + "," + round2(y) + " Q" + round2(xSwing*xSwoopScale(numFightsInBetween)*xSwoopDist*jitterUp + xBaseline) + "," + round2(yDiff/2 + yOld) + " " + pathUp;
 						}//else
 						
-						xSwing = xSwing * -1;
 					 } else { 
 					 	path = "M" + x + "," + round2(y); 
 					 	pathUp = x + "," + round2(y) + " Z";
@@ -596,6 +654,9 @@ if(isMobile) {
 					yOld = y;
 
 					for(var j=1; j<charFights.length; j++) {
+						//Check if this is a changing-side character
+						if(changing) xSwing = badFights[d.key].indexOf(charFights[j].id) > -1 ? 1 : -1;
+
 						x = Math.round(sagaScale( sagaData[sagaNames.indexOf(charFights[j].subSaga)].id ));
 						y = fightScale(charFights[j].id);
 						yDiff = y - yOld;
@@ -621,8 +682,6 @@ if(isMobile) {
 						xOld = x;
 						yOld = y;
 
-						//Move the Q to the other side (with respect to the fight location)
-						xSwing = xSwing * -1;
 					}//for j
 
 					//Draw the path if this is either the last saga for a main character
@@ -668,6 +727,9 @@ if(isMobile) {
 					.transition("visible").duration(300)
 		        	.style("opacity", 0.1);
 		    	sagaTextWrapper
+		        	.transition("visible").duration(300)
+		        	.style("opacity", 0.3);
+				annotationDivWrapper
 		        	.transition("visible").duration(300)
 		        	.style("opacity", 0.3);
 
@@ -728,14 +790,15 @@ if(isMobile) {
 		        sagaTextWrapper
 		        	.transition("visible").duration(300)
 		        	.style("opacity", 1);
+				annotationDivWrapper
+		        	.transition("visible").duration(300)
+		        	.style("opacity", 1);
 
 			});
 
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////// Add extra fights and annotations /////////////////////
 		///////////////////////////////////////////////////////////////////////////
-
-		createFightLegend();
 
 		var annotationWrapper = svg.append("g").attr("class", "annotation-wrapper");
 
@@ -751,12 +814,8 @@ if(isMobile) {
 			.attr("class", "annotation-line")
 			.attr("x1", function(d) { return 0; })
 			.attr("y1", function(d) { return 0; })
-			.attr("x2", function(d) { 
-				var extra = d.horizontalOffset > 0 ? 1.5 : 2.5;
-				return -1 * Math.round(sagaScale(d.horizontalOffset + 2)); 
-			})
+			.attr("x2", function(d) { return -1 * Math.round(sagaScale(d.horizontalOffset + 2)); })
 			.attr("y2", function(d) { return 0.01; })
-			//.style("stroke", function(d) { return d.stroke; })
 			.style("stroke", function(d) { return "url(#gradient-id-" + d.fightID + ")"; })
 			.style("stroke-width", strokeWidthScale(width) );
 
@@ -775,15 +834,28 @@ if(isMobile) {
 			.style("stroke-width", strokeWidthScale(width) );
 
 		//Add the text to the images
-		annotations.append("text")
+		var annotationWidth = 175*outerWidth/1000;
+		var annotationText = annotationDivWrapper.selectAll(".annotation-text-wrapper")
+			.data(specialFights)
+			.enter().append("div")
+			.attr("class", "annotation-text-wrapper")
+			.style("transform", function(d) { return "translate(" + round2(d.x + annotationCircleSize + tooltipOffset + margin.left) + "px," + round2(d.y + annotationCircleSize + margin.top) + "px)"; })
+			.style("width", function(d) { return annotationWidth*d.widthFactor + "px"; })
+			.style("left", function(d) { return (d.textX * annotationCircleSize) + "px"; })
+			.style("top", function(d) { return (d.textY * annotationCircleSize) + "px"; });
+
+		annotationText.append("div")
 			.attr("class", "annotation-text")
-			.attr("x", function(d) { return d.textX * annotationCircleSize; })
-			.attr("y", function(d) { return d.textY * annotationCircleSize; })
-			.attr("dy", "0.75em")
-			.style("text-anchor", function(d) { return d.textAnchor; })
-			.style("fill", function(d) { return d.stroke; })
-			.text(function(d) { return d.fightText; })
-			.call(wrap, annotationCircleSize*3);
+			.style("left", function(d) { 
+				if(d.textX === 0) return "-50%";
+				else if (d.textX < 0) return "-100%";
+				else return "0%"; 
+			})
+			.style("top", function(d) { return d.textY === 0 ? "-50%" : "0%"; })
+			.style("transform", function(d) { if(d.textY === 0) return "translateY(-50%)"; })
+			.style("text-align", function(d) { return d.textAnchor; })
+			.style("color", function(d) { return d.stroke; })
+			.html(function(d) { return d.fightText; });
 
 		///////////////////////////////////////////////////////////////////////////
 		/////////////////////// Create the text for each saga /////////////////////
@@ -797,11 +869,11 @@ if(isMobile) {
 			.enter().append("g")
 			.attr("class", "saga-name-group")
 			.attr("transform", function(d,i) {
-				var x = sagaScale(i+1) + 3*xSwoopDist*(i <= 9 ? 1 : -1),
+				var x = sagaScale(i+1) + 3*xSwoopDist*(i <= 14 ? 1 : -1.3),
 					y = fightScale(d.firstFight);
 				return "translate(" + x + "," + y + ")";
 			})
-			.style("text-anchor", function(d,i) { return i <= 9 ? "start" : "end"; });
+			.style("text-anchor", function(d,i) { return i <= 14 ? "start" : "end"; });
 
 		sagaText.append("text")
 			.attr("class", "subsaga-name")
@@ -857,16 +929,6 @@ if(isMobile) {
 				d3.select(this.parentNode).raise();
 
 				d3.event.stopPropagation();
-				// //Insert a rectangle that will overlay everything but the fight
-				// d3.select(this).insert("rect", ":first-child")
-				// 	.attr("id","overlay-rect")
-				// 	.attr("x", -d.x)
-				// 	.attr("y", -d.y)
-				// 	.attr("width", width)
-				// 	.attr("height", height)
-				// 	.style("opacity", 0)
-				// 	.transition("visible").duration(500)
-				// 	.style("opacity", 0.6);
 
 				///////////////////////// Adjust the fight circle ////////////////////////
 
@@ -878,11 +940,7 @@ if(isMobile) {
 				//Move the circles apart
 				el.selectAll(".character-circle-group")
 					.transition("move").duration(700)
-					.attr("transform", function(c,i) { 
-						var x = -baseRadius*3 * Math.cos( i * Math.PI * 2 / d.numFighters ),
-							y = -baseRadius*3 * Math.sin( i * Math.PI * 2 / d.numFighters );
-						return "translate(" + x + "," + y + ")"; 
-					});
+					.attr("transform", function(c,i) { return "translate(" + (3/baseDistanceRatio*c.x) + "," + (3/baseDistanceRatio*c.y) + ")"; });
 
 				//Make the background rect smaller
 				el.select(".fight-background")
@@ -977,6 +1035,9 @@ if(isMobile) {
 		        sagaTextWrapper
 		        	.transition("visible").duration(300)
 		        	.style("opacity", 0.3);
+				annotationDivWrapper
+		        	.transition("visible").duration(300)
+		        	.style("opacity", 0.3);
 
 				//Names of the fighters involved
 				//console.log(d.key, d.values.map(function(c) { return c.name; }));
@@ -1004,11 +1065,7 @@ if(isMobile) {
 			//Move circles back together
 			el.selectAll(".character-circle-group")
 				.transition("move").duration(500)
-				.attr("transform", function(c,i) { 
-					var x = -baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / this.parentNode.__data__.numFighters ),
-						y = -baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
-					return "translate(" + x + "," + y + ")"; 
-				});
+				.attr("transform", function(c,i) { return "translate(" + c.x + "," + c.y + ")"; });
 
 			//Make the background rect normal
 			el.select(".fight-background")
@@ -1046,6 +1103,9 @@ if(isMobile) {
 	        sagaTextWrapper
 	        	.transition("visible").duration(300)
 	        	.style("opacity", 1);
+			annotationDivWrapper
+	        	.transition("visible").duration(300)
+	        	.style("opacity", 1);
 		
 		}//function mouseOutFight
 
@@ -1072,9 +1132,12 @@ if(isMobile) {
 			.data(function(d) { return d.values; })
 			.enter().append("g")
 			.attr("class","character-circle-group")
+			.each(function(d) {
+				d.startAngle = fightData[fightLink[d.id]].startAngle * Math.PI/180;	
+			})
 			.attr("transform", function(d,i) { 
-				d.x = -baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
-				d.y = -baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / this.parentNode.__data__.numFighters );
+				d.x = baseRadius*baseDistanceRatio * Math.cos( i * Math.PI * 2 / this.parentNode.__data__.numFighters + d.startAngle);
+				d.y = baseRadius*baseDistanceRatio * Math.sin( i * Math.PI * 2 / this.parentNode.__data__.numFighters + d.startAngle);
 				return "translate(" + d.x + "," + d.y + ")"; 
 			})
 			.each(function(d,i) {
@@ -1200,7 +1263,7 @@ if(isMobile) {
 
 	}//draw
 
-//}//else
+}//else
 
 ///////////////////////////////////////////////////////////////////////////
 /////////////////////////// Extra functions ///////////////////////////////
@@ -1210,50 +1273,6 @@ if(isMobile) {
 function round2(num) {
 	return (Math.round(num * 100)/100).toFixed(2);
 }//round2
-
-// //Bring the mousovered fight to the front
-// //http://stackoverflow.com/questions/14167863/how-can-i-bring-a-circle-to-the-front-with-d3
-// d3.selection.prototype.moveToFront = function() {
-//   return this.each(function(){
-//     this.parentNode.appendChild(this);
-//   });
-// };	
-// d3.selection.prototype.moveToBack = function() { 
-//     return this.each(function() { 
-//         var firstChild = this.parentNode.firstChild; 
-//         if (firstChild) { 
-//             this.parentNode.insertBefore(this, firstChild); 
-//         } 
-//     }); 
-// };
-
-/*Taken from http://bl.ocks.org/mbostock/7555321
-//Wraps SVG text*/
-function wrap(text, width) {
-  text.each(function() {
-	var text = d3.select(this),
-		words = text.text().split(/\s+/).reverse(),
-		word,
-		line = [],
-		lineNumber = 0,
-		lineHeight = 1.2, // ems
-		y = parseFloat(text.attr("y")),
-		x = parseFloat(text.attr("x")),
-		dy = parseFloat(text.attr("dy")),
-		tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
-
-	while (word = words.pop()) {
-	  line.push(word);
-	  tspan.text(line.join(" "));
-	  if (tspan.node().getComputedTextLength() > width) {
-		line.pop();
-		tspan.text(line.join(" "));
-		line = [word];
-		tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-	  }
-	}
-  });
-}//wrap
 
 //Function to take apart the names of the good and "bad" fighters and give each characters name
 //the right color using spans

@@ -16,7 +16,7 @@ function createFightLegend() {
 	  bottom: 10,
 	  left: 10
 	};
-	var width = document.getElementById("fight-legend").clientWidth - 2*15 - margin.left - margin.right;
+	var width = document.getElementById("fight-legend").clientWidth - 4*15 - margin.left - margin.right;
 	var height = 2*baseRadius*backgroundCircleFactor * 1.5; //2*baseRadius*backgroundCircleFactor * scaleIncrease * 1.1;
 		
 	//SVG container
@@ -38,15 +38,61 @@ function createFightLegend() {
 	var numFighters = data.length;
 
 	///////////////////////////////////////////////////////////////////////////
+	////////////////////////// Create defs elements ///////////////////////////
+	///////////////////////////////////////////////////////////////////////////
+
+	//Container for the gradients
+	var defs = svg.append("defs");
+
+	//Filter for the outside shadow
+	var filter = defs.append("filter")
+	  .attr("id","shadow-legend");
+
+	filter.append("feColorMatrix")
+		.attr("type", "matrix")
+		.attr("values", "0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 0 0.4 0")
+	filter.append("feGaussianBlur")
+	  .attr("stdDeviation","3")
+	  .attr("result","coloredBlur");;
+
+	var feMerge = filter.append("feMerge");
+	feMerge.append("feMergeNode")
+	  .attr("in","coloredBlur");
+	feMerge.append("feMergeNode")
+	  .attr("in","SourceGraphic");
+
+	///////////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Add text //////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	var aFight = svg.append("text")
+	svg.append("text")
 		.attr("class","fight-legend-text")
 		.attr("x", 0)
-		.attr("y", -baseRadius*backgroundCircleFactor*scaleIncrease * 0.3)
+		.attr("y", -height/2+5)
 		.attr("dy", "0.3em")
 		.text("1 fight");
+
+	svg.append("text")
+		.attr("class","fight-legend-side-text")
+		.attr("x", Math.max(-width/4, -60))
+		.attr("y", height*0.3)
+		.attr("dy", "0.3em")
+		.text("Good guys");
+	svg.append("text")
+		.attr("class","fight-legend-side-text")
+		.attr("x", Math.min(width/4, 60))
+		.attr("y", height*0.3)
+		.attr("dy", "0.3em")
+		.text("Bad guys");
+
+	//Saga line down the middle
+	svg.append("line")
+		.attr("class", "saga-line")
+		.attr("x1", 0)
+		.attr("y1", -height*0.3)
+		.attr("x2", 0.001)
+		.attr("y2", height/2)
+		.style("stroke", isMobile ? "#d3d3d3" : "url(#saga-line-gradient)");
 
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////// Create a group per fight ////////////////////////
@@ -149,7 +195,7 @@ function createFightLegend() {
 
 		//Make the background circle visible
 		fight.select(".fight-background-circle-legend")
-			.style("filter", "url(#shadow)")
+			.style("filter", "url(#shadow-legend)")
 			.transition().duration(1000)
 			.style("opacity", 1);
 

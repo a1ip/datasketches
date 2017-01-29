@@ -88,12 +88,19 @@ a.image-link {
   /*padding-left: 15px;*/
 }
 
-#chrome-note {
+#chrome-note,
+#mobile-note {
   margin-top: 25px;
   text-align: center;
   color: #292929;
-  font-size: 13px;
   font-family: 'PT Sans Narrow', sans-serif;
+}
+#chrome-note {
+  font-size: 13px;
+}
+#mobile-note {
+  margin-bottom: 20px;
+  font-size: 15px;
 }
 
 /* --- Legends --- */
@@ -102,7 +109,7 @@ a.image-link {
 #character-legend-protagonists,
 #character-legend-antagonists,
 #fight-legend,
-#chart {
+#chart, #chart svg {
   text-align: center;
   position: relative;
 }
@@ -142,7 +149,7 @@ a.image-link {
   font-size: 18px;
   text-anchor: middle;
   font-family: 'PT Sans Narrow', sans-serif;
-  fill: #252525;
+  fill: #f27c07;
 }
 
 .fight-legend-text {
@@ -150,6 +157,12 @@ a.image-link {
   text-anchor: middle;
   font-family: 'PT Sans Narrow', sans-serif;
   fill: #252525;
+}
+
+.fight-legend-side-text {
+  font-size: 12px;
+  text-anchor: middle;
+  fill: #9f9f9f;
 }
 
 .fight-legend-circle-text {
@@ -218,8 +231,15 @@ a.image-link {
 
 .annotation-wrapper {
 	pointer-events: none;
+  cursor: default;
+}
+.annotation-text-wrapper {
+  position: absolute;
+  pointer-events: none;
+  cursor: default;
 }
 .annotation-text {
+  position: relative;
 	font-size: 1em;
 	font-family: 'PT Sans', sans-serif;
 	fill: #777777;
@@ -329,7 +349,6 @@ a.image-link {
   position: absolute;
   opacity: 0;
   font-size: calc(8px + (12 - 8) * (100vw - 450px)/(1000 - 450));
-  position: absolute;
   cursor: default;
 }
 
@@ -343,7 +362,7 @@ a.image-link {
 
 @media screen and (max-width: 400px) {
   #tooltip-legend .tooltip-container {
-    width: 200px !important;
+    width: 160px !important;
   }
 }
 #tooltip-legend .tooltip-container {

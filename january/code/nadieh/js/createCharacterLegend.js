@@ -91,7 +91,7 @@ function createCharacterLegend(characters) {
 		//////////////////////////// Set up the SVG ///////////////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
-		var width = document.getElementById("character-legend-" + title.toLowerCase()).clientWidth - 2*15 - margin.left - margin.right;
+		var width = document.getElementById("character-legend-" + title.toLowerCase()).clientWidth - 4*15 - margin.left - margin.right;
 		var height = 8*size;
 			
 		//SVG container
@@ -102,14 +102,14 @@ function createCharacterLegend(characters) {
 			.append("g")
 			.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
 
-		var xOffset = 0,
+		var xOffset = 15,
 			yExtraOffset = 0;
 		if(title === "Antagonists") {
 			if(document.documentElement.clientWidth >= 992-15) {
-				xOffset = width + margin.left + margin.right + 2*15;
+				xOffset = width + margin.left + margin.right + 5*15;
 				yExtraOffset = 0;
 			} else {
-				xOffset = 0;
+				xOffset = 15;
 				yExtraOffset = heightOffset;
 			}//else
 		}//if
@@ -158,7 +158,7 @@ function createCharacterLegend(characters) {
 			.attr("x", width/2)
 			.attr("y", -size*1.75)
 			.attr("dy", "0.3em")
-			.style("fill", "url(#legend-title-gradient)")
+			//.style("fill", "url(#legend-title-gradient)")
 			.text(title);
 
 		///////////////////////////////////////////////////////////////////////////
