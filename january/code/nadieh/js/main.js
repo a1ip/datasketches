@@ -100,8 +100,6 @@ if(isMobile) {
 	img.src = "img/DBZ_desktop_experience.gif";
 } else {
 
-isChrome = false;
-
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the SVG ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
@@ -140,7 +138,7 @@ isChrome = false;
 
 	//Offset for the centering of the SVG
 	var tooltipOffset = scrollBarPadding/2;
-	if( window.innerWidth > maxWidth) tooltipOffset = (window.innerWidth - outerWidth - 0)/2;
+	if( window.innerWidth > maxWidth) tooltipOffset = (window.innerWidth - outerWidth)/2;
 	else if (outerWidth === minWidth) tooltipOffset = 0;
 
 	//Adjust the width of the explanation text to the visual itself of the page is big enough
@@ -1261,7 +1259,7 @@ isChrome = false;
 		/////////////////////// Add the mini map to the right /////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
-		//createFightMap(width, height, margin, characterPaths, fightNestedData, baseRadius);
+		createFightMap(width, height, margin, characterPaths, fightNestedData, baseRadius);
 
 	}//draw
 
