@@ -100,6 +100,8 @@ if(isMobile) {
 	img.src = "img/DBZ_desktop_experience.gif";
 } else {
 
+isChrome = false;
+
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the SVG ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
@@ -124,15 +126,6 @@ if(isMobile) {
 	//Finally the actual width and height of the fight visual
 	var width = outerWidth - margin.left - margin.right;
 	var height = 6.5*width;
-		
-	//Offset for the centering of the SVG
-	var tooltipOffset = scrollBarPadding/2;
-	if( window.innerWidth > maxWidth) tooltipOffset = (window.innerWidth - outerWidth)/2;
-	else if (outerWidth === minWidth) tooltipOffset = 0;
-
-	//Adjust the width of the explanation text to the visual itself of the page is big enough
-	if(windowWidth >= 768) d3.selectAll(".visual-width").style("max-width", width + "px");
-	else d3.selectAll(".visual-width").style("padding-right", "15px").style("padding-left", "15px"); 
 
 	//Has to lie below the SVG
 	var annotationDivWrapper = d3.select("#fight-visual").append("div").attr("class","annotation-div-wrapper");
@@ -144,6 +137,15 @@ if(isMobile) {
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g").attr("class", "top-wrapper")
 		.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
+
+	//Offset for the centering of the SVG
+	var tooltipOffset = scrollBarPadding/2;
+	if( window.innerWidth > maxWidth) tooltipOffset = (window.innerWidth - outerWidth - 0)/2;
+	else if (outerWidth === minWidth) tooltipOffset = 0;
+
+	//Adjust the width of the explanation text to the visual itself of the page is big enough
+	if(windowWidth >= 768) d3.selectAll(".visual-width").style("max-width", width + "px");
+	else d3.selectAll(".visual-width").style("padding-right", "15px").style("padding-left", "15px"); 
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////// Create extra information /////////////////////////
@@ -1259,7 +1261,7 @@ if(isMobile) {
 		/////////////////////// Add the mini map to the right /////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
-		createFightMap(width, height, margin, characterPaths, fightNestedData, baseRadius);
+		//createFightMap(width, height, margin, characterPaths, fightNestedData, baseRadius);
 
 	}//draw
 
