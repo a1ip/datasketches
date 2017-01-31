@@ -22,6 +22,15 @@
 	  	<language>en-US</language>
 
 		<item>
+			<title>December - Music</title>
+			<link>http://www.datasketch.es/december</link>
+			<guid>http://www.datasketch.es/december</guid>
+			<pubDate>Sat, 31 Dec 2016 08:00:00 GMT</pubDate>
+			<description><![CDATA[<img width="1020" height="400" src="http://www.datasketch.es/img/december.jpg" alt="The final December visuals" style="display: block; margin: auto; margin-bottom: 5px;" />
+			<p>Shirley got her hands on the dance moves of 2000 DDR songs and went crazy with spirals, while Nadieh visualized the distribution of release year of the Top 2000 songs ever made to see which decade is loved the most. Read more about the exact data + sketch + code that we performed in our write-up...</p>]]></description>
+		</item>
+
+		<item>
 			<title>November - Books</title>
 			<link>http://www.datasketch.es/november</link>
 			<guid>http://www.datasketch.es/november</guid>
