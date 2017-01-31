@@ -77,7 +77,7 @@
               <div class="time kingBasil"></div>
               <div class="location quicksand">amsterdam</div>
 
-  			        <!-- <a href="code/nadieh/img/Top2000PosterEnglish.png"><img src="code/nadieh/img/top2000_header.jpg" class="img-responsive img-month-top" alt="Top 2000 loves the 70's & 80's"></a> -->
+  			        <a href="code/nadieh"><img src="code/nadieh/img-write-up/dbz_header.png" class="img-responsive img-month-top" alt="All the fights in Dragon Ball Z"></a>
 
                 <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
@@ -108,8 +108,36 @@
 
                 <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-                <p></p>
+                <p>As per my sketches, I wanted to represent every fighter in a battle with a circle and then have these circles positioned partly overlapping. Also, each saga would be placed in its own column to make the distinction between different story lines more apparent. With some geometry that was achieved relatively quickly.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/fights_per_saga.png"> <img src="code/nadieh/img-write-up/fights_per_saga_small.jpg" class="img-responsive img-month" alt="The very basic start of the visual"></a>
 
+                <p>And then came the custom paths that would connect all the fights from one character. I only had the locations of a character's fights, so to create the swoosh I would have to figure out a way to position the anchor points of the <a href="http://blogs.sitepointstatic.com/examples/tech/svg-curves/quadratic-curve.html" target="_new">SVG Quadratic Bézier Curves</a> myself to make it look nice. Of course, I didn't start by creating the complete path, I build things up in iterations, adding more and more of the needed complexity when the previous step is working. So I started with straight lines from fight to fight, then adding the anchor points at fixed locations, so all swooshes would look rather similar.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/building_paths.png"> <img src="code/nadieh/img-write-up/building_paths_small_2.png" class="img-responsive img-month" alt="Several steps that show how the character paths were build"></a>
+
+                <p>When I saw that fixed anchor points was creating a bit of a boring result, I added in bigger swooshes and randomness. The farther the distance between two fights, the farther out the anchor point is placed and each point also got a random "jitter" so that overlapping swooshes (characters going from the same fight to the next same fight) wouldn't overlap exactly. I liked the end result more, but still, in my mind the swooshing lines had a bit more going on by having different widths, from thin at the fight circles to broad during the bend between fights. Thus, as explained in the <i>sketch</i> section already, I turned the line from top to bottom into an entire closed path, by adding another section to the path string that would run from bottom to top. This second section would again be randomly offset from the first section on the anchor points, thus creating the appearance of different width lines. Naturally this didn't go right on the first try 😁</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/building_complete_paths_wrong.png"> <img src="code/nadieh/img-write-up/building_complete_paths_wrong.png" class="img-responsive img-month" alt="Figuring out how to create different-width paths"></a>
+
+                <p>It was an interesting exercise, thinking about math and hand-crafted SVG paths, but in the end I finally had the result that I was looking for. Below left is the "before" image with only a stroked line and to right of it is the final result, where I've build the complete path and filled it with a color to give the appearance of a different-width line instead. I'd say the right looks more visually appealing ^^</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/comparing_swooshing_paths.png"> <img src="code/nadieh/img-write-up/comparing_swooshing_paths.png" class="img-responsive img-month" alt="Comparing before and after going from line to path"></a>
+
+                <p>With about 200 fights, the visual was quite long, in fact it's about 6.5 times as long as it is wide. Thus it will never fit on any screen. And when I showed the visual to Shirley, she said that she'd like to know what section she's looking at with respect to the whole, and suggested I add a mini-map with a full overview.</p>
+                <p>I knew it was a great idea, but I also sort of dreaded building it, haha. Nevertheless, one Saturday in January I sat behind my laptop for hours and slowly build up the mini-map. Actually getting the visual part in there wasn't the hardest challenge, it was figuring out the mathematics of when the mini-map should be fixed in place in the middle of the screen, or move up and down when you are outside of the chart area, hehe.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/creating_mini_map.png"> <img src="code/nadieh/img-write-up/creating_mini_map.png" class="img-responsive img-month" alt="Creating a mini-map of the total visual on the right of the page"></a>
+
+                <p>A suggestion by a designer friend was to try and make one (or all) of the swooshing paths look more like the "aura" that is typically visible when characters power-up. I tried a glow, but that made the visual exceptionally non-performing. So instead he said I should fill maybe 1 line with a pattern that would have some of the color differences present in the auras. As a test I made a simple SVG thing in Illustrator which I loaded as a pattern for Goku's swooshing line. However, I guess my design skills couldn't be stretched farther, because I could not make it look interesting enough to warrant the extra loading of a 0.5 - 1 Mb SVG file...</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/goku_line_background.png"> <img src="code/nadieh/img-write-up/goku_line_background_small.png" class="img-responsive img-month" alt="Trying out a pattern background for Goku's path"></a>
+
+                <p>Another change that is visible above is that many of the swooshing lines are on the left side. This was a suggestion from Susie Lu, to make it easier to distinguish the good guys from the bad guys. So all the good guys have their lines on the left, whereas the bad guys are on the right. This made it possible to see that Vegeta starts out as a main antagonist, but turns to the good side (although maybe not for the right reasons, until he sacrifices himself in the Majin Buu saga 😢)</p>
+
+                <p>Personally, I particularly like the transition effect that occurs when you hover over a fight. With a white circle and everything getting bigger and the circles moving outward :) Besides that, the lines of the fighters and all the other battles in which any of the fighters appeared are highlighted in both the visual itself and the mini-map for context.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/dbz_fight_hover.gif"> <img src="code/nadieh/img-write-up/dbz_fight_hover.gif" class="img-responsive img-month" alt="The transition effect when you hover over a fight"></a>
+
+                <p>Due to having become a freelancer, this was the first month where I truly tracked my hours. Although I do feel that it was a particularly long month. I spend quite some time going trough gifs, finding the perfect ones, same for videos to link the gifs to and the character images. But also, 95% of the fights have annotations (if you hover over a fight) to explain what was special about that fight or how it fits into the story. These were all manual exercises, but they are that attention to detail that can make a true difference. But *drumroll* I spend about 75 hours on this visual 😱 So for next month I really want to try and keep it within at least half that...</p>
+
+                <p>You can find the final visual <a href="code/nadieh" target="_new">here</a>. It actually works the best in Chrome, due to its ability to handle CSS transitions better than the other browsers (even though I kept all transitions to either a change <i>transform</i> or <i>opacity</i> I keep creating visuals that have these "too-many-transitions-on-hover" issues which slows things down 😞)</p>
+                <a href="code/nadieh"> <img src="code/nadieh/img-write-up/dbz_visual_final.jpg" class="img-responsive img-month" alt="The final result of visualizing all fights from Dragon Ball Z"></a>
+
+                <p>I have to admit, it was great fun to dive into a topic I hadn't really thought about for 15 years. It gave me a lot of enthusiasm to try and turn it into something worth looking at and informative!</p>
             </div>
           </div>
 
