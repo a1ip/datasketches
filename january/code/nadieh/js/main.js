@@ -265,26 +265,8 @@ if(isMobile) {
 	////////////////////////// Create defs elements ///////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	//Add gradient on first fight
-	//var extraOffset = outerWidth === 1000 ? (window.innerWidth - 1000)/2 : 0;
-	//d3.select("body").style("background","radial-gradient(circle closest-corner at " + Math.round(margin.left + extraOffset) + "px " + Math.round(margin.top) + "px, #fdf0db 0%, #fdf6db 100%, #FFFFFF 300%)");
-	//d3.select("body").style("background","radial-gradient(circle closest-corner at " + Math.round(margin.left + extraOffset) + "px " + Math.round(margin.top) + "px, #0e4948 0%, #00081c 700%)");
-
 	//Container for the gradients
 	var defs = svg.append("defs");
-
-	// //Background for goku's swoosh path
-	// var gokuBackground = defs.append("pattern")
-	// 	.attr("id", "goku-background")
-	// 	.attr("patternUnits","objectBoundingBox")
-	// 	.attr("height", 1)
-	// 	.attr("width", 1)
-	// 	.append("image")
-	// 		.attr("xlink:href", "img/DBZ-background.svg")
-	// 		.attr("x", 0)
-	// 		.attr("y", 0)
-	// 		.attr("height", height*1.4)
-	// 		.attr("width", width*1.4);
 
 	var annotationCircleSize = sagaScale(2) - sagaScale(1);
 	//Create wrapper for the clip paths
@@ -948,8 +930,8 @@ if(isMobile) {
 				//Make the background rect smaller
 				el.select(".fight-background")
 					.transition().duration(500)
-					.attr("y", -backgroundRectSize/2/3)
-					.attr("height", backgroundRectSize/3);
+					.attr("y", -backgroundRectSize/4/3)
+					.attr("height", backgroundRectSize/2/3);
 
 				//Make the background circle visible
 				el.select(".fight-background-circle")
@@ -1073,8 +1055,8 @@ if(isMobile) {
 			//Make the background rect normal
 			el.select(".fight-background")
 				.transition().duration(500)
-				.attr("y", -backgroundRectSize/2)
-				.attr("height", backgroundRectSize);
+				.attr("y", -backgroundRectSize/4)
+				.attr("height", backgroundRectSize/2);
 
 			//Hide the background circle
 			el.select(".fight-background-circle")
@@ -1119,10 +1101,10 @@ if(isMobile) {
 		//Add an invisible background to capture the mouse events
 		var fightBackground = fights.append("rect")
 			.attr("class", "fight-background")
-			.attr("x", -backgroundRectSize/2)
-			.attr("y", -backgroundRectSize/2)
-			.attr("width", backgroundRectSize)
-			.attr("height", backgroundRectSize);
+			.attr("x", -backgroundRectSize*1.25/2)
+			.attr("y", -backgroundRectSize/4)
+			.attr("width", backgroundRectSize*1.25)
+			.attr("height", backgroundRectSize/2);
 
 		//Extra background that becomes visible on hover
 		var fightCircleBackground = fights.append("circle")
