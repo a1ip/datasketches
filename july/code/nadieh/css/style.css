@@ -123,13 +123,13 @@ a, a:link, a:visited, a:active {
 
 .elvish-outer-label {
 	font-family: 'Elvish', cursive;
-	font-size: 40px;
+	font-size: 4rem;
 	fill: #e2e2e2;
 	cursor: default;
 }
 .dwarfish-outer-label {
 	font-family: 'Dwarfish', cursive;
-	font-size: 40px;
+	font-size: 4rem;
 	fill: #e2e2e2;
 	cursor: default;
 }
