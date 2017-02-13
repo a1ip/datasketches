@@ -1,3 +1,20 @@
+@font-face {
+  font-family: "Aniron";
+  src: url("Aniron.ttf");
+}
+@font-face {
+  font-family: "Bilbo";
+  src: url("Bilbo.ttf");
+}
+@font-face {
+  font-family: "Elvish";
+  src: url("Elvish.ttf");
+}
+@font-face {
+  font-family: "Dwarfish";
+  src: url("Dwarfish.ttf");
+}
+
 html { font-size: 62.5%; } 
 
 body {
@@ -12,7 +29,8 @@ body {
 }
 
 #lotr-title {
-	font-size: 42px;
+	font-family: 'Aniron', cursive;
+	font-size: 30px;
 	font-weight: 300;
 	margin: 40px 30px 0px 30px;
 	color: #272727;
@@ -70,23 +88,23 @@ a, a:link, a:visited, a:active {
 }
 
 .MiddleEarth {
-	font-family: 'Macondo', cursive;
 	color: #53821a;
 }
 
 /*--- chart ---*/
 
 .name-title {
-	font-family: 'Macondo Swash Caps', cursive;
-	font-size: 2.8rem;
+	font-family: 'Aniron', cursive;
+	font-size: 1.8rem;
 	fill: #232323;
 	cursor: default;
 	text-anchor: middle;
 }
 
 .value-title {
+	font-family: 'Bilbo', serif;
 	text-anchor: middle;
-	font-size: 1.8rem;
+	font-size: 2.1rem;
   	fill: #b9b9b9;
 }
 
@@ -97,20 +115,42 @@ a, a:link, a:visited, a:active {
 }
 			
 .inner-label {
-	font-family: 'Macondo Swash Caps', cursive;
-	font-size: 1.4rem;
+	font-family: 'Aniron', cursive;
+	font-size: 1.0rem;
 	fill: #232323;
 	cursor: default;
 }
 
+.elvish-outer-label {
+	font-family: 'Elvish', cursive;
+	font-size: 40px;
+	fill: #e2e2e2;
+	cursor: default;
+}
+.dwarfish-outer-label {
+	font-family: 'Dwarfish', cursive;
+	font-size: 40px;
+	fill: #e2e2e2;
+	cursor: default;
+}
+
 .outer-label {
-	font-family: 'Macondo', cursive;
-	font-size: 1.6rem;
+	font-family: 'Aniron', cursive;
+	font-size: 1.1rem;
 	fill: #5f5f5f;
 	cursor: default;
 }
 
 .outer-label-value {
-  	font-size: 1.2rem;
-  	fill: #b9b9b9;
+	font-family: 'Bilbo', serif;
+  	font-size: 1.3rem;
+  	fill: #878787;
+}
+
+.ring-text {
+	font-family: 'Elvish', cursive;
+	font-size: 2rem;
+	fill: #da6f0b;
+	opacity: 0.3;
+	text-anchor: middle;
 }

@@ -1,5 +1,5 @@
-var margin = {left:80, top:40, right:120, bottom:60},
-	width = Math.max( Math.min(window.innerWidth, 1100) - margin.left - margin.right - 20, 400),
+var margin = {left:130, top:40, right:180, bottom:150},
+	width = Math.max( Math.min(window.innerWidth, 1200) - margin.left - margin.right - 20, 400),
     height = Math.max( Math.min(window.innerHeight - 75, 800) - margin.top - margin.bottom - 20, 400),
     innerRadius = Math.min(width * 0.33, height * .45),
     outerRadius = innerRadius * 1.05;
@@ -123,6 +123,62 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 	    .attr("transform", "translate(" + (width/2 + margin.left) + "," + (height/2 + margin.top) + ")")
 		.datum(loom(dataAgg));	
 
+	///////////////////////////////////////////////////////////////////////////
+	//////////////////////////// Create the filter ////////////////////////////
+	///////////////////////////////////////////////////////////////////////////
+
+	//Container for the gradients
+	var defs = svg.append("defs");
+
+	//Filter for the outside glow
+	var filter = defs.append("filter").attr("id","glow");
+
+	filter.append("feGaussianBlur")
+		.attr("class", "blur")
+		.attr("stdDeviation","2")
+		.attr("result","coloredBlur");
+
+	var feMerge = filter.append("feMerge");
+	feMerge.append("feMergeNode")
+		.attr("in","coloredBlur");
+	feMerge.append("feMergeNode")
+		.attr("in","SourceGraphic");
+
+	////////////////////////////////////////////////////////////
+  	//////////////// Draw the ring inscription /////////////////
+  	////////////////////////////////////////////////////////////
+
+	var ringWrapper = g.append("g").attr("class", "ring-wrapper");
+  	var ringR = innerRadius*0.65;
+
+  	ringWrapper.append("path")
+  		.attr("id", "ring-path-top")
+  		.attr("class", "ring-path")
+  		.style("fill", "none")
+  		.attr("d", 	"M" + -ringR + "," + 0 + " A" + ringR + "," + ringR + " 0 0,1 " + ringR + "," + 0);
+
+  	ringWrapper.append("text")
+  		.attr("class", "ring-text")
+  		.append("textPath")
+  		.attr("startOffset", "50%")
+		.style("filter", "url(#glow)")
+  		.attr("xlink:href", "#ring-path-top")
+  		.text("AE5,Ex26Yw1EjYzH= AE5,Exx:w%P1Dj^");
+
+  	ringWrapper.append("path")
+  		.attr("id", "ring-path-bottom")
+  		.attr("class", "ring-path")
+  		.style("fill", "none")
+  		.attr("d", 	"M" + -ringR + "," + 0 + " A" + ringR + "," + ringR + " 0 0,0 " + ringR + "," + 0);
+
+  	ringWrapper.append("text")
+  		.attr("class", "ring-text")
+  		.append("textPath")
+  		.attr("startOffset", "50%")
+  		.style("filter", "url(#glow)")
+  		.attr("xlink:href", "#ring-path-bottom")
+  		.text("AE5,Ex37zD1EjYzH= X#w6Ykt^AT`Bz7qTp1EjY");
+
 	////////////////////////////////////////////////////////////
 	///////////////////// Set-up title /////////////////////////
 	////////////////////////////////////////////////////////////
@@ -139,7 +195,7 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 	titles.append("text")
 		.attr("class", "value-title")
 		.attr("x", 0)
-		.attr("y", -innerRadius*5/6 + 25);
+		.attr("y", -innerRadius*5/6 + 35);
 	
 	//The character pieces	
 	titles.append("text")
@@ -154,27 +210,28 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 
 	var arcs = g.append("g")
 	    .attr("class", "arcs")
-	  .selectAll("g")
-	    .data(function(s) { 
-			return s.groups; 
-		})
+	  	.selectAll("g")
+	   	.data(function(s) { return s.groups; })
 	  .enter().append("g")
 		.attr("class", "arc-wrapper")
-	  	.each(function(d) { 
-			d.pullOutSize = (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) 
-		})
+	  	.each(function(d) { d.pullOutSize = (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)); })
  	 	.on("mouseover", function(d) {
 			
 			//Hide all other arcs	
 			d3.selectAll(".arc-wrapper")
 		      	.transition()
-				.style("opacity", function(s) { return s.outername === d.outername ? 1 : 0.5; });
+				.style("opacity", function(s) { return s.outername === d.outername ? 1 : fadeOpacity; });
 			
 			//Hide all other strings
 		    d3.selectAll(".string")
 		      	.transition()
 		        .style("opacity", function(s) { return s.outer.outername === d.outername ? 1 : fadeOpacity; });
 				
+			//Hide ring text
+			d3.selectAll(".ring-wrapper")
+				.transition()
+				.style("opacity", fadeOpacity);
+
 			//Find the data for the strings of the hovered over location
 			var locationData = loom(dataAgg).filter(function(s) { return s.outer.outername === d.outername; });
 			//Hide the characters who haven't said a word
@@ -188,7 +245,7 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
  	 	})
      	.on("mouseout", function(d) {
 			
-			//Sjow all arc labels
+			//Show all arc labels
 			d3.selectAll(".arc-wrapper")
 		      	.transition()
 				.style("opacity", 1);
@@ -202,15 +259,12 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 			d3.selectAll(".inner-label")
 		      	.transition()
 		        .style("opacity", 1);
- 	 	});
 
-	var outerArcs = arcs.append("path")
-		.attr("class", "arc")
-	    .style("fill", function(d) { return color(d.outername); })
-	    .attr("d", arc)
-		.attr("transform", function(d, i) { //Pull the two slices apart
-		  	return "translate(" + d.pullOutSize + ',' + 0 + ")";
-		 });
+		 	//Show ring text
+			d3.selectAll(".ring-wrapper")
+				.transition()
+				.style("opacity", 1);
+ 	 	});
 		 					
 	////////////////////////////////////////////////////////////
 	//////////////////// Draw outer labels /////////////////////
@@ -228,7 +282,16 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 			+ "translate(" + 26 + ",0)"
 			+ (d.angle > Math.PI ? "rotate(180)" : "")
 		})
-		
+	
+	var elvishName = ["175{#","7R`B4#6Y","x{#75$iY1","t%j4#7iT","93GlExj6T",
+                    	"KiAZADDÚMU","j3Hj~N7`B5$","q7E3 xj#5$","t$I5 thUj",
+                    	"79N5#","ex{#7Y5","x2{^6Y","t7Y46Y"];
+  	//The outer name in Elvish 
+  	outerLabels.append("text")
+	    .attr("class", function(d,i) { return d.outername === "Moria" ? "dwarfish-outer-label" : "elvish-outer-label"; })
+	    .attr("dy", ".15em")
+	    .text(function(d,i){ return elvishName[i]; });
+
 	//The outer name
 	outerLabels.append("text")
 		.attr("class", "outer-label")
@@ -238,8 +301,20 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 	//The value below it
 	outerLabels.append("text")
 		.attr("class", "outer-label-value")
-		.attr("dy", "1.5em")
+		.attr("dy", "1.3em")
 		.text(function(d,i){ return numFormat(d.value) + " words"; });
+	
+	////////////////////////////////////////////////////////////
+	//////////////////// Draw outer arcs ///////////////////////
+	////////////////////////////////////////////////////////////
+	
+	var outerArcs = arcs.append("path")
+		.attr("class", "arc")
+	    .style("fill", function(d) { return color(d.outername); })
+	    .attr("d", arc)
+		.attr("transform", function(d, i) { //Pull the two slices apart
+		  	return "translate(" + d.pullOutSize + ',' + 0 + ")";
+		 });
 
 	////////////////////////////////////////////////////////////
 	////////////////// Draw inner strings //////////////////////
@@ -267,10 +342,8 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 	//And also rotated with the offset in the clockwise direction
 	var innerLabels = g.append("g")
 		.attr("class","inner-labels")
-	  .selectAll("text")
-	    .data(function(s) { 
-			return s.innergroups; 
-		})
+	  	.selectAll("text")
+	    .data(function(s) { return s.innergroups; })
 	  .enter().append("text")
 		.attr("class", "inner-label")
 		.attr("x", function(d,i) { return d.x; })
@@ -320,13 +393,18 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 			d3.select(".value-title")
 				.text(function() {
 					var words = dataChar.filter(function(s) { return s.key === d.name; });
-					return numFormat(words[0].value);
+					return numFormat(words[0].value) + " words";
 				});
 				
 			//Show the character note
 			d3.selectAll(".character-note")
 				.text(characterNotes[d.name])
 				.call(wrap, 2.25*pullOutSize);
+
+			//Hide ring text
+			d3.selectAll(".ring-wrapper")
+				.transition()
+				.style("opacity", fadeOpacity);
 				
 		})
      	.on("mouseout", function(d) {
@@ -353,6 +431,11 @@ d3.csv('../../data/nadieh/lotr_words_locations.csv', function (error, data) {
 			// //Hide the character note
 			// d3.selectAll(".character-note")
 			// 	.text("");
+
+			//Show ring text
+			d3.selectAll(".ring-wrapper")
+				.transition()
+				.style("opacity", 1);
 		});
 	  		
 });//d3.csv
