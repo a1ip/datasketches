@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel='shortcut icon' href='../img/favicon.ico' type='image/x-icon'/ >
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Data Sketches</title>
+    <meta name="author" content="Nadieh Bremer">
+    <meta name="description" content="Data Sketches - February - Nature">
+    <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Tinos:400,400i|Sacramento|Quicksand|Playfair+Display:400i" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Moment -->
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	  <!-- fancyBox -->
+	  <link rel="stylesheet" href="../plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+	  <script type="text/javascript" src="../plugins/fancybox/jquery.fancybox.pack.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+  <header>
+    <!-- Logo and name -->
+    <div>
+      <a class="hide-mobile peach kingBasil no-border" href="../january"><div class="top-links other-month-link textRight">go to January</div></a>
+      <div class="month-logo"><a class="no-border" href=".."><img class="paddingTop20" src="../img/logo.png" width="120" /></a></div>
+      <a class="hide-mobile peach kingBasil no-border"><div class="top-links other-month-link textLeft">waiting on March</div></a>
+    </div>
+    <div>
+      <a class="quicksand no-border" href=".."><div class="top-links datasketch-top-link"><span class="dark-grey">data sketch<span class="dark-pink">|</span>es</span></div></a>
+    </div>
+
+    <!-- Title above -->
+    <div class="row">
+      <div class="col-xs-12 month-page-title">
+        <h2 class="kingBasil peach">February</h2>
+        <h1 class="quicksand">Nature</h1>
+      </div>
+    </div>
+  </header>
+
+    <section id="january" class="month-page">
+      <div class="nadieh background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+      <div class="shirley background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+
+      <div class="container">
+        <!-- Write-ups -->
+        <div class="row">
+          <!-- Nadieh -->
+          <div class="col-xs-12 col-md-6 write-up">
+            <div class="nadieh">
+              <div class="name paddingBelow kingBasil">Nadieh</div>
+              <div class="time kingBasil"></div>
+              <div class="location quicksand">amsterdam</div>
+
+  			        <!-- <a href="code/nadieh"><img src="code/nadieh/img-write-up/dbz_header.png" class="img-responsive img-month-top" alt="All the fights in Dragon Ball Z"></a> -->
+
+                <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+
+                <p>Such a lovely topic, nature, I expected to have loads of ideas once I started on February... But that didn't happen. After spending a bit too much time on January's visual, I had set myself a goal that I wanted to try and finish February within 20 hours, just to force myself to deliver something within a reasonable number of hours. And having a "dataviz" block wasn't helping me stay within that time limit 😞</p>
+
+                <p>However, at some point I thought about what defines nature for me, which was evolution and the randomness of mutations that in turn can lead to "better adaptations" to the environment. Which in turn reminded me of generative art and the semi-randomness which often guides those pieces of art. I've always loved generative art and thus suddenly February seemed like the perfect month to give it a try.</p>
+
+                <p>Now I only needed a subject to guide the randomness. The first thing I was drawn to were flowers, but damn, I could <i>not</i> find a single dataset about flowers that contained information such as the main color, average number of petals, blooming period, things like that. It was all images for image processing training or taxonomy lists (e.g. what group, family, etc. does the flower belong to). I therefore turned my attention to butterflies, for which I also have a fascination (don't ask my boyfriend how much time he's had to wait for me on vacations while I was trying to perfectly capture a butterfly, 😅 ). But.... same problem, only taxonomy lists, no nice dataset with main wing color, size, etc.</p>
+
+                <p>The best (start of a) dataset that I could find, <i>I kid you not</i>, was eventually found on <a href="http://www.gardenswithwings.com/identify-butterflies.html" target="_new">Gardens with Wing</a>. It at least had some pages that divided butterflies into main colors, wing shape, size and species. So I manually turned the results of this pages filters into a dataset with 86 butterflies (found <a href="data/nadieh/butterflies.csv" target="_new">here</a>).</p>
+                <a class="fancybox" href="data/nadieh/gardens_with_wings.png"> <img src="data/nadieh/gardens_with_wings.png" class="img-responsive img-month" alt="The website of Gardens with Wings"></a>
+
+                <p>The main color of a butterlfy I could use to color whatever path the butterfly was going to have on my screen, the size of the butterfly could guide the thickness of the line/point, whatever I was going to make of it, and the species maybe could guide something else (the type of the path?). That wasn't a lot of information to use, but hopefully it would be enough 😁</p>
+
+                <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+
+                <p></p>
+
+                <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+
+                <p></p>
+
+            </div>
+          </div>
+
+          <!-- Shirley -->
+          <div class="col-xs-12 col-md-6 write-up">
+            <div class="shirley">
+              <div class="name paddingBelow kingBasil">Shirley</div>
+              <div class="time kingBasil"></div>
+              <div class="location quicksand">san francisco</div>
+
+              <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
+
+              <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+
+              <p></p>
+              <!-- <a class="fancybox" href="data/shirley/years.png"> <img src="data/shirley/years.png" class="img-responsive img-month"></a> -->
+
+              <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+
+              <p></p>
+
+              <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+
+              <p></p>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Our names and website below -->
+        <div class="row">
+          <div class="nadieh col-xs-6">
+            <div class="name kingBasil">Nadieh</div>
+            <div class="quicksand"><a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
+          </div>
+
+          <div class="shirley col-xs-6">
+            <div class="name kingBasil">Shirley</div>
+            <div class="quicksand"><a href="http://sxywu.com/">sxywu.com</a></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="january-guest" class="month-page">
+      <div class="guest background-guest col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
+
+      <div class="container guest-container">
+        <!-- Write-up -->
+        <div class="row">
+          <!-- Guest -->
+          <div class="col-xs-12 col-md-12 write-up">
+            <div class="guest">
+			  <div class="guest-introduction quicksand">introducing our guest</div>
+              <div class="name-guest paddingBelow kingBasil">Sarah Drasner</div>
+              <div class="time kingBasil"></div>
+              <div class="location quicksand paddingBelow">san francisco</div>
+
+                <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt="Snapshot of final image"></a> -->
+
+                <h3>week 1 <span class="light-grey">|</span> data</h3>
+
+                <p></p>
+                <!-- <a class="fancybox" href="data/guest/database.png"><img alt="Screenshot of Scrabble database" class="img-responsive img-month" src="data/guest/database.png" /></a> -->
+
+                <h3>week 2 <span class="light-grey">|</span> sketch</h3>
+
+                <p></p>
+                <!-- <a class="fancybox" href="sketches/guest/scrabble-2.png"><img alt="Second version" class="img-responsive img-month" src="sketches/guest/scrabble-2.png" /></a> -->
+
+                <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+
+                <p></p>
+                <!-- <a class="fancybox" href="code/guest/scrabble-10-11-12.png"><img alt="Versions 10, 11, and 12" class="img-responsive img-month" src="code/guest/scrabble-10-11-12.png" /></a> -->
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Guest name and website below -->
+        <div class="row">
+          <div class="guest col-xs-12">
+            <div class="name kingBasil">Sarah</div>
+            <div class="quicksand"><a href="http://sarahdrasnerdesign.com/">SarahDrasnerDesign.com</a></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="guest-month">
+      <div class="container">
+        <div>
+          <span>a monthly collaboration between </span>
+          <span class="kingBasil">Nadieh Bremer & Shirley Wu</span>
+        </div>
+        <div class="quicksand">
+          <a href="https://twitter.com/datasketches">@datasketches</a><span class="pipe-divider">  |  </span>#datasketches
+        </div>
+        <div class="about-link quicksand">
+          <a href="../about">about</a><span class="pipe-divider">  |  </span><a href="../feed.xml">rss</a><span class="pipe-divider">  |  </span><a href="https://tinyletter.com/datasketches">newsletter</a>
+        </div>
+      </div>
+    </footer>
+
+	<script>
+  function setTime() {
+    var format = 'h:mm a';
+    var time = new Date();
+    var nadieh = moment(time, format).tz("Europe/Amsterdam");
+    var shirley = moment(time, format).tz("America/Los_Angeles");
+	  var guest = moment(time, format).tz("America/Los_Angeles");
+    $('.nadieh .time').text(nadieh.format(format));
+    $('.shirley .time').text(shirley.format(format));
+	  $('.guest .time').text(guest.format(format));
+
+    var nadiehColor = nadieh.hour();
+    nadiehColor = nadiehColor >= 18 || nadiehColor <= 6 ? 'dark' : 'light';
+    var shirleyColor = shirley.hour();
+    shirleyColor = shirleyColor >= 18 || shirleyColor <= 6 ? 'dark' : 'light';
+    var guestColor = guest.hour();
+    guestColor = guestColor >= 18 || guestColor <= 6 ? 'dark' : 'light';
+
+    $('.nadieh').removeClass('light dark').addClass(nadiehColor);
+    $('.shirley').removeClass('light dark').addClass(shirleyColor);
+	$('.guest').removeClass('light dark').addClass(guestColor);
+  }
+
+  $( document ).ready( function() {
+    setTime();
+    setInterval(setTime, 60000);
+    $(".fancybox").fancybox({
+      openEffect : 'fade',
+      closeEffect : 'fade',
+      padding: 0,
+      helpers: {
+      overlay: {
+        locked: false
+      }
+      }
+    });
+  });
+	</script>
+
+  </body>
+</html>
