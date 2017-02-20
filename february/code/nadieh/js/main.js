@@ -31,6 +31,13 @@ colorMap["white"] 	= "#ffffff";
 colorMap["grey"] 	= "#BDB8AD";
 colorMap["black"] 	= "#000000";
 
+var radius = Math.min(200, width/3, height/3);
+var hex = hexArray(width, height, radius);
+
+//Is the credit rect shown
+var shown = false;
+d3.select(".credit-rect").style("opacity", 0);
+
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////// Read in the data /////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -43,7 +50,7 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 	
 	if (error) throw error;
 
-	//Take out the brown & black butterflies
+	//Take out some butterflies based on color
 	data = data.filter(function(d) { return d.color !== "brown"; }); //&& d.color !== "black" && d.color !== "grey"
 
 	//Get the wingspan size: small, medium or large
@@ -59,44 +66,47 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 
 		//For now stop after 30 seconds
 		if (elapsed > 60000) {
-			console.log("stopping");
+			console.log("stopping", ID, bf.length);
 			timer.stop();
-		}
+		} else if (elapsed > 30000 && !shown) {
+			d3.select(".credit-rect").transition().duration(4000).style("opacity", 1);
+			shown = true;
+		}//else if
 
 		//Create new butterflies
-		for (var i = 0; i < Math.round(Math.random()*2); i++) spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
-		//spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
+		//for (var i = 0; i < Math.round(Math.random()*2); i++) spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
+		spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
 
 		//Remove non-alive butterflies
-		//bf = bf.filter(function(d) { return d.alive; });
+		bf = bf.filter(function(d) { return d.alive; });
 
 		for (var i = 0; i < bf.length; i++) {
 
 	      	ctx.setLineDash([]);
 
-	      	if(bf[i].species === "Skippers" && !bf[i].outside) {
+	      	if(bf[i].species === "Skippers") { //Create circles
 	      		ctx.fillStyle = bf[i].color;
-	      		ctx.globalAlpha = Math.random()*6*bf[i].opacity;
-	      		var start = bf[i].pos.length - 3;
-	      		if(bf[i].pos.length < 10) start = 0;
+	      		ctx.globalAlpha = bf[i].opacity * 0.1;
+	      		var start = 0 ;//bf[i].pos.length - 3;
+	      		//if(bf[i].pos.length < 10) start = 0;
     			for(var j = start; j < bf[i].pos.length-1; j++) {
     				ctx.beginPath();
-    				ctx.arc(bf[i].pos[j].x + (Math.random()>0.5 ? 1 : -1) * Math.random()*15, 
-    						bf[i].pos[j].y + (Math.random()>0.5 ? 1 : -1) * Math.random()*15, 
-    						bf[i].lineWidth*Math.random()*10, 0, 2*Math.PI, 1);
+    				ctx.arc(bf[i].pos[j].x + (Math.random()>0.5 ? 1 : -1) * Math.random()*bf[i].lineWidth, 
+    						bf[i].pos[j].y + (Math.random()>0.5 ? 1 : -1) * Math.random()*bf[i].lineWidth, 
+    						bf[i].pos[j].radius, 0, 2*Math.PI, 1);
     				ctx.closePath();
     				ctx.fill();
     			}//for j
-	      	} else {
+	      	} else { //Create curved lines
 	      		ctx.strokeStyle = bf[i].color;
 	      		ctx.globalAlpha = bf[i].opacity;
 	      		ctx.lineWidth = bf[i].lineWidth;
 		      	if(bf[i].lineWidth < 2) {
-		      		ctx.setLineDash([bf[i].lineWidth/8, bf[i].lineWidth*2]); /*dashes are Xpx and spaces are Ypx*/
+		      		ctx.setLineDash([bf[i].lineWidth/8, bf[i].lineWidth*4]); /*dashes are Xpx and spaces are Ypx*/
 		      	}//if
 
 				//Draw a smooth curve through the points
-	      		drawCurve(ctx, bf[i].pos, Math.random());	      		
+	      		drawCurve(ctx, bf[i].pos, Math.random());	     		
 	      	}//else
 
 			//Adjust the path of the butterflies a bit
@@ -105,7 +115,7 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 			//Add a new point to the butterfly if it is still inside the screen
 			if(!bf[i].outside) {
 				move(bf[i]);
-				bf[i].pos.push({x: +round2(bf[i].x), y: +round2(bf[i].y)});
+				bf[i].pos.push({x: +round2(bf[i].x), y: +round2(bf[i].y), radius: +round2(bf[i].radius)});
 
 				//Check if the butterfly is outside of the canvas area
 				if(bf[i].pos[bf[i].pos.length-1].x < 0 || bf[i].pos[bf[i].pos.length-1].x > width ||
@@ -115,6 +125,35 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 			}//if
 
 		}//for i
+
+		//"Kill" the oldest butterflies if more than 400 exist already
+		if(bf.length > 300) {
+			for (var i = 0; i < bf.length-300; i++) {
+				bf[i].alive = false;
+			}//for i
+		}//if
+
+		//Draw the hexagon
+		ctx.strokeStyle = "white";
+      	ctx.globalAlpha = 0.05;
+      	ctx.lineWidth = 2;
+      	ctx.beginPath();
+      	ctx.moveTo(hex[0].x + (Math.random()>0.5 ? 1 : -1) * Math.random()*7, 
+      			   hex[0].y + (Math.random()>0.5 ? 1 : -1) * Math.random()*7);
+		for (var i = 1; i < hex.length; i++) {
+			ctx.lineTo(hex[i].x + (Math.random()>0.5 ? 1 : -1) * Math.random()*7, 
+					   hex[i].y + (Math.random()>0.5 ? 1 : -1) * Math.random()*7);
+		}//for i
+		ctx.closePath();
+		ctx.stroke();
+		//Draw the circle
+		ctx.globalAlpha = 0.025;
+		ctx.beginPath();
+      	ctx.arc(width/2 + (Math.random()>0.5 ? 1 : -1) * Math.random()*5, 
+    			height/2 + (Math.random()>0.5 ? 1 : -1) * Math.random()*5, 
+    			radius*1.2, 0, 2*Math.PI, 1);
+		ctx.closePath();
+		ctx.stroke();
 
 	}, 50);//timer
 
@@ -134,7 +173,7 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 
 //Jitter the existing path a bit
 function jitter(d, jitter) {
-	for(var i = 1; i < d.length; i++) {
+	for(var i = 0; i < d.length; i++) {
 		d[i].x = +d[i].x + jitter * (Math.random() > 0.5 ? 1 : -1);
 		d[i].y = +d[i].y + jitter * (Math.random() > 0.5 ? 1 : -1);
 	}//for i
@@ -142,6 +181,9 @@ function jitter(d, jitter) {
 
 //Calculates the new path to draw
 function move(d) {
+
+	d.radius = d.lineWidth*Math.random()*4;
+
 	d.x += d.vx;
 	d.y += d.vy;
 
@@ -174,20 +216,23 @@ function spawn(d) {
 		force = getRandomNumber( 6, 10 );
 	}//else if
 
+	var startLoc = findstartLoc(width, height);
+
 	//Create the butterfly
 	butterfly = {
 		id: ID,			
 		
 		lineWidth: lineWidth,
+		radius: lineWidth,
 		opacity: opacity,
 		color: colorOffset(colorMap[d.color]),
 		species: d.species,
 
-		x: width/2,
-		y: height/2,
+		x: startLoc[0], //width/2,
+		y: startLoc[1], //height/2,
 		wander: getRandomNumber( 1.5, 4 ),
 		drag: getRandomNumber( 0.85, 0.99 ),
-		theta: getRandomNumber( -Math.PI,  Math.PI ),
+		theta: startLoc[2], //getRandomNumber( -Math.PI,  Math.PI ),
 		force: force,
 		jitter: jitter,
 
@@ -204,7 +249,7 @@ function spawn(d) {
 	//Create some starting positions for butterfly
 	for(var i = 0; i < 6; i++) {
 		move(butterfly);
-		pos.push({x: +round2(butterfly.x), y: +round2(butterfly.y)});
+		pos.push({x: +round2(butterfly.x), y: +round2(butterfly.y), radius: +round2(butterfly.radius)});
 	}//for i
 	butterfly.pos = pos;
 
@@ -214,6 +259,84 @@ function spawn(d) {
 }//spawn
 
 ///////////////////////////////////////////////////////////////////////////
+///////////////////////// Get the hexagon points //////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function hexArray(width, height, radius) {
+
+	var SQRT3 = Math.sqrt(3),
+    	hexRadius = radius;
+	var hexagonPoly = [[SQRT3/2,0.5],[0,1],[-SQRT3/2,0.5],[-SQRT3/2,-0.5],[0,-1],[SQRT3/2,-0.5]];
+	
+	//For SVG path
+	//var hexagonPath = " m" + hexagonPoly.map(function(p){ return [+round2(p[0]*hexRadius), +round2(p[1]*hexRadius)].join(','); }).join(' l') + "z";
+	//return "M" + (width/2) + "," + (height/2) + hexagonPath;
+	
+	//Return array of {x: x, y:y }
+	var hexagonPath = hexagonPoly.map(function(p){ return {x: +round2(p[0]*hexRadius + width/2), y: +round2(p[1]*hexRadius + height/2)} });
+	return hexagonPath;
+}//function hexArray
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////// Sample points along line ////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function findstartLoc(width, height) {
+	if(Math.random() > 0.5) {
+		if(Math.random() > 0.5) {
+			//before x axis
+			return [-10, getRandomNumber(0, height), getRandomNumber(0, Math.PI)];
+		} else {
+			//after x axis
+			return [width+10, getRandomNumber(0, height), getRandomNumber(Math.PI, 2*Math.PI)];
+		}//else
+	} else {
+		if(Math.random() > 0.5) {
+			//above y axis
+			return [getRandomNumber(0, width), -10, getRandomNumber(-Math.PI/2, Math.PI/2)];
+		} else {
+			//below y axis
+			return [getRandomNumber(0, height), height + 10, getRandomNumber(Math.PI/2, Math.PI*3/2)];
+		}//else
+	}//else
+}//function findstartLoc
+
+
+// function translateAlong(path) {
+//   var l = path.getTotalLength();
+//   return function(d, i, a) {
+//     return function(t) {
+//       var p = path.getPointAtLength(t * l);
+//       return "translate(" + p.x + "," + p.y + ")";
+//     };
+//   };
+// }
+
+// var d1 = pt.chordToLoom.adjustedRibbon(d), 
+//       			precision = 4;
+
+// 	      	var path0 = this,
+// 		        path1 = path0.cloneNode(),
+// 		        n0 = path0.getTotalLength(),
+// 		        n1 = (path1.setAttribute("d", d1), path1).getTotalLength();
+
+// 		    // Uniform sampling of distance based on specified precision.
+// 		    var distances = [0], i = 0, dt = precision / Math.max(n0, n1);
+// 		    while ((i += dt) < 1) distances.push(i);
+// 		    distances.push(1);
+
+// 		    // Compute point-interpolators at each distance.
+// 		    var points = distances.map(function(t) {
+// 		      var p0 = path0.getPointAtLength(t * n0),
+// 		          p1 = path1.getPointAtLength(t * n1);
+// 		      return d3.interpolate([p0.x, p0.y], [p1.x, p1.y]);
+// 		    });
+
+// 		    return function(t) {
+// 		      return t < 1 ? "M" + points.map(function(p) { return p(t); }).join("L") : d1;
+// 		    };
+
+///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Draw the curved lines //////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
@@ -221,15 +344,16 @@ function spawn(d) {
 //http://stackoverflow.com/questions/7054272/how-to-draw-smooth-curve-through-n-points-using-javascript-html5-canvas
 function drawCurve(ctx, ptsa, tension, isClosed, numOfSegments, showPoints) {
 
-  ctx.beginPath();
-  drawLines(ctx, getCurvePoints(ptsa, tension, isClosed, numOfSegments));
+  	ctx.beginPath();
+  	drawLines(ctx, getCurvePoints(ptsa, tension, isClosed, numOfSegments));
   
-  if (showPoints) {
-    ctx.beginPath();
-    for(var i = 0; i < ptsa.length-1; i++) ctx.rect(ptsa[i].x - 2, ptsa[i].y - 2, 4, 4);
-  }//if
-  ctx.stroke();
-  ctx.closePath();
+  	if (showPoints) {
+    	ctx.beginPath();
+    	for(var i = 0; i < ptsa.length-1; i++) ctx.rect(ptsa[i].x - 2, ptsa[i].y - 2, 4, 4);
+  	}//if
+
+    ctx.stroke();
+  	//ctx.closePath();
 }//function drawCurve
 
 function drawLines(ctx, pts) {
