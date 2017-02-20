@@ -246,7 +246,7 @@ a:hover {
 }
 
 #months .month {
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 #months #current.month {
@@ -267,6 +267,13 @@ a:hover {
 	text-align: center;
   background-color: #fff;
 }
+#months .month-row-guest {
+  position: relative;
+  height: 500px;
+  text-align: center;
+  background-color: #fff;
+  z-index: 2;
+}
 
 #months .month-wrapper {
   position: absolute;
@@ -276,6 +283,9 @@ a:hover {
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
+}
+#months .month-row-guest .month-wrapper {
+  padding-top: 40px;
 }
 
 #months h1 {
@@ -289,13 +299,6 @@ a:hover {
 	margin-bottom: 0;
   cursor: default;
 }
-
-/*@media only screen and (max-width: 800px) {
-	#months h2 {
-		font-size: 20px;
-		padding-bottom: 10px;
-	}
-}*/
 
 #months p {
   padding-top: 20px;
@@ -332,18 +335,35 @@ a:hover {
 }
 
 #months .month-img {
-  	height: 400px;
-  	padding: 0;
-  	overflow: hidden;
-  	position: relative;
+  height: 400px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+#months .month-img-guest {
+  height: 100px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  margin-top: -100px;
 }
 
-/* Make the images less high on small screens */
-/*@media only screen and (max-width: 500px) {
-	#months .month-img, #months .month-row {
-		height: 250px;
-	}
-}*/
+/*Make some changes for the guest row when on small screens*/
+@media only screen and (max-width: 992px) {
+	#months .month-img-guest {
+    margin-top: 0px !important;
+  }
+  #months .guest-intro {
+    margin-top: 45px !important;
+  }
+  #months .month-row-guest {
+    height: 400px !important;
+  }
+  #months .month-row-guest .month-wrapper {
+    padding-top: 0px !important;
+  }
+}
 
 #months .month-img-left img {
   	position: absolute;
@@ -368,6 +388,15 @@ a:hover {
 	border-bottom: none;
 }
 
+#months .guest-intro {
+  margin-top: 100px;
+}
+#months .guest-title {
+  font-size: 18px;
+}
+#months .guest-name {
+  font-size: 22px;
+}
 /*-------------- HEADER SECTION -----------------*/
 
 header {
