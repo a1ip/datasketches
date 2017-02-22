@@ -1,5 +1,7 @@
-body{
-    overflow-x:hidden;
+body {
+	/*height: 100%;*/
+	margin: 0;
+    overflow:hidden;
     color: white;
 	font-family: 'Ubuntu', sans-serif;
 }
@@ -32,7 +34,7 @@ a.image-link {
 .credit-rect {
 	opacity: 0;
 	position: absolute;
-	top: 0%;
+	bottom: 0%;
 	left: 0%;
 	width: 100%;
 	height: 100%;

@@ -1,13 +1,46 @@
-
 var width = document.body.clientWidth; 
 var height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
 
-var canvas  = d3.select("#chart").append("canvas")
-	.attr("id", "canvas")
-	.attr("width", width)
-	.attr("height", height);
-	
-var ctx = canvas.node().getContext("2d");
+var canvas = document.getElementById("canvas-lines");
+canvas.width = width;
+canvas.height = height;
+
+var ctx = canvas.getContext("2d");
+
+//From https://www.html5rocks.com/en/tutorials/canvas/hidpi/#toc-1
+var devicePixelRatio = window.devicePixelRatio || 1;
+var backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+                        ctx.mozBackingStorePixelRatio ||
+                        ctx.msBackingStorePixelRatio ||
+                        ctx.oBackingStorePixelRatio ||
+                        ctx.backingStorePixelRatio || 1;
+var ratio = devicePixelRatio / backingStoreRatio;
+
+// // upscale the canvas if the two ratios don't match
+// if (devicePixelRatio !== backingStoreRatio) {
+//     canvas.width = width * ratio;
+//     canvas.height = height * ratio;
+// 		canvas.style.width = width + 'px';
+// 		canvas.style.height = height + 'px';
+//     // now scale the context to counter
+//     // the fact that we've manually scaled our canvas element
+//     ctx.scale(ratio, ratio);
+// }//if
+
+// //Actually downscale the canvas to have a bit of a blurry effect on non-retina screens
+// if (devicePixelRatio === 1) {
+// 	width = width/2;
+// 	height = height/2;
+//     canvas.width = width;
+//     canvas.height = height;
+//     canvas.style.width = (2*width) + 'px';
+// 	canvas.style.height = (2*height) + 'px';
+//     // now scale the context to counter the fact that we've manually scaled our canvas element
+//     //ctx.scale(0.5, 0.5);
+// }//if
+
+//For scaling if line thickness, forces and such based on screen size
+var scaling = Math.min(1, +round2(Math.max(width/1400, height/800)));
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////// Create global variables /////////////////////////
@@ -31,12 +64,66 @@ colorMap["white"] 	= "#ffffff";
 colorMap["grey"] 	= "#BDB8AD";
 colorMap["black"] 	= "#000000";
 
-var radius = Math.min(200, width/3, height/3);
+var radius = Math.min(200/scaling, width/3, height/3);
 var hex = hexArray(width, height, radius);
 
 //Is the credit rect shown
 var shown = false;
 d3.select(".credit-rect").style("opacity", 0);
+
+
+//Path for the butterfly in the center
+var imageWidth = 90.7,
+	imageHeight = 60,
+	imageScale = 1.25*radius/imageWidth;
+var butterflyPath = 
+[ 
+	{ marker: "M", values: [ 45.4,50.6 ] }, 
+	{ marker: "c", values: [ -15.9,24.7, -27.1,16.6, -31,9.4 ] },
+	{ marker: "C", values: [ 2.3,37.3, 28.2,34.5, 28.2,34.5 ] },
+	{ marker: "C", values: [ 2.3,41.9, 1.9,26.7, 1.1,19.6 ] },
+	{ marker: "C", values: [ -1,1.5, 7.4,0.8, 11.9,1.7 ] },
+	{ marker: "c", values: [ 19.9,4, 33.5,30.4, 33.5,30.4 ] },
+	{ marker: "c", values: [ 0.2,0, 13.6,-26.5, 33.5,-30.4 ] },
+	{ marker: "c", values: [ 4.5,-0.9, 12.9,-0.2, 10.8,17.9 ] },
+	{ marker: "c", values: [ -0.8,7.1, -1.3,22.3, -27.1,14.9 ] },
+	{ marker: "c", values: [ 0,0, 25.9,2.8, 13.8,25.4 ] },
+	{ marker: "C", values: [ 72.5,67.1, 61.3,75.3, 45.4,50.6 ] }
+];
+var butterflyPoints = [
+	// {x: 45.4, y: 50.6}, 
+	// {x: 14.5, y: 60}, 
+	// {x: 28.2, y: 34.5}, 
+	// {x: 1.1,  y: 19.6}, 
+	// {x: 11.9, y: 1.7}, 
+	// {x: 45.4, y: 32.1}, 
+	// {x: 78.9, y: 1.7}, 
+	// {x: 89.7, y: 19.6}, 
+	// {x: 62.6, y: 34.5}, 
+	// {x: 76.4, y: 59.9}, 
+	// {x: 45.4, y: 50.6}, 
+	{x: 45.4, y: 32.6, fixed: true},
+	{x: 33.4, y: 15.6, fixed: false},
+	{x: 17.4, y: 3.6, fixed: false},
+	{x: 5.4, y: 2.6, fixed: false},
+	{x: 0.4, y: 12.6, fixed: false},
+	{x: 5.4, y: 32.6, fixed: false},
+	{x: 27.4, y: 34.6, fixed: true},
+	{x: 12.4, y: 44.6, fixed: true},
+	{x: 17.4, y: 63.6, fixed: false},
+	{x: 25.4, y: 67.6, fixed: false},
+	{x: 45.4, y: 50.6, fixed: false},
+	{x: 66.4, y: 67.6, fixed: true},
+	{x: 73.4, y: 63.6, fixed: false},
+	{x: 78.4, y: 44.6, fixed: false},
+	{x: 62.4, y: 34.6, fixed: false},
+	{x: 85.4, y: 32.6, fixed: true},
+	{x: 90.4, y: 12.6, fixed: false},
+	{x: 85.4, y: 2.6, fixed: false},
+	{x: 72.4, y: 3.6, fixed: false},
+	{x: 57.4, y: 15.6, fixed: false},
+];
+butterflyPoints = transformPath(butterflyPoints);
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////// Read in the data /////////////////////////////
@@ -66,7 +153,6 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 
 		//For now stop after 30 seconds
 		if (elapsed > 60000) {
-			console.log("stopping", ID, bf.length);
 			timer.stop();
 		} else if (elapsed > 30000 && !shown) {
 			d3.select(".credit-rect").transition().duration(4000).style("opacity", 1);
@@ -83,10 +169,11 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 		for (var i = 0; i < bf.length; i++) {
 
 	      	ctx.setLineDash([]);
+	      	ctx.strokeStyle = bf[i].color;
 
 	      	if(bf[i].species === "Skippers") { //Create circles
-	      		ctx.fillStyle = bf[i].color;
-	      		ctx.globalAlpha = bf[i].opacity * 0.1;
+	      		//ctx.fillStyle = bf[i].color;
+	      		ctx.globalAlpha = bf[i].opacity*0.3;
 	      		var start = 0 ;//bf[i].pos.length - 3;
 	      		//if(bf[i].pos.length < 10) start = 0;
     			for(var j = start; j < bf[i].pos.length-1; j++) {
@@ -95,10 +182,9 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
     						bf[i].pos[j].y + (Math.random()>0.5 ? 1 : -1) * Math.random()*bf[i].lineWidth, 
     						bf[i].pos[j].radius, 0, 2*Math.PI, 1);
     				ctx.closePath();
-    				ctx.fill();
+    				ctx.stroke();
     			}//for j
 	      	} else { //Create curved lines
-	      		ctx.strokeStyle = bf[i].color;
 	      		ctx.globalAlpha = bf[i].opacity;
 	      		ctx.lineWidth = bf[i].lineWidth;
 		      	if(bf[i].lineWidth < 2) {
@@ -126,7 +212,7 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 
 		}//for i
 
-		//"Kill" the oldest butterflies if more than 400 exist already
+		//"Kill" the oldest butterflies if more than X exist already
 		if(bf.length > 300) {
 			for (var i = 0; i < bf.length-300; i++) {
 				bf[i].alive = false;
@@ -136,22 +222,24 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 		//Draw the hexagon
 		ctx.strokeStyle = "white";
       	ctx.globalAlpha = 0.05;
-      	ctx.lineWidth = 2;
+      	ctx.lineWidth = 2*scaling;
       	ctx.beginPath();
-      	ctx.moveTo(hex[0].x + (Math.random()>0.5 ? 1 : -1) * Math.random()*7, 
-      			   hex[0].y + (Math.random()>0.5 ? 1 : -1) * Math.random()*7);
+      	ctx.moveTo(hex[0].x + twitch(), hex[0].y + twitch());
 		for (var i = 1; i < hex.length; i++) {
-			ctx.lineTo(hex[i].x + (Math.random()>0.5 ? 1 : -1) * Math.random()*7, 
-					   hex[i].y + (Math.random()>0.5 ? 1 : -1) * Math.random()*7);
+			ctx.lineTo(hex[i].x + twitch(), hex[i].y + twitch());
 		}//for i
 		ctx.closePath();
 		ctx.stroke();
+		//Draw the butterfly
+		ctx.globalAlpha = 0.015;
+		drawSvgPath(ctx, width, height, imageScale, imageWidth, imageHeight, butterflyPath);
+		ctx.globalAlpha = 0.03;
+		drawCurve(ctx, butterflyPoints, Math.random());
+		jitterFixed(butterflyPoints, 0.75);
 		//Draw the circle
-		ctx.globalAlpha = 0.025;
+      	ctx.globalAlpha = 0.03;
 		ctx.beginPath();
-      	ctx.arc(width/2 + (Math.random()>0.5 ? 1 : -1) * Math.random()*5, 
-    			height/2 + (Math.random()>0.5 ? 1 : -1) * Math.random()*5, 
-    			radius*1.2, 0, 2*Math.PI, 1);
+      	ctx.arc(width/2 + twitch()*0.75, height/2 + twitch()*0.75, radius*1.2, 0, 2*Math.PI, 1);
 		ctx.closePath();
 		ctx.stroke();
 
@@ -171,6 +259,15 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 /////////////////////// Create & move the butterfly ///////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
+function jitterFixed(d, jitter) {
+	for(var i = 0; i < d.length; i++) {
+		if(!d.fixed) {
+			d[i].x = +d[i].x + jitter * (Math.random() > 0.5 ? 1 : -1);
+			d[i].y = +d[i].y + jitter * (Math.random() > 0.5 ? 1 : -1);
+		}//fixed
+	}//for i
+}//jitterFixed
+
 //Jitter the existing path a bit
 function jitter(d, jitter) {
 	for(var i = 0; i < d.length; i++) {
@@ -182,7 +279,7 @@ function jitter(d, jitter) {
 //Calculates the new path to draw
 function move(d) {
 
-	d.radius = d.lineWidth*Math.random()*4;
+	d.radius = d.lineWidth*Math.random()*4*scaling;
 
 	d.x += d.vx;
 	d.y += d.vy;
@@ -222,8 +319,8 @@ function spawn(d) {
 	butterfly = {
 		id: ID,			
 		
-		lineWidth: lineWidth,
-		radius: lineWidth,
+		lineWidth: lineWidth*scaling,
+		radius: lineWidth*scaling,
 		opacity: opacity,
 		color: colorOffset(colorMap[d.color]),
 		species: d.species,
@@ -233,8 +330,8 @@ function spawn(d) {
 		wander: getRandomNumber( 1.5, 4 ),
 		drag: getRandomNumber( 0.85, 0.99 ),
 		theta: startLoc[2], //getRandomNumber( -Math.PI,  Math.PI ),
-		force: force,
-		jitter: jitter,
+		force: force*scaling,
+		jitter: jitter*scaling,
 
 		outside: false,
 		alive: true
@@ -300,41 +397,6 @@ function findstartLoc(width, height) {
 		}//else
 	}//else
 }//function findstartLoc
-
-
-// function translateAlong(path) {
-//   var l = path.getTotalLength();
-//   return function(d, i, a) {
-//     return function(t) {
-//       var p = path.getPointAtLength(t * l);
-//       return "translate(" + p.x + "," + p.y + ")";
-//     };
-//   };
-// }
-
-// var d1 = pt.chordToLoom.adjustedRibbon(d), 
-//       			precision = 4;
-
-// 	      	var path0 = this,
-// 		        path1 = path0.cloneNode(),
-// 		        n0 = path0.getTotalLength(),
-// 		        n1 = (path1.setAttribute("d", d1), path1).getTotalLength();
-
-// 		    // Uniform sampling of distance based on specified precision.
-// 		    var distances = [0], i = 0, dt = precision / Math.max(n0, n1);
-// 		    while ((i += dt) < 1) distances.push(i);
-// 		    distances.push(1);
-
-// 		    // Compute point-interpolators at each distance.
-// 		    var points = distances.map(function(t) {
-// 		      var p0 = path0.getPointAtLength(t * n0),
-// 		          p1 = path1.getPointAtLength(t * n1);
-// 		      return d3.interpolate([p0.x, p0.y], [p1.x, p1.y]);
-// 		    });
-
-// 		    return function(t) {
-// 		      return t < 1 ? "M" + points.map(function(p) { return p(t); }).join("L") : d1;
-// 		    };
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Draw the curved lines //////////////////////////
@@ -426,9 +488,175 @@ function getCurvePoints(pts, tension, isClosed, numOfSegments) {
   return res;
 }//function getCurvePoints
 
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////// Draw complex canvas path ////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+//Adjusted from https://gist.github.com/shamansir/6294f8cfdd555a9d1b9e182007dd0c2f
+// take SVG commands and draw this path to HTML5 canvas
+
+// commandList should look like that: [ { marker: "M", values: [ 10, 10 ] }, 
+//                                      { marker: "l", values: [ 5, 7 ] },
+//                                      { marker: "C", values: [ -5, 7.2, .3, -16, 24, 10 ] },
+//                                      . . .
+//                                      { marker: "z", values: [ ] } ]
+
+// there's another gist which has the code to parse SVG paths: 
+// https://gist.github.com/shamansir/0ba30dc262d54d04cd7f79e03b281505
+// 
+// var ctx = canvas.getContext('2d');
+// [ 'M10,10 l 5,7 C-5,7.2,.3-16,24,10  z', ... ].map(svgPathToCommands)
+//                                               .forEach(function(commandList) { drawSvgPath(ctx, commandList); });
+
+function drawSvgPath(ctx, width, height, s, imageWidth, imageHeight, commandList) {
+	var w = width/2 - imageWidth/2*s,
+		h = height/2 - imageHeight/2*s;
+    ctx.save();
+    ctx.beginPath();
+    var lastPos = [ 0, 0 ]; 
+    var pointOne, pointTwo, pointThree;
+    commandList.forEach(function(command) {
+	    if ((command.marker === 'z') || (command.marker === 'Z')) {
+	        lastPos = [ 0, 0 ];
+	        ctx.closePath();
+	    } else if (command.marker === 'm') {
+	        lastPos = [ lastPos[0] + command.values[0]*s, lastPos[1] + command.values[1]*s ];
+	        pointOne = [ lastPos[0]+tw(), lastPos[1]+tw() ];
+	        ctx.moveTo(pointOne[0], pointOne[1]);
+	    } else if (command.marker === 'l') {
+	        lastPos = [ lastPos[0] + command.values[0]*s, lastPos[1] + command.values[1]*s ];
+	        pointOne = [ lastPos[0]+tw(), lastPos[1]+tw() ];
+	        ctx.lineTo(pointOne[0], pointOne[1]);
+	    } else if (command.marker === 'h') {
+	        lastPos = [ lastPos[0] + command.values[0]*s, lastPos[1] ];
+	        pointOne = [ lastPos[0]+tw(), lastPos[1] ];
+	        ctx.lineTo(pointOne[0], pointOne[1]);
+	    } else if (command.marker === 'v') {
+	        lastPos = [ lastPos[0], lastPos[1] + command.values[0]*s+tw() ];
+	        pointOne = [ lastPos[0], lastPos[1]+tw() ];
+	        ctx.lineTo(pointOne[0], pointOne[1]);
+	    } else if (command.marker === 'c') {
+	        pointOne =    [ lastPos[0] + command.values[0]*s+tw(),
+	                     	lastPos[1] + command.values[1]*s+tw() ];
+	        pointTwo = 	  [ lastPos[0] + command.values[2]*s+tw(),
+	                     	lastPos[1] + command.values[3]*s+tw() ];
+	        lastPos  = 	  [ lastPos[0] + command.values[4]*s,
+	                     	lastPos[1] + command.values[5]*s ];
+	        pointThree  = [ lastPos[0] + tw(),
+	                     	lastPos[1] + tw() ];
+	        ctx.bezierCurveTo(
+	                pointOne[0], 	pointOne[1],
+	                pointTwo[0], 	pointTwo[1],
+	                pointThree[0], 	pointThree[1]);
+	    } else if (command.marker === 'M') {
+	    	lastPos = [ command.values[0]*s+w, command.values[1]*s+h ];
+	    	pointOne = [ lastPos[0]+tw(), lastPos[1]+tw() ];
+	        ctx.moveTo(pointOne[0], pointOne[1]);
+	    } else if (command.marker === 'L') {
+	        lastPos = [ command.values[0]*s+w, command.values[1]*s+h ];
+	        pointOne = [ lastPos[0]+tw(), lastPos[1]+tw() ];
+	        ctx.lineTo(pointOne[0], pointOne[1]);
+	    } else if (command.marker === 'H') {
+	        lastPos = [ command.values[0]*s+w, lastPos[1] ];
+	        pointOne = [ lastPos[0]+tw(), lastPos[1] ];
+	        ctx.lineTo(pointOne[0], pointOne[1]);
+	    } else if (command.marker === 'V') {
+	        lastPos = [ lastPos[0], command.values[0]*s+h+tw() ];
+	        pointOne = [ lastPos[0], lastPos[1]+tw() ];
+	        ctx.lineTo(pointOne[0], pointOne[1]);
+	    } else if (command.marker === 'C') {
+	        pointOne = [ command.values[0]*s+w+tw(),
+	                     command.values[1]*s+h+tw() ];
+	        pointTwo = [ command.values[2]*s+w+tw(),
+	                     command.values[3]*s+h+tw() ];
+	        lastPos  = [ command.values[4]*s+w,
+	                     command.values[5]*s+h ];
+	        pointThree = [ lastPos[0]+tw(), lastPos[1]+tw() ];
+	        ctx.bezierCurveTo(
+	                pointOne[0], pointOne[1],
+	                pointTwo[0], pointTwo[1],
+	                pointThree[0], pointThree[1]);
+	    }
+	});//forEach
+	ctx.stroke();        
+    ctx.restore();
+}//drawSvgPath
+
+// svgPathToCommands('M10,10 l 5,7 C-5,7.2,.3-16,24,10  z');
+// produces:
+//
+// [ { marker: "M", values: [ 10, 10 ] }, 
+//   { marker: "l", values: [ 5, 7 ] },
+//   { marker: "C", values: [ -5, 7.2, 0.3, -16, 24, 10 ] },
+//   { marker: "z", values: [ ] } ]
+
+// function svgPathToCommands(str) {
+// 	var markerRegEx = /[MmLlSsQqLlHhVvCcSsQqTtAaZz]/g;
+// 	var digitRegEx = /-?[0-9]*\.?\d+/g;
+//     var results = []; 
+//     var match; while ((match = markerRegEx.exec(str)) !== null) { results.push(match); };
+//     return results
+//         .map(function(match) {
+//             return { marker: str[match.index], 
+//                      index: match.index };
+//         })
+//         .reduceRight(function(all, cur) {
+//             var chunk = str.substring(cur.index, all.length ? all[all.length - 1].index : str.length);
+//             return all.concat([
+//                { marker: cur.marker, 
+//                  index: cur.index, 
+//                  chunk: (chunk.length > 0) ? chunk.substr(1, chunk.length - 1) : chunk }
+//             ]);
+//         }, [])
+//         .reverse()
+//         .map(function(command) {
+//             var values = command.chunk.match(digitRegEx);
+//             return { marker: command.marker, values: values ? values.map(parseFloat) : []};
+//         })
+// }//function svgPathToCommands
+
+// function drawStraight(ctx, pts, s) {
+// 	var w = width/2 - imageWidth/2*s,
+// 		h = height/2 - imageHeight/2*s;
+// 	var sc = 2;
+// 	var order = shuffleArray(d3.range(pts.length));
+// 	ctx.beginPath();
+// 	ctx.moveTo(pts[order[0]].x*s + w + tw()*sc, pts[order[0]].y*s + h + tw()*sc);
+// 	for(var i = 1; i < pts.length; i++) ctx.lineTo(pts[order[i]].x*s + w + tw()*sc, pts[order[i]].y*s + h + tw()*sc);
+// 	ctx.stroke();
+// }//drawStraight
+
+// //From http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+// function shuffleArray(array) {
+//     for (var i = array.length - 1; i > 0; i--) {
+//         var j = Math.floor(Math.random() * (i + 1));
+//         var temp = array[i];
+//         array[i] = array[j];
+//         array[j] = temp;
+//     }
+//     return array;
+// }
+
+function transformPath(pts) {
+	var newPts = [];
+	var w = width/2 - imageWidth/2*imageScale,
+		h = height/2 - imageHeight/2*imageScale;
+	pts.forEach(function(d) {
+		newPts.push({
+			x: d.x*imageScale + w,
+			y: d.y*imageScale + h,
+		});
+	})
+	return newPts;
+}//transformPath
+
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////////// Extra functions ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
+
+function tw() { return (Math.random()>0.5 ? 1 : -1) * Math.random()*scaling*5; }
+function twitch() { return (Math.random()>0.5 ? 1 : -1) * Math.random()*scaling*7; }
 
 //https://github.com/bgrins/TinyColor
 //Get a slightly different color, based on the provided color

@@ -90,15 +90,23 @@
                 <p>The best (start of a) dataset that I could find, <i>I kid you not</i>, was eventually found on <a href="http://www.gardenswithwings.com/identify-butterflies.html" target="_new">Gardens with Wing</a>. It at least had some pages that divided butterflies into main colors, wing shape, size and species. So I manually turned the results of this pages filters into a dataset with 86 butterflies (found <a href="data/nadieh/butterflies.csv" target="_new">here</a>).</p>
                 <a class="fancybox" href="data/nadieh/gardens_with_wings.png"> <img src="data/nadieh/gardens_with_wings.png" class="img-responsive img-month" alt="The website of Gardens with Wings"></a>
 
-                <p>The main color of a butterlfy I could use to color whatever path the butterfly was going to have on my screen, the size of the butterfly could guide the thickness of the line/point, whatever I was going to make of it, and the species maybe could guide something else (the type of the path?). That wasn't a lot of information to use, but hopefully it would be enough 😁</p>
+                <p>The main color of a butterfly I could use to color whatever path the butterfly was going to have on my screen, the size of the butterfly could guide the thickness of the line/point, whatever I was going to make of it, and the species maybe could guide something else (the type of the path?). That wasn't a lot of information to use, but hopefully it would be enough 😁</p>
 
                 <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-                <p></p>
+                <p>Once I figured out the butterfly and generative angle it seemed most appropriate to me to have the butterflies just flit around the screen. They always seem to fly quite randomly once they're near a plant going left, right, quite suddenly.</p>
+
+                <p>At first I thought about using the different path options to build up the butterfly's route, maybe Skippers would be straight lines and Swallowtails would be arcs. So that's what I drew below, but after having created a very rough version of the straight lines (1st image in the code section below) I knew that was not going to work :S However, after that point I didn't really go back to sketching, but continued to develop the paths by <i>sketching</i> with code, since it can be rather difficult to truly sketch the end result of random behavior, hehe.</p>
+                <a class="fancybox" href="sketches/nadieh/butterfly_sketch.jpg"> <img src="sketches/nadieh/butterfly_sketch_small.jpg" class="img-responsive img-month" alt="Very rough sketch of the butterflies"></a>
+
+                <p>I also drew some shapes because I wanted the front of each path to be visualized by a shape moving along, where each species would get its own shape. And the right page is really just questions or ideas I wanted to keep in mind while coding, such as "should a line (e.g. butterfly) quit after a certain time?"</p>
 
                 <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-                <p></p>
+                <p>I knew there would we many many paths all going across the screen at once with probably no interactivity, so this month I finally did it right, I started with canvas instead of d3. For my very first attempt I just wanted the simplest thing in the screen, which in my mind were representing the butterfly "particles" by random straight paths, going in a different direction on each X milliseconds.</p>
+                <a class="fancybox" href="code/nadieh/img/straight_lines.png"> <img src="code/nadieh/img/straight_lines_small.jpg" class="img-responsive img-month" alt="Very first result on screen with only straight lines"></a>
+
+                <p>Well, that looked absolutely dreadful. Which instantly taught me that making random things look beautiful was difficult (and I got even more respect of people like Jared Tarbell and Anders Hoff). </p>
 
             </div>
           </div>
