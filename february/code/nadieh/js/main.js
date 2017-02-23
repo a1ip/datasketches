@@ -380,7 +380,7 @@ function spawn(d) {
 	var force = getRandomNumber( 3, 8 );
 	var markerSize = getRandomNumber(1,2);
 	if(d.size === "medium") {
-		lineWidth = round2(getRandomNumber( 1.5, 3 ));
+		lineWidth = round2(getRandomNumber( 1.25, 2.5 ));
 		opacity = getRandomNumber( 0.006, 0.025 );
 		jitter = getRandomNumber( 0.5, 2 );
 		force = getRandomNumber( 4, 9 );
@@ -391,7 +391,6 @@ function spawn(d) {
 		jitter = getRandomNumber( 1, 2);
 		force = getRandomNumber( 6, 10 );
 		markerSize = getRandomNumber(3,4);
-		return;
 	}//else if
 
 	//But brighter whites
