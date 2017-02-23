@@ -28,6 +28,24 @@ a.image-link {
   top: 0%
   left: 0%;
 }
+canvas {
+  position: absolute;
+  top: 0%;
+  left: 0%;	
+}
+
+#title {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	width: 100%;
+	transform: translate(-50%,-50%);
+	font-family: 'Amatic SC', cursive;
+	font-size: 90px;
+	text-align: center;
+	color: black;
+	font-weight: 700;
+}
 
 /* --- Credits --- */
 
@@ -52,13 +70,14 @@ a.image-link {
 #credit {
 	position: absolute;
 	bottom: 15px;
-	left: 25px;
+	margin-left: 25px;
+	margin-right: 25px;
 	font-size: 12px;
 }
 
 #credit p {
 	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-bottom: 2px;
 }
 
 .credit-bold {

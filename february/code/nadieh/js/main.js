@@ -4,8 +4,17 @@ var height = (window.innerHeight || document.documentElement.clientHeight || doc
 var canvas = document.getElementById("canvas-lines");
 canvas.width = width;
 canvas.height = height;
-
 var ctx = canvas.getContext("2d");
+
+//Shoud the fronts of the paths be shown
+var showMarker = false;
+if(showMarker) {
+	//Second canvas for the markers only
+	var canvas_markers = document.getElementById("canvas-markers");
+	canvas_markers.width = width;
+	canvas_markers.height = height;
+	var ctxm = canvas_markers.getContext("2d");
+}//if
 
 //From https://www.html5rocks.com/en/tutorials/canvas/hidpi/#toc-1
 var devicePixelRatio = window.devicePixelRatio || 1;
@@ -40,7 +49,14 @@ var ratio = devicePixelRatio / backingStoreRatio;
 // }//if
 
 //For scaling if line thickness, forces and such based on screen size
-var scaling = Math.min(1, +round2(Math.max(width/1400, height/800)));
+var scaling = Math.min(1, +round2(Math.max(width/2500, height/1500)));
+//console.log(scaling);
+
+//Should the white logo on top be shown?
+var showLogo = getQueryVariable("logo") === "no" ? false : true;
+
+//Randomly choose to start from the center or outside the screen
+var originCenter = Math.random() > 0.5 ? 1 : 0;
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////// Create global variables /////////////////////////
@@ -51,6 +67,7 @@ ctx.lineCap = "round";
 
 var ID = 0;
 var bf = [];
+var timer;
 
 var colorMap = [];
 colorMap["red"] 	= "#CE1836";
@@ -64,13 +81,21 @@ colorMap["white"] 	= "#ffffff";
 colorMap["grey"] 	= "#BDB8AD";
 colorMap["black"] 	= "#000000";
 
-var radius = Math.min(200/scaling, width/3, height/3);
+var radius = Math.max(200*scaling, width/10, height/6);
 var hex = hexArray(width, height, radius);
 
 //Is the credit rect shown
 var shown = false;
 d3.select(".credit-rect").style("opacity", 0);
 
+var fontScale = d3.scaleLinear()
+	.domain([100,200])
+	.range([40,90]);
+
+//Path for the title
+var fontPath,
+	letters = [],
+	fontSize = fontScale(radius);
 
 //Path for the butterfly in the center
 var imageWidth = 90.7,
@@ -102,28 +127,68 @@ var butterflyPoints = [
 	// {x: 62.6, y: 34.5}, 
 	// {x: 76.4, y: 59.9}, 
 	// {x: 45.4, y: 50.6}, 
-	{x: 45.4, y: 32.6, fixed: true},
-	{x: 33.4, y: 15.6, fixed: false},
-	{x: 17.4, y: 3.6, fixed: false},
-	{x: 5.4, y: 2.6, fixed: false},
-	{x: 0.4, y: 12.6, fixed: false},
-	{x: 5.4, y: 32.6, fixed: false},
-	{x: 27.4, y: 34.6, fixed: true},
-	{x: 12.4, y: 44.6, fixed: true},
-	{x: 17.4, y: 63.6, fixed: false},
-	{x: 25.4, y: 67.6, fixed: false},
-	{x: 45.4, y: 50.6, fixed: false},
-	{x: 66.4, y: 67.6, fixed: true},
-	{x: 73.4, y: 63.6, fixed: false},
-	{x: 78.4, y: 44.6, fixed: false},
-	{x: 62.4, y: 34.6, fixed: false},
-	{x: 85.4, y: 32.6, fixed: true},
-	{x: 90.4, y: 12.6, fixed: false},
-	{x: 85.4, y: 2.6, fixed: false},
-	{x: 72.4, y: 3.6, fixed: false},
-	{x: 57.4, y: 15.6, fixed: false},
+	// {x: 45.4, y: 32.6, fixed: true},
+	// {x: 33.4, y: 15.6, fixed: false},
+	// {x: 17.4, y: 3.6, fixed: false},
+	// {x: 5.4, y: 2.6, fixed: false},
+	// {x: 0.4, y: 12.6, fixed: false},
+	// {x: 5.4, y: 32.6, fixed: false},
+	// {x: 27.4, y: 34.6, fixed: true},
+	// {x: 12.4, y: 44.6, fixed: false},
+	// {x: 17.4, y: 63.6, fixed: false},
+	// {x: 25.4, y: 67.6, fixed: false},
+	// {x: 45.4, y: 50.6, fixed: true},
+	// {x: 66.4, y: 67.6, fixed: false},
+	// {x: 73.4, y: 63.6, fixed: false},
+	// {x: 78.4, y: 44.6, fixed: false},
+	// {x: 62.4, y: 34.6, fixed: true},
+	// {x: 85.4, y: 32.6, fixed: false},
+	// {x: 90.4, y: 12.6, fixed: false},
+	// {x: 85.4, y: 2.6, fixed: false},
+	// {x: 72.4, y: 3.6, fixed: false},
+	// {x: 57.4, y: 15.6, fixed: false},
+	// {x: 45.4, y: 32.6, fixed: true},
+	{x: 45.4, y:32.6, fixed: true},
+	{x: 41.4, y:25.6, fixed: false},
+	{x: 33.4, y:15.6, fixed: false},
+	{x: 26.4, y:8.6, fixed: false},
+	{x: 17.4, y:3.6, fixed: false},
+	{x: 5.4, y:2.6, fixed: true}, //
+	{x: 0.4, y:12.6, fixed: false},
+	{x: 1.4, y:23.6, fixed: false},
+	{x: 5.4, y:32.6, fixed: false},
+	{x: 15.4, y:36.6, fixed: false},
+	{x: 27.4, y:34.6, fixed: true},
+	{x: 14.4, y:40.6, fixed: false},
+	{x: 11.4, y:48.6, fixed: false},
+	{x: 12.4, y:56.6, fixed: false},
+	{x: 17.4, y:63.6, fixed: false},
+	{x: 25.4, y:67.6, fixed: true},//
+	{x: 34.4, y:63.6, fixed: false},
+	{x: 41.4, y:56.6, fixed: false},
+	{x: 45.4, y:50.6, fixed: true},
+	{x: 49.4, y:56.6, fixed: false},
+	{x: 56.4, y:63.6, fixed: false},
+	{x: 66.4, y:67.6, fixed: true},//
+	{x: 73.4, y:63.6, fixed: false},
+	{x: 78.4, y:56.6, fixed: false},
+	{x: 79.4, y:48.6, fixed: false},
+	{x: 76.4, y:40.6, fixed: false},
+	{x: 62.4, y:34.6, fixed: true},
+	{x: 75.4, y:36.6, fixed: false},
+	{x: 85.4, y:32.6, fixed: false},
+	{x: 89.4, y:23.6, fixed: false},
+	{x: 90.4, y:12.6, fixed: false},
+	{x: 85.4, y:2.6, fixed: true},//
+	{x: 72.4, y:3.6, fixed: false},
+	{x: 64.4, y:8.6, fixed: false},
+	{x: 57.4, y:15.6, fixed: false},
+	{x: 49.4, y:25.6, fixed: false},
+	{x: 45.4, y:32.6, fixed: true},
 ];
+//Transform the points to the center and correct size
 butterflyPoints = transformPath(butterflyPoints);
+//var butterflyPointsExtr = getCurvePoints(butterflyPoints, 0.5);
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////// Read in the data /////////////////////////////
@@ -145,23 +210,32 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 		d.size = d.wingspan.split(" ")[0].toLowerCase();
 	})//for each
 
+	if(!showLogo) {
+		d3.select(".with-logo").style("display", "none");
+	}
+
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////// Let the butterflies loose ////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	var timer = d3.interval(function(elapsed) {
+	//spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
+	//console.log(bf[0].opacity, bf[0].markerSize);
 
-		//For now stop after 30 seconds
-		if (elapsed > 60000) {
-			timer.stop();
-		} else if (elapsed > 30000 && !shown) {
+	timer = d3.interval(function(elapsed) {
+
+		//Remove the marker canvas
+		if(showMarker) ctxm.clearRect(0, 0, width, height);
+
+		//Stop after 30 seconds
+		//if (elapsed > 60000) { timer.stop(); } 
+		if (elapsed > 30000 && !shown) {
 			d3.select(".credit-rect").transition().duration(4000).style("opacity", 1);
 			shown = true;
 		}//else if
 
 		//Create new butterflies
-		//for (var i = 0; i < Math.round(Math.random()*2); i++) spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
-		spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
+		for (var i = 0; i < Math.round(Math.random()*2); i++) spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
+		//spawn(data[Math.round(getRandomNumber(0, data.length-1))]);
 
 		//Remove non-alive butterflies
 		bf = bf.filter(function(d) { return d.alive; });
@@ -187,7 +261,7 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 	      	} else { //Create curved lines
 	      		ctx.globalAlpha = bf[i].opacity;
 	      		ctx.lineWidth = bf[i].lineWidth;
-		      	if(bf[i].lineWidth < 2) {
+		      	if(bf[i].lineWidth <= 1.5*scaling) {
 		      		ctx.setLineDash([bf[i].lineWidth/8, bf[i].lineWidth*4]); /*dashes are Xpx and spaces are Ypx*/
 		      	}//if
 
@@ -208,6 +282,17 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 				   bf[i].pos[bf[i].pos.length-1].y < 0 || bf[i].pos[bf[i].pos.length-1].y > height ) {
 					bf[i].outside = true;
 				}//if
+
+				if(showMarker) {
+					//Add a marker point to the top of the path
+					ctxm.fillStyle = bf[i].color;
+		      		ctxm.globalAlpha = 1; //bf[i].opacity*4;
+		      		ctxm.beginPath();
+					ctxm.arc(bf[i].pos[bf[i].pos.length-1].x, bf[i].pos[bf[i].pos.length-1].y, 
+							 bf[i].markerSize, 0, 2*Math.PI, 1);
+					ctxm.closePath();
+					ctxm.fill();
+				}//if
 			}//if
 
 		}//for i
@@ -219,54 +304,46 @@ d3.csv('../../data/nadieh/butterflies.csv', function (error, data) {
 			}//for i
 		}//if
 
-		//Draw the hexagon
-		ctx.strokeStyle = "white";
-      	ctx.globalAlpha = 0.05;
-      	ctx.lineWidth = 2*scaling;
-      	ctx.beginPath();
-      	ctx.moveTo(hex[0].x + twitch(), hex[0].y + twitch());
-		for (var i = 1; i < hex.length; i++) {
-			ctx.lineTo(hex[i].x + twitch(), hex[i].y + twitch());
-		}//for i
-		ctx.closePath();
-		ctx.stroke();
-		//Draw the butterfly
-		ctx.globalAlpha = 0.015;
-		drawSvgPath(ctx, width, height, imageScale, imageWidth, imageHeight, butterflyPath);
-		ctx.globalAlpha = 0.03;
-		drawCurve(ctx, butterflyPoints, Math.random());
-		jitterFixed(butterflyPoints, 0.75);
-		//Draw the circle
-      	ctx.globalAlpha = 0.03;
-		ctx.beginPath();
-      	ctx.arc(width/2 + twitch()*0.75, height/2 + twitch()*0.75, radius*1.2, 0, 2*Math.PI, 1);
-		ctx.closePath();
-		ctx.stroke();
+		if(showLogo) {
+			//Draw the hexagon
+			ctx.strokeStyle = "white";
+	      	ctx.globalAlpha = 0.05;
+	      	ctx.lineWidth = 2*scaling;
+	      	ctx.beginPath();
+	      	ctx.moveTo(hex[0].x + twitch(), hex[0].y + twitch());
+			for (var i = 1; i < hex.length; i++) {
+				ctx.lineTo(hex[i].x + twitch(), hex[i].y + twitch());
+			}//for i
+			ctx.closePath();
+			ctx.stroke();
+			//Draw the circle
+	      	ctx.globalAlpha = 0.03;
+			ctx.beginPath();
+	      	ctx.arc(width/2 + twitch()*0.75, height/2 + twitch()*0.75, radius*1.2, 0, 2*Math.PI, 1);
+			ctx.closePath();
+			ctx.stroke();
+			//Draw the butterfly
+			ctx.globalAlpha = 0.015;
+			ctx.lineWidth = 1;
+			drawSvgPath(ctx, width, height, imageScale, imageWidth, imageHeight, butterflyPath);
+			ctx.globalAlpha = 0.015;
+			drawCurve(ctx, butterflyPoints, Math.random());
+			jitterFixed(butterflyPoints, 0.3);
+			//Draw the title
+			ctx.globalAlpha = 0.015;
+			letters.forEach(function(l) {
+				drawCurve(ctx, l[0], Math.random());
+				jitter(l[0], Math.random()/4);
+			});//forEach
+		}//if
 
 	}, 50);//timer
 
 })//d3.csv
 
-//arc(x, y, radius, startAngle, endAngle, anticlockwise)
-
-//quadraticCurveTo(cp1x, cp1y, x, y)
-//Draws a quadratic Bézier curve from the current pen position to the end point specified by x and y, using the control point specified by cp1x and cp1y.
-
-//bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)
-//Draws a cubic Bézier curve from the current pen position to the end point specified by x and y, using the control points specified by (cp1x, cp1y) and (cp2x, cp2y).
-
 ///////////////////////////////////////////////////////////////////////////
 /////////////////////// Create & move the butterfly ///////////////////////
 ///////////////////////////////////////////////////////////////////////////
-
-function jitterFixed(d, jitter) {
-	for(var i = 0; i < d.length; i++) {
-		if(!d.fixed) {
-			d[i].x = +d[i].x + jitter * (Math.random() > 0.5 ? 1 : -1);
-			d[i].y = +d[i].y + jitter * (Math.random() > 0.5 ? 1 : -1);
-		}//fixed
-	}//for i
-}//jitterFixed
 
 //Jitter the existing path a bit
 function jitter(d, jitter) {
@@ -301,17 +378,24 @@ function spawn(d) {
 	var opacity = getRandomNumber( 0.02, 0.08 )
 	var jitter = getRandomNumber( 0.4, 1.4 );
 	var force = getRandomNumber( 3, 8 );
+	var markerSize = getRandomNumber(1,2);
 	if(d.size === "medium") {
 		lineWidth = round2(getRandomNumber( 1.5, 3 ));
-		opacity = getRandomNumber( 0.005, 0.025 );
+		opacity = getRandomNumber( 0.006, 0.025 );
 		jitter = getRandomNumber( 0.5, 2 );
 		force = getRandomNumber( 4, 9 );
+		markerSize = getRandomNumber(2,3);
 	} else if (d.size === "large") {
-		lineWidth = round2(getRandomNumber( 3, 8 ));
-		opacity = getRandomNumber( 0.0025, 0.005 );
-		jitter = getRandomNumber( 1, 3);
+		lineWidth = round2(getRandomNumber( 1.5, 3 ));
+		opacity = getRandomNumber( 0.006, 0.01 ); //lower than 0.006 isn't visible...
+		jitter = getRandomNumber( 1, 2);
 		force = getRandomNumber( 6, 10 );
+		markerSize = getRandomNumber(3,4);
+		return;
 	}//else if
+
+	//But brighter whites
+	//if(d.color === "white") opacity = 1.5*opacity;
 
 	var startLoc = findstartLoc(width, height);
 
@@ -320,10 +404,11 @@ function spawn(d) {
 		id: ID,			
 		
 		lineWidth: lineWidth*scaling,
-		radius: lineWidth*scaling,
+		radius: lineWidth*3*scaling,
 		opacity: opacity,
 		color: colorOffset(colorMap[d.color]),
 		species: d.species,
+		markerSize: markerSize*scaling,
 
 		x: startLoc[0], //width/2,
 		y: startLoc[1], //height/2,
@@ -355,6 +440,39 @@ function spawn(d) {
 	bf.push( butterfly );
 }//spawn
 
+//Get a random starting location that is just outside the screen
+function findstartLoc(width, height) {
+
+	//Start from the center
+	if(originCenter) {
+		return [width/2, height/2, getRandomNumber(0, 2*Math.PI)];
+		
+		//var pos = Math.floor(Math.random()*butterflyPointsExtr.length);
+		//return [butterflyPointsExtr[pos].x, butterflyPointsExtr[pos].y, getRandomNumber(0, 2*Math.PI)];
+		//var pos = Math.floor(Math.random()*hex.length);
+		//return [hex[pos].x, hex[pos].y, getRandomNumber(0, 2*Math.PI)];
+	} else {
+		//Start from just outside the screen
+		if(Math.random() > 0.5) {
+			if(Math.random() > 0.5) {
+				//before x axis
+				return [-10, getRandomNumber(0, height), getRandomNumber(0, Math.PI)];
+			} else {
+				//after x axis
+				return [width+10, getRandomNumber(0, height), getRandomNumber(Math.PI, 2*Math.PI)];
+			}//else
+		} else {
+			if(Math.random() > 0.5) {
+				//above y axis
+				return [getRandomNumber(0, width), -10, getRandomNumber(-Math.PI/2, Math.PI/2)];
+			} else {
+				//below y axis
+				return [getRandomNumber(0, height), height + 10, getRandomNumber(Math.PI/2, Math.PI*3/2)];
+			}//else
+		}//else
+	}//else
+}//function findstartLoc
+
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////// Get the hexagon points //////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -373,30 +491,6 @@ function hexArray(width, height, radius) {
 	var hexagonPath = hexagonPoly.map(function(p){ return {x: +round2(p[0]*hexRadius + width/2), y: +round2(p[1]*hexRadius + height/2)} });
 	return hexagonPath;
 }//function hexArray
-
-///////////////////////////////////////////////////////////////////////////
-///////////////////////// Sample points along line ////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
-function findstartLoc(width, height) {
-	if(Math.random() > 0.5) {
-		if(Math.random() > 0.5) {
-			//before x axis
-			return [-10, getRandomNumber(0, height), getRandomNumber(0, Math.PI)];
-		} else {
-			//after x axis
-			return [width+10, getRandomNumber(0, height), getRandomNumber(Math.PI, 2*Math.PI)];
-		}//else
-	} else {
-		if(Math.random() > 0.5) {
-			//above y axis
-			return [getRandomNumber(0, width), -10, getRandomNumber(-Math.PI/2, Math.PI/2)];
-		} else {
-			//below y axis
-			return [getRandomNumber(0, height), height + 10, getRandomNumber(Math.PI/2, Math.PI*3/2)];
-		}//else
-	}//else
-}//function findstartLoc
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Draw the curved lines //////////////////////////
@@ -488,6 +582,67 @@ function getCurvePoints(pts, tension, isClosed, numOfSegments) {
   return res;
 }//function getCurvePoints
 
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////// Draw the title ///////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+opentype.load('css/WorkSans-Thin.ttf', function(err, font) {
+    if (err) {
+         alert('Font could not be loaded: ' + err);
+    } else {
+    	//First get an idea of the width
+        fontPath = font.getPath('Marble Butterflies', 0, 0, fontSize);
+
+        //Get ± the width of the text
+        var textWidth = fontPath.commands[fontPath.commands.length-2].x;
+
+        //Now put it in the right location
+        fontPath = font.getPath('Marble Butterflies', width/2 - textWidth/2, height/2 - radius*1.4, fontSize);
+
+        //Split into separate letters
+        var letter = [];
+        fontPath.commands.forEach(function(l) {
+        	if(l.type !== "Z") {
+        		letter.push(l);
+        	} else {
+        		letters.push([letter])
+        		letter = [];
+        	}//esle
+        });//forEach
+
+		//font.drawPoints(ctx, 'Marble Butterflies', width/2 - textWidth/2, height/2 - radius*1.4, fontSize);
+    }//else
+});//openType
+
+// function fontDraw(ctx, list, color, stroke, fill) {
+//     ctx.beginPath();
+//     for (var i = 0; i < list.length; i += 1) {
+//         var cmd = list[i];
+//         if (cmd.type === 'M') {
+//             ctx.moveTo(cmd.x+tw2(), cmd.y+tw2());
+//         } else if (cmd.type === 'L') {
+//             ctx.lineTo(cmd.x+tw2(), cmd.y+tw2());
+//         } else if (cmd.type === 'C') {
+//             ctx.bezierCurveTo(cmd.x1+tw2(), cmd.y1+tw2(), cmd.x2+tw2(), cmd.y2+tw2(), cmd.x+tw2(), cmd.y+tw2());
+//         } else if (cmd.type === 'Q') {
+//             ctx.quadraticCurveTo(cmd.x1+tw2(), cmd.y1+tw2(), cmd.x+tw2(), cmd.y+tw2());
+//         } else if (cmd.type === 'Z') {
+//             ctx.closePath();
+//         }
+//     }
+
+//     if (fill) {
+//         ctx.fillStyle = color;
+//         ctx.fill();
+//     }
+//     if (stroke) {
+//         ctx.strokeStyle = color;
+//         ctx.lineWidth = 1;
+//         ctx.stroke();
+//     }
+// }//fontDraw
+
+//function tw2() { return (Math.random()>0.5 ? 1 : -1) * Math.random()*scaling*(Math.random() > 0.5 ? 20 : 1.5); }
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////// Draw complex canvas path ////////////////////////
@@ -583,6 +738,19 @@ function drawSvgPath(ctx, width, height, s, imageWidth, imageHeight, commandList
     ctx.restore();
 }//drawSvgPath
 
+//Twitch the SVG path a bit
+function tw() { return (Math.random()>0.5 ? 1 : -1) * Math.random()*scaling*5; }
+
+//Jitter the non fixed points
+function jitterFixed(d, jitter) {
+	for(var i = 0; i < d.length; i++) {
+		if(!d[i].fixed) {
+			d[i].x = +d[i].x + jitter * (Math.random() > 0.5 ? 1 : -1);
+			d[i].y = +d[i].y + jitter * (Math.random() > 0.5 ? 1 : -1);
+		}
+	}//for i
+}//jitterFixed
+
 // svgPathToCommands('M10,10 l 5,7 C-5,7.2,.3-16,24,10  z');
 // produces:
 //
@@ -638,6 +806,7 @@ function drawSvgPath(ctx, width, height, s, imageWidth, imageHeight, commandList
 //     return array;
 // }
 
+//Transform the path point to the center and correct height
 function transformPath(pts) {
 	var newPts = [];
 	var w = width/2 - imageWidth/2*imageScale,
@@ -646,6 +815,7 @@ function transformPath(pts) {
 		newPts.push({
 			x: d.x*imageScale + w,
 			y: d.y*imageScale + h,
+			fixed: d.fixed
 		});
 	})
 	return newPts;
@@ -655,7 +825,7 @@ function transformPath(pts) {
 ////////////////////////////// Extra functions ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-function tw() { return (Math.random()>0.5 ? 1 : -1) * Math.random()*scaling*5; }
+//Offset the hexagon and circle a bit
 function twitch() { return (Math.random()>0.5 ? 1 : -1) * Math.random()*scaling*7; }
 
 //https://github.com/bgrins/TinyColor
@@ -672,3 +842,15 @@ function getRandomNumber(start, end) { return ((Math.random() * (end-start)) + s
 
 //Round number to 2 behind the decimal
 function round2(num) { return (Math.round(num * 100)/100).toFixed(2); }//round2
+
+//See if the no-white version is needed
+//https://css-tricks.com/snippets/javascript/get-url-variables/
+function getQueryVariable(variable) {
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}//getQueryVariable
