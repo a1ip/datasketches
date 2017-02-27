@@ -218,7 +218,50 @@
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p></p>
+              <p>
+                I think this month's hard part was mainly in the ideation, and after that, the coding was pretty straight going.  It only took me as long as it did (2 weeks after finally settling on a good layout) because I cared too much.  And what I mean by that is because I'm so invested in Harry Potter, I really wanted to make a good visualization that would do it justice.
+              </p>
+
+              <p>
+                <a class="fancybox" href="code/shirley/gifs.png"> <img src="code/shirley/gifs.png" class="img-responsive img-month"></a>
+                The first thing I did was add book and film dates to my timeline (the above is that of Harry/Ginny stories), as well as gifs to give context (though let's be real, it's mostly just because I saw Nadieh add gifs and I wanted to procrastinate by looking for Harry Potter gifs).  The book and film dates did give great context though, especially the very interesting spikes between the 6th and 7th books.  My first guess for those spikes were that there were a lot of anticipation for the last book, but upon closer inspection, there's always a spike in the number of stories published around December and January because of the holidays.  (I couldn't figure out the March 2006 spike though...)
+              </p>
+
+              <p>
+                I then started looking into how I wanted to depict several pairings for a character:
+                <a class="fancybox" href="code/shirley/area.png"> <img src="code/shirley/area.png" class="img-responsive img-month"></a>
+                The above is a set of area charts showing Hermione and her pairing's stories by publish date.
+                (Believe it or not, that's the first time I've ever used <a href='https://github.com/d3/d3-shape#areas' target='_new'>d3.area</a>, though I've used <a href='https://github.com/d3/d3-shape#lines' target='_new'>d3.line</a> many times, and I quite liked the look.)  There are 6 charts overlapping each other in total, which, while pretty, made it hard to distinguish any trends.  I then tried stacking the area charts, and found it to be slightly easier to read:
+                <a class="fancybox" href="code/shirley/stacked_area.png"> <img src="code/shirley/stacked_area.png" class="img-responsive img-month"></a>
+                But it was still hard to make out the top most areas, the pairings with the least stories that blended into each other for most of the months.  I played around with a few of the <a href='https://github.com/d3/d3-shape#curves' target='_new'>curve options</a> (how to interpolate between the points in an area/line chart), and ultimately landed on <a href='https://github.com/d3/d3-shape#curveStep' target='_new'>d3.curveStep</a>:
+                <a class="fancybox" href="code/shirley/stacked_step_area.png"> <img src="code/shirley/stacked_step_area.png" class="img-responsive img-month"></a>
+                Though it has its downside (when the lines are too close together, it's hard to tell where one ends the next starts), I still liked it the most for how clean it looked.
+              </p>
+
+              <p>
+                Other then the stacked area chart timeline, I also had to figure out how to show the genres for each pairing.  The genres were important to me, because I wanted to see if specific pairings leaned heavier towards specific genres, and it turns out that they do; for example, Hermione/Ron stories tend to lean towards Drama, Fluff, and Humor, while top Hermione/Draco genres are Drama and Angst, with two or three times more in the Horror/Dark genre than all of Hermione's other pairings.  James/Lily's top genre is actually Humor, closely followed by Drama, while Harry/Ginny's top genres are Drama and Action/Adventure.
+              </p>
+
+              <p>
+                To show all this, I at first considered showing the cumulative number of stories for each genre, colored and placed according to how dark/serious or light/fluffy it was:
+                <a class="fancybox" href="code/shirley/genres_sketch.jpg"> <img src="code/shirley/genres_sketch.jpg" class="img-responsive img-month"></a>
+                But I was also interested in seeing if specific genres rose or fell because of occurrences in the books or films, and in the end decided to make it a timeline also (though I do wonder if my darker/lighter spectrum idea would have been more interesting):
+                <a class="fancybox" href="code/shirley/genres.png"> <img src="code/shirley/genres.png" class="img-responsive img-month"></a>
+                And I lined them up with my original timeline for the pairing colored by reviews:
+                <a class="fancybox" href="code/shirley/reviews_genres.png"> <img src="code/shirley/reviews_genres.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                Finally, I put in the graph of characters linked by their pairings, which was also the way for users to select which character's stories to explore (it defaulted to Hermione who had the most Romance stories written for her):
+                <a class="fancybox" href="code/shirley/graph.png"> <img src="code/shirley/graph.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                Some legends, intros, and footers later, my Harry Potter visualization was finally ready:
+                <a href="http://sxywu.com/hpff" target='_new'> <img src="code/shirley/final.png" class="img-responsive img-month"></a>
+                I really like the look of the whole piece and how it turned out (no doubt made much better by Catherine's character illustrations), but I feel mixed about the fact every visual was a timeline.  On one hand, I like that they were different takes on the same timeline, but I also wonder if I should have changed up the visuals to break up the monotony.  But if there's one thing I'm for sure happy about, it's that I managed to do this whole piece with gradients of only two colors: pink and purple.  I've been noticing that I'm quite over-reliant on color in my visuals, and had been wondering how I could remedy that, and I really like how this piece turned out in that context.
+              </p>
+
 
             </div>
           </div>
