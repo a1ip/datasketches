@@ -104,19 +104,52 @@
 
               <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
 
-              <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+              <h3 class="margin-top-10"><span class="light-grey">|</span> data</h3>
 
-              <p></p>
-              <!-- <a class="fancybox" href="data/shirley/years.png"> <img src="data/shirley/years.png" class="img-responsive img-month"></a> -->
+                <p>
+                  When Nadieh and I got the email from Alberto and Simon to work with Google News Lab, I was ecstatic and beyond intimidated.  Afterall, it was Google, it was Simon Rogers and Alberto Cairo, and they had search data back to 2004.  They had already published projects from <a href='http://www.worldpotus.com/#/' target='_new'>Accurat</a> and <a href='http://rhythm-of-food.net/#explore-foods' target='_new'>Truth & Beauty</a>, and I wasn't sure if I could live up to them.
+                </p>
 
-              <h3>week 2 <span class="light-grey">|</span> sketches</h3>
+                <p>
+                  But I was determined to try my best.
+                </p>
 
-              <p></p>
+                <p>
+                  Nadieh and I explored <a href='http://www.google.com/trends' target='_new'>Google Trends</a> and came up with several proposals, and Simon ended up choosing our Culture proposal.  Nadieh was to look into language, the most common words a country searched for to translate into English.  I wanted to look into travel, at what places a country searched for in another.
+                </p>
 
-              <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+                <p>
+                  Since Simon preferred having the data we displayed live instead of being a snapshot in time, I subcontracted my friend <a href='https://www.linkedin.com/in/charles-liu-929bb077/' target='_new'>Charles</a> to build a web app with a database to serve up the data we queried from Google Trends.  (Let me repeat, I subcontracted someone.  For the first time.  I feel so adult.)  Since I usually work by myself on my data sketches, it was a great feeling to have another person work on this project with me; not only did he get and clean all the data so I didn't have to, he was great to bounce ideas off of since he was so intimately familiar with the data.
+                </p>
 
-              <p></p>
+                <p>
+                  <a class="fancybox" href="data/shirley/initial.jpg"> <img src="data/shirley/initial.jpg" class="img-responsive img-month"></a>
+                  When I started, I wanted to know given a country, which countries were searching for that country the most.  I wanted to know, were they looking for cities in that country?  Museums?  Specific landmarks?  And as I started digging into the data with <a href='https://trends.google.com/trends/explore' target='_new'>Google Trend's Explore</a> function, I also started to wonder if countries looked for places geographically closer to them; this thought came to mind when I saw that Australia when looking at the U.S. searched primarily for places on the West Coast.
+                </p>
 
+                <p>
+                  The way Google Trends works, we can put in a set of search terms (up to five) and get back their search interest, all the originating regions, as well as related and top topics over a specific time period.  We can also specify a specific originating region, and a category to filter by.
+                  <a class="fancybox" href="data/shirley/trends.png"> <img src="data/shirley/trends.png" class="img-responsive img-month"></a>
+                  To get the data we needed, <a href='https://twitter.com/jealee_' target='_new'>Jennifer Lee</a> at the News Lab suggested we search for every country (with Google's list of country id's) filtered by Tourist Destinations and for all time.  Since Google Trends returns the search interest back to us as a relative value out of 100, she also suggested that we go through all the countries but leave one of the countries in as a baseline.  That way, we can accurately get the top 20 countries by travel search interest.
+                </p>
+
+                <p>
+                  After getting the top 20 countries, we got the top regions that searched the most for each of those countries every quarter starting from 2004, and then the top topics those regions searched for.  It sounded reasonable when we first came up with the queries, but when we got back the data, it was overwhelmingly vast.  I meandered for weeks trying to make sense of the data, creating visuals to dig through the data, trying to figure out if there was an interesting story buried in there.  At one point, we decided to get travel topics for all the countries around the world and not just the top 20, and we ended up with thousands of topics with hundreds of categories.
+                </p>
+
+                <p>
+                  To make sense of all the topics and categories, Charles pulled the topic details off of Google's <a href='https://developers.google.com/knowledge-graph/reference/rest/v1/' target='_new'>Knowledge Graph Search</a>, which includes images, descriptions, and an array of types for the topic.
+                </p>
+
+                <p>
+
+                </p>
+
+              <h3><span class="light-grey">|</span> sketch, code, repeat</h3>
+
+              <p>
+
+              </p>
             </div>
           </div>
 
