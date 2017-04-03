@@ -141,14 +141,72 @@
                   In order to make sense of the data beyond simple frequencies of countries searching for each other, we needed a way to categorize the data. We wanted categories that are specific enough to be meaningful but broad enough so that the viewer isn’t confused by the sheer number of categories. To determine which one of our 8 categories each topic belongs to, Charles pulled the topic details off of <a href='https://developers.google.com/knowledge-graph/reference/rest/v1/' target='_new'>Google's Knowledge Graph Search</a>, which includes images, descriptions, and an array of types for the topic. For each topic, its types in the Knowledge Graph correspond to a list of “tags” picked out of a predefined set. We immediately settled on cities, people, and nature being three of the categories. The remainder were more difficult to define -- among the types given by the Knowledge Graph, we wanted to pick the type of the proper specificity -- not too broad like “Thing” or “Place”, but also not too narrow like “LodgingBusiness” or “MovieTheater”. Charles produced a mapping of Knowledge Graph types to our chosen categories; for the 45 topics that either fell into multiple categories or no category, we manually assigned the category.
                 </p>
 
-                <p>
-
-                </p>
-
               <h3><span class="light-grey">|</span> sketch, code, repeat</h3>
 
               <p>
+                For my sketch and code sections, I really meandered trying to figure out my visuals and narrative.  I started by exploring for Brazil (the top searched country for travel) which countries had searched for it in a given year, defaulting to 2016:
+                <a class="fancybox" href="code/shirley/1.png"> <img src="code/shirley/1.png" class="img-responsive img-month"></a>
+                And this was really cool because I could see that the countries closer to Brazil did indeed search for it more, but I also wanted to see at a glance all the searches across the years.  I thought up these pie charts placed above the centroid of each country, with the radius being the amount of search interest, and the colors being the years.
+                <a class="fancybox" href="code/shirley/2-1.png"> <img src="code/shirley/2-1.png" class="img-responsive img-month"></a>
+                I liked that it showed me that some countries were searching for Brazil since 2004, but others only started searching recently - this was interesting, but potentially misleading; we couldn't tell from our data if those countries only started becoming interested recently, or only started using Google recently.  Alberto - who was responsible for our art direction - also adviced me against the bubble chart/pie chart hybrid, since it could potentially confuse readers.
+              </p>
 
+              <p>
+                So I went back to the drawing board.  This was around when I took my first stab at categorizing the topics (Charles did the more sophisticated version later on), and I wondered if instead of focusing on just one country at a time, I could show all the countries and their topics from the get go.  The idea was that each topic was a block colored by their category and grouped by their year, in a circle around an outline of the country it belonged to:
+                <a class="fancybox" href="sketches/shirley/3.jpg"> <img src="sketches/shirley/3.jpg" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/3-1.png"> <img src="code/shirley/3-1.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/3-2.png"> <img src="code/shirley/3-2.png" class="img-responsive img-month"></a>
+                Though this version was certainly pretty, the circle format made it hard to compare across the years and across the countries (though it did give a good at-a-glance summary of the countries), and Alberto urged me to try a normal bar graph instead.
+              </p>
+
+              <p>
+                And since I was going to turn it into a bar chart, I thought maybe I could play around with the length of the blocks (which I couldn't before).  I wondered if on top of category and year, if I could also encode the popularity of a topic as its width.  This was an unfortunate mistake, and I call this piece <em>The Plunger</em>:
+                <a class="fancybox" href="code/shirley/4-1.png"> <img src="code/shirley/4-1.png" class="img-responsive img-month"></a>
+                I did like my idea of trying to show the popularity of a topic, so this time around, I tried to do it with the radius of the circle.  So each circle represented the topic searched by an originating region, and the more overlap there was for a set of circles (and thus darker) the more originating regions that had searched for that topic for that country.
+                <a class="fancybox" href="code/shirley/4-4.png"> <img src="code/shirley/4-4.png" class="img-responsive img-month"></a>
+                I liked this much more than all my previous attempts, and iterated on it a bit more, including a section on the right that expanded all the topics in a year and lined them up by originating region.  The originating regions were positioned by their proximity to the country being searched.
+                <a class="fancybox" href="sketches/shirley/5.jpg"> <img src="sketches/shirley/5.jpg" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/5-1.png"> <img src="code/shirley/5-1.png" class="img-responsive img-month"></a>
+                The expanded topic view didn't give as much insight as I was hoping for (especially since the x-axis was arbitrary), so I tried a different approach of showing just the selected topic over the years.  To try to fix the overlap of the originating region names, I spaced them out evenly and also experimented with a heatmap to see if it would look cleaner.
+                <a class="fancybox" href="code/shirley/5-2.png"> <img src="code/shirley/5-2.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/5-3.png"> <img src="code/shirley/5-3.png" class="img-responsive img-month"></a>
+                I liked this last version enough, and got to brainstorming how I wanted to introduce the visuals and provide a key to reading them.  I decided I would find the most searched for topic (Pattaya, Thailand) and write a story around it that would also introduce the bubble graph and heatmap.  After digging through the two visualizations for any interesting insight into Pattaya and banging my head on the desk for an afternoon, I had to face the truth my friend was pointing out: perhaps I should rethink my visualizations, because though they were pretty enough, digging through them wasn't getting me anything useful.
+              </p>
+
+              <p>
+                So I went back to brainstorming and asking myself what it was that I wanted to learn about the data.  I remembered in my digging for Pattaya the seasonal nature of some of these topics' search interests, and wondered if there was something interesting there - were certain continents searched for more in summer as opposed to winter or vice versa?
+                <a class="fancybox" href="sketches/shirley/6-1.jpg"> <img src="sketches/shirley/6-1.jpg" class="img-responsive img-month"></a>
+                Here, the top section is Spring, and the bottom is Summer.  Everytime there is a tall set of blue blocks, it indicates the start of a continent, and the continents are ordered by closest to furthest from U.S.  Each block is a topic the U.S. has searched for. And yet again the visual didn't go the way I was hoping for; it turns out for each continent, the number of topics searched for are always the same across the seasons.
+                <a class="fancybox" href="code/shirley/6-1.png"> <img src="code/shirley/6-1.png" class="img-responsive img-month"></a>
+                I was so bummed that I left the cafe I was working at, but on my drive home realized that I should try to size the height of each topic by their search interest.  This actually gave interesting results for which I was really excited:
+                <a class="fancybox" href="code/shirley/6-2.png"> <img src="code/shirley/6-2.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/6-3.png"> <img src="code/shirley/6-3.png" class="img-responsive img-month"></a>
+                For each topic, I was curious about the rise and fall of of it across the years.
+                <a class="fancybox" href="sketches/shirley/7-1.jpg"> <img src="sketches/shirley/7-1.jpg" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/7-1.png"> <img src="code/shirley/7-1.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/7-2.gif"> <img src="code/shirley/7-2.gif" class="img-responsive img-month"></a>
+                The idea of it was that the x-axis was the search value out of 100, and each circle was a year.  An arc above meant that searches had increased across a year, whereas below indicated a decrease across a year.  I learned quite a bit from this visual: for example, a lot of topics actually peaked in 2004 and have been declining since, with a lot of them dipping the most between 2008 and 2011 (the years of the financial market crashes).  But as useful as those insights were, I had to admit that it took a lot of effort to get those insights from the visualization.
+              </p>
+
+              <p>
+                I put aside the visualizations for the topic details for a bit to work on the story.  In mid-February, I had taken a <a href='https://webanimationworkshops.com/' target='_new'>Web Animation Workshop</a> with <a href='https://twitter.com/sarah_edo' target='_new'>Sarah Drasner</a> and <a href='https://twitter.com/vlh' target='_new'>Val Head</a>, where I learned the basics of how to animate with Greensock.  With that knowledge, I wanted to create "scenes" that explained the visuals in detail, and my first pass was with scrollytelling.  However, I was unsatisfied with how much vertical space I was taking to show as simple of a concept as topics and categories.
+                <a class="fancybox" href="sketches/shirley/7-2.jpg"> <img src="sketches/shirley/7-2.jpg" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/7-3.gif"> <img src="code/shirley/7-3.gif" class="img-responsive img-month"></a>
+                I went back to working on the topic details, and went with Alberto's suggestion of a line chart, as well as the world map with bubbles over each originating region:
+                <a class="fancybox" href="code/shirley/7-4.png"> <img src="code/shirley/7-4.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/7-5.gif"> <img src="code/shirley/7-5.gif" class="img-responsive img-month"></a>
+                With these views, I was able to explore and find an interesting story about the seasonality between Qin Shi Huang and his Terracotta soldiers, and also the stories to introduce topics, categories, and my originating regions visualization.  I was especially interested in figuring out how to introduce those visualizations in a space-efficient way, and remembered the discussion between scrollytelling and stoppers a while back.  I decided to try animating with the stoppers, and I like the way it turned out; with Greensock I was able to have smooth transitions between each step and it's probably the best looking set of animations I've ever made.
+                <a class="fancybox" href="sketches/shirley/8.jpg"> <img src="sketches/shirley/8.jpg" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/8-1.gif"> <img src="code/shirley/8-1.gif" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/8-2.gif"> <img src="code/shirley/8-2.gif" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                It's been quite an arduous journey, where I changed my visualizations almost every week for a month (and I felt super bad every time Simon and Alberto gave feedback and I came back with a completely different visual the next week), didn't know what to do with my data, and didn't know if I was going to find anything interesting to tell.  I think a lot of the flip-flop really came from two things: the vastness of the data (and my lack of knowledge on how to glean through them efficiently for insights), and my not sticking to one question all the way through.  I jumped around asking a bunch of different questions, but ended up with the same questions as the beginning: what does a country search about other countries, and what do other countries search about it?
+              </p>
+
+              <p>
+                Despite all of that, I'm glad I was able to end up with something I can be proud of.  I like the stories I found, and I like the exploration section I ended up with (though I wonder if I've used too many colors).  And I'm really grateful to Simon and Alberto for giving me this opportunity and for their guidance, and of course for Nadieh's constant encouragement.
               </p>
             </div>
           </div>
