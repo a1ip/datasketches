@@ -138,7 +138,7 @@
                 </p>
 
                 <p>
-                  To make sense of all the topics and categories, Charles pulled the topic details off of Google's <a href='https://developers.google.com/knowledge-graph/reference/rest/v1/' target='_new'>Knowledge Graph Search</a>, which includes images, descriptions, and an array of types for the topic.
+                  In order to make sense of the data beyond simple frequencies of countries searching for each other, we needed a way to categorize the data. We wanted categories that are specific enough to be meaningful but broad enough so that the viewer isn’t confused by the sheer number of categories. To determine which one of our 8 categories each topic belongs to, Charles pulled the topic details off of <a href='https://developers.google.com/knowledge-graph/reference/rest/v1/' target='_new'>Google's Knowledge Graph Search</a>, which includes images, descriptions, and an array of types for the topic. For each topic, its types in the Knowledge Graph correspond to a list of “tags” picked out of a predefined set. We immediately settled on cities, people, and nature being three of the categories. The remainder were more difficult to define -- among the types given by the Knowledge Graph, we wanted to pick the type of the proper specificity -- not too broad like “Thing” or “Place”, but also not too narrow like “LodgingBusiness” or “MovieTheater”. Charles produced a mapping of Knowledge Graph types to our chosen categories; for the 45 topics that either fell into multiple categories or no category, we manually assigned the category.
                 </p>
 
                 <p>
