@@ -243,7 +243,6 @@ function drawAllMaps(error) {
 
 		//Cue up next frame then render the updates
 		requestAnimationFrame(animate);
-		//setTimeout(animate, 500)
 		renderer.render(stage);
 	};
 

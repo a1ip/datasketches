@@ -120,14 +120,14 @@ function drawFirstMap(error, coordRaw, data) {
 	//////////////////////////// Draw the other maps //////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	
-	// //Create a queue that loads in all the files first, before calling the draw function
-	// var q = d3.queue();
+	//Create a queue that loads in all the files first, before calling the draw function
+	var q = d3.queue();
 
-	// for(var i = 0; i < nWeeks; i++) {
-	// 	//Add each predefined file to the queue
-	// 	q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
-	// }//for i
-	// q.await(drawAllMaps);
+	for(var i = 0; i < nWeeks; i++) {
+		//Add each predefined file to the queue
+		q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
+	}//for i
+	q.await(drawAllMaps);
 
 }//function drawFirstMap
 
@@ -146,6 +146,9 @@ function drawAllMaps(error) {
 		var data = arguments[i];
 		data.forEach(function(d) {
 			d.layer = +d.layer;
+			d.color = d3.rgb(greenColor(d.layer));
+			d.opacity = opacityScale(d.layer);
+			d.size = radiusScale(d.layer);
 		});
 		//And save in a new array
 		maps[(i-1)] = data;
@@ -153,29 +156,110 @@ function drawAllMaps(error) {
 	//Delete the arguments since we now have all the data in a new variable
 	delete arguments;
 
-	//NOTE MAP 36 ISN'T COMPLETE - REDO DATA
-	var counter = 0;
-	timer = d3.interval(function() {	
-	//timer = setInterval(function() {
+	//I could not have done the part below without this great block 
+	//https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9
+	//by Alastair Dant (@ajdant)
+
+	//Animate the changes between states over time
+	const fps = 3;
+	const tweenTime = 1;
+	const tweenFrames = fps * tweenTime;
+
+	var counter = 0, 
+		frame = 0, 
+		progress = 0;
+
+	var nCircles = maps[0].length;
+
+	//Called every requestanimationframe
+	function animate() {
+
+		// track circles, states and scales
+		var currValue, nextValue, value, i;
+		var currColor, nextColor, r, g, b, color;
+		var currSize, nextSize, size;
+		var currOpacity, nextOpacity, opacity;
+
+		//Track progress as proportion of frames completed
+		frame = ++frame % tweenFrames;
+		progress = (frame / tweenFrames) || 0;
+
+		//console.log(counter, frame, progress);
+
+		//Increment state counter once we've looped back around
+		if (frame === 0) {
+			counter = ++counter % nWeeks;
+		};
+
+		var currMap = maps[counter],
+			nextMap = maps[(counter+1) % nWeeks];
 
 		//Clear the previous map
 		ctx.clearRect(0, 0, width, height);
 
-		//Draw each circle
-		maps[counter].forEach(function(d,i) {
-			ctx.fillStyle = greenColor(d.layer);
-			ctx.globalAlpha = opacityScale(d.layer);
+		//Update scale and color of all circles by
+		//Interpolating current state and next state
+		for (i = 0; i < nCircles; i++) {
+
+			//Trial and testing has taught me that it's best to 
+			//do all of these values separately
+			currSize = currMap[i].size;
+			nextSize = nextMap[i].size;
+			//Interpolate between them
+			size = currSize + ((nextSize - currSize) * progress);
+
+			currOpacity = currMap[i].opacity;
+			nextOpacity = nextMap[i].opacity;
+			//Interpolate between them
+			opacity = currOpacity + ((nextOpacity - currOpacity) * progress);
+
+			currColor = currMap[i].color;
+			nextColor = nextMap[i].color;
+			//Interpolate between them
+			r = currColor.r + ((nextColor.r - currColor.r) * progress);
+			g = currColor.g + ((nextColor.g - currColor.g) * progress);
+			b = currColor.b + ((nextColor.b - currColor.b) * progress);
+			color = d3.rgb(r,g,b);
+
+			//Finally set the new values on the circle and draw
+			ctx.fillStyle = color;
+			ctx.globalAlpha = opacity;
 			ctx.beginPath();
-			ctx.arc(xScale(loc[i].x), yScale(loc[i].y), radiusScale(d.layer), 0, 2*Math.PI, 1);
+			ctx.arc(xScale(loc[i].x), yScale(loc[i].y), size, 0, 2*Math.PI, 1);
 			ctx.closePath();
 			ctx.fill();
-		});
 
-		//Get ready for the next map
-		counter = (counter+1)%52;
+		}//for i
 
-		if (stopAnimation) { timer.stop(); } 
+		//Cue up next frame then render the updates
+		requestAnimationFrame(animate);
+	};
 
-	}, 100);
+	animate();
+
+	// //NOTE MAP 36 ISN'T COMPLETE - REDO DATA
+	// var counter = 0;
+	// timer = d3.interval(function() {	
+	// //timer = setInterval(function() {
+
+	// 	//Clear the previous map
+	// 	ctx.clearRect(0, 0, width, height);
+
+	// 	//Draw each circle
+	// 	maps[counter].forEach(function(d,i) {
+	// 		ctx.fillStyle = greenColor(d.layer);
+	// 		ctx.globalAlpha = opacityScale(d.layer);
+	// 		ctx.beginPath();
+	// 		ctx.arc(xScale(loc[i].x), yScale(loc[i].y), radiusScale(d.layer), 0, 2*Math.PI, 1);
+	// 		ctx.closePath();
+	// 		ctx.fill();
+	// 	});
+
+	// 	//Get ready for the next map
+	// 	counter = (counter+1)%52;
+
+	// 	if (stopAnimation) { timer.stop(); } 
+
+	// }, 100);
 
 }//function drawAllMaps
