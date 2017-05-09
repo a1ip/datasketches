@@ -24,7 +24,7 @@ var container = new PIXI.Container(0xFFFFFF);
 stage.addChild(container);
 
 //Create a texture to be used as a Sprite from a white circle png image
-var circleTexture = new PIXI.Texture.fromImage("circle.png");
+const circleTexture = new PIXI.Texture.fromImage("circle.png");
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////// Create global variables /////////////////////////
@@ -273,16 +273,14 @@ function drawAllMaps(error) {
 		//Track progress as proportion of frames completed
 		frame = ++frame % tweenFrames;
 		progress = (frame / tweenFrames) || 0;
-
 		//console.log(counter, frame, progress);
 
 		//Increment state counter once we've looped back around
 		if (frame === 0) {
 			counter = ++counter % nWeeks;
+			//Adjust the title
+			d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016");
 		};
-
-		//Adjust the title
-		d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016");
 
 		var currMap = maps[counter],
 			nextMap = maps[(counter+1) % nWeeks];
