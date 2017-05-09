@@ -313,7 +313,7 @@ if(isMobile) {
 		.attr("values", "0 0 0 0   0 0 0 0 0   0 0 0 0 0   0 0 0 0 0.4 0")
 	filter.append("feGaussianBlur")
 	  .attr("stdDeviation","3")
-	  .attr("result","coloredBlur");;
+	  .attr("result","coloredBlur");
 
 	var feMerge = filter.append("feMerge");
 	feMerge.append("feMergeNode")
