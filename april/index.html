@@ -20,11 +20,11 @@
 
     <!-- Moment -->
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
-    <script src="https://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.min.js"></script>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
 	  <!-- fancyBox -->
 	  <link rel="stylesheet" href="../plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
@@ -81,14 +81,29 @@
 
                 <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-                <p>After reading the quarterly magazine that I get for being a donor to the Dutch branche of the World Wildlife Fund (WWF) I suddenly wanted to make a visualization that related somehow to something that the WWF might do. I "pitched" the idea to Shirley and it was some back and forth on what more general topic would work for both of us. But then Shirley found her angle, the data visalization survey that had just come out, which gave us our topic of "community".</p>
+                <p>After reading the quarterly magazine that I get for being a donor to the Dutch branch of the World Wildlife Fund (WWF) I suddenly wanted to make a visualization that related somehow to something that the WWF might do. I "pitched" the idea to Shirley and it was some back and forth on what more general topic would work for both of us. But then Shirley found her angle, the data visualization survey that had just come out, which gave us our topic of "community".</p>
 
-                <p>At the start of April I asked twitter for help on datasets that one might associate with the WWF and got a whole lot of links (thank you very much dear followers!). However, due to being in the US the entire month doing conferences & meetups, and creating the presentation that Shirley and I had to make for OpenVisConf in Boston on April 24th (which was another amazing conference!), I didn't get to do anything with the links until I was waiting at the gate of my flight back home to Amsterdam on April 26th.</p>
+                <p>At the start of April I asked twitter for help on datasets that one might associate with the WWF and got a whole lot of links (thank you very much dear followers!). However, due to being in the US the entire month doing conferences & meet-ups, and creating the presentation that Shirley and I had to make for OpenVisConf in Boston on April 24th (which was another amazing conference!), I didn't get to do anything with the links until I was waiting at the gate of my flight back home to Amsterdam on April 26th.</p>
 
-                <p>I received a lot of tracking data links, either animal or buoy in the water. But what I noticed was that the search functionalities of these data repositories is rather aimed at researchers. I could search datasets based on the id of a paper or name of a scientist. But I couldn't request all tracking data of, say, whales...</p>
-                <p>Another type of dataset that was very prevalent were the choropleths, filled regions on a map, representing things such as protected areas, or animal habitations zones.</p>
-                <p>I just started to meander through the links, and I don't know how I got there, but at some point I found myself on the website of <a href="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/index.php" target="_new">NOAA STAR</a>, the Center for satellite applications and research. Again, just clicking around, and then I came across an image of the Earth, colored by vegetation health.
-                <a class="fancybox" href="data/nadieh/img/STAR_vegetation_health.jpg"> <img src="data/nadieh/img/STAR_vegetation_health.jpg" class="img-responsive img-month" alt="STAR map showing vegetation health for week 1 of January 2016"></a>
+                <p>I received a lot of tracking data links, either animal or buoy in the water. But what I noticed was that the search functionalities of these data repositories is rather aimed at researchers. I could search datasets based on the id of a paper or name of a scientist. But I couldn't request all tracking data of, say, whales...</br>
+                Another type of dataset that was very prevalent were the choropleths, filled regions on a map, representing things such as protected areas, or animal habitations zones.</p>
+
+                <p>I started to meander through the links, going down the "Earth" related datasets, and I don't know how I got there, but at some point I found myself on the website of <a href="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/index.php" target="_new">NOAA STAR</a>, the Center for satellite applications and research. Again, just clicking around, and then I came across an image of the Earth, colored by vegetation health.
+                <a class="fancybox" href="data/nadieh/img/STAR_vegetation_health.png"> <img src="data/nadieh/img/STAR_vegetation_health.png" class="img-responsive img-month" alt="STAR map showing vegetation health for week 1 of January 2016"></a>
+
+                <p>And they had a map like this for every week in the year of 2016. There was also an option that showed all the maps in a very rough animation (as in, going through 52 images within a minute or two). Even though the animation was crude, and the color palette, well, not optimal, I really liked seeing the changes of vegetation health throughout the year. I wanted to visualize the same thing, but do it in my own style. To show a continuously "breathing Earth".</br>
+                Furthermore, after seeing what <a href="https://twitter.com/dominikus" target="_new">Dominikus Baur</a> did with the <a href="https://github.com/pixijs/pixi.js" target="_new">Pixi.JS library</a> while we were both presenting at the INCH conference last March, I knew I wanted to try it out as well. I just needed a project where I wanted to visualize <i>a lot</i> of points. And this idea seemed like the perfect opportunity to give Pixi a try, since there are often thousands if not millions of "pixels" in an image.</p>
+
+                <p>I was very happy to see that STAR also <a href="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/vh_ftp.php">shared the data</a> behind the images. However, I had never worked with these levels of sophisticated geo-data before; hdf and GeoTiff files. Thankfully, I had just seen the wonderful presentation of <a href="https://twitter.com/rsimmon" target="_new">Rob Simmon</a> on GDAL (the Geospatial Data Abstraction Library) and according to Google GDAL should be able to open these kinds of files. I followed the quick and hassle free installation steps as outlined in <a href="https://medium.com/planet-stories/a-gentle-introduction-to-gdal-part-1-a3253eb96082" target="_new">Rob's blog</a>. However, instead of trying to parse the files in the command-line, which Rob's talk was about, I of course took to Google again to see if there was an R package instead. And of course there was! The appropriately named <a href="https://cran.r-project.org/web/packages/rgdal/index.html" target="_new">rgdal</a>.</p>
+
+                <p>After also getting rgdal to work (you can read my steps at the top of this R file), my next few hours were filled with understanding how to read in a GeoTiff file, what it contained, how I could play with it and finally how I could map it (& how to switch map projections!). My first goal was to recreate one of the images from the STAR website, so  I knew I had done and understood the steps to get to that point. It took about 6-8 hours, but I have to admit, even with the sub-optimal color palette, I think the image below is just amazing in its detailed nature (just check out the bigger version by clicking on the image below).</p>
+                <a class="fancybox" href="data/nadieh/img/worldMap_in_R.png"> <img src="data/nadieh/img/worldMap_in_R.jpg" class="img-responsive img-month" alt="Recreated map in R"></a>
+
+                <p>Great, but these images were about 22 million pixels/datapoints, per week! There was no way I could load that amount of data into the browser, and do that 52 times. I therefore had to create lower resolution files. I did some tests and eventually reducing the resolution to about 50 000 (non-water representing) pixels looked like a good middle ground. Small enough for WebGL to handle, but high enough to still being able to see interesting details.</p>
+
+                <p>As a note to somebody who I had this particular talk with: Yes, I could've made many highly detailed images and then turned these into a mp4 movie. Maybe that would've given the smallest file size with the highest resolution. But! That wasn't my goal this month! I wanted to learn something completely new; WebGL (or libraries build on top of WebGL) and this seemed like a good, but interesting starting project. Therefore, out of a purist approach, I wanted the eventual visualization on my screen to consist of <i>actual numeric data</i> read in and then made visual as thousands of small circles.</p>
+
+                <p>My next challenge was to think of a way to save the data in the smallest file(s) as possible. Even 52 weeks of 50.000 datapoints each week is going to take a several megabytes. During my time trying to understand the file & data I noticed that > 90% of the weeks contained exactly the same number of datapoints. After some more investigation I saw that the x and y locations of these points were exactly the same. The first four weeks in the year had missing data, but they didn't contain any x-y locations that weren't in the other 48 weeks. I therefore made a separate file containing the x and y variable, and 52 separate files only containing 1 variable; the level of vegetation health. The row number would then connect the vegetation health value to the correct x and y location on the map. This made the file size of 1 week (i.e. 50.000 values) about 250 kB (I also checked out gzip'ing the files, but I couldn't find a way to then unzip them in the browser. Sad, because the files were reduced to only 35 kB)</p>
 
                 <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
@@ -96,7 +111,61 @@
 
                 <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
+                <p>I started out getting the data on the screen with HTML5 canvas. I knew that D3's standard approach of SVGs was definitely going to fail here, since I also wanted to implement transitions, so I didn't even try that. Thankfully, canvas being quite straightforward (in my opinion), having done a few other projects in canvas over the past year (like <a href="../february/code/nadieh" target="_new">February's Marble Butterflies</a>), and only wanting to plot circles at certain locations, I got that working for 1 map/week's worth of data quite easily. Below are some steps in the process; first just the circles in the right location (all having the same size and color, but differing opacity); adding colors; adding a multiply blend mode and different circle sizes.</p>
+                <a class="fancybox" href="code/nadieh/img/canvas_steps.png"> <img src="code/nadieh/img/canvas_steps.png" class="img-responsive img-month" alt="Three steps showing the creation of the map in canvas"></a>
+
+                <p>I then made a simple interval function that would switch between the 52 maps as fast as it could. So not even animating the whole! And as expected, that took about 1-2 seconds per map. Definitely not a "frame rate" that I could use for natural looking animations.</p>
+
+                <p>Therefore, I dove into PixiJS. I opened up a whole bunch of examples, especially those that I could find on <a href="http://blockbuilder.org/search#text=pixi" target="_new">blockbuilder.org</a>, combining d3 with Pixi, like <a href="http://blockbuilder.org/iros/36a18c646f3b3b5b9001ad758bfd8a08" target="_new">this one</a> by <a href="https://twitter.com/ireneros?lang=en" target="_new">Irene Ros</a>. Let me spare you the details of the code, in short, it was surprisingly easy to pick up (especially when I later went into regl and WebGL o_O). However, there were some weird pixel rounding "things" going on...</p>
+                <a class="fancybox" href="code/nadieh/img/pixi_graphics.png"> <img src="code/nadieh/img/pixi_graphics_small.png" class="img-responsive img-month" alt="Strange effects in plotting circles with Pixi"></a>
+                <p>And it was slow...</p>
+
+                <p>I couldn't really find a solution to making Pixi faster for my specific case through Google, so I did the next best thing; I asked it on Twitter</p>
+                <a class="fancybox" href="code/nadieh/img/twitter_question.png"> <img src="code/nadieh/img/twitter_question.png" class="img-responsive img-month" alt="Asking my question on twitter"></a>
+
+                <p>And damn, I was so amazed by all of the people providing ideas! Even when I explained more, or asked more, practically all would reply and even share some sandbox examples :D I had several conversations going on, some of them focusing on using regl or three.js, but I also got some interesting ideas on Pixi. For example, I learned that to get the fastest performance of Pixi (even when it uses WebGL) is to use something called "Sprites". You can sort of see this as small "images". <a href="http://www.goodboydigital.com/pixijs/bunnymark/" target="_new">This example</a> with bunnies shows it quite well, you can have hundreds of thousands of the same 5 "bunny" images bouncing around. But I didn't have images, I had thousands of slightly different circles. But then I got the following tweet from <a href="https://twitter.com/mattdesl" target="_new">Matt DesLauriers</a></p>
+                <a class="fancybox" href="code/nadieh/img/twitter_pixi_png_idea.png"> <img src="code/nadieh/img/twitter_pixi_png_idea.png" class="img-responsive img-month" alt="The idea to use a white circle png in Pixi"></a>
+
+                <p>Which I tried and it worked <i>and</i> it seemed fast enough! However, when you looked closely the circles weren't very circular. They looked rather pixelated...</p>
+                <a class="fancybox" href="code/nadieh/img/pixi_not_circles.png"> <img src="code/nadieh/img/pixi_not_circles_small.png" class="img-responsive img-month" alt="Pixelated circles with Pixi Sprites"></a>
+
+                <p>And that's when I decided to give <a href="https://github.com/regl-project/regl" target="_new">regl</a> a try. Especially after <a href="https://twitter.com/pbesh" target="_new">Peter Beshai</a> uploaded <a href="https://bl.ocks.org/pbeshai/51d05995c5410a52116f89738144c622" target="_new">this block that animates 100.000 points with regl</a> (which is also mesmerizing to look at). A bit later <a href="https://twitter.com/rickyreusser" target="_new">Ricky Reusser</a> send me <a href="http://rickyreusser.com/smoothly-animating-points-with-regl/" target="_new">the same demo</a>, but coded slightly different, for those interested.</p>
+
+                <p>At first I hoped to get the hang of regl by going through the above (and other) examples. But after an hour or so I acknowledged the fact that I really didn't understand <i>anything</i> yet and that I had to read some introductions to WebGL, GLSL and shaders, hehe 😅 It took a while, but my brain slowly started to wrap it's head around the concepts of shaders, fragments, vertices, attributes, uniforms and varyings (some sites that helped me <a href="https://www.html5rocks.com/en/tutorials/three/intro/" target="_new">1</a>, <a href="https://www.html5rocks.com/en/tutorials/webgl/shaders/" target="_new">2</a>, <a href="https://github.com/Jam3/jam3-lesson-webgl-shader-intro" target="_new">3</a>, <a href="https://github.com/Jam3/jam3-lesson-webgl-shader-threejs" target="_new">4</a> and of course the <a href="https://thebookofshaders.com/" target="_new">Book of Shaders</a> (although I only skimmed through the first 2 chapters)).</p>
+
+                <p>I started out with this very simple <a href="https://bl.ocks.org/1wheel/e025cbd91ac499d360a8b3346cb6f9e7" target="_new">example block</a> by <a href="https://twitter.com/adamrpearce" target="_new">Adam Pearce</a> creating a triangle. I then slowly starting adjusting it, relying heavily on Peter Beshai's example of 100.000 points, to show circles on a map. Some things could stump me for quite some time, like opacity not acting like I expected (lower left image), but often I found some small blog or note that would explain what was going on and how to "fix" it.</p>
+                <a class="fancybox" href="code/nadieh/img/regl_steps_simple_map.png"> <img src="code/nadieh/img/regl_steps_simple_map_small.png" class="img-responsive img-month" alt="Several steps of getting the map working in regl"></a>
+
+                <p>It wasn't only Pixi that had it's difficulties in placing the circles on the map without strange effects. I got the below interesting circular-ish pattern in regl at some point. I eventually fixed the whole issue by making sure the size of the map would be an exact multiple of the number of points on the x and y.</p>
+                <a class="fancybox" href="code/nadieh/img/regl_pixel_rounding.png"> <img src="code/nadieh/img/regl_pixel_rounding_small.jpg" class="img-responsive img-month" alt="Strange effects in regl"></a>
+
                 <p></p>
+                <a class="fancybox" href="code/nadieh/img/regl_map_no_blend.png"> <img src="code/nadieh/img/regl_map_no_blend_small.jpg" class="img-responsive img-month" alt="Regl map as close to the canvas version as I could get it"></a>    
+
+                <p>But again, if I zoomed in, the same pixelated effect, ARGH!</p>
+                <a class="fancybox" href="code/nadieh/img/regl_pixelated.png"> <img src="code/nadieh/img/regl_pixelated_small.png" class="img-responsive img-month" alt="Regl map still pixelated"></a>   
+
+                <p>
+                <a href="http://bl.ocks.org/monfera/85aa9627de1ae521d3ac5b26c9cd1c49" target="_new">A block showing how to transition between shapes in regl</a> by <a href="https://twitter.com/monfera" target="_new">Robert Monfera</a>
+
+                <a href="https://bl.ocks.org/tafsiri/dba04b04ae949760f96f97a2fba23ba6" target="_new">a remix on Peter Beshai's block, but then with circles instead of squares</a> by <a href="https://twitter.com/tafsiri" target="_new">Yannick Assogba</a>
+
+                <a href="http://bl.ocks.org/rflow/39692bd181fb1eb0b077a4caf886b077" target="_new">A block animating a lot of circles using ReGL</a> (looking amazing btw) custom made by <a href="https://twitter.com/ajdant" target="_new">Alastair Dant</a>
+                </p>
+
+                <p>While trying to find info on getting anti aliased circles in regl I came across a snippet that showed that Pixi actually has an "anti alias" setting! And not long before. <a href="https://twitter.com/ajdant" target="_new">Alastair Dant</a> made <a href="https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9" target="_new">this animated Pixi example</a> that I tested with 50.000 circles and that still seemed to work fine. These two interesting avenues to explore brought me back to my Pixi based map.</p>
+
+                <p>Btw, at some point during the data preparation I made a big change in how I saved the final files, which gave me this result where the locations were suddenly randomly shuffled, oops 😅 Not such an interesting map anymore.</p>
+                <a class="fancybox" href="code/nadieh/img/pixi_map_random_ordering.png"> <img src="code/nadieh/img/pixi_map_random_ordering_small.jpg" class="img-responsive img-month" alt="Accidental random ordering of the pixel locations"></a>
+
+                <p>Another hour or two of work adjusting the example by Alastair to my data, playing with some anti-aliasing things and I was finally looking at a smoothly changing map!</p>
+                <video class="img-responsive img-month" src="code/nadieh/img/pixi_smoothly_changing_circles.mp4" autoplay loop></video>
+
+                <p>I had learned many things while going through all the wonderful examples people had send me. I therefore returned to the canvas version to see if I could make it faster. After a bit of messing around, I managed to get it to switch between maps every 0.5 seconds, but that is still too slow for a smooth animation (nonetheless, you can see that version live and working here).</p>
+
+                <p>Having chosen the regl library to work with WebGL I decided not to go into ThreeJS as well. It was just too much to handle in one week, so many new programming libraries, hehe. Nonetheless, I still want to share these 3 examples that show the concept of changing circles that were send to my through Twitter: <a href="https://bl.ocks.org/robinhouston/4b736b08f369a94c419098a72e11c47b" target="_new">a block with 50.000 circles animated with WebGL</a> custom made by <a href="https://twitter.com/robinhouston" target="_new">Robin Houston</a>. Two codepens with 50.000 animated circles, one using <a href="http://codepen.io/mattdesl/pen/YVENeL" target="_new">circle "pentagons" in ThreeJS</a> and another version using <a href="http://codepen.io/mattdesl/pen/LyOxqd" target="_new">DataTextures in ThreeJS</a> both custom made by <a href="https://twitter.com/mattdesl" target="_new">Matt DesLauriers</a>.</p>
+
+                <p>I would specifically like to thank Matt DesLauriers, Ricky Reusser, Peter Beshai, Alastair Dant, Yannick Assogba, Robin Houston, Robert Monfera, Amelia Bellamy-Royds, Jan Willem Tulp, Mike Brondbjerg, Paul Murray, and Mathieu Henri who have all helped me in different areas of either PixiJS, regl, ThreeJS and more. I don't think I would've been able to get my map(s) working (especially within 1 week) without the ideas and examples they shared. THANK YOU!</p>
 
             </div>
           </div>

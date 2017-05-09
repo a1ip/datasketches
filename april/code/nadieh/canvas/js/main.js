@@ -33,6 +33,7 @@ if (devicePixelRatio !== backingStoreRatio) {
 ///////////////////////// Create global variables /////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
+//Color blend mode for all
 ctx.globalCompositeOperation = "multiply";
 
 //Number of weeks in the year :)
@@ -46,8 +47,7 @@ var maxL = 0.8,
 	minL = 0; //-0.06;
 
 //Timer variables
-var timer,
-	stopAnimation = false;
+var stopAnimation = false;
 
 ///////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Create scales /////////////////////////////
@@ -75,7 +75,7 @@ var greenColor = d3.scaleLinear()
 	.range(["#d9e537", "#008800"]);
 
 ///////////////////////////////////////////////////////////////////////////
-//////////////////////////// Read in the data /////////////////////////////
+/////////////////////////// Read in a first map ///////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
 d3.queue() 
@@ -117,20 +117,25 @@ function drawFirstMap(error, coordRaw, data) {
 	});
 
 	///////////////////////////////////////////////////////////////////////////
-	//////////////////////////// Draw the other maps //////////////////////////
+	////////////////////////// Read in the other maps /////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	
-	//Create a queue that loads in all the files first, before calling the draw function
-	var q = d3.queue();
+	setTimeout(function() {
+		//Create a queue that loads in all the files first, before calling the draw function
+		var q = d3.queue();
 
-	for(var i = 0; i < nWeeks; i++) {
-		//Add each predefined file to the queue
-		q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
-	}//for i
-	q.await(drawAllMaps);
+		for(var i = 0; i < nWeeks; i++) {
+			//Add each predefined file to the queue
+			q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
+		}//for i
+		q.await(drawAllMaps);
+	}, 1000);
 
 }//function drawFirstMap
 
+///////////////////////////////////////////////////////////////////////////
+/////////////////////// Animate through all the maps //////////////////////
+///////////////////////////////////////////////////////////////////////////
 function drawAllMaps(error) {
 
 	if (error) throw error;
@@ -158,7 +163,7 @@ function drawAllMaps(error) {
 
 	//I could not have done the part below without this great block 
 	//https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9
-	//by Alastair Dant (@ajdant)
+	//to make it performant, by Alastair Dant (@ajdant)
 
 	//Animate the changes between states over time
 	const fps = 3;
@@ -232,34 +237,9 @@ function drawAllMaps(error) {
 		}//for i
 
 		//Cue up next frame then render the updates
-		requestAnimationFrame(animate);
+		if(!stopAnimation) requestAnimationFrame(animate);
 	};
 
 	animate();
-
-	// //NOTE MAP 36 ISN'T COMPLETE - REDO DATA
-	// var counter = 0;
-	// timer = d3.interval(function() {	
-	// //timer = setInterval(function() {
-
-	// 	//Clear the previous map
-	// 	ctx.clearRect(0, 0, width, height);
-
-	// 	//Draw each circle
-	// 	maps[counter].forEach(function(d,i) {
-	// 		ctx.fillStyle = greenColor(d.layer);
-	// 		ctx.globalAlpha = opacityScale(d.layer);
-	// 		ctx.beginPath();
-	// 		ctx.arc(xScale(loc[i].x), yScale(loc[i].y), radiusScale(d.layer), 0, 2*Math.PI, 1);
-	// 		ctx.closePath();
-	// 		ctx.fill();
-	// 	});
-
-	// 	//Get ready for the next map
-	// 	counter = (counter+1)%52;
-
-	// 	if (stopAnimation) { timer.stop(); } 
-
-	// }, 100);
 
 }//function drawAllMaps

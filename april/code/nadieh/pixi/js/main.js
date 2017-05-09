@@ -1,27 +1,29 @@
-var mapRatio = 0.5078871;
+///////////////////////////////////////////////////////////////////////////
+//////////////////////////// Set the PIXI stage ///////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
-var width = 2000; //document.body.clientWidth; 
-var height = Math.round(mapRatio * width);
+const width = 2000; //document.body.clientWidth;
+const mapRatio = 0.5078871;
+const height = Math.round(mapRatio * width);
 
 //Create the canvas
 var renderer = new PIXI.autoDetectRenderer(width, height, { backgroundColor : 0xffffff, antialias: true });
-renderer.view.className = "rendererView";
-//renderer.setBlendMode = PIXI.blendModes.MULTIPLY;
 //Add to the document
 document.getElementById("chart").appendChild(renderer.view);
+renderer.view.id = "canvas-map";
 
 //Get the visible size back to 1000 px
 renderer.view.style.width = (width*0.5) + 'px';
 renderer.view.style.height = (height*0.5) + 'px';
 
 //Create the root of the scene graph
-var stage = new PIXI.Stage(0xFFFFFF); //or PIXI.Container(0xFFFFFF); or PIXI.Stage(0xFFFFFF);
+var stage = new PIXI.Stage(0xFFFFFF); //or PIXI.Container(0xFFFFFF);
 
 //var container = new PIXI.ParticleContainer(50000, [true, true, false, false, true]);
 var container = new PIXI.Container(0xFFFFFF);
 stage.addChild(container);
 
-//var circleTexture = new PIXI.Texture.fromImage("pixel.png");
+//Create a texture to be used as a Sprite from a white circle png image
 var circleTexture = new PIXI.Texture.fromImage("circle.png");
 
 ///////////////////////////////////////////////////////////////////////////
@@ -29,21 +31,88 @@ var circleTexture = new PIXI.Texture.fromImage("circle.png");
 ///////////////////////////////////////////////////////////////////////////
 
 //Number of weeks in the year :)
-var nWeeks = 52;
+const nWeeks = 52;
 
 //Will save the coordinate mapping
 var loc;
 
 //The minimum and maximum values of the layer variable
-var maxL = 0.8,
-	minL = 0; //-0.06;
+const maxL = 0.8,
+	  minL = 0; //-0.06;
 
-//Timer variables
-var timer,
-	stopAnimation = false;
+//Will stop the animation
+var animate;
+var stopAnimation = false;
+//Function attached to the stop/start button
+d3.select("#stopstart").on("click", function() { 
+	if(!stopAnimation) {
+		stopAnimation = true;
+		d3.select(this).text("restart the animation");
+	} else {
+		stopAnimation = false;
+		d3.select(this).text("stop the animation");
+		animate();
+	}//else 
+});
 
+//Will save the drawn circle settings
 var dots = [];
-var circles = [];
+
+//Months during those weeks
+var months = [
+	"January", //1
+	"January", //2
+	"January", //3
+	"January", //4
+	"February", //5
+	"February", //6
+	"February", //7
+	"February", //8
+	"February & March", //9
+	"March", //10
+	"March", //11
+	"March", //12
+	"March & April", //13
+	"April", //14
+	"April", //15
+	"April", //16
+	"April & May", //17
+	"May", //18
+	"May", //19
+	"May", //20
+	"May", //21
+	"May & June", //22
+	"June", //23
+	"June", //24
+	"June", //25
+	"June & July", //26
+	"July", //27
+	"July", //28
+	"July", //29
+	"July", //30
+	"August", //31
+	"August", //32
+	"August", //33
+	"August", //34
+	"August & September", //35
+	"September", //36
+	"September", //37
+	"September", //38
+	"September & October", //39
+	"October", //40
+	"October", //41
+	"October", //42
+	"October", //43
+	"October & November", //44
+	"November", //45
+	"November", //46
+	"November", //47
+	"November & December", //48
+	"December", //49
+	"December", //50
+	"December", //51
+	"December & January", //52
+];
 
 ///////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Create scales /////////////////////////////
@@ -95,26 +164,28 @@ function drawFirstMap(error, coordRaw, data) {
 		d.x = +d.x;
 		d.y = +d.y;
 	});
+	//Save the variable to global
 	loc = coordRaw	
 
 	data.forEach(function(d) {
 		d.layer = +d.layer;
 	});
 
+	//Adjust the title
+	d3.select("#week").text("Week " + 22 + ", " + months[22-1] + ", 2016");
+
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////// Create first map ////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	console.log("adding circles");
-
 	//Draw each circle
 	data.forEach(function(d,i) {
 		//Get the color in the weird hex format
-		var finalFill = +("0x" + tinycolor(greenColor(d.layer)).toHex());
+		var fill = d3.rgb(greenColor(d.layer));
+		var color = color = (fill.r << 16) + (fill.g << 8) + fill.b;
 
 		var dot = new PIXI.Sprite(circleTexture);
-		//var dot = new PIXI.Sprite(tex);
-		dot.tint = finalFill;
+		dot.tint = color;
 		dot.blendMode = PIXI.blendModes.MULTIPLY;
 		dot.anchor.x = 0.5;
 		dot.anchor.y = 0.5;
@@ -123,28 +194,31 @@ function drawFirstMap(error, coordRaw, data) {
 		dot.scale.x = dot.scale.y = pixelScale(d.layer);
 		dot.alpha = opacityScale(d.layer);
 
+		//Save the circle
 		dots[i] = dot;
 
+		//Add to the container
 		container.addChild(dot);
 	});//forEach
 
-	console.log("rendering");
+	//Render to the screen
 	renderer.render(stage);
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Draw the other maps //////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 	
-	console.log("reading in maps");
+	setTimeout(function() {
+		console.log("reading in maps");
+		//Create a queue that loads in all the files first, before calling the draw function
+		var q = d3.queue();
 
-	//Create a queue that loads in all the files first, before calling the draw function
-	var q = d3.queue();
-
-	for(var i = 0; i < nWeeks; i++) {
-		//Add each predefined file to the queue
-		q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
-	}//for i
-	q.await(drawAllMaps);
+		for(var i = 0; i < nWeeks; i++) {
+			//Add each predefined file to the queue
+			q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
+		}//for i
+		q.await(drawAllMaps);
+	}, 2000);
 
 }//function drawFirstMap
 
@@ -155,8 +229,6 @@ function drawAllMaps(error) {
 	///////////////////////////////////////////////////////////////////////////
 	////////////////////////// Final data preparation /////////////////////////
 	///////////////////////////////////////////////////////////////////////////
-
-	console.log("loaded all maps");
 
 	//Create array that will hold all data
 	maps = new Array(nWeeks);
@@ -175,9 +247,11 @@ function drawAllMaps(error) {
 	//Delete the arguments since we now have all the data in a new variable
 	delete arguments;
 
+	console.log("prepared all maps");
+
 	//I could not have done the part below without this great block 
 	//https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9
-	//by Alastair Dant (@ajdant)
+	//to make it performant, by Alastair Dant (@ajdant)
 
 	//Animate the changes between states over time
 	const fps = 5;
@@ -189,7 +263,7 @@ function drawAllMaps(error) {
 		progress = 0;
 
 	//Called every requestanimationframe
-	function animate() {
+	animate = function() {
 		// track circles, states and scales
 		var currValue, nextValue, value, i;
 		var currColor, nextColor, r, g, b, color;
@@ -206,6 +280,9 @@ function drawAllMaps(error) {
 		if (frame === 0) {
 			counter = ++counter % nWeeks;
 		};
+
+		//Adjust the title
+		d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016");
 
 		var currMap = maps[counter],
 			nextMap = maps[(counter+1) % nWeeks];
@@ -242,7 +319,7 @@ function drawAllMaps(error) {
 		}//for i
 
 		//Cue up next frame then render the updates
-		requestAnimationFrame(animate);
+		if(!stopAnimation) requestAnimationFrame(animate);
 		renderer.render(stage);
 	};
 
