@@ -47,7 +47,64 @@ var maxL = 0.8,
 	minL = 0; //-0.06;
 
 //Timer variables
-var stopAnimation = false;
+var animate,
+	stopAnimation = false;
+
+//Months during those weeks
+var months = [
+	"January", //1
+	"January", //2
+	"January", //3
+	"January", //4
+	"February", //5
+	"February", //6
+	"February", //7
+	"February", //8
+	"February & March", //9
+	"March", //10
+	"March", //11
+	"March", //12
+	"March & April", //13
+	"April", //14
+	"April", //15
+	"April", //16
+	"April & May", //17
+	"May", //18
+	"May", //19
+	"May", //20
+	"May", //21
+	"May & June", //22
+	"June", //23
+	"June", //24
+	"June", //25
+	"June & July", //26
+	"July", //27
+	"July", //28
+	"July", //29
+	"July", //30
+	"August", //31
+	"August", //32
+	"August", //33
+	"August", //34
+	"August & September", //35
+	"September", //36
+	"September", //37
+	"September", //38
+	"September & October", //39
+	"October", //40
+	"October", //41
+	"October", //42
+	"October", //43
+	"October & November", //44
+	"November", //45
+	"November", //46
+	"November", //47
+	"November & December", //48
+	"December", //49
+	"December", //50
+	"December", //51
+	"December & January", //52
+];
 
 ///////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Create scales /////////////////////////////
@@ -105,6 +162,9 @@ function drawFirstMap(error, coordRaw, data) {
 	///////////////////////////// Create first map ////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
+	//Set the title
+	d3.select("#week").text("Week " + 22 + ", " + months[21] + ", 2016");
+
 	//Draw each circle
 	data.forEach(function(d,i) {
 		//Create each circle
@@ -161,6 +221,21 @@ function drawAllMaps(error) {
 	//Delete the arguments since we now have all the data in a new variable
 	delete arguments;
 
+	console.log("prepared all maps");
+
+	d3.select("#stopstart").text("stop the animation");
+	//Function attached to the stop/start button
+	d3.select("#stopstart").on("click", function() { 
+		if(!stopAnimation) {
+			stopAnimation = true;
+			d3.select(this).text("restart the animation");
+		} else {
+			stopAnimation = false;
+			d3.select(this).text("stop the animation");
+			animate();
+		}//else 
+	});
+
 	//I could not have done the part below without this great block 
 	//https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9
 	//to make it performant, by Alastair Dant (@ajdant)
@@ -177,7 +252,7 @@ function drawAllMaps(error) {
 	var nCircles = maps[0].length;
 
 	//Called every requestanimationframe
-	function animate() {
+	animate = function() {
 
 		// track circles, states and scales
 		var currValue, nextValue, value, i;
@@ -194,6 +269,8 @@ function drawAllMaps(error) {
 		//Increment state counter once we've looped back around
 		if (frame === 0) {
 			counter = ++counter % nWeeks;
+			//Adjust the title
+			d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016");
 		};
 
 		var currMap = maps[counter],
@@ -238,7 +315,8 @@ function drawAllMaps(error) {
 
 		//Cue up next frame then render the updates
 		if(!stopAnimation) requestAnimationFrame(animate);
-	};
+
+	}//function animate
 
 	animate();
 

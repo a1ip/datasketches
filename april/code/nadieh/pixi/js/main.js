@@ -43,17 +43,6 @@ const maxL = 0.8,
 //Will stop the animation
 var animate;
 var stopAnimation = false;
-//Function attached to the stop/start button
-d3.select("#stopstart").on("click", function() { 
-	if(!stopAnimation) {
-		stopAnimation = true;
-		d3.select(this).text("restart the animation");
-	} else {
-		stopAnimation = false;
-		d3.select(this).text("stop the animation");
-		animate();
-	}//else 
-});
 
 //Will save the drawn circle settings
 var dots = [];
@@ -248,6 +237,19 @@ function drawAllMaps(error) {
 	delete arguments;
 
 	console.log("prepared all maps");
+
+	d3.select("#stopstart").text("stop the animation");
+	//Function attached to the stop/start button
+	d3.select("#stopstart").on("click", function() { 
+		if(!stopAnimation) {
+			stopAnimation = true;
+			d3.select(this).text("restart the animation");
+		} else {
+			stopAnimation = false;
+			d3.select(this).text("stop the animation");
+			animate();
+		}//else 
+	});
 
 	//I could not have done the part below without this great block 
 	//https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9

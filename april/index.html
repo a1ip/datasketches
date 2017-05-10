@@ -145,14 +145,6 @@
                 <p>But again, if I zoomed in, the same pixelated effect, ARGH!</p>
                 <a class="fancybox" href="code/nadieh/img/regl_pixelated.png"> <img src="code/nadieh/img/regl_pixelated_small.png" class="img-responsive img-month" alt="Regl map still pixelated"></a>   
 
-                <p>
-                <a href="http://bl.ocks.org/monfera/85aa9627de1ae521d3ac5b26c9cd1c49" target="_new">A block showing how to transition between shapes in regl</a> by <a href="https://twitter.com/monfera" target="_new">Robert Monfera</a>
-
-                <a href="https://bl.ocks.org/tafsiri/dba04b04ae949760f96f97a2fba23ba6" target="_new">a remix on Peter Beshai's block, but then with circles instead of squares</a> by <a href="https://twitter.com/tafsiri" target="_new">Yannick Assogba</a>
-
-                <a href="http://bl.ocks.org/rflow/39692bd181fb1eb0b077a4caf886b077" target="_new">A block animating a lot of circles using ReGL</a> (looking amazing btw) custom made by <a href="https://twitter.com/ajdant" target="_new">Alastair Dant</a>
-                </p>
-
                 <p>While trying to find info on getting anti aliased circles in regl I came across a snippet that showed that Pixi actually has an "anti alias" setting! And not long before, <a href="https://twitter.com/ajdant" target="_new">Alastair Dant</a> made <a href="https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9" target="_new">this animated Pixi example</a> that I tested with 50.000 circles which still seemed to work smoothly. These two interesting avenues to explore brought me back to my Pixi based map.</p>
 
                 <p>Btw, at some point during the data preparation I made a big change in how I saved the final files. However, I made an error, which gave the result below where the locations are randomly shuffled, oops... Not such an interesting map anymore 😅</p>
@@ -163,6 +155,14 @@
 
                 <p>I had learned many things while going through all the wonderful examples people had send me. I therefore returned to the canvas version to see if I could make it faster. After a bit of messing around, I managed to get it to switch between maps every 0.5 seconds, but that is still too slow for a smooth animation (nonetheless, you can see that version live and working here).</p>
 
+                <p>
+                <a href="http://bl.ocks.org/monfera/85aa9627de1ae521d3ac5b26c9cd1c49" target="_new">A block showing how to transition between shapes in regl</a> by <a href="https://twitter.com/monfera" target="_new">Robert Monfera</a>
+
+                <a href="https://bl.ocks.org/tafsiri/dba04b04ae949760f96f97a2fba23ba6" target="_new">a remix on Peter Beshai's block, but then with circles instead of squares</a> by <a href="https://twitter.com/tafsiri" target="_new">Yannick Assogba</a>
+
+                <a href="http://bl.ocks.org/rflow/39692bd181fb1eb0b077a4caf886b077" target="_new">A block animating a lot of circles using ReGL</a> (looking amazing btw) custom made by <a href="https://twitter.com/ajdant" target="_new">Alastair Dant</a>
+                </p>
+                
                 <p>Having chosen the regl library to work with WebGL I decided not to go into ThreeJS as well. It was just too much to handle in one week, so many new programming libraries, hehe. Nonetheless, I still want to share these 3 examples that show the concept of changing circles that were send to my through Twitter: <a href="https://bl.ocks.org/robinhouston/4b736b08f369a94c419098a72e11c47b" target="_new">a block with 50.000 circles animated with WebGL</a> custom made by <a href="https://twitter.com/robinhouston" target="_new">Robin Houston</a>. Two codepens with 50.000 animated circles, one using <a href="http://codepen.io/mattdesl/pen/YVENeL" target="_new">circle "pentagons" in ThreeJS</a> and another version using <a href="http://codepen.io/mattdesl/pen/LyOxqd" target="_new">DataTextures in ThreeJS</a> both custom made by <a href="https://twitter.com/mattdesl" target="_new">Matt DesLauriers</a>.</p>
 
                 <p>I would specifically like to thank Matt DesLauriers, Ricky Reusser, Peter Beshai, Alastair Dant, Yannick Assogba, Robin Houston, Robert Monfera, Amelia Bellamy-Royds, Jan Willem Tulp, Mike Brondbjerg, Paul Murray, and Mathieu Henri who have all helped me in different areas of either PixiJS, regl, ThreeJS and more. I don't think I would've been able to get my map(s) working (especially within 1 week) without the ideas and examples they shared. THANK YOU!</p>
