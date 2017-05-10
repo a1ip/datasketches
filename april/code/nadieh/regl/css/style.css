@@ -37,6 +37,10 @@ a:hover {
 	margin-bottom: 25px;
 	color: #87a21a;
 }
+#note {
+	font-size: 11px;
+	margin-bottom: 30px;
+}
 
 #chart {
 	text-align: center;
