@@ -368,9 +368,9 @@ function createReglMap(isMobile) {
 		const tweenFrames = fps * tweenTime;
 
 		//Keeps track of the week and progress within interpolation
-		var counter = startMap,
-			frame,
-			progress;
+		var counter = startMap-1,
+			frame = 0,
+			progress = 0;
 
 		var currMap,
 			nextMap;
