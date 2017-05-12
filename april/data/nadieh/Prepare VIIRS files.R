@@ -106,20 +106,7 @@ for(i in 1:52) {
 }#for i
 rm(fileN,factor,i)
 
-#Week 40 isn't actually available, so make one that is the average between the two
-map39 <- maps[39][[1]]
-map41 <- maps[41][[1]]
-# #Check if there is a difference between the pixels of the two maps - there isn't
-# diffX <- setdiff(map39$x, map41$x)
-# diffY <- setdiff(map39$y, map41$y)
-# sum(map39$x == map41$x); sum(map39$y == map41$y)
-#So I can just average between the two
-map40 <- map39
-map40$layer <- rowMeans(cbind(map39$layer, map41$layer), na.rm=T)
-#Now save that map into the maps variable
-maps[[40]] <- map40
-rm(map39,map40,map41)
-
+#Save results
 saveRDS(maps, file="mapData.rds")
 
 # #Create a png plot of all maps
@@ -166,14 +153,14 @@ for(i in 1:52) {
   #Write the layer variable to a file - the row number will coincide with the location
   write.csv(map, file=paste0("VIIRS final data layers/mapData-week-",i,".csv"), row.names=F)
   
-  #Add data to bigger df
-  names(map) <- paste0("week_",i)
-  allMaps <- cbind(allMaps,map)
+  # #Add data to bigger df
+  # names(map) <- paste0("week_",i)
+  # allMaps <- cbind(allMaps,map)
   
-  #Investigated gzip, but couldn't find a way for the browser to unzip it...
-  #setwd("~/Downloads/datasketches april/VIIRS final data layers")
-  #system(paste0("gzip mapData-week-",i,".csv"))
-  #setwd("~/Downloads/datasketches april")
+  # #Investigated gzip, but couldn't find a way for the browser to unzip it...
+  # setwd("~/Downloads/datasketches april/VIIRS final data layers")
+  # system(paste0("gzip mapData-week-",i,".csv"))
+  # setwd("~/Downloads/datasketches april")
 }#for i
 rm(map, i)
 #Write all data in one data frame to file - But is even bigger than 52 separate ones
