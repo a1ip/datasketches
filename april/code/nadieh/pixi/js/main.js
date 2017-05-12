@@ -246,7 +246,7 @@ function createPixiMap(isMobile) {
 		maps = new Array(nWeeks);
 
 		//Save each map in a variable, loop over it to make all variables numeric
-		//From: https://github.com/tungs/breathe
+		//From: https://github.com/tungs/breathe and https://breathejs.org/Using-Breathe.html
 		breathe.times(nWeeks+1, function(i) {
 			if(i !== 0) {
 				var data = rawMaps[i];
@@ -263,7 +263,7 @@ function createPixiMap(isMobile) {
 		.then(function() {
 			//Run after the map data loop above is finished
 			console.log("prepared all maps, starting animation");
-			
+
 			//Delete the arguments since we now have all the data in a new variable
 			delete arguments;
 			delete rawMaps;
