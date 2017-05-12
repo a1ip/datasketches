@@ -227,37 +227,69 @@ function createCanvasMap(isMobile) {
 		////////////////////////// Final data preparation /////////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
+		console.log("preparing map data");
+
 		//Create array that will hold all data
+		var rawMaps = arguments;
+		var nCircles;
 		maps = new Array(nWeeks);
-		//Save each map in a variable, loop over it to make all variables numeric
-		for (var i = 1; i < arguments.length; i++) {
-			var data = arguments[i];
-			data.forEach(function(d) {
-				d.layer = +d.layer;
-				d.color = d3.rgb(greenColor(d.layer));
-				d.opacity = opacityScale(d.layer);
-				d.size = radiusScale(d.layer);
+
+		//From: https://github.com/tungs/breathe
+		breathe.times(nWeeks+1, function(i) {
+			if(i !== 0) {
+				var data = rawMaps[i];
+				data.forEach(function(d) {
+					d.layer = +d.layer;
+					d.color = d3.rgb(greenColor(d.layer));
+					d.opacity = opacityScale(d.layer);
+					d.size = radiusScale(d.layer);
+				});
+				//And save in a new array
+				maps[(i-1)] = data;
+			}//if
+		})
+		.then(function() {
+			//Run after the map data loop above is finished
+			console.log("prepared all maps, starting animation");
+			
+			//Delete the arguments since we now have all the data in a new variable
+			delete arguments;
+			delete rawMaps;
+
+			d3.select("#stopstart").text("stop the animation (yes it's very slow, but it's really going trough all 52 weeks)");
+			//Function attached to the stop/start button
+			d3.select("#stopstart").on("click", function() { 
+				if(!stopAnimation) {
+					stopAnimation = true;
+					d3.select(this).text("restart the animation");
+				} else {
+					stopAnimation = false;
+					d3.select(this).text("stop the animation");
+					animate();
+				}//else 
 			});
-			//And save in a new array
-			maps[(i-1)] = data;
-		}//for i
-		//Delete the arguments since we now have all the data in a new variable
-		delete arguments;
 
-		console.log("prepared all maps");
-
-		d3.select("#stopstart").text("stop the animation (yes it's very slow, but it's really going trough all 52 weeks)");
-		//Function attached to the stop/start button
-		d3.select("#stopstart").on("click", function() { 
-			if(!stopAnimation) {
-				stopAnimation = true;
-				d3.select(this).text("restart the animation");
-			} else {
-				stopAnimation = false;
-				d3.select(this).text("stop the animation (yes it's very slow, but it's really going trough all 52 weeks)");
-				animate();
-			}//else 
+			nCircles = maps[0].length;
+			//Start the animation
+			animate();
 		});
+
+
+		// //Old standard loop function
+		// //Save each map in a variable, loop over it to make all variables numeric
+		// for (var i = 1; i < arguments.length; i++) {
+		// 	var data = arguments[i];
+		// 	data.forEach(function(d) {
+		// 		d.layer = +d.layer;
+		// 		d.color = d3.rgb(greenColor(d.layer));
+		// 		d.opacity = opacityScale(d.layer);
+		// 		d.size = radiusScale(d.layer);
+		// 	});
+		// 	//And save in a new array
+		// 	maps[(i-1)] = data;
+		// }//for i
+		// //Delete the arguments since we now have all the data in a new variable
+		// delete arguments;
 
 		//I could not have done the part below without this great block 
 		//https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9
@@ -271,8 +303,6 @@ function createCanvasMap(isMobile) {
 		var counter = startMap-1, 
 			frame = 0, 
 			progress = 0;
-
-		var nCircles = maps[0].length;
 
 		//Called every requestanimationframe
 		animate = function() {
@@ -341,7 +371,7 @@ function createCanvasMap(isMobile) {
 
 		}//function animate
 
-		animate();
+		//animate();
 
 	}//function drawAllMaps
 

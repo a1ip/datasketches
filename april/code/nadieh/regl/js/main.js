@@ -238,13 +238,14 @@ function createReglMap(isMobile) {
 				}//void main
 			`,
 
-			depth: { enable: false },
+			depth: {enable: false, mask: false},
 
 			blend: {
 				enable: true,
 				//func: { srcRGB: 'src alpha', dstRGB: 'one minus src alpha', srcAlpha: 1, dstAlpha: 'one minus src alpha' }, //1
 				func: {src: 1, dst: 'one minus src alpha'}, //2
 				//func: {src: 'one minus dst alpha', dst: 'src color'}, //never got this working correctly with opacities, but it does look like a multiply blend
+				//func: {src: 'dst color', dst: 'one minus src alpha'}, //seems to work for Pixi, but I just get a white screen...
 				equation: { rgb: 'add', alpha: 'add' },
 			},
 
@@ -423,57 +424,96 @@ function createReglMap(isMobile) {
 
 		//Create array that will hold all data
 		maps = new Array(nWeeks);
+		var rawMaps = arguments;
+
 		//Save each map in a variable, loop over it to make all variables numeric
-		for (var i = 1; i < arguments.length; i++) {
-			var data = arguments[i];
-			data.forEach(function(d) {
-				d.layer = +d.layer;
-				d.opacity = opacityScale(d.layer);
-				d.color = greenColorRGB(d.layer);
-				//Premultiply the colors by the alpha
-				d.color[0] = d.color[0] * d.opacity;
-				d.color[1] = d.color[1] * d.opacity;
-				d.color[2] = d.color[2] * d.opacity;
-				d.size = radiusScale(d.layer); 
+		//From: https://github.com/tungs/breathe
+		breathe.times(nWeeks+1, function(i) {
+			if(i !== 0) {
+				var data = rawMaps[i];
+				data.forEach(function(d) {
+					d.layer = +d.layer;
+					d.opacity = opacityScale(d.layer);
+					d.color = greenColorRGB(d.layer);
+					//Premultiply the colors by the alpha
+					d.color[0] = d.color[0] * d.opacity;
+					d.color[1] = d.color[1] * d.opacity;
+					d.color[2] = d.color[2] * d.opacity;
+					d.size = radiusScale(d.layer); 
+				});
+				//Now create a new array that shuffles the data a bit
+				var dataObject = {
+					colors: data.map(function(d) { return d.color; }),
+					opacities: data.map(function(d) { return d.opacity; }),
+					sizes: data.map(function(d) { return 2*d.size; }),	
+				};
+				//And save in a new array
+				maps[(i-1)] = dataObject;
+			}//if
+		})
+		.then(function() {
+			//Run after the map data loop above is finished
+			console.log("prepared all maps, starting animation");
+			
+			//Delete the arguments since we now have all the data in a new variable
+			delete arguments;
+			delete rawMaps;
+
+			//Set the stop and restart of the animation on the button below
+			d3.select("#stopstart").text("stop the animation");
+			//Function attached to the stop/start button
+			d3.select("#stopstart").on("click", function() { 
+				if(!stopAnimation) {
+					ticker.cancel();
+					stopAnimation = true;
+					d3.select(this).text("restart the animation");
+				} else {
+					d3.select(this).text("stop the animation");
+					stopAnimation = false;
+					animate();
+				}//else 
 			});
 
-			//debugger;
+			//Start the animation
+			animate();
+		});
 
-			//Now create a new array that shuffles the data a bit
-			var dataObject = {
-				colors: data.map(function(d) { return d.color; }),
-				opacities: data.map(function(d) { return d.opacity; }),
-				sizes: data.map(function(d) { return 2*d.size; }),	
-			};
+		// //Create array that will hold all data
+		// maps = new Array(nWeeks);
+		// //Save each map in a variable, loop over it to make all variables numeric
+		// for (var i = 1; i < arguments.length; i++) {
+		// 	var data = arguments[i];
+		// 	data.forEach(function(d) {
+		// 		d.layer = +d.layer;
+		// 		d.opacity = opacityScale(d.layer);
+		// 		d.color = greenColorRGB(d.layer);
+		// 		//Premultiply the colors by the alpha
+		// 		d.color[0] = d.color[0] * d.opacity;
+		// 		d.color[1] = d.color[1] * d.opacity;
+		// 		d.color[2] = d.color[2] * d.opacity;
+		// 		d.size = radiusScale(d.layer); 
+		// 	});
 
-			//And save in a new array
-			maps[(i-1)] = dataObject;
-		}//for i
+		// 	//Now create a new array that shuffles the data a bit
+		// 	var dataObject = {
+		// 		colors: data.map(function(d) { return d.color; }),
+		// 		opacities: data.map(function(d) { return d.opacity; }),
+		// 		sizes: data.map(function(d) { return 2*d.size; }),	
+		// 	};
 
-		//Delete the arguments since we now have all the data in a new variable
-		delete arguments;
+		// 	//And save in a new array
+		// 	maps[(i-1)] = dataObject;
+		// }//for i
+
+		// //Delete the arguments since we now have all the data in a new variable
+		// delete arguments;
 
 		///////////////////////////////////////////////////////////////////////////
 		/////////////////////////////// Animate ///////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////
 
-		//Set the stop and restart of the animation on the button below
-		d3.select("#stopstart").text("stop the animation");
-		//Function attached to the stop/start button
-		d3.select("#stopstart").on("click", function() { 
-			if(!stopAnimation) {
-				ticker.cancel();
-				stopAnimation = true;
-				d3.select(this).text("restart the animation");
-			} else {
-				d3.select(this).text("stop the animation");
-				stopAnimation = false;
-				animate();
-			}//else 
-		});
-
 		//Start the animation
-		animate();
+		//animate();
 
 	}//function drawAllMaps
 }//function createReglMap
