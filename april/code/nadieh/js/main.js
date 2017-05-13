@@ -73,7 +73,7 @@ function createLegend() {
 		.attr("id", "legend-title")
 		.attr("x", legendWidth/2)
 		.attr("y", 0)
-		.text("Vegetation health - Greenness");
+		.text("Vegetation health | Greenness");
 
 	//Append left and right sides to legend
 	svg.append("text")
