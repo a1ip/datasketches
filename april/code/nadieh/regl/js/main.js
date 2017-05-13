@@ -136,6 +136,7 @@ function createReglMap(isMobile) {
 	var greenColor = d3.scaleLinear()
 		.domain([-0.08, 0.1, maxL])
 		.range(["#FFBE1F", "#d9e537", "#054501"])
+		//.range(["#FAECAB", "#f2ec82", "#0c750c"]) //colors in case I get multiply working
 		.clamp(true);
 
 	//Wrap d3 color scales so they produce vec3s with values 0-1
@@ -454,13 +455,15 @@ function createReglMap(isMobile) {
 		.then(function() {
 			//Run after the map data loop above is finished
 			console.log("prepared all maps, starting animation");
-			
+
 			//Delete the arguments since we now have all the data in a new variable
 			delete arguments;
 			delete rawMaps;
 
 			//Set the stop and restart of the animation on the button below
-			d3.select("#stopstart").text("stop the animation");
+			d3.select("#stopstart")
+				.style("cursor", "pointer")
+				.text("stop the animation");
 			//Function attached to the stop/start button
 			d3.select("#stopstart").on("click", function() { 
 				if(!stopAnimation) {

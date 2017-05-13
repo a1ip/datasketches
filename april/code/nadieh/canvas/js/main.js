@@ -2,6 +2,7 @@
 ////////////////////////////// Mobile or not //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
+
 //If it's too small, thus most likely mobile, tell them to watch on pc
 var isMobile = window.innerWidth < 400;
 if(isMobile) 
@@ -127,6 +128,8 @@ function createCanvasMap(isMobile) {
 		"December & January", //52
 	];
 
+	var saveToImage = false;
+
 	///////////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Create scales /////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
@@ -251,12 +254,14 @@ function createCanvasMap(isMobile) {
 		.then(function() {
 			//Run after the map data loop above is finished
 			console.log("prepared all maps, starting animation");
-			
+
 			//Delete the arguments since we now have all the data in a new variable
 			delete arguments;
 			delete rawMaps;
 
-			d3.select("#stopstart").text("stop the animation (yes it's very slow, but it's really going trough all 52 weeks)");
+			d3.select("#stopstart")
+				.style("cursor", "pointer")
+				.text("stop the animation (yes it's very slow, but it's really going trough all 52 weeks)");
 			//Function attached to the stop/start button
 			d3.select("#stopstart").on("click", function() { 
 				if(!stopAnimation) {
@@ -368,6 +373,12 @@ function createCanvasMap(isMobile) {
 
 			//Cue up next frame then render the updates
 			if(!stopAnimation) requestAnimationFrame(animate);
+
+			if(saveToImage) {
+				//Save canvas image as data url (png format by default)
+				var dataURL = canvas.toDataURL();
+				document.getElementById('canvasImg').src = dataURL;
+			}//if
 
 		}//function animate
 
