@@ -22,6 +22,10 @@ if(isMobile) {
 	createPixiMap();
 }//else
 
+///////////////////////////////////////////////////////////////////////////
+//////////////////////// Function to create legend ////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
 //Create the legend below the visual
 function createLegend() {
 
@@ -90,6 +94,10 @@ function createLegend() {
 		.style("text-anchor", "start")
 		.text("high | lush");
 }//function createLegend
+
+///////////////////////////////////////////////////////////////////////////
+/////////////////////// Function to create the world maps /////////////////
+///////////////////////////////////////////////////////////////////////////
 
 //Function to draw the pixiJS based map
 function createPixiMap() {
@@ -255,6 +263,7 @@ function createPixiMap() {
 		//Save the variable to global
 		loc = coordRaw;	
 
+		//Adjust map data and calculate the different circle appearance variables beforehand
 		data.forEach(function(d) {
 			d.layer = +d.layer;
 			d.color = d3.rgb(greenColor(d.layer));
@@ -271,6 +280,7 @@ function createPixiMap() {
 			//Get the color in the weird hex format
 			var color = (d.color.r << 16) + (d.color.g << 8) + d.color.b;
 
+			//Set all characterstics of the circle
 			var dot = new PIXI.Sprite(circleTexture);
 			dot.tint = color;
 			dot.blendMode = PIXI.blendModes.MULTIPLY;
@@ -325,6 +335,7 @@ function createPixiMap() {
 
 		//Save each map in a variable, loop over it to make all variables numeric
 		//From: https://github.com/tungs/breathe and https://breathejs.org/Using-Breathe.html
+		//Using breathe.js to not block the browser during data prep
 		breathe.times(nWeeks+1, function(i) {
 			if(i !== 0) {
 				var data = rawMaps[i];
@@ -346,6 +357,7 @@ function createPixiMap() {
 			delete arguments;
 			delete rawMaps;
 
+			//Adjust the appearance of the animation "button" below the map
 			d3.select("#stopstart")
 				.style("cursor", "pointer")
 				.text("stop the animation");
@@ -391,10 +403,11 @@ function createPixiMap() {
 			frame = 0, 
 			progress = 0;
 
+		var extraText;
+		
 		//Called every requestanimationframe
 		animate = function() {
-			// track circles, states and scales
-			var currValue, nextValue, value, i;
+			//Track circles between current and next week's map
 			var currColor, nextColor, r, g, b, color;
 			var currSize, nextSize, size;
 			var currOpacity, nextOpacity, opacity;
@@ -407,16 +420,18 @@ function createPixiMap() {
 			//Increment state counter once we've looped back around
 			if (frame === 0) {
 				counter = ++counter % nWeeks;
+				extraText = counter < 4 ? " | missing data in the North" : "";
 				//Adjust the title
-				d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016");
+				d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016" + extraText);
 			};
 
+			//Assign the maps
 			var currMap = maps[counter],
 				nextMap = maps[(counter+1) % nWeeks];
 
 			//Update scale and color of all circles by
 			//Interpolating current state and next state
-			for (i = 0; i < dots.length; i++) {
+			for (var i = 0; i < dots.length; i++) {
 
 				//Trial and testing has taught me that it's best to 
 				//do all of these values separately

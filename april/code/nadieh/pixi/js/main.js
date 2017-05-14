@@ -342,7 +342,6 @@ function createPixiMap() {
 				extraText = counter < 4 ? " | missing data in the North" : "";
 				//Adjust the title
 				d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016" + extraText);
-
 			};
 
 			var currMap = maps[counter],
