@@ -3,16 +3,24 @@
 ///////////////////////////////////////////////////////////////////////////
 
 //If it's too small, thus most likely mobile, tell them to watch on pc
-var isMobile = window.innerWidth < 400;
-if(isMobile) 
+var md = new MobileDetect(window.navigator.userAgent);
+var isMobile = (md.mobile() !== null || md.phone() !== null || md.tablet() !== null); //window.innerWidth < 400;
+
+if(isMobile) {
+	//Show the hidden image
+	d3.selectAll(".mobile").style("display", "block");
+	//Change text in the "stop/start" button
 	d3.select("#stopstart")
 		.text("for the animation through all 52 weeks, please go to a desktop. I promise it looks mesmerizing!")
-
-//Call the function
-createPixiMap(isMobile);
+	//Adjust the title above the map
+	d3.select("#week").text("Week 23, June, 2016");
+} else {
+	//Call the function
+	createPixiMap();
+}//else
 
 //Function to draw the pixiJS based map
-function createPixiMap(isMobile) {
+function createPixiMap() {
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set the PIXI stage ///////////////////////////
@@ -26,7 +34,7 @@ function createPixiMap(isMobile) {
 	var renderer = new PIXI.autoDetectRenderer(width, height, { backgroundColor : 0xFFFFFF, antialias: true });
 	//Add to the document
 	document.getElementById("chart").appendChild(renderer.view);
-	renderer.view.id = "canvas-map";
+	renderer.view.id = "canvas";
 
 	//Get the visible size back to 1000 px
 	renderer.view.style.width = (width*0.5) + 'px';
@@ -46,8 +54,8 @@ function createPixiMap(isMobile) {
 	///////////////////////// Create global variables /////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	const nWeeks = 52;						//Number of weeks in the year
-	const startMap = isMobile ? 22 : 12;	//The week of the first map to be drawn
+	const nWeeks = 52;		//Number of weeks in the year
+	const startMap = 12;	//The week of the first map to be drawn
 
 	//Will save the coordinate mapping
 	var loc;
@@ -118,6 +126,8 @@ function createPixiMap(isMobile) {
 		"December", //51
 		"December & January", //52
 	];
+
+	var saveToImage = false;
 
 	///////////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Create scales /////////////////////////////
@@ -215,19 +225,17 @@ function createPixiMap(isMobile) {
 		//////////////////////////// Draw the other maps //////////////////////////
 		///////////////////////////////////////////////////////////////////////////
 		
-		if(!isMobile) {
-			setTimeout(function() {
-				console.log("reading in maps");
-				//Create a queue that loads in all the files first, before calling the draw function
-				var q = d3.queue();
+		setTimeout(function() {
+			console.log("reading in maps");
+			//Create a queue that loads in all the files first, before calling the draw function
+			var q = d3.queue();
 
-				for(var i = 0; i < nWeeks; i++) {
-					//Add each predefined file to the queue
-					q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
-				}//for i
-				q.await(drawAllMaps);
-			}, 1000);
-		}//if
+			for(var i = 0; i < nWeeks; i++) {
+				//Add each predefined file to the queue
+				q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
+			}//for i
+			q.await(drawAllMaps);
+		}, 1000);
 
 	}//function drawFirstMap
 
@@ -313,6 +321,8 @@ function createPixiMap(isMobile) {
 			frame = 0, 
 			progress = 0;
 
+		var extraText;
+
 		//Called every requestanimationframe
 		animate = function() {
 			// track circles, states and scales
@@ -329,8 +339,10 @@ function createPixiMap(isMobile) {
 			//Increment state counter once we've looped back around
 			if (frame === 0) {
 				counter = ++counter % nWeeks;
+				extraText = counter < 4 ? " | missing data in the North" : "";
 				//Adjust the title
-				d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016");
+				d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016" + extraText);
+
 			};
 
 			var currMap = maps[counter],
@@ -370,6 +382,12 @@ function createPixiMap(isMobile) {
 			//Cue up next frame then render the updates
 			renderer.render(stage);
 			if(!stopAnimation) requestAnimationFrame(animate);
+
+			// if(saveToImage) {
+			// 	//Save canvas image as data url (png format by default)
+			// 	var dataURL = renderer.view.toDataURL();
+			// 	document.getElementById('canvasImg').src = dataURL;
+			// }//if
 		};
 
 		//animate();

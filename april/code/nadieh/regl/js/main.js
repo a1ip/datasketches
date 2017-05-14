@@ -3,16 +3,25 @@
 ///////////////////////////////////////////////////////////////////////////
 
 //If it's too small, thus most likely mobile, tell them to watch on pc
-var isMobile = window.innerWidth < 400;
-if(isMobile) 
+var md = new MobileDetect(window.navigator.userAgent);
+var isMobile = (md.mobile() !== null || md.phone() !== null || md.tablet() !== null); //window.innerWidth < 400;
+
+if(isMobile) {
+	//Show the hidden image
+	d3.selectAll(".mobile").style("display", "block");
+	d3.select("canvas").style("display", "none");
+	//Change text in the "stop/start" button
 	d3.select("#stopstart")
 		.text("for the animation through all 52 weeks, please go to a desktop. I promise it looks mesmerizing!")
-
-//Call the function
-createReglMap(isMobile);
+	//Adjust the title above the map
+	d3.select("#week").text("Week 23, June, 2016");
+} else {
+	//Call the function
+	createReglMap();
+}//else
 
 //Function to draw the regl based map
-function createReglMap(isMobile) {
+function createReglMap() {
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the canvas ////////////////////////////
@@ -42,8 +51,8 @@ function createReglMap(isMobile) {
 	///////////////////////// Create global variables /////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	const nWeeks = 52;						//Number of weeks in the year
-	const startMap = isMobile ? 22 : 12;	//The week of the first map to be drawn
+	const nWeeks = 52;		//Number of weeks in the year
+	const startMap = 12;	//The week of the first map to be drawn
 
 	var mapPoints;	//Will save the coordinate mapping
 
@@ -111,6 +120,8 @@ function createReglMap(isMobile) {
 		"December", //51
 		"December & January", //52
 	];
+
+	var saveToImage = false;
 
 	///////////////////////////////////////////////////////////////////////////
 	/////////////////////////////// Create scales /////////////////////////////
@@ -335,18 +346,15 @@ function createReglMap(isMobile) {
 		///////////////////////////////////////////////////////////////////////////
 		//////////////////////////// Draw the other maps //////////////////////////
 		///////////////////////////////////////////////////////////////////////////
-		
-		//Only do this if not on mobile
-		if(!isMobile) {
-			//Create a queue that loads in all the files first, before calling the draw function
-			var q = d3.queue();
 
-			for(var i = 0; i < nWeeks; i++) {
-				//Add each predefined file to the queue
-				q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
-			}//for i
-			q.await(drawAllMaps);
-		}//if
+		//Create a queue that loads in all the files first, before calling the draw function
+		var q = d3.queue();
+
+		for(var i = 0; i < nWeeks; i++) {
+			//Add each predefined file to the queue
+			q = q.defer(d3.csv, "../../../data/nadieh/VIIRS/mapData-week-" + (i+1) + ".csv");
+		}//for i
+		q.await(drawAllMaps);
 
 	}//function drawFirstMap
 
@@ -377,6 +385,8 @@ function createReglMap(isMobile) {
 		var currMap,
 			nextMap;
 
+		var extraText;
+
 		animate = function() {
 
 			//Sve in variable, so we can cancel and restart
@@ -391,8 +401,9 @@ function createReglMap(isMobile) {
 				//Increment state counter once we've looped back around
 				if (frame === 0) {
 					counter = ++counter % nWeeks;
+					extraText = counter < 4 ? " | missing data in the North" : "";
 					//Adjust the title
-					d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016");
+					d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016" + extraText);
 				}//if
 				//Track progress as proportion of frames completed
 				progress = frame / tweenFrames;
@@ -412,6 +423,14 @@ function createReglMap(isMobile) {
 					nextSize: nextMap.sizes,
 					progress: progress 
 				});
+
+				// if(saveToImage) {
+				// 	ticker.cancel();
+				// 	//Save canvas image as data url (png format by default)
+				// 	var dataURL = canvas.toDataURL();
+				// 	document.getElementById('canvasImg').src = dataURL;
+				// }//if
+
 			});//frame
 
 		}//function animate

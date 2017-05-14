@@ -14,6 +14,7 @@
 		<script src="../../../../plugins/d3.js"></script>
 		<script src="js/pixi.min.js"></script>
 		<script src="../js/breathe.js"></script>
+		<script src="../js/mobile-detect.js"></script>
 
 		<!-- Styling -->
 		<link href="../css/style-examples.css" rel="stylesheet">
@@ -30,8 +31,13 @@
 			<div id="note">50.000 circles moving through a year of data on planetary vegetation health</div>
 
 			<div id="week"></div>
-			<div id="chart"></div>
+			<div id="chart">
+				<img class="mobile" src="pixi_breathing_earth_week_23.jpg"  alt="Image of a Breathing Earth map of week 23" height="508" width="1000">
+			</div>
 			<div id="stopstart">loading all 52 weeks, animation will start soon...</div>
+
+			<!-- For saving a file -->
+			<!-- <img id="canvasImg" alt="Right click to save me!"> -->
 
 			<div id="credit">
 				<div id="made">creator <span class="divider">|</span> <a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a> <span class="divider">|</span> <a href="http://www.visualcinnamon.com/" target="_new">VisualCinnamon.com</a></div>

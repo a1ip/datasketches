@@ -4,16 +4,25 @@
 
 
 //If it's too small, thus most likely mobile, tell them to watch on pc
-var isMobile = window.innerWidth < 400;
-if(isMobile) 
+var md = new MobileDetect(window.navigator.userAgent);
+var isMobile = (md.mobile() !== null || md.phone() !== null || md.tablet() !== null);
+
+if(isMobile) {
+	//Show the hidden image
+	d3.selectAll(".mobile").style("display", "block");
+	d3.select("canvas").style("display", "none");
+	//Change text in the "stop/start" button
 	d3.select("#stopstart")
 		.text("for the animation through all 52 weeks, please go to a desktop. I promise it looks mesmerizing!")
-
-//Call the function
-createCanvasMap(isMobile);
+	//Adjust the title above the map
+	d3.select("#week").text("Week 23, June, 2016");
+} else {
+	//Call the function
+	createCanvasMap();
+}//else
 
 //Function to draw the canvas based map
-function createCanvasMap(isMobile) {
+function createCanvasMap() {
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Set up the canvas ////////////////////////////
@@ -56,7 +65,6 @@ function createCanvasMap(isMobile) {
 
 	//Color blend mode for all
 	ctx.globalCompositeOperation = "multiply";
-
 
 	var nWeeks = 52;					//Number of weeks in the year :)
 	var startMap = isMobile ? 22 : 12;	//The week of the first map to be drawn
@@ -309,6 +317,8 @@ function createCanvasMap(isMobile) {
 			frame = 0, 
 			progress = 0;
 
+		var extraText;
+
 		//Called every requestanimationframe
 		animate = function() {
 
@@ -327,8 +337,9 @@ function createCanvasMap(isMobile) {
 			//Increment state counter once we've looped back around
 			if (frame === 0) {
 				counter = ++counter % nWeeks;
+				extraText = counter < 4 ? " | missing data in the North" : "";
 				//Adjust the title
-				d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016");
+				d3.select("#week").text("Week " + (counter+1) + ", " + months[counter] + ", 2016" + extraText);
 			};
 
 			var currMap = maps[counter],
@@ -374,11 +385,11 @@ function createCanvasMap(isMobile) {
 			//Cue up next frame then render the updates
 			if(!stopAnimation) requestAnimationFrame(animate);
 
-			if(saveToImage) {
-				//Save canvas image as data url (png format by default)
-				var dataURL = canvas.toDataURL();
-				document.getElementById('canvasImg').src = dataURL;
-			}//if
+			// if(saveToImage) {
+			// 	//Save canvas image as data url (png format by default)
+			// 	var dataURL = canvas.toDataURL();
+			// 	document.getElementById('canvasImg').src = dataURL;
+			// }//if
 
 		}//function animate
 

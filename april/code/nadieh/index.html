@@ -32,6 +32,7 @@
 		<script src="../../../plugins/d3.js"></script>
 		<script src="js/pixi.min.js"></script>
 		<script src="js/breathe.js"></script>
+		<script src="js/mobile-detect.js"></script>
 
 		<!-- Styling -->
 		<link href="css/style.css" rel="stylesheet">
@@ -62,7 +63,7 @@
 			<div id="explanation-scientific">
 				<p>The data comes from <a href="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/index.php" target="_new">NOAA STAR</a>, the center for satellite applications and research, who use the VIIRS (Visible Infrared Imager Radiometer Suite) sensor onboard Suomi National Polar-orbiting Partnership (SNPP) satellite to get detailed vegetation information of our Earth every week.</p>
 				<p>The specific variable visualized in the map is called 'Greenness', or in more scientific terms; the no noise (smoothed) Normalized Difference Vegetation Index (SMN). Greenness can be used to estimate the start and senescence of vegetation, start of the growing season and phenological phases. For areas without vegetation (desert, high mountains, etc.), the displayed values characterize surface conditions.</p>
-				<p>Animating 50.000 circles in the browser, all separately from each other through different sizes, colors & opacities became a real technical challenge. In the end 3 different methods were tested to see which one would appear most natural. For those interested to see the differences, you can find the (slow) <a href="canvas" target="_new">pure canvas version here</a>, <a href="pixi" target="_new">the pixi.js version here</a> and <a href="regl" target="_new">the regl version here</a>.</p>
+				<p>Animating 50.000 circles in the browser, all separately from each other through different sizes, colors & opacities became a real technical challenge. In the end 3 different methods were tested to see which one would appear most natural. For those interested to see the differences, you can find the (slow) <a href="canvas" target="_new">pure canvas version here</a>, the <a href="pixi" target="_new">pixi.js WebGL version here</a> and the <a href="regl" target="_new">regl WebGL version here</a>.</p>
 			</div>
 
 			<div id="credit">

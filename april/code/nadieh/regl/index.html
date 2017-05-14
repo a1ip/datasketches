@@ -12,6 +12,7 @@
 		<script src="../../../../plugins/d3.js"></script>
 		<script src="js/regl.min.js"></script>
 		<script src="../js/breathe.js"></script>
+		<script src="../js/mobile-detect.js"></script>
 
 		<!-- Styling -->
 		<link href="../css/style-examples.css" rel="stylesheet">
@@ -29,9 +30,13 @@
 
 			<div id="week"></div>
 			<div id="chart">
+				<img class="mobile" src="regl_breathing_earth_week_23.jpg"  alt="Image of a Breathing Earth map of week 23" height="508" width="1000">
 				<canvas id="canvas"></canvas>
 			</div>
 			<div id="stopstart">loading all 52 weeks, animation will start soon...</div>
+
+			<!-- For saving a file -->
+			<!-- <img id="canvasImg" alt="Right click to save me!"> -->
 
 			<div id="credit">
 				<div id="made">creator <span class="divider">|</span> <a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a> <span class="divider">|</span> <a href="http://www.visualcinnamon.com/" target="_new">VisualCinnamon.com</a></div>
