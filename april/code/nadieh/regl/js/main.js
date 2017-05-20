@@ -43,9 +43,13 @@ function createReglMap() {
 	var regl = createREGL({
 		extensions: ['OES_standard_derivatives'],
 		canvas: canvas,
-		//alpha: false,
-		antialias: true
+		attributes: {
+			alpha: false,
+			depth: false,
+			antialias: true
+		}
 	});
+	regl.clear({color: [1, 1, 1, 1]});
 
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////// Create global variables /////////////////////////
@@ -137,7 +141,7 @@ function createReglMap() {
 
 	var radiusScale = d3.scaleSqrt()
 		.domain([minL, maxL])
-		.range([0, 4])
+		.range([0, 5])
 		.clamp(true);
 
 	var opacityScale = d3.scaleLinear()
@@ -146,8 +150,8 @@ function createReglMap() {
 
 	var greenColor = d3.scaleLinear()
 		.domain([-0.08, 0.1, maxL])
-		.range(["#FFBE1F", "#d9e537", "#054501"])
-		//.range(["#FAECAB", "#f2ec82", "#0c750c"]) //colors in case I get multiply working
+		//.range(["#FFBE1F", "#d9e537", "#054501"]) //old colors when multiply wasn't working
+		.range(["#FAECAB", "#f2ec82", "#0c750c"])
 		.clamp(true);
 
 	//Wrap d3 color scales so they produce vec3s with values 0-1
@@ -227,9 +231,10 @@ function createReglMap() {
 						//Anti-aliasing-factor
 						float aaf = fwidth(point_dist)/2.0;
 						//if(point_dist + aaf > 1.0) discard; //strangley this doesn't work as inteded at all
-						float alpha = (1.0 - smoothstep(1.0 - aaf, 1.0 + aaf, point_dist));
+						float alpha = fopacity*(1.0 - smoothstep(1.0 - aaf, 1.0 + aaf, point_dist));
 					#else
 						if(point_dist > 1.0) discard;
+						float alpha = fopacity;
 					#endif
 
 					//From:https://gist.github.com/rflow/39692bd181fb1eb0b077a4caf886b077
@@ -244,8 +249,14 @@ function createReglMap() {
 					//The most basic way to get a (pixelated) circle
 					//if (point_dist > 1.0) discard;
 					
-					gl_FragColor = vec4(alpha*fcolor, alpha*fopacity);// - correct for no multiply but with pre-opacity multiplication (& the //2 func below)
+					//gl_FragColor = vec4(alpha*fcolor, alpha*fopacity);// - correct for no multiply but with pre-opacity multiplication (& the //2 func below)
 					//gl_FragColor = vec4(fcolor, alpha*fopacity); // correct for nu multiply and without pre-opacity multiplication (& the //1 func below)
+
+					// I could not have figured the below part out without the help of Ricky Reusser!!
+					// premultiplying the alpha like this means we can use *just* the multiplicative
+					// part of the blending function (src * dst). But alpha = 0 corresponds to
+					// multiplying by one, so we have to do this little 'one minus' trick:
+					gl_FragColor = vec4(1.0 - alpha * (1.0 - fcolor), 1);
 
 				}//void main
 			`,
@@ -254,8 +265,9 @@ function createReglMap() {
 
 			blend: {
 				enable: true,
+				func: { srcRGB: 'dst color', dstRGB: 0, srcAlpha: 1, dstAlpha: 1 },
 				//func: { srcRGB: 'src alpha', dstRGB: 'one minus src alpha', srcAlpha: 1, dstAlpha: 'one minus src alpha' }, //1
-				func: {src: 1, dst: 'one minus src alpha'}, //2
+				//func: {src: 1, dst: 'one minus src alpha'}, //2
 				//func: {src: 'one minus dst alpha', dst: 'src color'}, //never got this working correctly with opacities, but it does look like a multiply blend
 				//func: {src: 'dst color', dst: 'one minus src alpha'}, //seems to work for Pixi, but I just get a white screen...
 				equation: { rgb: 'add', alpha: 'add' },
@@ -309,9 +321,9 @@ function createReglMap() {
 			d.opacity = opacityScale(d.layer);
 			d.color = greenColorRGB(d.layer);
 			//Premultiply the colors by the alpha
-			d.color[0] = d.color[0] * d.opacity;
-			d.color[1] = d.color[1] * d.opacity;
-			d.color[2] = d.color[2] * d.opacity;
+			// d.color[0] = d.color[0] * d.opacity;
+			// d.color[1] = d.color[1] * d.opacity;
+			// d.color[2] = d.color[2] * d.opacity;
 			d.size = radiusScale(d.layer); 
 		});
 
@@ -333,6 +345,7 @@ function createReglMap() {
 		d3.select("#week").text("Week " + (startMap+1) + ", " + months[startMap] + ", 2016");
 
 		//Draw the current map
+		regl.clear({color: [1, 1, 1, 1]});
 		drawMap({ 
 			currColor: currMap.colors,
 			nextColor: currMap.colors,
@@ -373,7 +386,7 @@ function createReglMap() {
 		///////////////////////////////////////////////////////////////////////////
 
 		//Render loop
-		const fps = 5;
+		const fps = 10;
 		const tweenTime = 3;
 		const tweenFrames = fps * tweenTime;
 
@@ -392,7 +405,7 @@ function createReglMap() {
 			//Sve in variable, so we can cancel and restart
 			ticker = regl.frame(function({ tick }) {
 				regl.clear({
-					color: [0, 0, 0, 0],
+					color: [1, 1, 1, 1],
 					depth: 1
 				})
 
@@ -456,9 +469,9 @@ function createReglMap() {
 					d.opacity = opacityScale(d.layer);
 					d.color = greenColorRGB(d.layer);
 					//Premultiply the colors by the alpha
-					d.color[0] = d.color[0] * d.opacity;
-					d.color[1] = d.color[1] * d.opacity;
-					d.color[2] = d.color[2] * d.opacity;
+					// d.color[0] = d.color[0] * d.opacity;
+					// d.color[1] = d.color[1] * d.opacity;
+					// d.color[2] = d.color[2] * d.opacity;
 					d.size = radiusScale(d.layer); 
 				});
 				//Now create a new array that shuffles the data a bit
