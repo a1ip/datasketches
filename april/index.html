@@ -63,7 +63,7 @@
     </div>
   </header>
 
-    <section id="january" class="month-page">
+    <section id="april" class="month-page">
       <div class="nadieh background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
       <div class="shirley background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
 
@@ -91,7 +91,7 @@
                 <a class="fancybox" href="data/nadieh/img/STAR_vegetation_health.png"> <img src="data/nadieh/img/STAR_vegetation_health.png" class="img-responsive img-month" alt="STAR map showing vegetation health for week 1 of January 2016"></a>
 
                 <p>And they had a map like this for every week in the year of 2016. There was also an option that showed all the maps in a very rough animation (as in, going through 52 images within a minute or two). Even though the animation was crude, and the color palette, well, not optimal, I really liked seeing the changes of vegetation health throughout the year. I wanted to visualize the same thing, but do it in my own style. To show a continuously "breathing Earth".</p>
-                
+
                 <p>Furthermore, after seeing what <a href="https://twitter.com/dominikus" target="_new">Dominikus Baur</a> did with the <a href="https://github.com/pixijs/pixi.js" target="_new">Pixi.JS library</a>, while we were both presenting at the INCH conference last March, I knew I wanted to try it out as well. I just needed a project where I had to visualize <i>a lot</i> of points. And this idea seemed like the perfect opportunity to give Pixi a try, since there are often thousands if not millions of "pixels" in an image.</p>
 
                 <p>I was very happy to see that STAR also <a href="https://www.star.nesdis.noaa.gov/smcd/emb/vci/VH/vh_ftp.php">shared the data</a> behind the images. However, I had never worked with these levels of sophisticated geo-data before; hdf and GeoTiff files. Thankfully, I had just seen the wonderful presentation of <a href="https://twitter.com/rsimmon" target="_new">Rob Simmon</a> on GDAL (the Geospatial Data Abstraction Library) at OpenVisConf. And according to Google, GDAL should be able to open these kinds of files. I followed the quick and hassle free installation steps as outlined in <a href="https://medium.com/planet-stories/a-gentle-introduction-to-gdal-part-1-a3253eb96082" target="_new">Rob's blog</a>. However, instead of trying to parse the files in the command-line, which Rob's talk was about, I took to Google again to see if there was an R package instead. And of course there was! The appropriately named <a href="https://cran.r-project.org/web/packages/rgdal/index.html" target="_new">rgdal</a>.</p>
@@ -141,7 +141,7 @@
                 <a class="fancybox" href="code/nadieh/img/regl_pixel_rounding.png"> <img src="code/nadieh/img/regl_pixel_rounding_small.jpg" class="img-responsive img-month" alt="Strange effects in regl"></a>
 
                 <p>Well, it took <i>a lot</i> of browsing through example code, but eventually I had a map in regl with circles and opacities (although no "multiply" blending going on, I didn't yet know how to get that working). But again, if I zoomed in, I saw the same pixelated effect, AARGH! And here I was really hoping that regl would not have the same issue as Pixi... I did notice that it was a bit faster in rendering than Pixi though.</p>
-                <a class="fancybox" href="code/nadieh/img/regl_pixelated.png"> <img src="code/nadieh/img/regl_pixelated_small.png" class="img-responsive img-month" alt="Regl map still pixelated"></a>   
+                <a class="fancybox" href="code/nadieh/img/regl_pixelated.png"> <img src="code/nadieh/img/regl_pixelated_small.png" class="img-responsive img-month" alt="Regl map still pixelated"></a>
 
                 <p>While trying to find info on getting anti-aliased circles in regl I came across a snippet that showed that Pixi actually has an "anti alias" setting! And not long before, <a href="https://twitter.com/ajdant" target="_new">Alastair Dant</a> made <a href="https://bl.ocks.org/rflow/55bc49a1b8f36df1e369124c53509bb9" target="_new">this animated Pixi example</a> that I tested with 50.000 circles which still seemed to work smoothly. These two interesting avenues to explore brought me back to my Pixi based map.</p>
 
@@ -162,7 +162,7 @@
 
                 <p>May 20th UPDATE | Apparently Ricky Reusser hadn't given up the "multiply" fight yet, and about a week after I published "A Breathing Earth" he tweeted <a href="http://codepen.io/rsreusser/pen/YVRXzy?editors=0010" target="_new">a regl demo</a> that had both multiply and opacity working (below is what I turned the demo into so I could compare it to, say, Illustrator). How amazing is that! So now I can say that all 3 versions are exactly the same ^_^ and regl is definitely the fastest. I even had to "slow" it down a bit otherwise it would just whoosh through a year in no time.</p>
                 <a class="fancybox" href="code/nadieh/img/regl_multiply_and_opacity.png"> <img src="code/nadieh/img/regl_multiply_and_opacity.png" class="img-responsive img-month" alt="Adjusted version of Ricky Reussers example that shows that multiply is working"></a>
-    
+
                 <p>I had learned many things while going through all the wonderful examples people had send me. I therefore returned to the canvas version to see if I could make it faster. After a bit of messing around, I managed to get it to switch between maps every second, but that is still too slow for a smooth animation (nonetheless, I also cleaned up the canvas version and added it to the main page for comparison).</p>
 
                 <p>Btw, another new thing I implemented this month was <a href="https://breathejs.org/Using-Breathe.html" target="_new">breathe.js</a>. I heard about it when attending the d3.bayArea meetup last April. I noticed that the final map preparation loop was freezing up the browser for ±10 seconds. And with some very minor changes using breathe.js that wasn't happening anymore, without it seeming to take longer to prepare the data 😀</p>
@@ -220,7 +220,7 @@
       </div>
     </section>
 
-    <section id="january-guest" class="month-page">
+    <section id="april-guest" class="month-page">
       <div class="guest background-guest col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
 
       <div class="container guest-container">
@@ -234,8 +234,15 @@
               <div class="time kingBasil"></div>
               <div class="location quicksand paddingBelow">eindhoven</div>
 
-                <!-- <img alt="Final project" class="img-responsive" src="code/guest/header.png" /> -->
-                <p></p>
+                <a href="http://www.studioterp.nl/voices-that-care/"><img src="code/guest/Voices that Care, a datavisualization by STUDIO TERP-cover.jpg" class="img-responsive img-month-top" alt="Voices that care"></a>
+
+                <p>
+                  It’s always nice to catch up with Nadieh and since we both live in the Netherlands we meet each other on several occasions such as the Infographics Congress last March where this time she dropped me a question: if I was interested in joining in as a guest on Data Sketches. If I was interested? I responded pretty calm (I think..?) but inside I went ‘hurray’ cause I greatly admire Nadiehs and Shirleys projects and their openness on the processes. Then when it the idea of taken part landed I completely freaked for the same reason: I feel so unskilled compared to them doing their code, D3 and all that jazz. It didn’t quite help watching them these last months showing up on different venues, talking on their super-interesting well-designed datavisualizations and the tools they master. Luckily they both ensured me they asked me precisely for the reason I handle my projects differently from them. I come from an design-background; I studied Public Space at the Design Academy and formerly had a career at a landscaping /urban design company. I use other tools and I mainly work manually in Illustrator. Nadieh and Shirley would like to see how I tackle and visualize a dataset my own way, which can be kind of ‘monnikenwerk’ as we say in Dutch.
+                </p>
+
+                <p>
+                  Well. My journey then.
+                </p>
 
                 <h3>week 1 <span class="light-grey">|</span> data</h3>
 
