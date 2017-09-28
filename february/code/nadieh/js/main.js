@@ -6,7 +6,7 @@ canvas.width = width;
 canvas.height = height;
 var ctx = canvas.getContext("2d");
 
-//Shoud the fronts of the paths be shown
+//Should the fronts of the paths be shown
 var showMarker = false;
 if(showMarker) {
 	//Second canvas for the markers only
@@ -535,7 +535,7 @@ function getCurvePoints(pts, tension, isClosed, numOfSegments) {
   // The algorithm require a previous and next point to the actual point array.
   // Check if we will draw closed or open curve.
   // If closed, copy end points to beginning and first points to end
-  // If open, duplicate first points to befinning, end points to end
+  // If open, duplicate first points to beginning, end points to end
   if (isClosed) {
     _pts.unshift(pts[pts.length - 1]);
     _pts.unshift(pts[pts.length - 1]);
@@ -606,7 +606,7 @@ opentype.load('css/WorkSans-Thin.ttf', function(err, font) {
         	} else {
         		letters.push([letter])
         		letter = [];
-        	}//esle
+        	}//else
         });//forEach
 
 		//font.drawPoints(ctx, 'Marble Butterflies', width/2 - textWidth/2, height/2 - radius*1.4, fontSize);

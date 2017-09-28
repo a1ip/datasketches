@@ -283,9 +283,12 @@ if(isMobile) {
 		.attr("width", "100%")
 		.append("image")
 			.attr("xlink:href", function(d) { return "img/" + (isMobile || !isChrome || isTouch ? d.img_url.replace(".gif", ".jpg") : d.img_url); })
+			//.attr("xlink:href", function(d) { return "img/" + d.img_url.replace(".gif", ".jpg"); })
 			.attr("x", function(d) { return isMobile || !isChrome || isTouch ? sagaScale(d.hExtraMobile) : sagaScale(d.hExtra); })
+			//.attr("x", function(d) { return sagaScale(d.hExtraMobile); })
 			.attr("height", 2*annotationCircleSize)
 			.attr("width", function(d) { return (isMobile || !isChrome || isTouch ? d.imgRatioMobile : d.imgRatio) * 2*annotationCircleSize; });
+			//.attr("width", function(d) { return d.imgRatioMobile*2*annotationCircleSize; });
 
 	//Create wrapper for the hover images
 	var hoverImageWrapper = defs.append("g").attr("class", "hover-image-group-wrapper");

@@ -481,7 +481,7 @@ d3.json('../../data/nadieh/olympic_feathers_min.json', function (error, data) {
 		.attr("y2", -timeScale(endYear) - arcHeight)
 		.style("stroke-width", 2*chartScale);
 
-	//Create small rings to siginify 20 years
+	//Create small rings to signify 20 years
 	feathers.selectAll(".year-outline")
 		.data(groupYears)
 		.enter().append("path")
