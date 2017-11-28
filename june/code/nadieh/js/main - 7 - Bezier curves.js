@@ -49,8 +49,6 @@ function create_CCS_chart() {
     var pi2 = 2*Math.PI,
         pi1_2 = Math.PI/2;
 
-    var cover_alpha = 0.2;
-
     var color_sakura = "#EB5580",
         color_kero = "#F6B42B";
 
@@ -62,7 +60,7 @@ function create_CCS_chart() {
         rad_dot_color = width * 0.34, //chapter dot
         rad_chapter_donut_inner = width * 0.34, //inner radius of the chapter donut
         rad_chapter_donut_outer = width * 0.354, //outer radius of the chapter donut
-        rad_line_label = width * 0.3, //textual label that explains the hovers
+        rad_line_label = width * 0.255, //textual label that explains the hovers
         rad_donut_inner = width * 0.14, //inner radius of the character donut
         rad_donut_outer = width * 0.15, //outer radius of the character donut
         rad_name = rad_donut_outer + 8 * size_factor, //padding between character donut and start of the character name
@@ -106,10 +104,9 @@ function create_CCS_chart() {
         if (error) throw error;
 
         ///////////////////////////////////////////////////////////////////////////
-        ///////////////////////// Calculate chapter locations //////////////////////
+        ///////////////////////// Calculate chapter loactions //////////////////////
         /////////////////////////////////////////////////////////////////////////// 
 
-        //Based on typical hierarchical clustering example
         var root = d3.stratify()
             .id(function (d) { return d.name; })
             .parentId(function (d) { return d.parent; })
@@ -117,7 +114,7 @@ function create_CCS_chart() {
         var cluster = d3.cluster()
             .size([360, rad_dot_color])
             .separation(function separation(a, b) {
-                return a.parent == b.parent ? 1 : 1.3;
+                return a.parent == b.parent ? 1 : 1.2;
             });
         cluster(root);
         var chapter_location_data = root.leaves()
@@ -128,7 +125,6 @@ function create_CCS_chart() {
         //The distance between two chapters that belong to the same volume
         var chapter_angle_distance = chapter_location_data[1].centerAngle - chapter_location_data[0].centerAngle;
 
-        //Add some useful metrics to the chapter data
         chapter_location_data.forEach(function (d, i) {
             d.startAngle = d.centerAngle - chapter_angle_distance / 2;
             d.endAngle = d.centerAngle + chapter_angle_distance / 2;
@@ -222,7 +218,7 @@ function create_CCS_chart() {
             .on("tick", tick)
             .on("end", simulation_end)
             .alphaMin(.1)
-            //.stop();
+        //.stop();
 
         //Run the simulation "manually"
         //for (var i = 0; i < 300; ++i) simulation.tick();
@@ -423,8 +419,8 @@ function create_CCS_chart() {
         function mouse_over_character(d) {
             //Show the chosen lines
             ctx.clearRect(-width/2, -height/2, width, height);
-            ctx.globalAlpha = 0.8;
-            create_lines("character", character_data.filter(function(c,j) {return c.character === d.character; }) );
+            ctx.globalAlpha = 0.4;
+            create_lines(character_data.filter(function(c,j) {return c.character === d.character; }) );
 
             //Update label path
             line_label_path.attr("d", label_arc(characterByName[d.character].name_angle));
@@ -437,35 +433,29 @@ function create_CCS_chart() {
             var char_chapters = character_data
                 .filter(function(c) { return c.character === d.character; })
                 .map(function(c) { return c.chapter; });
-            var char_color = characterByName[d.character].color;
-            chapter_hover_slice.filter(function(c,j) { return _.indexOf(char_chapters,j+1) >= 0; })
-                .style("fill", char_color)
-                .style("stroke", char_color);
+            chapter_slice.filter(function(c,j) { return _.indexOf(char_chapters,j+1) >= 0; })
+                .style("fill", characterByName[d.character].color)
+                .style("stroke", characterByName[d.character].color);
             chapter_number.filter(function(c,j) { return _.indexOf(char_chapters,j+1) >= 0; })
                 .style("fill", "white");
             chapter_dot.filter(function(c,j) { return _.indexOf(char_chapters,j+1) >= 0; })
-                .attr("r", chapter_dot_rad * 1.5)
-                .style("stroke-width", chapter_dot_rad * 0.5 * 1.5)
-                .style("fill", char_color);
+                .style("opacity", 0);
 
         }//function mouse_over_character
 
         function mouse_out_character() {
             ctx.clearRect(-width/2, -height/2, width, height);
-            ctx.globalAlpha = cover_alpha;
-            create_lines("character", cover_data);
+            ctx.globalAlpha = 0.2;
+            create_lines(cover_data);
 
             //Update the label text
             line_label.text(default_label_text)
             remove_text_timer = setTimeout(function() { line_label.text("")}, 4000);
 
             //Chapter donut back to normal
-            chapter_hover_slice.style("fill", "none").style("stroke", "none");
+            chapter_slice.style("fill", "white").style("stroke", "#c4c4c4");
             chapter_number.style("fill", null);
-            chapter_dot
-                .attr("r", chapter_dot_rad)
-                .style("stroke-width", chapter_dot_rad * 0.5)
-                .style("fill", "#c4c4c4");
+            chapter_dot.style("opacity", 1)
         }//function mouse_out_character
 
         ///////////////////////////////////////////////////////////////////////////
@@ -525,7 +515,6 @@ function create_CCS_chart() {
         //Create groups in right order
         var donut_chapter_group = chart.append("g").attr("class", "donut-chapter-group");
         var chapter_dot_group = chart.append("g").attr("class", "chapter-dot-group");
-        var donut_chapter_hover_group = chart.append("g").attr("class", "donut-chapter_hover-group");
         var chapter_num_group = chart.append("g").attr("class", "chapter-number-group");
 
         //Arc command for the chapter number donut chart
@@ -544,15 +533,6 @@ function create_CCS_chart() {
             .style("fill", "none")
             .style("stroke", "#c4c4c4")
             .style("stroke-width", 1 * size_factor);
-        //Create the donut slices per character (and the number of chapters they appeared in)
-        var chapter_hover_slice = donut_chapter_hover_group.selectAll(".arc")
-            .data(chapter_location_data)
-            .enter().append("path")
-            .attr("class", "arc")
-            .attr("d", arc_chapter)
-            .style("fill", "none")
-            .style("stroke", "none")
-            .style("stroke-width", 1.5 * size_factor);
 
         //The text is placed in the center of each donut slice
         var rad_chapter_donut_half = ((rad_chapter_donut_outer - rad_chapter_donut_inner) / 2 + rad_chapter_donut_inner);
@@ -642,17 +622,16 @@ function create_CCS_chart() {
         /////////////////////////////////////////////////////////////////////////// 
 
         //Add a circle at the inside of each chapter
-        var chapter_dot_rad = 3.5 * size_factor;
         var chapter_dot = chapter_dot_group.selectAll(".chapter-dot")
             .data(chapter_location_data)
             .enter().append("circle")
             .attr("class", "chapter-dot")
             .attr("cx", function (d) { return rad_dot_color * Math.cos(d.centerAngle - pi1_2); })
             .attr("cy", function (d) { return rad_dot_color * Math.sin(d.centerAngle - pi1_2); })
-            .attr("r", chapter_dot_rad)
+            .attr("r", 3 * size_factor)
             .style("fill", "#c4c4c4")
             .style("stroke", "white")
-            .style("stroke-width", chapter_dot_rad * 0.5);
+            .style("stroke-width", 1.5 * size_factor);
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////// Create hidden chapter hover areas ///////////////////
@@ -675,12 +654,11 @@ function create_CCS_chart() {
         //When you mouse over a chapter arc
         function mouse_over_chapter(d,i) {
             ctx.clearRect(-width / 2, -height / 2, width, height);
-            ctx.lineWidth = 4 * size_factor;
-            ctx.globalAlpha = 1;
-            create_lines("chapter", character_data.filter(function (c) { return c.chapter === i+1; }));
-            
+            ctx.globalAlpha = 0.8;
+            create_lines(character_data.filter(function (c) { return c.chapter === i+1; }));
             //Update label path
             line_label_path.attr("d", label_arc(d.centerAngle));
+
             //Update the label text
             clearTimeout(remove_text_timer);
             line_label.text("characters that appear in chapter " + (i+1) );
@@ -689,29 +667,24 @@ function create_CCS_chart() {
             var char_chapters = character_data
                 .filter(function(c) { return c.chapter === i+1; })
                 .map(function(c) { return c.character; });
-
             names.filter(function(c) { return _.indexOf(char_chapters, c.character) < 0; })
                 .style("opacity", 0.2);
             name_dot.filter(function(c) { return _.indexOf(char_chapters, c.character) < 0; })
                 .style("opacity", 0.2);
 
             //Highlight the chapter donut slice
-            chapter_hover_slice.filter(function (c, j) { return i === j; })
+            chapter_slice.filter(function (c, j) { return i === j; })
                 .style("fill", color_sakura)
                 .style("stroke", color_sakura);
             chapter_number.filter(function (c, j) { return i === j; })
                 .style("fill", "white");
-            chapter_dot.filter(function (c, j) { return i === j; })
-                .attr("r", chapter_dot_rad * 1.5)
-                .style("stroke-width", chapter_dot_rad * 0.5 * 1.5)
-                .style("fill", color_sakura);
         }//function mouse_over_chapter
 
         //When you mouse out a chapter arcs
         function mouse_out_chapter() {
             ctx.clearRect(-width / 2, -height / 2, width, height);
-            ctx.globalAlpha = cover_alpha;
-            create_lines("character", cover_data);
+            ctx.globalAlpha = 0.2;
+            create_lines(cover_data);
 
             //Update the label text
             line_label.text(default_label_text)
@@ -722,12 +695,8 @@ function create_CCS_chart() {
             name_dot.style("opacity", null);
 
             //Chapter donut back to normal
-            chapter_hover_slice.style("fill", "none").style("stroke", "none");
+            chapter_slice.style("fill", "white").style("stroke", "#c4c4c4");
             chapter_number.style("fill", null);
-            chapter_dot
-                .attr("r", chapter_dot_rad)
-                .style("stroke-width", chapter_dot_rad * 0.5)
-                .style("fill", "#c4c4c4");
         }//function mouse_out_chapter
 
         ///////////////////////////////////////////////////////////////////////////
@@ -797,141 +766,246 @@ function create_CCS_chart() {
         ////////////// Function to create character - chapter lines ///////////////
         /////////////////////////////////////////////////////////////////////////// 
 
+        ctx.globalAlpha = 0.3;
         ctx.globalCompositeOperation = "multiply";
         ctx.lineCap = "round";
-        ctx.lineWidth = 3 * size_factor;
-        
-        //Line function to draw the lines from character to chapter on canvas
-        var line = d3.lineRadial()
-            .angle(function(d) { return d.angle; })
-            .radius(function(d) { return d.radius; })
-            .curve(d3.curveBasis)
-            .context(ctx);
-            
-        //Draw the lines for the cover
-        ctx.globalAlpha = cover_alpha;
-        create_lines("character", cover_data);
+        create_lines(cover_data);
 
-        function create_lines(type, data) {
+        function create_lines(data) {
 
-            for (var i = 0; i < data.length; i++) {
+            // data.forEach(function(d,i) {
+            for(var i = 0; i < data.length; i++) {
                 d = data[i];
-                var line_data = [];
 
-                //if(d.character !== "Sakura" || d.chapter !== 46) continue;
-                //console.log(d);
-
+                // console.log(d)
                 var source_a = characterByName[d.character].name_angle,
                     source_r = characterByName[d.character].dot_name_rad
-                var target_a = chapter_location_data[d.chapter - 1].centerAngle,
-                    target_r = rad_dot_color;
-
-                //Figure out some variable that will determine the path points to create
-                if (target_a - source_a < -Math.PI) {
+                    target_a = chapter_location_data[d.chapter-1].centerAngle;
+                var xs = source_r * Math.cos(source_a - pi1_2),
+                    ys = source_r * Math.sin(source_a - pi1_2),
+                    xt = rad_dot_color * Math.cos(target_a - pi1_2),
+                    yt = rad_dot_color * Math.sin(target_a - pi1_2);
+                var dx = xt - xs,
+                    dy = yt - ys;
+                
+                //Where should the middle point be placed
+                var scale_middle_a = d3.scaleLinear()
+                     .domain([0, 0.9])
+                     .range([0.5, 0.84])
+                     .clamp(true);           
+                if(target_a - source_a < -Math.PI) {
                     var side = "cw";
-                    var da = 2 + (target_a - source_a) / Math.PI;
+                    var da = 2 + (target_a - source_a)/Math.PI;
                     var angle_sign = 1;
-                } else if (target_a - source_a < 0) {
+                    var middle_a = ((2 * Math.PI + target_a) - source_a) * scale_middle_a(da) + source_a; 
+                } else if(target_a - source_a < 0) {
                     var side = "ccw";
-                    var da = (source_a - target_a) / Math.PI;
-                    var angle_sign = -1;
-                } else if (target_a - source_a < Math.PI) {
+                    var da = (source_a - target_a)/Math.PI;
+                    var angle_sign = -1; 
+                    var middle_a = (source_a - target_a) * (1 - scale_middle_a(da)) + target_a;
+                } else if(target_a - source_a < Math.PI) { 
                     var side = "cw";
-                    var da = (target_a - source_a) / Math.PI;
+                    var da = (target_a - source_a)/Math.PI;
                     var angle_sign = 1;
-                } else {
+                    var middle_a = (target_a - source_a) * scale_middle_a(da) + source_a; 
+                } else { 
                     var side = "ccw";
-                    var da = 2 - (target_a - source_a) / Math.PI;
+                    var da = 2 - (target_a - source_a)/Math.PI;
                     var angle_sign = -1;
+                    var middle_a = ((source_a + 2 * Math.PI) - target_a) * (1 - scale_middle_a(da)) + target_a;
                 }//else
-                //console.log(side, da, angle_sign);
+                middle_a = middle_a % pi2;
+                var ma = middle_a/Math.PI;
 
-
-                //Calculate the radius of the middle arcing section of the line
-                var range = type === "character" ? [0.33, 0.23] : [0.22, 0.32];
-                var scale_rad_curve = d3.scaleLinear()
-                    .domain([0, 1])
-                    .range(range);
-                var rad_curve_line = scale_rad_curve(da) * width;
-
-                //Slightly offset the first point on the curve from the source
-                var range = type === "character" ? [0, 0.07] : [0, 0.01];
+                //Set up the first anchor point
+                var scale_source_width = d3.scaleLinear()
+                    .domain([0,1])
+                    .range([0.001,0.01]);
+                var source_width = scale_source_width(da);
+                //Anchor point connected to source location
                 var scale_angle_start_offset = d3.scaleLinear()
+                    .domain([0,0.7])
+                    .range([0,0.1]);
+                var start_angle_offset = scale_angle_start_offset(da);
+                start_angle_offset -= source_width;
+                var scale_start_rad_offset = d3.scaleLinear()
+                    .domain([0,1])
+                    .range([10,300]);
+                var start_rad_offset = scale_start_rad_offset(da) * size_factor;
+                var cx1 = (source_r + start_rad_offset) * Math.cos(source_a + angle_sign * start_angle_offset * Math.PI - pi1_2),
+                    cy1 = (source_r + start_rad_offset) * Math.sin(source_a + angle_sign * start_angle_offset * Math.PI - pi1_2);
+
+
+                //Calculate the radius of the middle point of the line
+                var scale_rad_middle = d3.scaleLinear()
                     .domain([0, 1])
-                    .range(range);
-                var start_angle = source_a + angle_sign * scale_angle_start_offset(da) * Math.PI;
-
-                //Slightly offset the last point on the curve from the target
-                var range = type === "character" ? [0, 0.01] : [0, 0.07];
-                var scale_angle_end_offset = d3.scaleLinear()
+                    .range([0.26, 0.3]);
+                var rad_middle_line = scale_rad_middle(da) * width;
+                var scale_rad_width = d3.scaleLinear()
                     .domain([0, 1])
-                    .range(range);
-                var end_angle = target_a - angle_sign * scale_angle_end_offset(da) * Math.PI;
+                    .range([4, 4]);
+                var rad_width = scale_rad_width(da);
+                rad_middle_line += rad_width * size_factor;
+                //Location of the "middle" point
+                var xm = rad_middle_line * Math.cos(middle_a - pi1_2),
+                    ym = rad_middle_line * Math.sin(middle_a - pi1_2);
+                    
 
-                if (target_a - source_a < -Math.PI) {
-                    var da_inner = pi2 + (end_angle - start_angle);
-                } else if (target_a - source_a < 0) {
-                    var da_inner = (start_angle - end_angle);
-                } else if (target_a - source_a < Math.PI) {
-                    var da_inner = (end_angle - start_angle);
-                } else if (target_a - source_a < 2 * Math.PI) {
-                    var da_inner = pi2 - (end_angle - start_angle)
-                } else {
-                    console.log("here");
-                }//else
-                //console.log(source_a, target_a, da_inner)
+                //Find the slope/angle of the tangent line to the circle of the middle point
+                var slope = -1 * xm/ym,
+                    tangent_a = Math.abs(Math.atan(slope));
 
-                //Attach first point to data
-                line_data.push({
-                    angle: source_a,
-                    radius: source_r
-                });
-
-                //Attach first point of the curve section
-                line_data.push({
-                    angle: start_angle,
-                    radius: rad_curve_line
-                });
-
-                //Create points in between for the curve line
-                var step = 0.05;
-                var n = Math.abs(Math.floor(da_inner / step));
-                var curve_angle = start_angle;
-                var sign = side === "cw" ? 1 : -1;
-                if(n >= 1) {
-                    for (var j = 0; j < n; j++) {
-                        curve_angle += (sign * step) % pi2; 
-                        line_data.push({
-                            angle: curve_angle,
-                            radius: rad_curve_line
-                        });
-                    }//for j
+                //Slightly offset the actual anchor points from the tangent line
+                //Depending on how far from the source the middle point lies
+                var sign_offset;
+                //Get the signs of the middle two anchor points
+                //It depends on the "quadrant" of the circle the middle point lies in
+                //And whether the line is drawn clockwise or counterclockwise
+                var sign_x, sign_y;
+                //Side = cw
+                if(ma >= 0 && ma < 0.5) {
+                    sign_offset = 1;
+                    sign_x = -1;
+                    sign_y = -1;
+                } else if (ma >= 0.5 && ma < 1) {
+                    sign_offset = -1;
+                    sign_x = 1;
+                    sign_y = -1;
+                } else if (ma >= 1 && ma < 1.5) {
+                    sign_offset = 1;
+                    sign_x = 1;
+                    sign_y = 1;
+                } else if (ma >= 1.5 && ma <= 2) {
+                    sign_offset = -1;
+                    sign_x = -1;
+                    sign_y = 1;
+                }//else if
+                //Inverse for counterclockwise
+                if(side === "ccw") {
+                    sign_offset *= -1;
+                    sign_x *= -1;
+                    sign_y *= -1;
                 }//if
 
-                //Attach last point of the curve section
-                line_data.push({
-                    angle: end_angle,
-                    radius: rad_curve_line
-                });
+                var scale_middle_angle_offset = d3.scaleLinear()
+                    .domain([0,0.4,0.5,1])
+                    .range([-0.4,0,0.05,0])
+                    .clamp(true);
+                var middle_angle_offset = sign_offset * scale_middle_angle_offset(da);
+                //First anchor to middle
+                var scale_first_anchor = d3.scaleLinear()
+                    .domain([0,0.2,1])
+                    .range([20,50,600]);
+                var first_anchor_offset = scale_first_anchor(da) * size_factor;
+                var cx2 = xm + sign_x * first_anchor_offset * Math.cos(tangent_a + middle_angle_offset*Math.PI),
+                    cy2 = ym + sign_y * first_anchor_offset * Math.sin(tangent_a + middle_angle_offset*Math.PI);
+                //Second anchor to middle
+                var scale_second_anchor = d3.scaleLinear()
+                    .domain([0,1])
+                    .range([20,120]);
+                var second_anchor_offset = scale_second_anchor(da) * size_factor;
+                var cx3 = xm - sign_x * second_anchor_offset * Math.cos(tangent_a + middle_angle_offset*Math.PI),
+                    cy3 = ym - sign_y * second_anchor_offset * Math.sin(tangent_a + middle_angle_offset*Math.PI);
 
-                //Attach last point to data
-                line_data.push({
-                    angle: target_a,
-                    radius: target_r
-                });
 
-                //Draw the path
+                //Anchor point connected to target location
+                var scale_end_offset = d3.scaleLinear()
+                    .domain([0,1])
+                    .range([0,0.03]);
+                var scale_end_rad_offset = d3.scaleLinear()
+                    .domain([0,1])
+                    .range([50,30]);
+                var end_rad_offset = scale_end_rad_offset(da) * size_factor;
+                var end_angle_offset = scale_end_offset(da);
+                end_angle_offset += 0.002;
+                var cx4 = (rad_dot_color - end_rad_offset) * Math.cos(target_a - angle_sign * end_angle_offset * Math.PI - pi1_2),
+                    cy4 = (rad_dot_color - end_rad_offset) * Math.sin(target_a - angle_sign * end_angle_offset * Math.PI - pi1_2);
+
+
+                //Start drawing the path from source to target
                 ctx.beginPath();
-                line(line_data);
-                ctx.strokeStyle = characterByName[d.character].color;
-                ctx.stroke(); 
+                ctx.moveTo(xs, ys);
 
+                if(da/Math.PI > 0.02) {
+                    ctx.bezierCurveTo(cx1, cy1, cx2, cy2, xm, ym);
+                    ctx.bezierCurveTo(cx3, cy3, cx4, cy4, xt, yt);
+                } else {
+                    ctx.bezierCurveTo(cx1, cy1, cx4, cy4, xt, yt);
+                }//else
+
+                // ctx.globalAlpha = 0.4;
+                // ctx.strokeStyle = characterByName[d.character].color;
+                // ctx.lineWidth = 5 * size_factor;
+                // ctx.stroke(); 
+                // continue;
+
+                //Create the portion back to create the tapered stroke
+                start_angle_offset += 2*source_width;
+                var cx1b = (source_r + start_rad_offset) * Math.cos(source_a + angle_sign * start_angle_offset * Math.PI - pi1_2),
+                    cy1b = (source_r + start_rad_offset) * Math.sin(source_a + angle_sign * start_angle_offset * Math.PI - pi1_2);
+
+                rad_middle_line -= 2*rad_width;
+                //Location of the "middle" point
+                var xmb = rad_middle_line * Math.cos(middle_a - pi1_2),
+                    ymb = rad_middle_line * Math.sin(middle_a - pi1_2);
+                middle_angle_offset += 0.01;
+                //First anchor to middle
+                var cx2b = xmb + sign_x * first_anchor_offset * Math.cos(tangent_a + middle_angle_offset*Math.PI),
+                    cy2b = ymb + sign_y * first_anchor_offset * Math.sin(tangent_a + middle_angle_offset*Math.PI);
+                //Second anchor to middle
+                var cx3b = xmb - sign_x * second_anchor_offset * Math.cos(tangent_a + middle_angle_offset*Math.PI),
+                    cy3b = ymb - sign_y * second_anchor_offset * Math.sin(tangent_a + middle_angle_offset*Math.PI);
+
+                end_angle_offset -= 0.004;
+                var cx4b = (rad_dot_color - end_rad_offset) * Math.cos(target_a - angle_sign * end_angle_offset * Math.PI - pi1_2),
+                    cy4b = (rad_dot_color - end_rad_offset) * Math.sin(target_a - angle_sign * end_angle_offset * Math.PI - pi1_2);
+
+                if(da/Math.PI > 0.02) {
+                    ctx.bezierCurveTo(cx4b, cy4b, cx3b, cy3b, xmb, ymb);
+                    ctx.bezierCurveTo(cx2b, cy2b, cx1b, cy1b, xs, ys);
+                } else {
+                    ctx.bezierCurveTo(cx4b, cy4b, cx1b, cy1b, xs, ys);
+                }//else
+                
+                //Draw and fill the path
+                ctx.fillStyle = characterByName[d.character].color;
+                ctx.fill();             
+
+                // //Draw the anchor points for reference
+                // chart.append("circle")
+                //     .attr("cx", cx1).attr("cy", cy1)
+                //     .attr("r", 3).style("fill", "blue")
+                // chart.append("circle")
+                //     .attr("cx", cx2).attr("cy", cy2)
+                //     .attr("r", 3).style("fill", "green")
+                // chart.append("circle")
+                //     .attr("cx", xm).attr("cy", ym)
+                //     .attr("r", 3).style("fill", "red")
+                // chart.append("circle")
+                //     .attr("cx", cx3).attr("cy", cy3)
+                //     .attr("r", 3).style("fill", "orange")
+                // chart.append("circle")
+                //     .attr("cx", cx4).attr("cy", cy4)
+                //     .attr("r", 3).style("fill", "blue")
+
+                // chart.append("circle")
+                //     .attr("cx", cx1b).attr("cy", cy1b)
+                //     .attr("r", 3).style("fill", "blue").style("opacity", 0.5)
+                // chart.append("circle")
+                //     .attr("cx", cx2b).attr("cy", cy2b)
+                //     .attr("r", 3).style("fill", "green").style("opacity", 0.5)
+                // chart.append("circle")
+                //     .attr("cx", xmb).attr("cy", ymb)
+                //     .attr("r", 3).style("fill", "red").style("opacity", 0.5)
+                // chart.append("circle")
+                //     .attr("cx", cx3b).attr("cy", cy3b)
+                //     .attr("r", 3).style("fill", "orange").style("opacity", 0.5)
+                // chart.append("circle")
+                //     .attr("cx", cx4b).attr("cy", cy4b)
+                //     .attr("r", 3).style("fill", "blue").style("opacity", 0.5)
             }//for
 
-            ctx.globalAlpha = 0.7;
-            ctx.lineWidth = 3 * size_factor;
-
-        }//function create_lines
+        }//function create_lines  
 
     }//function draw
 
@@ -944,6 +1018,7 @@ function create_CCS_chart() {
             .style('height', height + "px");
         ctx.scale(sf, sf);
     }//function crispyCanvas
+
 
     // //Dragging functions for final positioning adjustments
     // function dragstarted(d) {
