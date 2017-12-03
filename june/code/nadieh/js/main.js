@@ -20,9 +20,10 @@ function create_CCS_chart() {
     ////////////////////////////////////////////////////////////// 
     
     var container = d3.select("#chart");
-    var width = 1400;
+    var width = 1600;
     var height = width;
 
+    //Scaling the entire visual, as compared to the base size of 1600px wide
     var size_factor = width/1600;
 
     //Canvas
@@ -30,6 +31,10 @@ function create_CCS_chart() {
     var ctx = canvas.node().getContext("2d");
     crispyCanvas(canvas, ctx, 2);
     ctx.translate(width/2,height/2);
+    //General canvas settings
+    ctx.globalCompositeOperation = "multiply";
+    ctx.lineCap = "round";
+    ctx.lineWidth = 3 * size_factor;
 
     //SVG container
     var svg = container.append("svg")
@@ -45,27 +50,36 @@ function create_CCS_chart() {
     //////////////// Initialize helpers and scales ///////////////
     //////////////////////////////////////////////////////////////
 
-    var num_chapters = 50;
+    var num_chapters = 50,
+        num_volume = 12;
     var pi2 = 2*Math.PI,
         pi1_2 = Math.PI/2;
 
-    var cover_alpha = 0.2;
+    var cover_alpha = 0.3;
+    var simulation;
+    var remove_text_timer;
 
     var color_sakura = "#EB5580",
         color_kero = "#F6B42B";
 
-    var rad_card_label = 0.435 * width, //capture card text on the outside
-        rad_color_outer = width * 0.42, //outside of the hidden chapter hover
-        rad_volume_donut_inner = width * 0.425, //inner radius of the volume donut
-        rad_volume_donut_outer = width * 0.427, //outer radius of the volume donut
-        rad_color = width * 0.39, //color circles
-        rad_dot_color = width * 0.34, //chapter dot
-        rad_chapter_donut_inner = width * 0.34, //inner radius of the chapter donut
-        rad_chapter_donut_outer = width * 0.354, //outer radius of the chapter donut
-        rad_line_label = width * 0.3, //textual label that explains the hovers
-        rad_donut_inner = width * 0.14, //inner radius of the character donut
-        rad_donut_outer = width * 0.15, //outer radius of the character donut
+    //Radii at which the different parts of the visual should be created
+    var rad_card_legend = width * 0.45, //explanation of the card labels
+        rad_card_label = width * 0.4, //capture card text on the outside
+        rad_color_outer = width * 0.4, //outside of the hidden chapter hover
+        // rad_volume_donut_outer = width * 0.427, //outer radius of the volume donut
+        // rad_volume_donut_inner = width * 0.425, //inner radius of the volume donut
+        rad_color = width * 0.373, //color circles
+        rad_volume_inner = width * 0.343, //radius of the volume arcs
+        rad_chapter_donut_outer = width * 0.334, //outer radius of the chapter donut
+        rad_chapter_donut_inner = width * 0.32, //inner radius of the chapter donut
+        rad_dot_color = width * 0.32, //chapter dot
+        rad_line_max = 0.31,
+        rad_line_min = 0.215,
+        rad_line_label = width * 0.29, //textual label that explains the hovers
+        rad_donut_inner = width * 0.122, //inner radius of the character donut
+        rad_donut_outer = width * 0.13, //outer radius of the character donut
         rad_name = rad_donut_outer + 8 * size_factor, //padding between character donut and start of the character name
+        rad_image = rad_donut_inner - 4 * size_factor; //radius of the central image shown on hover
         rad_relation = rad_donut_inner - 8 * size_factor; //padding between character donut and inner lines
 
     //Angle for each chapter on the outside
@@ -77,10 +91,6 @@ function create_CCS_chart() {
     var radius_scale = d3.scaleSqrt()
         .domain([0, 1])
         .range([0, 20]);
-
-    var simulation;
-
-    var remove_text_timer;
 
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////// Create groups ///////////////////////////////
@@ -106,9 +116,10 @@ function create_CCS_chart() {
         if (error) throw error;
 
         ///////////////////////////////////////////////////////////////////////////
-        ///////////////////////// Calculate chapter locations //////////////////////
+        ///////////////////////// Calculate chapter locations /////////////////////
         /////////////////////////////////////////////////////////////////////////// 
 
+        chapter_hierarchy_data = chapter_hierarchy_data.filter(function (d) { return d.name === "CCS" || (d.volume_num <= num_volume && !d.num) || (d.num >= 1 && d.num <= num_chapters); });
         //Based on typical hierarchical clustering example
         var root = d3.stratify()
             .id(function (d) { return d.name; })
@@ -148,6 +159,7 @@ function create_CCS_chart() {
         cover_data.sort(sortCharacter);
         character_data.sort(sortCharacter);
 
+        color_data = color_data.filter(function (d) { return d.chapter <= num_chapters; })
         color_data.forEach(function (d) {
             d.cluster = d.chapter - 1;
             d.radius = radius_scale(d.percentage);
@@ -159,14 +171,26 @@ function create_CCS_chart() {
             d.x = d.focusX + Math.random();
             d.y = d.focusY + Math.random();
         })//forEach
-        color_data = color_data.filter(function (d) { return d.chapter <= num_chapters; })
 
+        // //Only keep the data from the selected chapters
+        // chapter_total_data = chapter_total_data.filter(function (d) { return d.chapter <= num_chapters; });
+
+        // cover_data = cover_data.filter(function (d) { return d.chapter <= num_chapters; });
+
+        // character_data = character_data.filter(function (d) { return d.chapter <= num_chapters; });
+
+        // //Which characters are left
+        // var char_left = _.uniq(character_data.map(function(d) { return d.character; }));
+        // //Only keep the data from these characters
+        // character_total_data = character_total_data.filter(function(d) { return _.indexOf(char_left, d.character) >= 0; });
+        // relation_data = relation_data.filter(function(d) { return _.indexOf(char_left, d.source) >= 0 && _.indexOf(char_left, d.target) >= 0; });
+        
         //////////////////////////////////////////////////////////////
         ///////////////////// Create CMYK patterns ///////////////////
         //////////////////////////////////////////////////////////////
 
         //Patterns based on http://blockbuilder.org/veltman/50a350e86de82278ffb2df248499d3e2
-        var radius_color_max = 1.75;
+        var radius_color_max = 2 * size_factor;
         var radius_color = d3.scaleSqrt().range([0, radius_color_max]);
 
         var ccs_colors = color_data.map(function (d) { return d.color; }),
@@ -211,14 +235,29 @@ function create_CCS_chart() {
                 .attr("fill", function (d, i) { return "url(#pattern-sub-" + cmyk_colors[i] + "-" + j + ")"; })
         }//for j
 
+        //Adding images of the characters
+        var image_radius = rad_image;
+        var image_group = defs.append("g").attr("class", "image-group");
+        //Had to add img width otherwise it wouldn't work in Safari & Firefox
+        //http://stackoverflow.com/questions/36390962/svg-image-tag-not-working-in-safari-and-firefox
+        var cover_image = image_group.append("pattern")
+            .attr("id", "cover-image")
+            .attr("class", "cover-image")
+            .attr("patternUnits", "objectBoundingBox")
+            .attr("height", "100%")
+            .attr("width", "100%")
+            .append("image")
+            .attr("xlink:href", "img/ccs-chapter-1.jpg")
+            .attr("height", 2 * image_radius)
+            .attr("width", 2 * image_radius);
+
         ///////////////////////////////////////////////////////////////////////////
         /////////////////////////// Run force simulation //////////////////////////
         ///////////////////////////////////////////////////////////////////////////     
-
         simulation = d3.forceSimulation(color_data)
             .force("x", d3.forceX().x(function (d) { return d.focusX; }).strength(0.05))
             .force("y", d3.forceY().y(function (d) { return d.focusY; }).strength(0.05))
-            .force("collide", d3.forceCollide(function (d) { return (d.radius * 1 + 2) * size_factor; }).strength(0))
+            .force("collide", d3.forceCollide(function (d) { return (d.radius * 1 + 2.5) * size_factor; }).strength(0))
             .on("tick", tick)
             .on("end", simulation_end)
             .alphaMin(.1)
@@ -256,27 +295,6 @@ function create_CCS_chart() {
         }//function simulation_end
 
         data_save = color_data; //So I save the final positions
-
-        ///////////////////////////////////////////////////////////////////////////
-        /////////////////////////// Create color circles //////////////////////////
-        ///////////////////////////////////////////////////////////////////////////    
-
-        var color_group = chart.append("g").attr("class", "color-group");
-        var color_circle = color_group.selectAll(".color-circle")
-            .data(color_data)
-            .enter().append("circle")
-            .attr("class", "color-circle")
-            .attr("cx", function (d) { return d.x; })
-            .attr("cy", function (d) { return d.y; })
-            .attr("r", function (d) { return d.radius * size_factor; })
-            .style("fill", function (d) { return d.color; })
-            .style("stroke", function (d) { return d.color; })
-            .style("stroke-width", 3 * size_factor)
-            // .call(d3.drag()
-            //     .on('start', dragstarted)
-            //     .on('drag', dragged)
-            //     .on('end', dragended)
-            // );
 
         ///////////////////////////////////////////////////////////////////////////
         /////////////////////// Create character donut chart //////////////////////
@@ -400,7 +418,71 @@ function create_CCS_chart() {
             .attr("r", 6 * size_factor)
             .style("fill", function (d) { return d.color; })
             .style("stroke", "white")
-            .style("stroke-width", 3 * size_factor)
+            .style("stroke-width", 3 * size_factor);
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////////////////////////// Create inner relations /////////////////////////
+        /////////////////////////////////////////////////////////////////////////// 
+
+        var pull_scale = d3.scaleLinear()
+            .domain([2 * rad_relation, 0])
+            .range([0.7, 2.3]);
+        var color_relation = d3.scaleOrdinal()
+            .domain(["family", "crush", "love", "friend", "master"]) //"teacher","ex-lovers","reincarnation","rival"
+            .range(["#2C9AC6", "#FA88A8", "#E01A25", "#7EB852", "#F6B42B"])
+            .unknown("#d4d4d4");
+        var stroke_relation = d3.scaleOrdinal()
+            .domain(["family", "crush", "love", "friend", "master"]) //"teacher","ex-lovers","reincarnation","rival"
+            .range([4, 5, 8, 4, 5])
+            .unknown(3);
+
+        var relation_group = chart.append("g").attr("class", "relation-group");
+
+        //Create the lines in between the characters that have some sort of relation
+        relation_group.selectAll(".relation-path")
+            .data(relation_data)
+            .enter().append("path")
+            .attr("class", "relation-path")
+            .style("fill", "none")
+            .style("stroke", function (d) { return color_relation(d.type); })
+            .style("stroke-width", function (d) { return stroke_relation(d.type) * size_factor; })
+            .style("stroke-linecap", "round")
+            .style("mix-blend-mode", "multiply")
+            .style("opacity", 0.7)
+            .attr("d", function (d) {
+                var source_a = characterByName[d.source].name_angle,
+                    target_a = characterByName[d.target].name_angle;
+                var x1 = rad_relation * Math.cos(source_a - pi1_2),
+                    y1 = rad_relation * Math.sin(source_a - pi1_2),
+                    x2 = rad_relation * Math.cos(target_a - pi1_2),
+                    y2 = rad_relation * Math.sin(target_a - pi1_2);
+                var dx = x2 - x1,
+                    dy = y2 - y1,
+                    dr = Math.sqrt(dx * dx + dy * dy);
+                var curve = dr * 1 / pull_scale(dr);
+
+                //Get the angles to determine the optimum sweep flag
+                var delta_angle = (target_a - source_a) / Math.PI;
+                var sweep_flag = 0;
+                if ((delta_angle > -1 && delta_angle <= 0) || (delta_angle > 1 && delta_angle <= 2))
+                    sweep_flag = 1;
+
+                return "M" + x1 + "," + y1 + " A" + curve + "," + curve + " 0 0 " + sweep_flag + " " + x2 + "," + y2;
+            });
+
+        ///////////////////////////////////////////////////////////////////////////
+        //////////////////////// Create cover chapter circle //////////////////////
+        /////////////////////////////////////////////////////////////////////////// 
+
+        //Add a circle at the center that will show the cover image on hover
+        var cover_circle_group = chart.append("g").attr("class", "cover-circle-group");
+        var cover_circle = cover_circle_group.append("circle")
+            .attr("class", "cover-circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", rad_image)
+            .style("fill", "none");
+            // .style("fill", "url(#cover-image)")
 
         ///////////////////////////////////////////////////////////////////////////
         ////////////////////// Create hidden name hover areas /////////////////////
@@ -448,6 +530,11 @@ function create_CCS_chart() {
                 .style("stroke-width", chapter_dot_rad * 0.5 * 1.5)
                 .style("fill", char_color);
 
+            //Show the character image in the center
+            cover_image.attr("xlink:href", null);
+            cover_image.attr("xlink:href", "img/character-" + d.character.toLowerCase() + ".jpg")
+            cover_circle.style("fill", "url(#cover-image)");
+
         }//function mouse_over_character
 
         function mouse_out_character() {
@@ -466,57 +553,11 @@ function create_CCS_chart() {
                 .attr("r", chapter_dot_rad)
                 .style("stroke-width", chapter_dot_rad * 0.5)
                 .style("fill", "#c4c4c4");
+
+            //Remove character image
+            cover_circle.style("fill", "none");
+            cover_image.attr("xlink:href", null);
         }//function mouse_out_character
-
-        ///////////////////////////////////////////////////////////////////////////
-        ////////////////////////// Create inner relations /////////////////////////
-        /////////////////////////////////////////////////////////////////////////// 
-
-        var pull_scale = d3.scaleLinear()
-            .domain([2*rad_relation, 0])
-            .range([0.7, 2.3]);
-        var color_relation = d3.scaleOrdinal()
-            .domain(["family","crush","love","friend","master"]) //"teacher","ex-lovers","reincarnation","rival"
-            .range(["#2C9AC6","#FA88A8","#E01A25","#7EB852","#F6B42B"])
-            .unknown("#d4d4d4");
-        var stroke_relation = d3.scaleOrdinal()
-            .domain(["family","crush","love","friend","master"]) //"teacher","ex-lovers","reincarnation","rival"
-            .range([4,5,8,4,5])
-            .unknown(3);
-
-        var relation_group = chart.append("g").attr("class", "relation-group");
-
-        //Create the lines in between the characters that have some sort of relation
-        relation_group.selectAll(".relation-path")
-            .data(relation_data)
-            .enter().append("path")
-            .attr("class", "relation-path")
-            .style("fill", "none")
-            .style("stroke", function(d) { return color_relation(d.type); })
-            .style("stroke-width", function(d) {return stroke_relation(d.type) * size_factor; })
-            .style("stroke-linecap", "round")
-            .style("mix-blend-mode", "multiply")
-            .style("opacity", 0.7)
-            .attr("d", function(d) { 
-                var source_a = characterByName[d.source].name_angle,
-                    target_a = characterByName[d.target].name_angle;
-                var x1 = rad_relation * Math.cos(source_a - pi1_2),
-                    y1 = rad_relation * Math.sin(source_a - pi1_2),
-                    x2 = rad_relation * Math.cos(target_a - pi1_2),
-                    y2 = rad_relation * Math.sin(target_a - pi1_2);
-                var dx = x2 - x1,
-                    dy = y2 - y1,
-                    dr = Math.sqrt(dx * dx + dy * dy);
-                var curve = dr * 1/pull_scale(dr);
-
-                //Get the angles to determine the optimum sweep flag
-                var delta_angle = (target_a - source_a) / Math.PI;
-                var sweep_flag = 0;
-                if ((delta_angle > -1 && delta_angle <= 0) || (delta_angle > 1 && delta_angle <= 2)) 
-                    sweep_flag = 1;
-
-                return "M" + x1 + "," + y1 + " A" + curve + "," + curve + " 0 0 " + sweep_flag + " " + x2 + "," + y2;
-             });
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// Create chapter donut chart //////////////////////
@@ -573,75 +614,7 @@ function create_CCS_chart() {
             .style("font-size", (9*size_factor) + "px")
             .text(function (d, i) { return i + 1; });
 
-        ///////////////////////////////////////////////////////////////////////////
-        ///////////////////////// Create volume donut chart //////////////////////
-        /////////////////////////////////////////////////////////////////////////// 
-
-        //Create groups in right order
-        var donut_volume_group = chart.append("g").attr("class", "donut-volume-group");
-
-        //Arc command for the chapter number donut chart
-        var arc_volume = d3.arc()
-            .outerRadius(rad_volume_donut_outer)
-            .innerRadius(rad_volume_donut_inner)
-            .padAngle(0.01)
-            .cornerRadius((rad_volume_donut_outer - rad_volume_donut_inner) / 2);
-
-        //Create the arcs data
-        var volume_data = [
-            {volume: 1, num_chapters: 5, chapter_start: 1, chapter_end: 5},
-            {volume: 2, num_chapters: 5, chapter_start: 6, chapter_end: 10},
-            {volume: 4, num_chapters: 4, chapter_start: 11, chapter_end: 14},
-            {volume: 3, num_chapters: 4, chapter_start: 15, chapter_end: 18},
-            {volume: 5, num_chapters: 4, chapter_start: 19, chapter_end: 22},
-            {volume: 6, num_chapters: 4, chapter_start: 23, chapter_end: 26},
-            {volume: 7, num_chapters: 4, chapter_start: 27, chapter_end: 30},
-            {volume: 8, num_chapters: 4, chapter_start: 31, chapter_end: 34},
-            {volume: 9, num_chapters: 4, chapter_start: 35, chapter_end: 38},
-            {volume: 10, num_chapters: 4, chapter_start: 39, chapter_end: 42},
-            {volume: 11, num_chapters: 3, chapter_start: 43, chapter_end: 45},
-            {volume: 12, num_chapters: 5, chapter_start: 46, chapter_end: 50}
-        ];
-        //Figure out the start and end angle
-        volume_data.forEach(function (d, i) {
-            d.startAngle = chapter_location_data[d.chapter_start-1].startAngle,
-            d.endAngle = chapter_location_data[d.chapter_end-1].endAngle;
-            d.centerAngle = (d.endAngle - d.startAngle) / 2 + d.startAngle;
-        });
-
-        //Create the donut slices per character (and the number of chapters they appeared in)
-        var volume_slice = donut_volume_group.selectAll(".arc")
-            .data(volume_data)
-            .enter().append("path")
-            .attr("class", "arc")
-            .attr("d", arc_volume)
-            .style("fill", function(d,i) { return d.volume <= 6 ? color_kero : color_sakura; })
-            .style("opacity", 0.4);
-
-        //The text is placed in the center of each donut slice
-        var rad_volume_donut_half = ((rad_volume_donut_outer - rad_volume_donut_inner) / 2 + rad_volume_donut_inner);
-                
-        // // //Add chapter number text
-        // // var chapter_number = chapter_num_group.selectAll(".chapter-number")
-        // //     .data(chapter_arcs)
-        // //     .enter().append("text")
-        // //     .attr("class", "chapter-number")
-        // //     .style("text-anchor", "middle")
-        // //     .attr("dy", ".35em")
-        // //     .attr("transform", function (d, i) {
-        // //         var angle = d.centerAngle * 180 / Math.PI - 90;
-        // //         return "rotate(" + angle + ")translate(" + rad_chapter_donut_half + ")" +
-        // //             // (d.centerAngle > 0 & d.centerAngle < Math.PI ? "" : "rotate(180)")
-        // //             "rotate(" + -angle + ")";
-        // //     })
-        // //     .style("font-size", (9*size_factor) + "px")
-        // //     .text(function (d, i) { return i + 1; });
-
-        ///////////////////////////////////////////////////////////////////////////
-        ///////////////////// Create dots for each chapter group //////////////////
-        /////////////////////////////////////////////////////////////////////////// 
-
-        //Add a circle at the inside of each chapter
+        //Add a circle at the inside of each chapter slice
         var chapter_dot_rad = 3.5 * size_factor;
         var chapter_dot = chapter_dot_group.selectAll(".chapter-dot")
             .data(chapter_location_data)
@@ -653,6 +626,74 @@ function create_CCS_chart() {
             .style("fill", "#c4c4c4")
             .style("stroke", "white")
             .style("stroke-width", chapter_dot_rad * 0.5);
+
+        ///////////////////////////////////////////////////////////////////////////
+        ///////////////////////// Create volume donut chart //////////////////////
+        /////////////////////////////////////////////////////////////////////////// 
+
+        //Create groups in right order
+        var donut_volume_group = chart.append("g").attr("class", "donut-volume-group");
+
+        //Create the arcs data
+        var volume_data = [
+            { volume: 1, num_chapters: 5, chapter_start: 1, chapter_end: 5 },
+            { volume: 2, num_chapters: 5, chapter_start: 6, chapter_end: 10 },
+            { volume: 4, num_chapters: 4, chapter_start: 11, chapter_end: 14 },
+            { volume: 3, num_chapters: 4, chapter_start: 15, chapter_end: 18 },
+            { volume: 5, num_chapters: 4, chapter_start: 19, chapter_end: 22 },
+            { volume: 6, num_chapters: 4, chapter_start: 23, chapter_end: 26 },
+            { volume: 7, num_chapters: 4, chapter_start: 27, chapter_end: 30 },
+            { volume: 8, num_chapters: 4, chapter_start: 31, chapter_end: 34 },
+            { volume: 9, num_chapters: 4, chapter_start: 35, chapter_end: 38 },
+            { volume: 10, num_chapters: 4, chapter_start: 39, chapter_end: 42 },
+            { volume: 11, num_chapters: 3, chapter_start: 43, chapter_end: 45 },
+            { volume: 12, num_chapters: 5, chapter_start: 46, chapter_end: 50 }
+        ];
+        volume_data = volume_data.filter(function(d) { return d.volume <= num_volume; });
+        //Figure out the start and end angle
+        volume_data.forEach(function (d, i) {
+            d.startAngle = chapter_location_data[d.chapter_start - 1].startAngle,
+            d.endAngle = chapter_location_data[d.chapter_end - 1].endAngle;
+            d.centerAngle = (d.endAngle - d.startAngle) / 2 + d.startAngle;
+        });
+
+        var volume_slice = donut_volume_group.selectAll(".volume-arc")
+            .data(volume_data)
+            .enter().append("path")
+            .attr("class", "volume-arc")
+            .style("stroke", "#c4c4c4")
+            .style("stroke", function(d,i) { return d.volume <= 6 ? color_kero : color_sakura; })
+            .style("stroke-width", 3 * size_factor)
+            .style("stroke-dasharray", "0," + (7 * size_factor))
+            .attr("d", function(d,i) {
+                var rad = rad_volume_inner,
+                    xs = rad * Math.cos(d.startAngle - pi1_2),
+                    ys = rad * Math.sin(d.startAngle - pi1_2),
+                    xt = rad * Math.cos(d.endAngle - pi1_2),
+                    yt = rad * Math.sin(d.endAngle - pi1_2)
+                return "M" + xs + "," + ys + " A" + rad + "," + rad + " 0 0 1 " + xt + "," + yt;
+            });
+
+        ///////////////////////////////////////////////////////////////////////////
+        /////////////////////////// Create color circles //////////////////////////
+        ///////////////////////////////////////////////////////////////////////////    
+        //The colored circles right after the character names
+        var color_group = chart.append("g").attr("class", "color-group");
+        var color_circle = color_group.selectAll(".color-circle")
+            .data(color_data)
+            .enter().append("circle")
+            .attr("class", "color-circle")
+            .attr("cx", function (d) { return d.x; })
+            .attr("cy", function (d) { return d.y; })
+            .attr("r", function (d) { return d.radius * size_factor; })
+            .style("fill", function (d) { return d.color; })
+            .style("stroke", function (d) { return d.color; })
+            .style("stroke-width", 3 * size_factor)
+            // .call(d3.drag()
+            //     .on('start', dragstarted)
+            //     .on('drag', dragged)
+            //     .on('end', dragended)
+            // );
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////// Create hidden chapter hover areas ///////////////////
@@ -705,6 +746,11 @@ function create_CCS_chart() {
                 .attr("r", chapter_dot_rad * 1.5)
                 .style("stroke-width", chapter_dot_rad * 0.5 * 1.5)
                 .style("fill", color_sakura);
+
+            //Show the cover image in the center
+            cover_image.attr("xlink:href", null);
+            cover_image.attr("xlink:href", "img/ccs-chapter-" + (i+1) + ".jpg")
+            cover_circle.style("fill", "url(#cover-image)");
         }//function mouse_over_chapter
 
         //When you mouse out a chapter arcs
@@ -728,46 +774,11 @@ function create_CCS_chart() {
                 .attr("r", chapter_dot_rad)
                 .style("stroke-width", chapter_dot_rad * 0.5)
                 .style("fill", "#c4c4c4");
+
+            //Remove cover image
+            cover_circle.style("fill", "none");
+            cover_image.attr("xlink:href", null);
         }//function mouse_out_chapter
-
-        ///////////////////////////////////////////////////////////////////////////
-        ///////////////////////// Create line title label /////////////////////////
-        /////////////////////////////////////////////////////////////////////////// 
-
-        var line_label_group = chart.append("g").attr("class", "line-label-group");
-
-        //Define the arc on which to draw the label text
-        function label_arc(angle) {
-            var x1 = rad_line_label * Math.cos(angle + 0.01 - pi1_2),
-                y1 = rad_line_label * Math.sin(angle + 0.01 - pi1_2);
-            var x2 = rad_line_label * Math.cos(angle - 0.01 - pi1_2),
-                y2 = rad_line_label * Math.sin(angle - 0.01 - pi1_2);
-            if(angle/Math.PI > 0.5 && angle/Math.PI < 1.5) {
-                return "M" + x1 + "," + y1 + " A" + rad_line_label + "," + rad_line_label + " 0 1 1 " + x2 + "," + y2;
-            } else {
-                return "M" + x2 + "," + y2 + " A" + rad_line_label + "," + rad_line_label + " 0 1 0 " + x1 + "," + y1;
-            }//else
-        }//function label_arc
-
-        //Create the paths along which the pillar labels will run
-        var line_label_path = line_label_group.append("path")
-            .attr("class", "line-label-path")
-            .attr("id", "line-label-path")
-            .attr("d", label_arc(characterByName["Sakura"].name_angle))
-            .style("fill", "none")
-            .style("display", "none");
-
-        //Create the label text
-        var default_label_text = "these lines show which characters appear on the chapter's cover art";
-        var line_label = line_label_group.append("text")
-            .attr("class", "line-label")
-            .attr("dy", "0.35em")
-            .style("text-anchor", "middle")
-            .style("font-size", (14 * size_factor) + "px")
-            .append("textPath")
-            .attr("xlink:href", "#line-label-path")
-            .attr("startOffset", "50%")
-            .text(default_label_text);
 
         ///////////////////////////////////////////////////////////////////////////
         //////////////////////// Create captured card labels //////////////////////
@@ -790,16 +801,101 @@ function create_CCS_chart() {
                     + (d.centerAngle > 0 & d.centerAngle < Math.PI ? "" : "rotate(180)");
             })
             .style("text-anchor", function (d) { return d.centerAngle > 0 & d.centerAngle < Math.PI ? "start" : "end"; })
-            .style("font-size", (9 * size_factor) + "px")
+            .style("font-size", (10 * size_factor) + "px")
             .text(function (d, i) { return d.card_captured; });
 
         ///////////////////////////////////////////////////////////////////////////
-        ////////////// Function to create character - chapter lines ///////////////
+        ///////////////////////////// Create annotations //////////////////////////
+        ///////////////////////////////////////////////////////////////////////////
+
+
+        document.querySelector('html').style.setProperty('--annotation-title-font-size', (14*size_factor) + 'px')
+        document.querySelector('html').style.setProperty('--annotation-label-font-size', (13*size_factor) + 'px')
+
+        var annotations = [{
+            note: {
+                label: "The right half of the circle shows which Clow cards were captured per chapter. Sakura was already in possession of Windy and Wood at the start of chapter 1",
+                title: "Clow Cards",
+                wrap: 320*size_factor,
+                padding: 5*size_factor
+            },
+            className: "note-cards",
+            x: 55 * size_factor,
+            y: -680 * size_factor,
+            dx: 37,
+            dy: -30
+        },{
+            note: {
+                label: "The left half of the circle shows which Clow cards were converted to Sakura cards per chapter",
+                title: "Sakura Cards",
+                wrap: 290*size_factor,
+                padding: 10*size_factor
+            },
+            className: "note-cards",
+            x: -285 * size_factor,
+            y: 620 * size_factor,
+            dx: -20,
+            dy: 45
+        }];
+        // x: rad_card_legend * Math.cos(chapter_location_data[28].centerAngle -pi1_2),
+        // y: rad_card_legend * Math.sin(chapter_location_data[28].centerAngle -pi1_2),
+
+        //Set-up the annotation maker
+        var makeAnnotations = d3.annotation()
+            // .editMode(true)
+            .type(d3.annotationCalloutElbow)
+            .annotations(annotations);
+
+        //Call and create for the first time, but font sizes are wrong
+        var annotation_group = chart.append("g").attr("class", "annotation-group");
+        annotation_group.call(makeAnnotations);
+
+        //Make the strokes of the connectors a different color and thicker
+        annotation_group.selectAll(".note-cards .connector, .note-line")
+            .style("stroke-width", 2 * size_factor);
+
+        ///////////////////////////////////////////////////////////////////////////
+        ///////////////////////// Create line title label /////////////////////////
         /////////////////////////////////////////////////////////////////////////// 
 
-        ctx.globalCompositeOperation = "multiply";
-        ctx.lineCap = "round";
-        ctx.lineWidth = 3 * size_factor;
+        var line_label_group = chart.append("g").attr("class", "line-label-group");
+
+        //Define the arc on which to draw the label text
+        function label_arc(angle) {
+            var x1 = rad_line_label * Math.cos(angle + 0.01 - pi1_2),
+                y1 = rad_line_label * Math.sin(angle + 0.01 - pi1_2);
+            var x2 = rad_line_label * Math.cos(angle - 0.01 - pi1_2),
+                y2 = rad_line_label * Math.sin(angle - 0.01 - pi1_2);
+            if (angle / Math.PI > 0.5 && angle / Math.PI < 1.5) {
+                return "M" + x1 + "," + y1 + " A" + rad_line_label + "," + rad_line_label + " 0 1 1 " + x2 + "," + y2;
+            } else {
+                return "M" + x2 + "," + y2 + " A" + rad_line_label + "," + rad_line_label + " 0 1 0 " + x1 + "," + y1;
+            }//else
+        }//function label_arc
+
+        //Create the paths along which the pillar labels will run
+        var line_label_path = line_label_group.append("path")
+            .attr("class", "line-label-path")
+            .attr("id", "line-label-path")
+            .attr("d", label_arc(characterByName["Sakura"].name_angle))
+            .style("fill", "none")
+            .style("display", "none");
+
+        //Create the label text
+        var default_label_text = "currently, these lines show which characters appear on the chapter's cover art";
+        var line_label = line_label_group.append("text")
+            .attr("class", "line-label")
+            .attr("dy", "0.35em")
+            .style("text-anchor", "middle")
+            .style("font-size", (14 * size_factor) + "px")
+            .append("textPath")
+            .attr("xlink:href", "#line-label-path")
+            .attr("startOffset", "50%")
+            .text(default_label_text);
+
+        ///////////////////////////////////////////////////////////////////////////
+        //////////////////// Create character & chapter lines /////////////////////
+        /////////////////////////////////////////////////////////////////////////// 
         
         //Line function to draw the lines from character to chapter on canvas
         var line = d3.lineRadial()
@@ -848,7 +944,7 @@ function create_CCS_chart() {
 
 
                 //Calculate the radius of the middle arcing section of the line
-                var range = type === "character" ? [0.33, 0.23] : [0.22, 0.32];
+                var range = type === "character" ? [rad_line_max, rad_line_min] : [rad_line_min, rad_line_max];
                 var scale_rad_curve = d3.scaleLinear()
                     .domain([0, 1])
                     .range(range);

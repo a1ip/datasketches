@@ -5,11 +5,19 @@
     font-style: normal;
 }
 
-/************* general *************/
+html {
+    --annotation-title-font-size: 15px;
+    --annotation-label-font-size: 13px;
+}
 
+/************* general *************/
 body {
-    font-family: 'Anime Ace', monospace;
+    
     font-weight: 400;
+}
+
+svg {
+    font-family: 'Anime Ace', monospace;
 }
 
 svg, canvas {
@@ -26,4 +34,34 @@ svg, canvas {
 
 .chapter-number {
     fill: #6d6d6d;
+}
+
+.card-label {
+    cursor: default;
+}
+.card-legend {
+    fill: #a1a1a1;
+}
+
+.volume-arc {
+    fill: none;
+    stroke-linecap: round;
+}
+
+.connector, .note-line {
+    stroke-linecap: round;
+}
+.annotation-note-title {
+    font-size: var(--annotation-title-font-size);
+}
+.annotation-note-label {
+    font-size: var(--annotation-label-font-size);
+    font-family: 'Barlow Semi Condensed', sans-serif;
+}
+
+.note-cards .connector, .note-line {
+    stroke: #f6b42b;
+}
+.note-cards .annotation-note-title {
+    fill: #f6b42b;
 }
