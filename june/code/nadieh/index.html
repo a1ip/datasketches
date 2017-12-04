@@ -41,13 +41,50 @@
 	<!-- Styling -->
 	<link href="css/style.css" rel="stylesheet">
 	<!-- Google fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed:400,400i|Barlow:400" rel="stylesheet">
 
 </head>
 
 <body>
 
-	<div id="chart"></div>
+	<!-- Intro -->
+	<div id="intro-container">
+		<img id="ccs-logo" src="img/sakura-cmyk-dot.png" />
+		<div id="title-container">
+			<div id="title">
+				<div id="sub-title">Fifty chapters of adorable cuteness</div>
+				<div id="main-title">Cardcaptor Sakura</div>
+			</div>
+		</div>
+		<div id="intro">
+			<p class="intro-text" style="margin-top: 0px;"><span class="anime">Cardcaptor Sakura</span> is one of the most beautiful and adorable manga series (a Japanese comic) ever created. The series was written and illustrated by the manga artist group CLAMP between 1996 and 2000, but is still extremely popular today. The series focuses on Sakura Kinomoto, a fourth grade elementary school student. After opening a book in her father's library she releases a set of 19 magical cards, which start to cause different kinds of mayhem. The guardian of these cards, Kero, a cute magical stuffed-animal-like lion, tasks Sakura to retrieve the cards in order to avoid an unknown catastrophe from befalling the world.</p>
+			<p class="explanation">The visualization below is an ode to this wonderful series. The outer ring focuses on all 50 chapters, showing the main colors present in each chapter's cover art, each practically a piece of art. The inner ring, instead, concentrates on the main characters and their relations. These two circles are connected by lines to reveal the characters that appear in each chapter. These links can be more fully investigated by hovering over the chapters or characters.</p>
+		</div>
+	</div>
+
+	<!-- Chart -->
+	<div id="chart-container">
+		<div id="chart"></div>
+	</div>
+
+
+	<!-- Legend -->
+	<div id="legend-container">
+		<div style="font-size: 50px; text-align: center;">ADD IN SVG LEGEND HERE</div>
+	</div>
+
+	<!-- Credits & Data -->
+	<div id="credit">
+		<p class="credit-bold" style="margin-bottom: 4px;">Created by
+			<a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a>
+			<span class="divider grey">|</span>
+			<a href="http://www.visualcinnamon.com/" target="_new">Visual Cinnamon</a>
+		</p>
+		<p class="credit-note">Images from the
+			<a href="http://ccsakura.wikia.com/wiki/Cardcaptor_Sakura_Wiki" target="_new">Cardcaptor Sakura Wikia</a>
+			<span class="divider grey">|</span> Go to
+			<a href="../..">datasketches' June month</a> to read about the data preparation & more</p>
+	</div>
 
 	<script>
 		WebFont.load({

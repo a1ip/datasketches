@@ -20,8 +20,9 @@ function create_CCS_chart() {
     ////////////////////////////////////////////////////////////// 
     
     var container = d3.select("#chart");
-    var width = 1600;
+    var width = 1400;
     var height = width;
+    container.style("height", height + "px");
 
     //Scaling the entire visual, as compared to the base size of 1600px wide
     var size_factor = width/1600;
@@ -247,7 +248,7 @@ function create_CCS_chart() {
             .attr("height", "100%")
             .attr("width", "100%")
             .append("image")
-            .attr("xlink:href", "img/ccs-chapter-1.jpg")
+            .attr("xlink:href", "img/white-square.jpg")
             .attr("height", 2 * image_radius)
             .attr("width", 2 * image_radius);
 
@@ -531,7 +532,6 @@ function create_CCS_chart() {
                 .style("fill", char_color);
 
             //Show the character image in the center
-            cover_image.attr("xlink:href", null);
             cover_image.attr("xlink:href", "img/character-" + d.character.toLowerCase() + ".jpg")
             cover_circle.style("fill", "url(#cover-image)");
 
@@ -556,7 +556,7 @@ function create_CCS_chart() {
 
             //Remove character image
             cover_circle.style("fill", "none");
-            cover_image.attr("xlink:href", null);
+            cover_image.attr("xlink:href", "img/white-square.jpg")
         }//function mouse_out_character
 
         ///////////////////////////////////////////////////////////////////////////
@@ -748,7 +748,6 @@ function create_CCS_chart() {
                 .style("fill", color_sakura);
 
             //Show the cover image in the center
-            cover_image.attr("xlink:href", null);
             cover_image.attr("xlink:href", "img/ccs-chapter-" + (i+1) + ".jpg")
             cover_circle.style("fill", "url(#cover-image)");
         }//function mouse_over_chapter
@@ -777,7 +776,7 @@ function create_CCS_chart() {
 
             //Remove cover image
             cover_circle.style("fill", "none");
-            cover_image.attr("xlink:href", null);
+            cover_image.attr("xlink:href", "img/white-square.jpg")
         }//function mouse_out_chapter
 
         ///////////////////////////////////////////////////////////////////////////
@@ -828,7 +827,7 @@ function create_CCS_chart() {
             note: {
                 label: "The left half of the circle shows which Clow cards were converted to Sakura cards per chapter",
                 title: "Sakura Cards",
-                wrap: 290*size_factor,
+                wrap: 250*size_factor,
                 padding: 10*size_factor
             },
             className: "note-cards",
