@@ -1,8 +1,6 @@
-//TODO: mark something about the type: magical, human, etc
-//var color_type = d3.scaleOrdinal()
-//TODO: Add chapter cover on chapter hover
-//TODO: Add legends
 //TODO: Add annotations
+//TODO: Set-up HTML header images
+//TODO: Fix x and y of color circles?
 
 
 var data_save;
@@ -19,7 +17,7 @@ function create_CCS_chart() {
     ////////////////////////////////////////////////////////////// 
     
     var container = d3.select("#chart");
-    var width = 1400;
+    var width = 1600;
     var height = width;
     container.style("height", height + "px");
 
@@ -61,6 +59,8 @@ function create_CCS_chart() {
 
     var color_sakura = "#EB5580",
         color_kero = "#F6B42B";
+
+    var mouse_over_in_action = false;
 
     //Radii at which the different parts of the visual should be created
     var rad_card_legend = width * 0.45, //explanation of the card labels
@@ -287,10 +287,12 @@ function create_CCS_chart() {
             //Place the mouse hover events
             character_hover
                 .on("mouseover", mouse_over_character)
-                .on("mouseout", mouse_out_character);
+                .on("mouseout", mouse_out);
             chapter_hover
                 .on("mouseover", mouse_over_chapter)
-                .on("mouseout", mouse_out_chapter);
+                .on("mouseout", mouse_out);
+            container
+                .on("mouseout", mouse_out);
     
         }//function simulation_end
 
@@ -503,6 +505,9 @@ function create_CCS_chart() {
             .style("pointer-events", "all");
 
         function mouse_over_character(d) {
+            d3.event.stopPropagation();
+            mouse_over_in_action = true;
+
             //Show the chosen lines
             ctx.clearRect(-width/2, -height/2, width, height);
             ctx.globalAlpha = 0.8;
@@ -535,28 +540,6 @@ function create_CCS_chart() {
             cover_circle.style("fill", "url(#cover-image)");
 
         }//function mouse_over_character
-
-        function mouse_out_character() {
-            ctx.clearRect(-width/2, -height/2, width, height);
-            ctx.globalAlpha = cover_alpha;
-            create_lines("character", cover_data);
-
-            //Update the label text
-            line_label.text(default_label_text)
-            remove_text_timer = setTimeout(function() { line_label.text("")}, 4000);
-
-            //Chapter donut back to normal
-            chapter_hover_slice.style("fill", "none").style("stroke", "none");
-            chapter_number.style("fill", null);
-            chapter_dot
-                .attr("r", chapter_dot_rad)
-                .style("stroke-width", chapter_dot_rad * 0.5)
-                .style("fill", "#c4c4c4");
-
-            //Remove character image
-            cover_circle.style("fill", "none");
-            cover_image.attr("xlink:href", "img/white-square.jpg")
-        }//function mouse_out_character
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// Create chapter donut chart //////////////////////
@@ -715,6 +698,9 @@ function create_CCS_chart() {
 
         //When you mouse over a chapter arc
         function mouse_over_chapter(d,i) {
+            d3.event.stopPropagation();
+            mouse_over_in_action = true;
+
             ctx.clearRect(-width / 2, -height / 2, width, height);
             ctx.lineWidth = 4 * size_factor;
             ctx.globalAlpha = 1;
@@ -752,8 +738,16 @@ function create_CCS_chart() {
             cover_circle.style("fill", "url(#cover-image)");
         }//function mouse_over_chapter
 
-        //When you mouse out a chapter arcs
-        function mouse_out_chapter() {
+        ///////////////////////////////////////////////////////////////////////////
+        ///////////////////////// General mouse out function //////////////////////
+        /////////////////////////////////////////////////////////////////////////// 
+
+        //When you mouse out of a chapter or character
+        function mouse_out() {
+            //Only run this if there was a mouseover before
+            if(!mouse_over_in_action) return;
+            mouse_over_in_action = false;
+
             ctx.clearRect(-width / 2, -height / 2, width, height);
             ctx.globalAlpha = cover_alpha;
             create_lines("character", cover_data);
@@ -761,6 +755,10 @@ function create_CCS_chart() {
             //Update the label text
             line_label.text(default_label_text)
             remove_text_timer = setTimeout(function() { line_label.text("")}, 4000);
+
+            //Character names back to normal
+            names.style("opacity", null);
+            name_dot.style("opacity", null);
 
             //Character names back to normal
             names.style("opacity", null);
@@ -777,7 +775,7 @@ function create_CCS_chart() {
             //Remove cover image
             cover_circle.style("fill", "none");
             cover_image.attr("xlink:href", "img/white-square.jpg")
-        }//function mouse_out_chapter
+        }//function mouse_out
 
         ///////////////////////////////////////////////////////////////////////////
         //////////////////////// Create captured card labels //////////////////////
