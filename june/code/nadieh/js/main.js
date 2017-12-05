@@ -2,7 +2,6 @@
 //var color_type = d3.scaleOrdinal()
 //TODO: Add chapter cover on chapter hover
 //TODO: Add legends
-//TODO: Add intro + credit
 //TODO: Add annotations
 
 
@@ -564,10 +563,11 @@ function create_CCS_chart() {
         /////////////////////////////////////////////////////////////////////////// 
 
         //Create groups in right order
-        var donut_chapter_group = chart.append("g").attr("class", "donut-chapter-group");
-        var chapter_dot_group = chart.append("g").attr("class", "chapter-dot-group");
-        var donut_chapter_hover_group = chart.append("g").attr("class", "donut-chapter_hover-group");
-        var chapter_num_group = chart.append("g").attr("class", "chapter-number-group");
+        var chapter_group = chart.append("g").attr("class", "chapter-group");
+        var donut_chapter_group = chapter_group.append("g").attr("class", "donut-chapter-group");
+        var chapter_dot_group = chapter_group.append("g").attr("class", "chapter-dot-group");
+        var donut_chapter_hover_group = chapter_group.append("g").attr("class", "donut-chapter_hover-group");
+        var chapter_num_group = chapter_group.append("g").attr("class", "chapter-number-group");
 
         //Arc command for the chapter number donut chart
         var arc_chapter = d3.arc()

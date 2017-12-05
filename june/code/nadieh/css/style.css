@@ -33,7 +33,7 @@ body {
 }
 
 #ccs-logo {
-    opacity: 0.5;
+    opacity: 0.3;
     position: absolute;
     top: 30px;
     left: -140px;
@@ -155,7 +155,7 @@ body {
     position: relative;
 }
 
-svg {
+#chart svg {
     font-family: 'Anime Ace', monospace;
     position: absolute;
     top: 0px;
@@ -208,6 +208,22 @@ canvas {
 }
 .note-cards .annotation-note-title {
     fill: #f6b42b;
+}
+
+/************* legend *************/
+
+#legend-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#legend-container > div {
+    margin-left: 10px;
+    margin-right: 10px;
+    display: none;
 }
 
 /************* credits *************/
