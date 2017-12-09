@@ -23,13 +23,17 @@ function create_CCS_chart() {
 
     var width = 1600;//Math.round(Math.min(1600, ww/0.7, wh/0.7));
     var height = width;
+
     container.style("height", height + "px");
-    d3.select("body").style("width", width + "px");
-    // d3.selectAll(".outer-container").style("width", Math.min(width,1400) + "px");
+    //d3.select("body").style("width", width + "px"); 
+    document.body.style.width = width + 'px';
     d3.selectAll(".outer-container").style("width", (ww - 2*20) + "px"); //2 * 20px padding
     //Move the window th the top left of the text
-    var pos = document.getElementById("top-outer-container").getBoundingClientRect()
-    window.scrollTo(pos.left,0);
+    if(width > window.innerWidth) {
+        var pos = document.getElementById("top-outer-container").getBoundingClientRect()
+        console.log(width, pos.left);
+        $.scrollTo(document.getElementById('top-outer-container'));
+    }//if
 
     //Scaling the entire visual, as compared to the base size
     var size_factor = width/base_width;
