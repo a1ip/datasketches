@@ -2,9 +2,7 @@
 //TODO: Set-up HTML header images
 //TODO: Fix x and y of color circles?
 
-
-var data_save;
-
+// var data_save;
 // var data_new = []
 // data_save.forEach(function(d) {
 //     data_new.push({country_id: d.country_id, x: _.round(d.x,2), y: _.round(d.y,2)})
@@ -17,12 +15,24 @@ function create_CCS_chart() {
     ////////////////////////////////////////////////////////////// 
     
     var container = d3.select("#chart");
-    var width = 1600;
+
+    var base_width = 1600;
+    
+    var ww = window.innerWidth,
+        wh = window.innerHeight;
+
+    var width = 1600;//Math.round(Math.min(1600, ww/0.7, wh/0.7));
     var height = width;
     container.style("height", height + "px");
+    d3.select("body").style("width", width + "px");
+    // d3.selectAll(".outer-container").style("width", Math.min(width,1400) + "px");
+    d3.selectAll(".outer-container").style("width", (ww - 2*20) + "px"); //2 * 20px padding
+    //Move the window th the top left of the text
+    var pos = document.getElementById("top-outer-container").getBoundingClientRect()
+    window.scrollTo(pos.left,0);
 
-    //Scaling the entire visual, as compared to the base size of 1600px wide
-    var size_factor = width/1600;
+    //Scaling the entire visual, as compared to the base size
+    var size_factor = width/base_width;
 
     //Canvas
     var canvas = container.append("canvas").attr("id", "canvas-target")
@@ -168,8 +178,8 @@ function create_CCS_chart() {
             d.focusX = rad_color * Math.cos(chapter_location_data[d.cluster].centerAngle - pi1_2);
             d.focusY = rad_color * Math.sin(chapter_location_data[d.cluster].centerAngle - pi1_2);
             //Add a bit of random to not get weird placement behavior in the simulation
-            d.x = d.focusX + Math.random();
-            d.y = d.focusY + Math.random();
+            d.x = d.focusX + random();
+            d.y = d.focusY + random();
         })//forEach
 
         // //Only keep the data from the selected chapters
@@ -283,16 +293,6 @@ function create_CCS_chart() {
         function simulation_end() {
             //Create the CMYK halftones
             color_circle.style("fill", function (d, i) { return "url(#pattern-total-" + i + ")"; })
-
-            //Place the mouse hover events
-            character_hover
-                .on("mouseover", mouse_over_character)
-                .on("mouseout", mouse_out);
-            chapter_hover
-                .on("mouseover", mouse_over_chapter)
-                .on("mouseout", mouse_out);
-            container
-                .on("mouseout", mouse_out);
     
         }//function simulation_end
 
@@ -484,7 +484,6 @@ function create_CCS_chart() {
             .attr("cy", 0)
             .attr("r", rad_image)
             .style("fill", "none");
-            // .style("fill", "url(#cover-image)")
 
         ///////////////////////////////////////////////////////////////////////////
         ////////////////////// Create hidden name hover areas /////////////////////
@@ -502,7 +501,9 @@ function create_CCS_chart() {
             .attr("class", "character-hover-arc")
             .attr("d", arc_character_hover)
             .style("fill", "none")
-            .style("pointer-events", "all");
+            .style("pointer-events", "all")
+            .on("mouseover", mouse_over_character)
+            .on("mouseout", mouse_out);
 
         function mouse_over_character(d) {
             d3.event.stopPropagation();
@@ -694,7 +695,9 @@ function create_CCS_chart() {
             .attr("class", "chapter-hover-arc")
             .attr("d", arc_chapter_hover)
             .style("fill", "none")
-            .style("pointer-events", "all");
+            .style("pointer-events", "all")
+            .on("mouseover", mouse_over_chapter)
+            .on("mouseout", mouse_out);
 
         //When you mouse over a chapter arc
         function mouse_over_chapter(d,i) {
@@ -741,6 +744,8 @@ function create_CCS_chart() {
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// General mouse out function //////////////////////
         /////////////////////////////////////////////////////////////////////////// 
+
+        container.on("mouseout", mouse_out);
 
         //When you mouse out of a chapter or character
         function mouse_out() {
@@ -804,7 +809,6 @@ function create_CCS_chart() {
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////// Create annotations //////////////////////////
         ///////////////////////////////////////////////////////////////////////////
-
 
         document.querySelector('html').style.setProperty('--annotation-title-font-size', (14*size_factor) + 'px')
         document.querySelector('html').style.setProperty('--annotation-label-font-size', (13*size_factor) + 'px')
@@ -1077,3 +1081,10 @@ function rgbToCMYK(rgb) {
     };
 }//function rgbToCMYK
 
+//Get a "random" number generator where you can fix the starting seed
+//https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
+var seed = 4;
+function random() {
+    var x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+}//function random
