@@ -94,7 +94,8 @@ function create_CCS_chart() {
     var remove_text_timer;
 
     var color_sakura = "#EB5580",
-        color_kero = "#F6B42B";
+        color_kero = "#F6B42B",
+        color_syaoran = "#4fb127";
 
     //Has a mouseover just happened
     var mouse_over_in_action = false;
@@ -214,7 +215,7 @@ function create_CCS_chart() {
 
         //Gradient for the titles of the annotations
         var grad = defs.append("linearGradient")
-            .attr("id", "gradient-title-left")
+            .attr("id", "gradient-title")
             .attr("x1", "0%").attr("y1", "0%")
             .attr("x2", "100%").attr("y2", "0%");
         grad.append("stop")
@@ -224,17 +225,18 @@ function create_CCS_chart() {
             .attr("offset", "200%")   
             .attr("stop-color", "#ED8B6A");
 
+        //Gradient for the titles of the annotations
         var grad = defs.append("linearGradient")
-            .attr("id", "gradient-title-right")
+            .attr("id", "gradient-title-legend")
             .attr("x1", "0%").attr("y1", "0%")
             .attr("x2", "100%").attr("y2", "0%");
         grad.append("stop")
-            .attr("offset", "0%")   
-            .attr("stop-color", "#ED8B6A");
+            .attr("offset", "50%")   
+            .attr("stop-color", color_syaoran);
         grad.append("stop")
-            .attr("offset", "100%")   
-            .attr("stop-color", color_sakura);
-
+            .attr("offset", "200%")   
+            .attr("stop-color", "#9ABF2B");
+            
         //////////////////////////////////////////////////////////////
         ///////////////////// Create CMYK patterns ///////////////////
         //////////////////////////////////////////////////////////////
@@ -858,17 +860,32 @@ function create_CCS_chart() {
             var annotations = [
                 {
                     note: {
-                        label: "The right half of the circle shows in which chapter the Clow cards were captured. Sakura was already in possession of Windy and Wood at the start of chapter 1",
+                        label: "Around the right half of the large circle you can see in which chapter the Clow cards were captured. Sakura was already in possession of Windy and Wood at the start of chapter 1",
                         title: "Clow Cards",
-                        wrap: 290*size_factor,
+                        wrap: 230*size_factor,
                     },
                     chapter: 1,
-                    extra_rad: 30 * size_factor,
-                    className: "eriol-title eriol-connector eriol-sakura note-right",
+                    extra_rad: 24 * size_factor,
+                    className: "note-right note-legend",
                     x: 151 * size_factor,
                     y: -705 * size_factor,
                     cx: 55 * size_factor,
-                    cy: -680 * size_factor,
+                    cy: -686 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "These circles reveal the main colors present in each chapter's cover art",
+                        title: "Cover art",
+                        wrap: 180*size_factor,
+                    },
+                    chapter: 1,
+                    extra_rad: 55 * size_factor,
+                    className: "note-right note-legend",
+                    x: 482 * size_factor,
+                    y: -532 * size_factor,
+                    cx: 412 * size_factor,
+                    cy: -493 * size_factor,
                     dx: 5 * size_factor,
                     dy: -5 * size_factor
                 },{
@@ -879,7 +896,7 @@ function create_CCS_chart() {
                     },
                     chapter: 11,
                     extra_rad: 30 * size_factor,
-                    className: "kero-title kero-connector kero-sakura note-right",
+                    className: "note-right",
                     x: 745 * size_factor,
                     y: -115 * size_factor,
                     cx: 610 * size_factor,
@@ -895,7 +912,7 @@ function create_CCS_chart() {
                     },
                     chapter: 15,
                     extra_rad: 22 * size_factor,
-                    className: "kaho-title kaho-connector kaho-kaho note-right",
+                    className: "note-right",
                     x: 770 * size_factor,
                     y: 230 * size_factor,
                     cx: 657 * size_factor,
@@ -911,7 +928,7 @@ function create_CCS_chart() {
                     },
                     chapter: 17,
                     extra_rad: 30 * size_factor,
-                    className: "sakura-title sakura-connector sakura-syaoran note-right",
+                    className: "note-right",
                     x: 736 * size_factor,
                     y: 397 * size_factor,
                     cx: 607 * size_factor,
@@ -927,7 +944,7 @@ function create_CCS_chart() {
                     },
                     chapter: 23,
                     extra_rad: 30 * size_factor,
-                    className: "kero-title kero-connector kero-sakura note-right",
+                    className: "note-right",
                     x: 256 * size_factor,
                     y: 755 * size_factor,
                     cx: 210 * size_factor,
@@ -943,43 +960,43 @@ function create_CCS_chart() {
                     },
                     chapter: 26,
                     extra_rad: 60 * size_factor,
-                    className: "yue-title yue-connector yue-sakura note-right",
-                    x: 24 * size_factor,
+                    className: "note-right",
+                    x: 14 * size_factor,
                     y: 800 * size_factor,
                     cx: -20 * size_factor,
                     cy: 635 * size_factor,
                     dx: 5 * size_factor,
                     dy: -5 * size_factor
                 },{
+                //     note: {
+                //         label: "The '2nd arc' starts in which Sakura learns that she has to convert the cards into Sakura cards before she can use the card's magic",
+                //         title: "A new challenge",
+                //         wrap: 180*size_factor,
+                //         padding: 10*size_factor
+                //     },
+                //     chapter: 27,
+                //     extra_rad: 40 * size_factor,
+                //     className: "sakura-title eriol-connector sakura-eriol note-left",
+                //     x: -184 * size_factor,
+                //     y: 766 * size_factor,
+                //     cx: -130 * size_factor,
+                //     cy: 620 * size_factor,
+                //     dx: 5 * size_factor,
+                //     dy: -5 * size_factor
+                // },{
                     note: {
-                        label: "The '2nd arc' starts in which Sakura learns that she has to convert the cards into Sakura cards before she can use the card's magic",
-                        title: "A new challenge",
-                        wrap: 180*size_factor,
-                        padding: 10*size_factor
-                    },
-                    chapter: 27,
-                    extra_rad: 40 * size_factor,
-                    className: "sakura-title eriol-connector sakura-eriol note-left",
-                    x: -184 * size_factor,
-                    y: 766 * size_factor,
-                    cx: -130 * size_factor,
-                    cy: 620 * size_factor,
-                    dx: 5 * size_factor,
-                    dy: -5 * size_factor
-                },{
-                    note: {
-                        label: "The left half of the circle shows in which chapter those Clow cards were converted to Sakura cards",
+                        label: "Around the left half of the large circle you can see in which chapter the Clow cards were converted to Sakura cards",
                         title: "Sakura Cards",
-                        wrap: 180*size_factor,
+                        wrap: 200*size_factor,
                         padding: 10*size_factor
                     },
                     chapter: 29,
-                    extra_rad: 22 * size_factor,
-                    className: "sakura-title sakura-connector sakura-sakura note-left",
-                    x: -370 * size_factor,
-                    y: 710 * size_factor,
-                    cx: -285 * size_factor,
-                    cy: 620 * size_factor,
+                    extra_rad: 25 * size_factor,
+                    className: "note-left note-legend",
+                    x: -301 * size_factor,
+                    y: 735 * size_factor,
+                    cx: -287 * size_factor,
+                    cy: 624 * size_factor,
                     dx: 5 * size_factor,
                     dy: -5 * size_factor
                 },{
@@ -990,10 +1007,10 @@ function create_CCS_chart() {
                         padding: 10*size_factor
                     },
                     chapter: 31,
-                    extra_rad: 50 * size_factor,
-                    className: "syaoran-title sakura-connector syaoran-sakura note-left",
+                    extra_rad: 92 * size_factor,
+                    className: "note-left",
                     x: -460 * size_factor,
-                    y: 613 * size_factor,
+                    y: 646 * size_factor,
                     cx: -405 * size_factor,
                     cy: 485 * size_factor,
                     dx: 5 * size_factor,
@@ -1002,13 +1019,13 @@ function create_CCS_chart() {
                     note: {
                         label: "The Fly transforms to give Sakura herself wings to fly, instead of her staff",
                         title: "Fly",
-                        wrap: 150*size_factor,
+                        wrap: 200*size_factor,
                     },
                     chapter: 32,
-                    extra_rad: 65 * size_factor,
-                    className: "sakura-title sakura-connector sakura-sakura note-left",
-                    x: -634 * size_factor,
-                    y: 590 * size_factor,
+                    extra_rad: 27 * size_factor,
+                    className: "note-left",
+                    x: -587 * size_factor,
+                    y: 552 * size_factor,
                     cx: -515 * size_factor,
                     cy: 485 * size_factor,
                     dx: 5 * size_factor,
@@ -1022,7 +1039,7 @@ function create_CCS_chart() {
                     },
                     chapter: 38,
                     extra_rad: 50 * size_factor,
-                    className: "toya-title yukito-connector toya-yukito note-left",
+                    className: "note-left",
                     x: -785 * size_factor,
                     y: 123 * size_factor,
                     cx: -700 * size_factor,
@@ -1037,9 +1054,9 @@ function create_CCS_chart() {
                     },
                     chapter: 42,
                     extra_rad: 30 * size_factor,
-                    className: "sakura-title syaoran-connector sakura-syaoran note-left",
-                    x: -703 * size_factor,
-                    y: -380 * size_factor,
+                    className: "note-left",
+                    x: -735 * size_factor,
+                    y: -366 * size_factor,
                     cx: -695 * size_factor,
                     cy: -370 * size_factor,
                     dx: 5 * size_factor,
@@ -1052,7 +1069,7 @@ function create_CCS_chart() {
                     },
                     chapter: 44,
                     extra_rad: 30 * size_factor,
-                    className: "eriol-title sakura-connector eriol-sakura note-left",
+                    className: "note-left",
                     x: -596 * size_factor,
                     y: -577 * size_factor,
                     cx: -593 * size_factor,
@@ -1067,7 +1084,7 @@ function create_CCS_chart() {
                     },
                     chapter: 50,
                     extra_rad: 30 * size_factor,
-                    className: "sakura-title syaoran-connector sakura-syaoran note-left",
+                    className: "note-left",
                     x: -105 * size_factor,
                     y: -660 * size_factor,
                     cx: -45 * size_factor,
@@ -1091,15 +1108,15 @@ function create_CCS_chart() {
             annotation_group.selectAll(".note-line, .connector")
                 .style("stroke", "none");
             annotation_group.selectAll(".annotation-note-title")
-                .style("fill", "url(#gradient-title-left)");
+                .style("fill", "url(#gradient-title)");
 
             //Create my own radially pointing connector lines
-            var annotation_connector_group = annotation_group.append("g", "annotation-connectors")
+            var annotation_connector_group = annotation_group.append("g", "annotation-connectors");
             annotations.forEach(function(d,i) {
                 var angle = Math.atan(d.cy/d.cx);
                 if(d.cx < 0) angle = -Math.atan(d.cy/-d.cx) + Math.PI;
                 annotation_connector_group.append("line")
-                    .attr("class", "connector-manual")
+                    .attr("class", "connector-manual " + d.className)
                     .attr("x1", d.cx)
                     .attr("y1", d.cy)
                     .attr("x2", d.cx + d.extra_rad * Math.cos(angle) )
@@ -1108,6 +1125,41 @@ function create_CCS_chart() {
                     .style("stroke-linecap", "round")
                     .style("stroke", color_sakura);
             });
+
+            //Turn the legend based annotations green
+            annotation_group.selectAll(".note-legend .annotation-note-title")
+                .style("fill", "url(#gradient-title-legend)");
+            annotation_connector_group.selectAll(".note-legend")
+                .style("stroke", color_syaoran);
+
+            //Add circles to the legend annotations
+            var annotation_circle_group = annotation_group.append("g", "annotation-circles");
+            //Add circle to first clow card                       
+            annotation_circle_group.append("circle")
+                .attr("class", "annotation-circle")
+                .attr("cx", 50 * size_factor)
+                .attr("cy", -655 * size_factor)
+                .attr("r", 25 * size_factor);
+
+            //Add circle to cover art annotation
+            annotation_circle_group.append("circle")
+                .attr("class", "annotation-circle")
+                .attr("cx", 384 * size_factor)
+                .attr("cy", -458 * size_factor)
+                .attr("r", 38 * size_factor);
+            
+            //Add circle to first sakura card                       
+            annotation_circle_group.append("circle")
+                .attr("class", "annotation-circle")
+                .attr("cx", -273 * size_factor)
+                .attr("cy", 596 * size_factor)
+                .attr("r", 25 * size_factor);
+
+            annotation_circle_group.selectAll(".annotation-circle")
+                .style("stroke-dasharray", "0," + (6 * size_factor))
+                .style("stroke-width", 2.5 * size_factor)
+                .style("stroke", color_syaoran);
+
         }//if
 
         ///////////////////////////////////////////////////////////////////////////
