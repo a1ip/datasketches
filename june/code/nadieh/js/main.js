@@ -1,7 +1,4 @@
-//TODO: Add annotations
-//TODO: Set-up HTML header images
 //TODO: Fix x and y of color circles?
-
 // var data_save;
 // var data_new = []
 // data_save.forEach(function(d) {
@@ -34,7 +31,6 @@ function create_CCS_chart() {
     }//else
     width = Math.round(Math.min(1600, width));
     var height = width;
-    console.log(ww, width)
 
     //Scaling the entire visual, as compared to the base size
     var size_factor = width/base_width;
@@ -59,8 +55,6 @@ function create_CCS_chart() {
             d3.selectAll(".outer-container").style("margin-left", 0 + "px");
         }//if
     }//if
-
-
 
     ////////////////////////////////////////////////////////////// 
     //////////////////// Create SVG & Canvas /////////////////////
@@ -102,6 +96,7 @@ function create_CCS_chart() {
     var color_sakura = "#EB5580",
         color_kero = "#F6B42B";
 
+    //Has a mouseover just happened
     var mouse_over_in_action = false;
 
     //Radii at which the different parts of the visual should be created
@@ -213,34 +208,11 @@ function create_CCS_chart() {
             d.y = d.focusY + random();
         })//forEach
 
-        // //Only keep the data from the selected chapters
-        // chapter_total_data = chapter_total_data.filter(function (d) { return d.chapter <= num_chapters; });
-
-        // cover_data = cover_data.filter(function (d) { return d.chapter <= num_chapters; });
-
-        // character_data = character_data.filter(function (d) { return d.chapter <= num_chapters; });
-
-        // //Which characters are left
-        // var char_left = _.uniq(character_data.map(function(d) { return d.character; }));
-        // //Only keep the data from these characters
-        // character_total_data = character_total_data.filter(function(d) { return _.indexOf(char_left, d.character) >= 0; });
-        // relation_data = relation_data.filter(function(d) { return _.indexOf(char_left, d.source) >= 0 && _.indexOf(char_left, d.target) >= 0; });
-
         //////////////////////////////////////////////////////////////
         /////////////////////// Create gradients /////////////////////
         //////////////////////////////////////////////////////////////
 
-        var grad = defs.append("linearGradient")
-            .attr("id", "gradient-stroke")
-            .attr("x1", "0%").attr("y1", "0%")
-            .attr("x2", "100%").attr("y2", "0%");
-        grad.append("stop")
-            .attr("offset", "0%")   
-            .attr("stop-color", "#ED8B6A");
-        grad.append("stop")
-            .attr("offset", "100%")   
-            .attr("stop-color", color_sakura);
-
+        //Gradient for the titles of the annotations
         var grad = defs.append("linearGradient")
             .attr("id", "gradient-title-left")
             .attr("x1", "0%").attr("y1", "0%")
