@@ -10,33 +10,61 @@
 // copy(data_new)
 
 function create_CCS_chart() {
+
     ////////////////////////////////////////////////////////////// 
-    //////////////////// Create SVG & Canvas /////////////////////
+    ////////////////// Set-up sizes of the page //////////////////
     ////////////////////////////////////////////////////////////// 
     
     var container = d3.select("#chart");
 
     var base_width = 1600;
-    
     var ww = window.innerWidth,
         wh = window.innerHeight;
+    var width_too_small = ww < 400;
 
-    var width = 1600;//Math.round(Math.min(1600, ww/0.7, wh/0.7));
+    var width;
+    if(wh < ww) {
+        width = wh/0.8;
+    } else {
+        if(ww < 400) width = ww/0.5;
+        else if(ww < 600) width = ww/0.6;
+        else if(ww < 800) width = ww/0.7;
+        else if(ww < 1100) width = ww/0.8;
+        else width = ww/0.8;
+    }//else
+    width = Math.round(Math.min(1600, width));
     var height = width;
-
-    container.style("height", height + "px");
-    //d3.select("body").style("width", width + "px"); 
-    document.body.style.width = width + 'px';
-    d3.selectAll(".outer-container").style("width", (ww - 2*20) + "px"); //2 * 20px padding
-    //Move the window th the top left of the text
-    if(width > window.innerWidth) {
-        var pos = document.getElementById("top-outer-container").getBoundingClientRect()
-        console.log(width, pos.left);
-        $.scrollTo(document.getElementById('top-outer-container'));
-    }//if
+    console.log(ww, width)
 
     //Scaling the entire visual, as compared to the base size
     var size_factor = width/base_width;
+
+    //Adjust the general layout based on the width of the visual
+    container.style("height", height + "px");
+    //Reset the body width
+    if(width > ww) document.body.style.width = (width + (width_too_small ? 0 : 240 * size_factor)) + 'px';
+    d3.selectAll(".outer-container").style("width", (ww - 2*20) + "px"); //2 * 20px padding
+
+    //Move the window to the top left of the text if the chart is wider than the screen
+    if(width > ww) {
+        var pos = document.getElementById("top-outer-container").getBoundingClientRect()
+        window.scrollTo(pos.left,0);
+        //$.scrollTo(document.getElementById('top-outer-container'));
+
+        //This doesn't work in all browsers, so check (actually it only doesn't seem to work in Chrome...)
+        var pos = document.getElementById("top-outer-container").getBoundingClientRect()
+        if( Math.abs(pos.left) > 2 ) {
+            //$.scrollTo({left:0, top:0});
+            window.scrollTo(0,0)
+            d3.selectAll(".outer-container").style("margin-left", 0 + "px");
+        }//if
+    }//if
+
+
+
+    ////////////////////////////////////////////////////////////// 
+    //////////////////// Create SVG & Canvas /////////////////////
+    ////////////////////////////////////////////////////////////// 
 
     //Canvas
     var canvas = container.append("canvas").attr("id", "canvas-target")
@@ -77,9 +105,8 @@ function create_CCS_chart() {
     var mouse_over_in_action = false;
 
     //Radii at which the different parts of the visual should be created
-    var rad_card_legend = width * 0.45, //explanation of the card labels
-        rad_card_label = width * 0.4, //capture card text on the outside
-        rad_color_outer = width * 0.4, //outside of the hidden chapter hover
+    var rad_card_label = width * 0.4, //capture card text on the outside
+        rad_color_outer = width * 0.42, //outside of the hidden chapter hover
         // rad_volume_donut_outer = width * 0.427, //outer radius of the volume donut
         // rad_volume_donut_inner = width * 0.425, //inner radius of the volume donut
         rad_color = width * 0.373, //color circles
@@ -198,7 +225,44 @@ function create_CCS_chart() {
         // //Only keep the data from these characters
         // character_total_data = character_total_data.filter(function(d) { return _.indexOf(char_left, d.character) >= 0; });
         // relation_data = relation_data.filter(function(d) { return _.indexOf(char_left, d.source) >= 0 && _.indexOf(char_left, d.target) >= 0; });
-        
+
+        //////////////////////////////////////////////////////////////
+        /////////////////////// Create gradients /////////////////////
+        //////////////////////////////////////////////////////////////
+
+        var grad = defs.append("linearGradient")
+            .attr("id", "gradient-stroke")
+            .attr("x1", "0%").attr("y1", "0%")
+            .attr("x2", "100%").attr("y2", "0%");
+        grad.append("stop")
+            .attr("offset", "0%")   
+            .attr("stop-color", "#ED8B6A");
+        grad.append("stop")
+            .attr("offset", "100%")   
+            .attr("stop-color", color_sakura);
+
+        var grad = defs.append("linearGradient")
+            .attr("id", "gradient-title-left")
+            .attr("x1", "0%").attr("y1", "0%")
+            .attr("x2", "100%").attr("y2", "0%");
+        grad.append("stop")
+            .attr("offset", "50%")   
+            .attr("stop-color", color_sakura);
+        grad.append("stop")
+            .attr("offset", "200%")   
+            .attr("stop-color", "#ED8B6A");
+
+        var grad = defs.append("linearGradient")
+            .attr("id", "gradient-title-right")
+            .attr("x1", "0%").attr("y1", "0%")
+            .attr("x2", "100%").attr("y2", "0%");
+        grad.append("stop")
+            .attr("offset", "0%")   
+            .attr("stop-color", "#ED8B6A");
+        grad.append("stop")
+            .attr("offset", "100%")   
+            .attr("stop-color", color_sakura);
+
         //////////////////////////////////////////////////////////////
         ///////////////////// Create CMYK patterns ///////////////////
         //////////////////////////////////////////////////////////////
@@ -814,50 +878,265 @@ function create_CCS_chart() {
         ///////////////////////////// Create annotations //////////////////////////
         ///////////////////////////////////////////////////////////////////////////
 
-        document.querySelector('html').style.setProperty('--annotation-title-font-size', (14*size_factor) + 'px')
-        document.querySelector('html').style.setProperty('--annotation-label-font-size', (13*size_factor) + 'px')
+        //Only create annotations when the screen is big enough
+        if(!width_too_small) {
+            document.querySelector('html').style.setProperty('--annotation-title-font-size', (14*size_factor) + 'px')
+            document.querySelector('html').style.setProperty('--annotation-label-font-size', (13*size_factor) + 'px')
 
-        var annotations = [{
-            note: {
-                label: "The right half of the circle shows which Clow cards were captured per chapter. Sakura was already in possession of Windy and Wood at the start of chapter 1",
-                title: "Clow Cards",
-                wrap: 320*size_factor,
-                padding: 5*size_factor
-            },
-            className: "note-cards",
-            x: 55 * size_factor,
-            y: -680 * size_factor,
-            dx: 37,
-            dy: -30
-        },{
-            note: {
-                label: "The left half of the circle shows which Clow cards were converted to Sakura cards per chapter",
-                title: "Sakura Cards",
-                wrap: 250*size_factor,
-                padding: 10*size_factor
-            },
-            className: "note-cards",
-            x: -285 * size_factor,
-            y: 620 * size_factor,
-            dx: -20,
-            dy: 45
-        }];
-        // x: rad_card_legend * Math.cos(chapter_location_data[28].centerAngle -pi1_2),
-        // y: rad_card_legend * Math.sin(chapter_location_data[28].centerAngle -pi1_2),
+            var annotations = [
+                {
+                    note: {
+                        label: "The right half of the circle shows in which chapter the Clow cards were captured. Sakura was already in possession of Windy and Wood at the start of chapter 1",
+                        title: "Clow Cards",
+                        wrap: 290*size_factor,
+                    },
+                    chapter: 1,
+                    extra_rad: 30 * size_factor,
+                    className: "eriol-title eriol-connector eriol-sakura note-right",
+                    x: 151 * size_factor,
+                    y: -705 * size_factor,
+                    cx: 55 * size_factor,
+                    cy: -680 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "With the 10 captured cards, Kero teaches Sakura how to do a fortune-telling to get insight into which card is running around town looking like Sakura",
+                        title: "Fortune-telling",
+                        wrap: 205*size_factor,
+                    },
+                    chapter: 11,
+                    extra_rad: 30 * size_factor,
+                    className: "kero-title kero-connector kero-sakura note-right",
+                    x: 745 * size_factor,
+                    y: -115 * size_factor,
+                    cx: 610 * size_factor,
+                    cy: -160 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "Sakura, Tomoyo and Syaoran are stuck in a maze, when Kaho appears and breaks the walls with her 'Moon Bell', guiding the group to the exit",
+                        title: "Kaho's Bell",
+                        wrap: 190*size_factor,
+                        padding: 10*size_factor
+                    },
+                    chapter: 15,
+                    extra_rad: 22 * size_factor,
+                    className: "kaho-title kaho-connector kaho-kaho note-right",
+                    x: 770 * size_factor,
+                    y: 230 * size_factor,
+                    cx: 657 * size_factor,
+                    cy: 170 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "This chapter is mostly Sakura and Syaoran during their school trip at the beach. While on an evening event in a cave everybody else starts to disappear",
+                        title: "Ghost stories",
+                        wrap: 200*size_factor,
+                        padding: 10*size_factor
+                    },
+                    chapter: 17,
+                    extra_rad: 30 * size_factor,
+                    className: "sakura-title sakura-connector sakura-syaoran note-right",
+                    x: 736 * size_factor,
+                    y: 397 * size_factor,
+                    cx: 607 * size_factor,
+                    cy: 323 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "Kero can finally return to his full form after Sakura catches the Firey card",
+                        title: "Cerberus",
+                        wrap: 200*size_factor,
+                        padding: 10*size_factor
+                    },
+                    chapter: 23,
+                    extra_rad: 30 * size_factor,
+                    className: "kero-title kero-connector kero-sakura note-right",
+                    x: 256 * size_factor,
+                    y: 755 * size_factor,
+                    cx: 210 * size_factor,
+                    cy: 650 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "After the capture of all 19 cards, Yue holds 'the final trial'. Eventually, he accepts Sakura as the new mistress of the Clow Cards",
+                        title: "The final judge",
+                        wrap: 180*size_factor,
+                        padding: 10*size_factor
+                    },
+                    chapter: 26,
+                    extra_rad: 60 * size_factor,
+                    className: "yue-title yue-connector yue-sakura note-right",
+                    x: 24 * size_factor,
+                    y: 800 * size_factor,
+                    cx: -20 * size_factor,
+                    cy: 635 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "The '2nd arc' starts in which Sakura learns that she has to convert the cards into Sakura cards before she can use the card's magic",
+                        title: "A new challenge",
+                        wrap: 180*size_factor,
+                        padding: 10*size_factor
+                    },
+                    chapter: 27,
+                    extra_rad: 40 * size_factor,
+                    className: "sakura-title eriol-connector sakura-eriol note-left",
+                    x: -184 * size_factor,
+                    y: 766 * size_factor,
+                    cx: -130 * size_factor,
+                    cy: 620 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "The left half of the circle shows in which chapter those Clow cards were converted to Sakura cards",
+                        title: "Sakura Cards",
+                        wrap: 180*size_factor,
+                        padding: 10*size_factor
+                    },
+                    chapter: 29,
+                    extra_rad: 22 * size_factor,
+                    className: "sakura-title sakura-connector sakura-sakura note-left",
+                    x: -370 * size_factor,
+                    y: 710 * size_factor,
+                    cx: -285 * size_factor,
+                    cy: 620 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "Syaoran finally understands that it's Sakura that he loves, not Yukito",
+                        title: "First love",
+                        wrap: 140*size_factor,
+                        padding: 10*size_factor
+                    },
+                    chapter: 31,
+                    extra_rad: 50 * size_factor,
+                    className: "syaoran-title sakura-connector syaoran-sakura note-left",
+                    x: -460 * size_factor,
+                    y: 613 * size_factor,
+                    cx: -405 * size_factor,
+                    cy: 485 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "The Fly transforms to give Sakura herself wings to fly, instead of her staff",
+                        title: "Fly",
+                        wrap: 150*size_factor,
+                    },
+                    chapter: 32,
+                    extra_rad: 65 * size_factor,
+                    className: "sakura-title sakura-connector sakura-sakura note-left",
+                    x: -634 * size_factor,
+                    y: 590 * size_factor,
+                    cx: -515 * size_factor,
+                    cy: 485 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "Toya gives his magical powers to Yue (and thus also Yukito) to keep them from disappearing because Sakura doesn't yet have enough magic herself to sustain them",
+                        title: "Toya's gift",
+                        wrap: 170*size_factor,
+                        padding: 10*size_factor
+                    },
+                    chapter: 38,
+                    extra_rad: 50 * size_factor,
+                    className: "toya-title yukito-connector toya-yukito note-left",
+                    x: -785 * size_factor,
+                    y: 123 * size_factor,
+                    cx: -700 * size_factor,
+                    cy: 12 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "Sakura and Syaoran use their magic together to defeat Eriol's bronze horse",
+                        title: "Teamwork",
+                        wrap: 160*size_factor,
+                    },
+                    chapter: 42,
+                    extra_rad: 30 * size_factor,
+                    className: "sakura-title syaoran-connector sakura-syaoran note-left",
+                    x: -703 * size_factor,
+                    y: -380 * size_factor,
+                    cx: -695 * size_factor,
+                    cy: -370 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "Sakura 'defeats' Eriol and has now transformed all the Clow cards into Sakura cards",
+                        title: "The strongest magician",
+                        wrap: 240*size_factor,
+                    },
+                    chapter: 44,
+                    extra_rad: 30 * size_factor,
+                    className: "eriol-title sakura-connector eriol-sakura note-left",
+                    x: -596 * size_factor,
+                    y: -577 * size_factor,
+                    cx: -593 * size_factor,
+                    cy: -560 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                },{
+                    note: {
+                        label: "Sakura realizes she loves Syaoran the most, right before he leaves for the airport to move back home to Hong Kong",
+                        title: "True love",
+                        wrap: 210*size_factor,
+                    },
+                    chapter: 50,
+                    extra_rad: 30 * size_factor,
+                    className: "sakura-title syaoran-connector sakura-syaoran note-left",
+                    x: -105 * size_factor,
+                    y: -660 * size_factor,
+                    cx: -45 * size_factor,
+                    cy: -635 * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                }
+            ];
 
-        //Set-up the annotation maker
-        var makeAnnotations = d3.annotation()
-            // .editMode(true)
-            .type(d3.annotationCalloutElbow)
-            .annotations(annotations);
+            //Set-up the annotation maker
+            var makeAnnotations = d3.annotation()
+                //.editMode(true)
+                .type(d3.annotationLabel)
+                .annotations(annotations);
 
-        //Call and create for the first time, but font sizes are wrong
-        var annotation_group = chart.append("g").attr("class", "annotation-group");
-        annotation_group.call(makeAnnotations);
+            //Call and create the textual part of the annotations
+            var annotation_group = chart.append("g").attr("class", "annotation-group");
+            annotation_group.call(makeAnnotations);
+        
+            //Update a few stylings
+            annotation_group.selectAll(".note-line, .connector")
+                .style("stroke", "none");
+            annotation_group.selectAll(".annotation-note-title")
+                .style("fill", "url(#gradient-title-left)");
 
-        //Make the strokes of the connectors a different color and thicker
-        annotation_group.selectAll(".note-cards .connector, .note-line")
-            .style("stroke-width", 2 * size_factor);
+            //Create my own radially pointing connector lines
+            var annotation_connector_group = annotation_group.append("g", "annotation-connectors")
+            annotations.forEach(function(d,i) {
+                var angle = Math.atan(d.cy/d.cx);
+                if(d.cx < 0) angle = -Math.atan(d.cy/-d.cx) + Math.PI;
+                annotation_connector_group.append("line")
+                    .attr("class", "connector-manual")
+                    .attr("x1", d.cx)
+                    .attr("y1", d.cy)
+                    .attr("x2", d.cx + d.extra_rad * Math.cos(angle) )
+                    .attr("y2", d.cy + d.extra_rad * Math.sin(angle) )
+                    .style("stroke-width", 2 * size_factor)
+                    .style("stroke-linecap", "round")
+                    .style("stroke", color_sakura);
+            });
+        }//if
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// Create line title label /////////////////////////

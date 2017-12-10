@@ -8,7 +8,6 @@
 html {
     --annotation-title-font-size: 15px;
     --annotation-label-font-size: 13px;
-    --color-pink: #eb547f;
 }
 
 /************* general *************/
@@ -143,6 +142,7 @@ body {
     #ccs-logo {
         top: -100px;
         left: -120px;
+        width: calc(100% + 120px);
         max-width: 500px;
     }
 
@@ -160,6 +160,9 @@ body {
     #sub-title {
         font-size: 16px;
     }
+    #intro-container {
+        margin-bottom: 0px;
+    }
 }
 
 /************* chart *************/
@@ -169,7 +172,14 @@ body {
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    margin-top: 80px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+@media screen and (max-width: 400px) {
+    #chart-container {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
 }
 
 #chart {
@@ -204,6 +214,7 @@ canvas {
 
 .card-label {
     cursor: default;
+    pointer-events: none;
 }
 .card-legend {
     fill: #a1a1a1;
@@ -214,8 +225,8 @@ canvas {
     stroke-linecap: round;
 }
 
-.connector, .note-line {
-    stroke-linecap: round;
+.annotation-group {
+    pointer-events: none;
 }
 .annotation-note-title {
     font-size: var(--annotation-title-font-size);
@@ -224,13 +235,6 @@ canvas {
 .annotation-note-label {
     font-size: var(--annotation-label-font-size);
     font-family: 'Barlow Semi Condensed', sans-serif;
-}
-
-.note-cards .connector, .note-line {
-    stroke: var(--color-pink);
-}
-.note-cards .annotation-note-title {
-    fill: var(--color-pink);
 }
 
 /************* legend *************/
@@ -254,8 +258,8 @@ canvas {
 }
 
 #legend-container > div {
-    margin-left: 30px;
-    margin-right: 30px;
+    /* margin-left: 30px; */
+    /* margin-right: 30px; */
     display: none;
 }
 
@@ -307,12 +311,12 @@ canvas {
 }
 
 a, a:link, a:visited, a:active {
-    color: var(--color-pink);
+    color: #eb547f;
     border-bottom: 1px dotted rgba(235, 84, 127, 0.5);
     text-decoration: none;
   }
   
   a:hover {
     text-decoration: none;
-    border-bottom: 1px solid var(--color-pink);
+    border-bottom: 1px solid #eb547f;
   }
