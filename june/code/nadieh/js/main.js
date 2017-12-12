@@ -23,7 +23,7 @@ function create_CCS_chart() {
 
     var width;
     if(wh < ww) {
-        width = wh/0.8;
+        width = wh/0.7;
     } else {
         if(ww < 400) width = ww/0.5;
         else if(ww < 600) width = ww/0.6;
@@ -40,8 +40,31 @@ function create_CCS_chart() {
     //Adjust the general layout based on the width of the visual
     container.style("height", height + "px");
     //Reset the body width
-    if(width > ww) document.body.style.width = (width + (width_too_small ? 0 : 240 * size_factor)) + 'px';
-    d3.selectAll(".outer-container").style("width", (ww - 2*20) + "px"); //2 * 20px padding
+    var annotation_padding = width_too_small ? 0 : 240 * size_factor;
+    if(width > ww) document.body.style.width = (width + annotation_padding) + 'px';
+    d3.selectAll(".outer-container").style("width", (ww - 20 - 2*20) + "px"); //2 * 20px padding
+
+    if(ww > 900) {
+        //Adjust the sizes of the images in the intro
+        for(var i = 1; i <= 3 ; i++) {
+            var par_height = document.getElementById("character-text-" + i).getBoundingClientRect().height;
+            var div_width = document.getElementById("character-intro").getBoundingClientRect().width;
+            var width_left = (window.innerWidth - div_width)/2 - 10;
+
+            var max_width = par_height*1.99;
+            var window_based_width = div_width*0.45 + width_left;
+            if(window_based_width > max_width) par_height = window_based_width/1.99;
+
+            d3.select("#manga-img-" + i)
+                .style("height", par_height + "px")
+                .style("width", Math.min(par_height*1.99, window_based_width) + "px") //width img = 45%
+                .style("display","block")
+        }//for i
+        d3.selectAll(".manga-mobile-img").style("display","hidden");
+    } else {
+        d3.selectAll(".manga-mobile-img").style("display","block");
+        d3.selectAll(".manga-img").style("display","hidden");
+    }//else
 
     //Move the window to the top left of the text if the chart is wider than the screen
     if(width > ww) {
@@ -54,7 +77,11 @@ function create_CCS_chart() {
         if( Math.abs(pos.left) > 2 ) {
             //$.scrollTo({left:0, top:0});
             window.scrollTo(0,0)
-            d3.selectAll(".outer-container").style("margin-left", 0 + "px");
+            d3.selectAll(".outer-container")
+                .style("margin-left", 0 + "px")
+                .style("margin-right", 0 + "px")
+                .style("padding-left", 30 + "px")
+                .style("padding-right", 30 + "px")
         }//if
     }//if
 
@@ -1187,17 +1214,25 @@ function create_CCS_chart() {
             var show_annotations = 1;
             d3.select("#story-annotation")
                 .style("opacity", 1)
-                .on("click", function() {
-                    show_annotations = show_annotations === 1 ? 0 : 1 
-                    annotation_group.selectAll(".note-story")
-                        .style("opacity", show_annotations);
-                    d3.select("#hide-show").html(show_annotations ? "hide" : "show");
-                });
+                .on("click", spoiler_click);
 
         } else {
             //Hide the annotation mentions in the intro
             d3.select("#annotation-explanation").style("display","none");
         }//else
+
+        d3.select("#spoiler-warning").on("click", spoiler_click);
+
+        function spoiler_click() {
+            show_annotations = show_annotations === 1 ? 0 : 1 
+            annotation_group.selectAll(".note-story")
+                .style("opacity", show_annotations);
+            d3.select("#hide-show").html(show_annotations ? "hide" : "show");
+
+            d3.selectAll(".spoiler")
+                .style("display", show_annotations ? null : "none" );
+            d3.select("#spoiler-warning").html(show_annotations ? "-- Hide the spoilers in this section --" : "-- Show the spoilers in this section --");
+        }//function spoiler_click
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// Create line title label /////////////////////////
