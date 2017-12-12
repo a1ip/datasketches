@@ -1,4 +1,4 @@
-// TODO: Add in some images from the manga itself (around the sides?)
+// TODO: Say what the different circles mean: relationships, chapter info, cover info
 
 //TODO: Fix x and y of color circles?
 // var data_save;
@@ -41,15 +41,17 @@ function create_CCS_chart() {
     container.style("height", height + "px");
     //Reset the body width
     var annotation_padding = width_too_small ? 0 : 240 * size_factor;
-    if(width > ww) document.body.style.width = (width + annotation_padding) + 'px';
+    if((width + annotation_padding) > ww) document.body.style.width = (width + annotation_padding) + 'px';
     d3.selectAll(".outer-container").style("width", (ww - 20 - 2*20) + "px"); //2 * 20px padding
 
+    //Update the sizes of the images in the introduction
     if(ww > 900) {
         //Adjust the sizes of the images in the intro
         for(var i = 1; i <= 2 ; i++) {
             var par_height = document.getElementById("character-text-" + i).getBoundingClientRect().height;
             var div_width = document.getElementById("character-intro").getBoundingClientRect().width;
-            var width_left = (window.innerWidth - div_width)/2 - 10;
+            if((width + annotation_padding) > ww) var width_left = (parseInt(document.body.style.width) - div_width)/2;
+            else var width_left = (window.innerWidth - div_width)/2 - 10;
 
             var max_width = par_height*1.99;
             var window_based_width = div_width*0.48 + width_left;
@@ -58,13 +60,25 @@ function create_CCS_chart() {
             d3.select("#manga-img-" + i)
                 .style("height", par_height + "px")
                 .style("width", Math.min(par_height*1.99, window_based_width) + "px") //width img = 45%
-                .style("display","block")
+                .style("display","block");
+
+            d3.select("#character-group-" + i).style("height", par_height + "px");
         }//for i
         d3.selectAll(".manga-mobile-img").style("display","hidden");
     } else {
         d3.selectAll(".manga-mobile-img").style("display","block");
         d3.selectAll(".manga-img").style("display","hidden");
     }//else
+
+    //Do the read-more button
+    d3.selectAll(".read-more").style("display","none");
+    d3.select("#read-more-button p")
+        .style("display","inline-block")
+        .on("click", function() {
+            d3.select("#read-more-button p").style("display","none");
+            d3.selectAll(".read-more").style("display", null);
+            d3.select("#character-group-1").style("margin-bottom", "60px");
+        });
 
     //Move the window to the top left of the text if the chart is wider than the screen
     if(width > ww) {
@@ -84,6 +98,9 @@ function create_CCS_chart() {
                 .style("padding-right", 30 + "px")
         }//if
     }//if
+
+    document.querySelector('html').style.setProperty('--annotation-title-font-size', (15*size_factor) + 'px')
+    document.querySelector('html').style.setProperty('--annotation-label-font-size', (15*size_factor) + 'px')
 
     ////////////////////////////////////////////////////////////// 
     //////////////////// Create SVG & Canvas /////////////////////
@@ -131,13 +148,16 @@ function create_CCS_chart() {
 
     //Radii at which the different parts of the visual should be created
     var rad_card_label = width * 0.4, //capture card text on the outside
-        rad_color_outer = width * 0.42, //outside of the hidden chapter hover
+        rad_cover_outer = width * 0.395, //outside of the hidden cover hover
+        rad_cover_inner = width * 0.350, //inside of the hidden cover hover
         // rad_volume_donut_outer = width * 0.427, //outer radius of the volume donut
         // rad_volume_donut_inner = width * 0.425, //inner radius of the volume donut
-        rad_color = width * 0.373, //color circles
+        rad_color = width * 0.373, //color circles' center
+        rad_chapter_outer = width * 0.3499, //outside of the hidden chapter hover
         rad_volume_inner = width * 0.343, //radius of the volume arcs
         rad_chapter_donut_outer = width * 0.334, //outer radius of the chapter donut
         rad_chapter_donut_inner = width * 0.32, //inner radius of the chapter donut
+        rad_chapter_inner = width * 0.30, //outside of the hidden chapter hover
         rad_dot_color = width * 0.32, //chapter dot
         rad_line_max = 0.31,
         rad_line_min = 0.215,
@@ -515,18 +535,18 @@ function create_CCS_chart() {
             .domain([2 * rad_relation, 0])
             .range([0.7, 2.3]);
         var color_relation = d3.scaleOrdinal()
-            .domain(["family", "crush", "love", "friend", "master"]) //"teacher","ex-lovers","reincarnation","rival"
+            .domain(["family", "crush", "love", "friends", "master"]) //"teacher","ex-lovers","reincarnation","rival"
             .range(["#2C9AC6", "#FA88A8", "#E01A25", "#7EB852", "#F6B42B"])
-            .unknown("#d4d4d4");
+            .unknown("#bbbbbb");
         var stroke_relation = d3.scaleOrdinal()
-            .domain(["family", "crush", "love", "friend", "master"]) //"teacher","ex-lovers","reincarnation","rival"
+            .domain(["family", "crush", "love", "friends", "master"]) //"teacher","ex-lovers","reincarnation","rival"
             .range([4, 5, 8, 4, 5])
             .unknown(3);
 
         var relation_group = chart.append("g").attr("class", "relation-group");
 
         //Create the lines in between the characters that have some sort of relation
-        relation_group.selectAll(".relation-path")
+        var relation_lines = relation_group.selectAll(".relation-path")
             .data(relation_data)
             .enter().append("path")
             .attr("class", "relation-path")
@@ -536,26 +556,90 @@ function create_CCS_chart() {
             .style("stroke-linecap", "round")
             .style("mix-blend-mode", "multiply")
             .style("opacity", 0.7)
-            .attr("d", function (d) {
-                var source_a = characterByName[d.source].name_angle,
-                    target_a = characterByName[d.target].name_angle;
-                var x1 = rad_relation * Math.cos(source_a - pi1_2),
-                    y1 = rad_relation * Math.sin(source_a - pi1_2),
-                    x2 = rad_relation * Math.cos(target_a - pi1_2),
-                    y2 = rad_relation * Math.sin(target_a - pi1_2);
-                var dx = x2 - x1,
-                    dy = y2 - y1,
-                    dr = Math.sqrt(dx * dx + dy * dy);
-                var curve = dr * 1 / pull_scale(dr);
+            .attr("d", create_relation_lines);
 
-                //Get the angles to determine the optimum sweep flag
-                var delta_angle = (target_a - source_a) / Math.PI;
-                var sweep_flag = 0;
-                if ((delta_angle > -1 && delta_angle <= 0) || (delta_angle > 1 && delta_angle <= 2))
-                    sweep_flag = 1;
+        function create_relation_lines(d) {
+            var source_a = characterByName[d.source].name_angle,
+                target_a = characterByName[d.target].name_angle;
+            var x1 = rad_relation * Math.cos(source_a - pi1_2),
+                y1 = rad_relation * Math.sin(source_a - pi1_2),
+                x2 = rad_relation * Math.cos(target_a - pi1_2),
+                y2 = rad_relation * Math.sin(target_a - pi1_2);
+            var dx = x2 - x1,
+                dy = y2 - y1,
+                dr = Math.sqrt(dx * dx + dy * dy);
+            var curve = dr * 1 / pull_scale(dr);
 
-                return "M" + x1 + "," + y1 + " A" + curve + "," + curve + " 0 0 " + sweep_flag + " " + x2 + "," + y2;
-            });
+            //Get the angles to determine the optimum sweep flag
+            var delta_angle = (target_a - source_a) / Math.PI;
+            var sweep_flag = 0;
+            if ((delta_angle > -1 && delta_angle <= 0) || (delta_angle > 1 && delta_angle <= 2))
+                sweep_flag = 1;
+
+            return "M" + x1 + "," + y1 + " A" + curve + "," + curve + " 0 0 " + sweep_flag + " " + x2 + "," + y2;
+        }//function create_relation_lines
+
+        ///////////////////////////////////////////////////////////////////////////
+        ///////////////////// Create inner relation hover areas ///////////////////
+        /////////////////////////////////////////////////////////////////////////// 
+
+        var relation_hover_group = chart.append("g").attr("class", "relation-hover-group");
+        var relation_hover_lines = relation_hover_group.selectAll(".relation-hover-path")
+            .data(relation_data)
+            .enter().append("path")
+            .attr("class", "relation-hover-path")
+            .style("fill", "none")
+            .style("stroke", "white")
+            .style("stroke-width", 16 * size_factor)
+            .style("opacity", 0)
+            // .style("pointer-events", "all")
+            .attr("d", create_relation_lines)
+            .on("mouseover", mouse_over_relation)
+            .on("mouseout", mouse_out)
+
+        //Call and create the textual part of the annotations
+        var annotation_relation_group = chart.append("g").attr("class", "annotation-relation-group");
+
+        function mouse_over_relation(d,i) {
+            d3.event.stopPropagation();
+            mouse_over_in_action = true;
+
+            clearTimeout(remove_text_timer);
+
+            //Only show the hovered relationship
+            relation_lines.filter(function(c,j) { return j !== i; })
+                .style("opacity", 0.05);
+
+            //Set up the annotation
+            var annotations_relationship = [
+                {
+                    note: {
+                        label: d.note,
+                        title: capitalizeFirstLetter(d.type),
+                        wrap: 150*size_factor,
+                    },
+                    relation_type: "family",
+                    x: +d.x * size_factor,
+                    y: +d.y * size_factor,
+                    dx: 5 * size_factor,
+                    dy: -5 * size_factor
+                }
+            ];
+
+            //Set-up the annotation maker
+            var makeAnnotationsRelationship = d3.annotation()
+                // .editMode(true)
+                .type(d3.annotationLabel)
+                .annotations(annotations_relationship);
+            annotation_relation_group.call(makeAnnotationsRelationship);
+
+            //Update a few stylings
+            annotation_relation_group.selectAll(".note-line, .connector")
+                .style("stroke", "none");
+            annotation_relation_group.select(".annotation-note-title")
+                .style("fill", color_relation(d.type) === "#bbbbbb" ? "#9e9e9e" : color_relation(d.type));
+            
+        }//function mouse_over_relation
 
         ///////////////////////////////////////////////////////////////////////////
         //////////////////////// Create cover chapter circle //////////////////////
@@ -701,7 +785,7 @@ function create_CCS_chart() {
             .style("stroke-width", chapter_dot_rad * 0.5);
 
         ///////////////////////////////////////////////////////////////////////////
-        ///////////////////////// Create volume donut chart //////////////////////
+        ///////////////////////// Create volume dotted line ///////////////////////
         /////////////////////////////////////////////////////////////////////////// 
 
         //Create groups in right order
@@ -748,33 +832,12 @@ function create_CCS_chart() {
             });
 
         ///////////////////////////////////////////////////////////////////////////
-        /////////////////////////// Create color circles //////////////////////////
-        ///////////////////////////////////////////////////////////////////////////    
-        //The colored circles right after the character names
-        var color_group = chart.append("g").attr("class", "color-group");
-        var color_circle = color_group.selectAll(".color-circle")
-            .data(color_data)
-            .enter().append("circle")
-            .attr("class", "color-circle")
-            .attr("cx", function (d) { return d.x; })
-            .attr("cy", function (d) { return d.y; })
-            .attr("r", function (d) { return d.radius * size_factor; })
-            .style("fill", function (d) { return d.color; })
-            .style("stroke", function (d) { return d.color; })
-            .style("stroke-width", 3 * size_factor)
-            // .call(d3.drag()
-            //     .on('start', dragstarted)
-            //     .on('drag', dragged)
-            //     .on('end', dragended)
-            // );
-
-        ///////////////////////////////////////////////////////////////////////////
         ///////////////////// Create hidden chapter hover areas ///////////////////
         /////////////////////////////////////////////////////////////////////////// 
 
         var arc_chapter_hover = d3.arc()
-            .outerRadius(rad_color_outer)
-            .innerRadius(rad_dot_color);
+            .outerRadius(rad_chapter_outer)
+            .innerRadius(rad_chapter_inner);
 
         //Create the donut slices per chapter
         var chapter_hover_group = chart.append("g").attr("class", "chapter-hover-group");
@@ -831,6 +894,89 @@ function create_CCS_chart() {
         }//function mouse_over_chapter
 
         ///////////////////////////////////////////////////////////////////////////
+        /////////////////////////// Create color circles //////////////////////////
+        ///////////////////////////////////////////////////////////////////////////    
+        //The colored circles right after the character names
+        var color_group = chart.append("g").attr("class", "color-group");
+        var color_circle = color_group.selectAll(".color-circle")
+            .data(color_data)
+            .enter().append("circle")
+            .attr("class", "color-circle")
+            .attr("cx", function (d) { return d.x; })
+            .attr("cy", function (d) { return d.y; })
+            .attr("r", function (d) { return d.radius * size_factor; })
+            .style("fill", function (d) { return d.color; })
+            .style("stroke", function (d) { return d.color; })
+            .style("stroke-width", 3 * size_factor)
+            // .call(d3.drag()
+            //     .on('start', dragstarted)
+            //     .on('drag', dragged)
+            //     .on('end', dragended)
+            // );
+
+
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////////////////////// Create hidden cover hover areas ////////////////////
+        /////////////////////////////////////////////////////////////////////////// 
+
+        var arc_cover_hover = d3.arc()
+            .outerRadius(rad_cover_outer)
+            .innerRadius(rad_cover_inner);
+
+        //Create the donut slices per chapter
+        var cover_hover_group = chart.append("g").attr("class", "cover-hover-group");
+        var cover_hover = cover_hover_group.selectAll(".cover-hover-arc")
+            .data(chapter_location_data)
+            .enter().append("path")
+            .attr("class", "cover-hover-arc")
+            .attr("d", arc_cover_hover)
+            .style("fill", "none")
+            .style("pointer-events", "all")
+            .on("mouseover", mouse_over_cover)
+            .on("mouseout", mouse_out);
+
+        //When you mouse over a chapter arc
+        function mouse_over_cover(d,i) {
+            d3.event.stopPropagation();
+            mouse_over_in_action = true;
+
+            ctx.clearRect(-width / 2, -height / 2, width, height);
+            ctx.lineWidth = 4 * size_factor;
+            ctx.globalAlpha = 1;
+            create_lines("cover", cover_data.filter(function (c) { return c.chapter === i+1; }));
+            
+            //Update label path
+            line_label_path.attr("d", label_arc(d.centerAngle));
+            //Update the label text
+            clearTimeout(remove_text_timer);
+            line_label.text("characters that appear on the cover of chapter " + (i+1) );
+
+            //Highlight the characters that appear in this chapter
+            var char_chapters = cover_data
+                .filter(function(c) { return c.chapter === i+1; })
+                .map(function(c) { return c.character; });
+
+            names.filter(function(c) { return _.indexOf(char_chapters, c.character) < 0; })
+                .style("opacity", 0.2);
+            name_dot.filter(function(c) { return _.indexOf(char_chapters, c.character) < 0; })
+                .style("opacity", 0.2);
+
+            //Highlight the chapter donut slice
+            chapter_hover_slice.filter(function (c, j) { return i === j; })
+                .style("stroke-width", chapter_dot_rad * 0.5 * 1.5)
+                .style("stroke", color_sakura);
+            chapter_dot.filter(function (c, j) { return i === j; })
+                .attr("r", chapter_dot_rad * 1.5)
+                .style("stroke-width", chapter_dot_rad * 0.5 * 1.5)
+                .style("fill", color_sakura);
+
+            //Show the cover image in the center
+            cover_image.attr("xlink:href", "img/ccs-chapter-" + (i+1) + ".jpg")
+            cover_circle.style("fill", "url(#cover-image)");
+        }//function mouse_over_cover
+
+        ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// General mouse out function //////////////////////
         /////////////////////////////////////////////////////////////////////////// 
 
@@ -872,6 +1018,11 @@ function create_CCS_chart() {
 
             //Hide the hover circle
             hover_circle.style("opacity", 0);
+
+            //Bring all relationships back
+            relation_lines.style("opacity", 0.7);
+            //Remove relationship annotation
+            annotation_relation_group.selectAll(".annotation").remove();
         }//function mouse_out
 
         ///////////////////////////////////////////////////////////////////////////
@@ -904,15 +1055,13 @@ function create_CCS_chart() {
 
         //Only create annotations when the screen is big enough
         if(!width_too_small) {
-            document.querySelector('html').style.setProperty('--annotation-title-font-size', (14*size_factor) + 'px')
-            document.querySelector('html').style.setProperty('--annotation-label-font-size', (13*size_factor) + 'px')
 
             var annotations = [
                 {
                     note: {
                         label: "Around the right half of the large circle you can see in which chapter the Clow cards were captured. Sakura was already in possession of Windy and Wood at the start of chapter 1",
                         title: "Clow Cards",
-                        wrap: 230*size_factor,
+                        wrap: 270*size_factor,
                     },
                     chapter: 1,
                     extra_rad: 24 * size_factor,
@@ -925,14 +1074,14 @@ function create_CCS_chart() {
                     dy: -5 * size_factor
                 },{
                     note: {
-                        label: "These circles reveal the main colors present in each chapter's cover art",
+                        label: "These circles reveal the main colors present in each chapter's cover art. The size of each circle represents the percentage of the cover image that is captured in that color. All circles from one chapter add up to 100%",
                         title: "Cover art",
-                        wrap: 180*size_factor,
+                        wrap: 270*size_factor,
                     },
                     chapter: 1,
                     extra_rad: 55 * size_factor,
                     className: "note-right note-legend",
-                    x: 482 * size_factor,
+                    x: 532 * size_factor,
                     y: -532 * size_factor,
                     cx: 412 * size_factor,
                     cy: -493 * size_factor,
@@ -963,8 +1112,8 @@ function create_CCS_chart() {
                     chapter: 15,
                     extra_rad: 22 * size_factor,
                     className: "note-right note-story",
-                    x: 770 * size_factor,
-                    y: 230 * size_factor,
+                    x: 774 * size_factor,
+                    y: 240 * size_factor,
                     cx: 657 * size_factor,
                     cy: 170 * size_factor,
                     dx: 5 * size_factor,
@@ -980,7 +1129,7 @@ function create_CCS_chart() {
                     extra_rad: 30 * size_factor,
                     className: "note-right note-story",
                     x: 736 * size_factor,
-                    y: 397 * size_factor,
+                    y: 407 * size_factor,
                     cx: 607 * size_factor,
                     cy: 323 * size_factor,
                     dx: 5 * size_factor,
@@ -996,7 +1145,7 @@ function create_CCS_chart() {
                     extra_rad: 30 * size_factor,
                     className: "note-right note-story",
                     x: 256 * size_factor,
-                    y: 755 * size_factor,
+                    y: 780 * size_factor,
                     cx: 210 * size_factor,
                     cy: 650 * size_factor,
                     dx: 5 * size_factor,
@@ -1005,14 +1154,14 @@ function create_CCS_chart() {
                     note: {
                         label: "After the capture of all 19 cards, Yue holds 'the final trial'. Eventually, he accepts Sakura as the new mistress of the Clow Cards",
                         title: "The final judge",
-                        wrap: 180*size_factor,
+                        wrap: 220*size_factor,
                         padding: 10*size_factor
                     },
                     chapter: 26,
                     extra_rad: 60 * size_factor,
                     className: "note-right note-story",
-                    x: 14 * size_factor,
-                    y: 800 * size_factor,
+                    x: -10 * size_factor,
+                    y: 812 * size_factor,
                     cx: -20 * size_factor,
                     cy: 635 * size_factor,
                     dx: 5 * size_factor,
@@ -1043,8 +1192,8 @@ function create_CCS_chart() {
                     chapter: 29,
                     extra_rad: 25 * size_factor,
                     className: "note-left note-legend",
-                    x: -301 * size_factor,
-                    y: 735 * size_factor,
+                    x: -291 * size_factor,
+                    y: 764 * size_factor,
                     cx: -287 * size_factor,
                     cy: 624 * size_factor,
                     dx: 5 * size_factor,
@@ -1053,14 +1202,14 @@ function create_CCS_chart() {
                     note: {
                         label: "Syaoran finally understands that it's Sakura that he loves, not Yukito",
                         title: "First love",
-                        wrap: 140*size_factor,
+                        wrap: 160*size_factor,
                         padding: 10*size_factor
                     },
                     chapter: 31,
                     extra_rad: 92 * size_factor,
                     className: "note-left note-story",
                     x: -460 * size_factor,
-                    y: 646 * size_factor,
+                    y: 655 * size_factor,
                     cx: -405 * size_factor,
                     cy: 485 * size_factor,
                     dx: 5 * size_factor,
@@ -1069,13 +1218,13 @@ function create_CCS_chart() {
                     note: {
                         label: "The Fly transforms to give Sakura herself wings to fly, instead of her staff",
                         title: "Fly",
-                        wrap: 200*size_factor,
+                        wrap: 230*size_factor,
                     },
                     chapter: 32,
                     extra_rad: 27 * size_factor,
                     className: "note-left note-story",
-                    x: -587 * size_factor,
-                    y: 552 * size_factor,
+                    x: -598 * size_factor,
+                    y: 556 * size_factor,
                     cx: -515 * size_factor,
                     cy: 485 * size_factor,
                     dx: 5 * size_factor,
@@ -1084,14 +1233,14 @@ function create_CCS_chart() {
                     note: {
                         label: "Toya gives his magical powers to Yue (and thus also Yukito) to keep them from disappearing because Sakura doesn't yet have enough magic herself to sustain them",
                         title: "Toya's gift",
-                        wrap: 170*size_factor,
+                        wrap: 180*size_factor,
                         padding: 10*size_factor
                     },
                     chapter: 38,
                     extra_rad: 50 * size_factor,
                     className: "note-left note-story",
                     x: -785 * size_factor,
-                    y: 123 * size_factor,
+                    y: 148 * size_factor,
                     cx: -700 * size_factor,
                     cy: 12 * size_factor,
                     dx: 5 * size_factor,
@@ -1100,7 +1249,7 @@ function create_CCS_chart() {
                     note: {
                         label: "Sakura and Syaoran use their magic together to defeat Eriol's bronze horse",
                         title: "Teamwork",
-                        wrap: 160*size_factor,
+                        wrap: 200*size_factor,
                     },
                     chapter: 42,
                     extra_rad: 30 * size_factor,
@@ -1115,7 +1264,7 @@ function create_CCS_chart() {
                     note: {
                         label: "Sakura 'defeats' Eriol and has now transformed all the Clow cards into Sakura cards",
                         title: "The strongest magician",
-                        wrap: 240*size_factor,
+                        wrap: 270*size_factor,
                     },
                     chapter: 44,
                     extra_rad: 30 * size_factor,
@@ -1130,12 +1279,12 @@ function create_CCS_chart() {
                     note: {
                         label: "Sakura realizes she loves Syaoran the most, right before he leaves for the airport to move back home to Hong Kong",
                         title: "True love",
-                        wrap: 210*size_factor,
+                        wrap: 240*size_factor,
                     },
                     chapter: 50,
                     extra_rad: 30 * size_factor,
                     className: "note-left note-story",
-                    x: -105 * size_factor,
+                    x: -125 * size_factor,
                     y: -660 * size_factor,
                     cx: -45 * size_factor,
                     cy: -635 * size_factor,
@@ -1221,12 +1370,11 @@ function create_CCS_chart() {
             d3.select("#annotation-explanation").style("display","none");
         }//else
 
-
         function spoiler_click() {
             show_annotations = show_annotations === 1 ? 0 : 1 
             annotation_group.selectAll(".note-story")
                 .style("opacity", show_annotations);
-            d3.select("#hide-show").html(show_annotations ? "hide" : "show");;
+            d3.select("#hide-show").html(show_annotations ? "hide" : "show");
         }//function spoiler_click
 
         ///////////////////////////////////////////////////////////////////////////
@@ -1462,3 +1610,7 @@ function random() {
     var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
 }//function random
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}//function capitalizeFirstLetter

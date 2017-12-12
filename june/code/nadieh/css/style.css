@@ -56,16 +56,16 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-top: 60px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 }
 
 #ccs-logo {
     opacity: 0.8;
     position: absolute;
-    top: -170px;
+    top: -190px;
     left: -100px;
     z-index: -1;
-    max-width: 500px;
+    max-width: 550px;
 }
 
 #title-container {
@@ -122,15 +122,11 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 70px;
+    padding-bottom: 30px;
 }
 
 .character-group p:first-of-type {
     margin-top: 0px;
-}
-
-.character-group:last-child {
-    padding-bottom: 30px;
 }
 
 .character-text {
@@ -139,6 +135,21 @@ body {
 
 .character {
     font-size: 12px;
+}
+
+#read-more-button {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%
+}
+#read-more-button > p {
+    padding: 10px 20px;
+    border: 1px solid #eb547f;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    color: #eb547f;
+    cursor: pointer;
+    display: none;
 }
 
 #color-explanation {
@@ -199,44 +210,11 @@ body {
     right: 0px;
 }
 
-/************* visual explanation *************/
-
-#visual-explanation-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 1100px;
-    width: calc(100% - 80px);
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 10px;
-    margin-bottom: 40px;
-}
-
-#horizontal-divider {
-    width: 100%;
-    height: 1px;
-    border-top: 1px #eb547f dotted;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.explanation {
-    width: 63%;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    color: #838383;
-    font-size: 16px;
-    line-height: 1.5em;
-    font-style: italic;
-    margin-bottom: 30px;
-}
+/************* annotation explanation *************/
 
 #annotation-explanation {
-    width: 35%;
+    max-width: 600px;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -245,6 +223,9 @@ body {
     justify-content: space-around;
     align-items: flex-start;
     line-height: 120%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 #annotation-explanation > p {
     width: 45%;
@@ -272,6 +253,34 @@ body {
     background: -webkit-linear-gradient(left, #EB5580 50%,#ED8B6A 110%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+/************* visual explanation *************/
+
+#visual-explanation-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1100px;
+    width: calc(100% - 80px);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.explanation {
+    width: 50%;
+    color: #838383;
+    font-size: 16px;
+    line-height: 1.5em;
+    font-style: italic;
+}
+
+#circle-layer-explanation {
+    width: 45%;
 }
 
 /************* media queries *************/
@@ -385,7 +394,7 @@ body {
     margin-right: auto;
     position: relative;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 40px;
 }
 @media screen and (max-width: 400px) {
     #chart-container {
@@ -489,7 +498,7 @@ canvas {
     width: calc(100% - 120px);
     margin-left: 60px;
     margin-right: 60px;
-    margin-top: 40px;
+    margin-top: 20px;
     border-top: 1px solid rgba(235, 84, 127, 0.5);
 }
 
