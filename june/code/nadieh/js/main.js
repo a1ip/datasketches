@@ -52,7 +52,7 @@ function create_CCS_chart() {
             var width_left = (window.innerWidth - div_width)/2 - 10;
 
             var max_width = par_height*1.99;
-            var window_based_width = div_width*0.45 + width_left;
+            var window_based_width = div_width*0.48 + width_left;
             if(window_based_width > max_width) par_height = window_based_width/1.99;
 
             d3.select("#manga-img-" + i)
@@ -1221,7 +1221,7 @@ function create_CCS_chart() {
             d3.select("#annotation-explanation").style("display","none");
         }//else
 
-        
+
         function spoiler_click() {
             show_annotations = show_annotations === 1 ? 0 : 1 
             annotation_group.selectAll(".note-story")

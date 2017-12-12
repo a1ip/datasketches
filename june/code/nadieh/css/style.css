@@ -122,7 +122,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 60px;
+    padding-bottom: 70px;
 }
 
 .character-group p:first-of-type {
@@ -134,7 +134,7 @@ body {
 }
 
 .character-text {
-    width: 50%;
+    width: 48%;
 }
 
 .character {
@@ -159,17 +159,8 @@ body {
     margin-bottom: 0px;
 }
 
-#spoiler-warning {
-    font-family: 'Barlow Semi Condensed', sans-serif;
-    font-size: 14px;
-    color: #838383;
-    text-align: center;
-    margin-top: 15px;
-    cursor: pointer;
-}
-
 .manga-img {
-    width: 45%;
+    width: 48%;
     position: relative;
 }
 .manga-img div {
@@ -193,32 +184,29 @@ body {
 }
 
 #manga-img-1 {
+    /* margin-left: 7%; */
     background-image: url("../img/manga-img-1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
 
 }
 #manga-img-2 {
+    /* margin-right: 7%; */
     background-image: url("../img/manga-img-2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: right;
     right: 0px;
 }
-#manga-img-3 {
-    background-image: url("../img/manga-img-3.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-}
 
 /************* visual explanation *************/
 
 #visual-explanation-container {
-    /* display: flex;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: center; */
+    align-items: center;
     max-width: 1100px;
     width: calc(100% - 80px);
     margin-left: auto;
@@ -236,20 +224,19 @@ body {
 }
 
 .explanation {
-    width: 70%;
+    width: 63%;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     color: #838383;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.5em;
     font-style: italic;
     margin-bottom: 30px;
-    text-align: center;
 }
 
 #annotation-explanation {
-    width: 60%;
+    width: 35%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -260,10 +247,9 @@ body {
     line-height: 120%;
 }
 #annotation-explanation > p {
-    width: 40%;
+    width: 45%;
     font-size: 13px;
     margin-top: 0px;
-    text-align: center;
 }
 
 #story-annotation {
@@ -382,8 +368,12 @@ body {
         width: 100%;
         text-align: left;
     }
-    #character-intro, #intro-container {
+    #character-intro, #intro-container, #visual-explanation-container {
         width: calc(100% - 20px);
+    }
+
+    #visual-explanation-container {
+        border-top: 1px solid #eb547f;
     }
 }
 
