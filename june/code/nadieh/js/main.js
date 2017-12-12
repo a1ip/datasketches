@@ -46,7 +46,7 @@ function create_CCS_chart() {
 
     if(ww > 900) {
         //Adjust the sizes of the images in the intro
-        for(var i = 1; i <= 3 ; i++) {
+        for(var i = 1; i <= 2 ; i++) {
             var par_height = document.getElementById("character-text-" + i).getBoundingClientRect().height;
             var div_width = document.getElementById("character-intro").getBoundingClientRect().width;
             var width_left = (window.innerWidth - div_width)/2 - 10;
@@ -1221,17 +1221,12 @@ function create_CCS_chart() {
             d3.select("#annotation-explanation").style("display","none");
         }//else
 
-        d3.select("#spoiler-warning").on("click", spoiler_click);
-
+        
         function spoiler_click() {
             show_annotations = show_annotations === 1 ? 0 : 1 
             annotation_group.selectAll(".note-story")
                 .style("opacity", show_annotations);
-            d3.select("#hide-show").html(show_annotations ? "hide" : "show");
-
-            d3.selectAll(".spoiler")
-                .style("display", show_annotations ? null : "none" );
-            d3.select("#spoiler-warning").html(show_annotations ? "-- Hide the spoilers in this section --" : "-- Show the spoilers in this section --");
+            d3.select("#hide-show").html(show_annotations ? "hide" : "show");;
         }//function spoiler_click
 
         ///////////////////////////////////////////////////////////////////////////
