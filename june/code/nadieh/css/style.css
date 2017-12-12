@@ -56,14 +56,14 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-top: 60px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 #ccs-logo {
     opacity: 0.8;
     position: absolute;
     top: -190px;
-    left: -100px;
+    left: -130px;
     z-index: -1;
     max-width: 550px;
 }
@@ -103,6 +103,42 @@ body {
     font-family: 'Barlow', sans-serif;
 }
 
+#story-intro {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 900px;
+    width: calc(100% - 80px);
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Barlow', sans-serif;
+    line-height: 160%;
+    font-size: 15px;
+    padding-bottom: 30px;
+    /* border-bottom: 1px solid #eb547f; */
+}
+
+#story-intro-text {
+    width: 70%;
+}
+
+#read-more-button {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+#read-more-button > p {
+    padding: 10px 20px;
+    border: 1px solid #eb547f;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+    color: #eb547f;
+    cursor: pointer;
+    display: none;
+}
+
 /************* character introduction *************/
 
 #character-intro {
@@ -135,21 +171,6 @@ body {
 
 .character {
     font-size: 12px;
-}
-
-#read-more-button {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    width: 100%
-}
-#read-more-button > p {
-    padding: 10px 20px;
-    border: 1px solid #eb547f;
-    font-family: 'Barlow Semi Condensed', sans-serif;
-    color: #eb547f;
-    cursor: pointer;
-    display: none;
 }
 
 #color-explanation {
@@ -224,7 +245,7 @@ body {
     align-items: flex-start;
     line-height: 120%;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 0px;
     margin-bottom: 30px;
 }
 #annotation-explanation > p {

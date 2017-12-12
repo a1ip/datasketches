@@ -75,9 +75,9 @@ function create_CCS_chart() {
     d3.select("#read-more-button p")
         .style("display","inline-block")
         .on("click", function() {
-            d3.select("#read-more-button p").style("display","none");
+            //d3.select("#read-more-button p").style("display","none");
             d3.selectAll(".read-more").style("display", null);
-            d3.select("#character-group-1").style("margin-bottom", "60px");
+            d3.select("#character-group-1").style("padding-bottom", "60px");
         });
 
     //Move the window to the top left of the text if the chart is wider than the screen
