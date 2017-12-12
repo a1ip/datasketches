@@ -1,3 +1,5 @@
+// TODO: Add in some images from the manga itself (around the sides?)
+
 //TODO: Fix x and y of color circles?
 // var data_save;
 // var data_new = []
@@ -374,6 +376,7 @@ function create_CCS_chart() {
         ///////////////////////////// Create name labels //////////////////////////
         /////////////////////////////////////////////////////////////////////////// 
 
+        var hover_circle_group = chart.append("g").attr("class", "hover-circle-group");
         var name_group = chart.append("g").attr("class", "name-group");
 
         //Create a group per character
@@ -450,6 +453,19 @@ function create_CCS_chart() {
 
             characterByName[d.character] = d;
         })//forEach
+
+        //Create hover circle that shows when you hover over a character
+        var rad_hover_circle = 35 * size_factor;
+        var hover_circle = hover_circle_group.selectAll(".hover-circle")
+            .data(character_total_data)
+            .enter().append("circle")
+            .attr("class", "hover-circle")
+            .attr("cx", function (d) { return d.dot_name_rad * Math.cos(d.name_angle - pi1_2); })
+            .attr("cy", function (d) { return d.dot_name_rad * Math.sin(d.name_angle - pi1_2); })
+            .attr("r", rad_hover_circle)
+            .style("fill", function (d) { return d.color; })
+            .style("fill-opacity", 0.3)
+            .style("opacity", 0);
 
         //Add a circle at the end of each name of each character
         var name_dot_group = chart.append("g").attr("class", "name-dot-group");
@@ -532,7 +548,7 @@ function create_CCS_chart() {
         /////////////////////////////////////////////////////////////////////////// 
 
         var arc_character_hover = d3.arc()
-            .outerRadius(function(d,i) { return character_total_data[i].dot_name_rad; })
+            .outerRadius(function(d,i) { return character_total_data[i].dot_name_rad + rad_hover_circle; })
             .innerRadius(rad_donut_inner)
 
         //Create the donut slices per character (and the number of chapters they appeared in)
@@ -581,6 +597,10 @@ function create_CCS_chart() {
             //Show the character image in the center
             cover_image.attr("xlink:href", "img/character-" + d.character.toLowerCase() + ".jpg")
             cover_circle.style("fill", "url(#cover-image)");
+
+            //Show the hover circle
+            hover_circle.filter(function(c) { return d.character === c.character; })
+                .style("opacity", 1);
 
         }//function mouse_over_character
 
@@ -801,7 +821,7 @@ function create_CCS_chart() {
 
             //Update the label text
             line_label.text(default_label_text)
-            remove_text_timer = setTimeout(function() { line_label.text("")}, 4000);
+            remove_text_timer = setTimeout(function() { line_label.text("")}, 6000);
 
             //Character names back to normal
             names.style("opacity", null);
@@ -821,7 +841,10 @@ function create_CCS_chart() {
 
             //Remove cover image
             cover_circle.style("fill", "none");
-            cover_image.attr("xlink:href", "img/white-square.jpg")
+            cover_image.attr("xlink:href", "img/white-square.jpg");
+
+            //Hide the hover circle
+            hover_circle.style("opacity", 0);
         }//function mouse_out
 
         ///////////////////////////////////////////////////////////////////////////
@@ -896,7 +919,7 @@ function create_CCS_chart() {
                     },
                     chapter: 11,
                     extra_rad: 30 * size_factor,
-                    className: "note-right",
+                    className: "note-right note-story",
                     x: 745 * size_factor,
                     y: -115 * size_factor,
                     cx: 610 * size_factor,
@@ -912,7 +935,7 @@ function create_CCS_chart() {
                     },
                     chapter: 15,
                     extra_rad: 22 * size_factor,
-                    className: "note-right",
+                    className: "note-right note-story",
                     x: 770 * size_factor,
                     y: 230 * size_factor,
                     cx: 657 * size_factor,
@@ -928,7 +951,7 @@ function create_CCS_chart() {
                     },
                     chapter: 17,
                     extra_rad: 30 * size_factor,
-                    className: "note-right",
+                    className: "note-right note-story",
                     x: 736 * size_factor,
                     y: 397 * size_factor,
                     cx: 607 * size_factor,
@@ -944,7 +967,7 @@ function create_CCS_chart() {
                     },
                     chapter: 23,
                     extra_rad: 30 * size_factor,
-                    className: "note-right",
+                    className: "note-right note-story",
                     x: 256 * size_factor,
                     y: 755 * size_factor,
                     cx: 210 * size_factor,
@@ -960,7 +983,7 @@ function create_CCS_chart() {
                     },
                     chapter: 26,
                     extra_rad: 60 * size_factor,
-                    className: "note-right",
+                    className: "note-right note-story",
                     x: 14 * size_factor,
                     y: 800 * size_factor,
                     cx: -20 * size_factor,
@@ -1008,7 +1031,7 @@ function create_CCS_chart() {
                     },
                     chapter: 31,
                     extra_rad: 92 * size_factor,
-                    className: "note-left",
+                    className: "note-left note-story",
                     x: -460 * size_factor,
                     y: 646 * size_factor,
                     cx: -405 * size_factor,
@@ -1023,7 +1046,7 @@ function create_CCS_chart() {
                     },
                     chapter: 32,
                     extra_rad: 27 * size_factor,
-                    className: "note-left",
+                    className: "note-left note-story",
                     x: -587 * size_factor,
                     y: 552 * size_factor,
                     cx: -515 * size_factor,
@@ -1039,7 +1062,7 @@ function create_CCS_chart() {
                     },
                     chapter: 38,
                     extra_rad: 50 * size_factor,
-                    className: "note-left",
+                    className: "note-left note-story",
                     x: -785 * size_factor,
                     y: 123 * size_factor,
                     cx: -700 * size_factor,
@@ -1054,7 +1077,7 @@ function create_CCS_chart() {
                     },
                     chapter: 42,
                     extra_rad: 30 * size_factor,
-                    className: "note-left",
+                    className: "note-left note-story",
                     x: -735 * size_factor,
                     y: -366 * size_factor,
                     cx: -695 * size_factor,
@@ -1069,7 +1092,7 @@ function create_CCS_chart() {
                     },
                     chapter: 44,
                     extra_rad: 30 * size_factor,
-                    className: "note-left",
+                    className: "note-left note-story",
                     x: -596 * size_factor,
                     y: -577 * size_factor,
                     cx: -593 * size_factor,
@@ -1084,7 +1107,7 @@ function create_CCS_chart() {
                     },
                     chapter: 50,
                     extra_rad: 30 * size_factor,
-                    className: "note-left",
+                    className: "note-left note-story",
                     x: -105 * size_factor,
                     y: -660 * size_factor,
                     cx: -45 * size_factor,
@@ -1160,7 +1183,21 @@ function create_CCS_chart() {
                 .style("stroke-width", 2.5 * size_factor)
                 .style("stroke", color_syaoran);
 
-        }//if
+            //Make it possible to show/hide the annotations
+            var show_annotations = 1;
+            d3.select("#story-annotation")
+                .style("opacity", 1)
+                .on("click", function() {
+                    show_annotations = show_annotations === 1 ? 0 : 1 
+                    annotation_group.selectAll(".note-story")
+                        .style("opacity", show_annotations);
+                    d3.select("#hide-show").html(show_annotations ? "hide" : "show");
+                });
+
+        } else {
+            //Hide the annotation mentions in the intro
+            d3.select("#annotation-explanation").style("display","none");
+        }//else
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// Create line title label /////////////////////////

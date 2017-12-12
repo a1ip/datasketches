@@ -99,6 +99,42 @@ body {
     padding-top: 15px;
 }
 
+#annotation-explanation {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+#annotation-explanation > p {
+    width: 48%;
+    font-size: 13px;
+}
+
+#story-annotation {
+    cursor: pointer;
+}
+
+#green-gradient {
+    font-family: 'Anime Ace', monospace;
+    font-size: 11px;
+    color: #4fb127;
+    background: -webkit-linear-gradient(left, #4fb127 50%,#9ABF2B 110%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#pink-gradient {
+    font-family: 'Anime Ace', monospace;
+    font-size: 11px;
+    color: #EB5580;
+    background: -webkit-linear-gradient(left, #EB5580 50%,#ED8B6A 110%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
 /* @media screen and (min-width: 1051px) {
     #main-title {
         background: -webkit-linear-gradient(left, #eb5580ab 0%,#eb5580 80%);
@@ -229,10 +265,12 @@ canvas {
     pointer-events: none;
 }
 .annotation-note-title {
+    font-size: 14px;
     font-size: var(--annotation-title-font-size);
     font-weight: 400;
 }
 .annotation-note-label {
+    font-size: 13px;
     font-size: var(--annotation-label-font-size);
     font-family: 'Barlow Semi Condensed', sans-serif;
 }
