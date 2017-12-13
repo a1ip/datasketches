@@ -56,7 +56,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     margin-top: 60px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 #ccs-logo {
@@ -116,8 +116,7 @@ body {
     font-family: 'Barlow', sans-serif;
     line-height: 160%;
     font-size: 15px;
-    padding-bottom: 30px;
-    /* border-bottom: 1px solid #eb547f; */
+    padding-bottom: 40px;
 }
 
 #story-intro-text {
@@ -158,7 +157,7 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 }
 
 .character-group p:first-of-type {
@@ -197,7 +196,7 @@ body {
 }
 .manga-img div {
     /* position: absolute; */
-    margin-top: -6px;
+    /* margin-top: -6px; */
     border-top: 6px solid #eb537f9C;
     border-bottom: 6px solid #eb537f9C;
     position: absolute;
@@ -211,12 +210,18 @@ body {
     border-top: 6px solid #eb537f9C;
     border-bottom: 6px solid #eb537f9C;
     margin-bottom: 30px;
-    transform: translateX(-40px);
+    transform: translateX(-55px);
     display: none;
 }
 
+#character-group-1 {
+    margin-top: 30px;
+}
+#character-group-1 img {
+    margin-top: 5px;
+}
+
 #manga-img-1 {
-    /* margin-left: 7%; */
     background-image: url("../img/manga-img-1.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -245,7 +250,7 @@ body {
     align-items: flex-start;
     line-height: 120%;
     text-align: center;
-    margin-top: 0px;
+    margin-top: 50px;
     margin-bottom: 30px;
 }
 #annotation-explanation > p {
@@ -278,41 +283,82 @@ body {
 
 /************* visual explanation *************/
 
+.divider-line {
+    border-top: 1px solid rgba(235, 84, 127, 0.5);
+    height: 5px;
+    width: calc(100% - 80px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #visual-explanation-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    max-width: 1100px;
+    position: relative;
+    max-width: 1400px;
     width: calc(100% - 80px);
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
     margin-bottom: 20px;
+    padding-top: 20px;
 }
 
-.explanation {
-    width: 50%;
-    color: #838383;
+#explanation {
+    width: 48%;
     font-size: 16px;
     line-height: 1.5em;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    text-align: center;
+    /* font-family: 'Barlow', sans-serif; */
+}
+#explanation p {
+    text-align: left;
+}
+
+#chibi-sakura {
+    max-width: 150px;
+}
+
+#tsubasa-note {
+    padding-top: 0px;
     font-style: italic;
+    color: #7a7a7a;
+}
+
+#discover-note {
+    color: #EB5580;
+    text-align: center !important;
+    font-family: 'Anime Ace';
+    font-size: 13px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #circle-layer-explanation {
     width: 45%;
+    position: relative;
+    text-align: center;
+}
+
+#layer-legend {
+    width: 100%;
+    max-width: 550px;
+}
+
+#layer-legend-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 }
 
 /************* media queries *************/
-
-/* @media screen and (min-width: 1051px) {
-    #main-title {
-        background: -webkit-linear-gradient(left, #eb5580ab 0%,#eb5580 80%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-} */
 
 @media screen and (max-width: 1450px) {
     #main-title {
@@ -321,20 +367,17 @@ body {
     #sub-title {
         font-size: 19px;
     }
-    #ccs-logo {
-        top: -160px;
-    }
 }
 
 @media screen and (max-width: 1050px) {
-    #title-container, #intro, #visual-explanation-container {
+    #title-container, #intro, #explanation, #circle-layer-explanation, #circle-layer-explanation, #layer-legend {
         width: 100%;
     }
 
     #intro-container {
         width: calc(100% - 80px);
         margin-top: 0px;
-        margin-bottom: 40px;
+        margin-bottom: 10px;
     }
 
     #title {
@@ -372,7 +415,7 @@ body {
 }
 
 @media screen and (max-width: 900px) {
-    .character-text, .manga-img {
+    .character-text, .manga-img, #story-intro-text, #read-more-button {
         width: 100%;
     }
 
@@ -389,21 +432,21 @@ body {
         font-size: 37px;
     }
     #sub-title {
-        font-size: 15px;
+        font-size: 16px;
     }
     #intro-container {
-        margin-bottom: 30px;
+        margin-bottom: 0px;
     }
     .explanation {
         width: 100%;
         text-align: left;
     }
-    #character-intro, #intro-container, #visual-explanation-container {
+    #character-intro, #intro-container, #visual-explanation-container, #story-intro, .divider-line  {
         width: calc(100% - 20px);
     }
 
-    #visual-explanation-container {
-        border-top: 1px solid #eb547f;
+    .manga-mobile-img {
+        transform: translateX(-40px);
     }
 }
 
@@ -487,52 +530,27 @@ canvas {
     stroke-linecap: round;
 }
 
-/************* legend *************/
-
-.divider-line {
-    border-top: 1px solid rgba(235, 84, 127, 0.5);
-    height: 5px;
-    width: calc(100% - 120px);
-    margin-left: 60px;
-    margin-right: 60px;
-}
-
-#legend-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    /* justify-content: center; */
-    align-items: flex-start;
-    margin-top: 15px;
-}
-
-#legend-container > div {
-    display: none;
-}
-
 /************* credits *************/
 
 #credit {
     padding-top: 20px;
     padding-bottom: 25px;
-    width: calc(100% - 120px);
-    margin-left: 60px;
-    margin-right: 60px;
+    width: calc(100% - 80px);
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 20px;
     border-top: 1px solid rgba(235, 84, 127, 0.5);
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 400px) {
     #credit {
-        width: calc(100% - 40px);
-        margin-left: 20px;
+        width: calc(100% - 20px);
     }
 }
 
 #credit p {
 	margin-top: 0px;
-	margin-bottom: 3px;
+	margin-bottom: 8px;
 }
 
 .credit-bold {
@@ -542,7 +560,7 @@ canvas {
 }
 
 .credit-note {
-	line-height: 140%;
+	line-height: 150%;
 	font-size: 13px;
 	font-weight: 400;
 	color: #a5a5a5;

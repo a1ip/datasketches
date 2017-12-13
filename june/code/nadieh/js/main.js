@@ -1,4 +1,3 @@
-// TODO: Say what the different circles mean: relationships, chapter info, cover info
 
 //TODO: Fix x and y of color circles?
 // var data_save;
@@ -15,6 +14,25 @@ function create_CCS_chart() {
     ////////////////////////////////////////////////////////////// 
     
     var container = d3.select("#chart");
+    //Remove anything that was still there
+    container.selectAll("svg, canvas").remove();
+    container.style("height", null);
+    document.body.style.width = null;
+    window.scroll(0,0);
+    d3.selectAll(".outer-container")
+        .style("width", null)
+        .style("margin-left", null)
+        .style("margin-right", null)
+        .style("padding-left", null)
+        .style("padding-right", null);
+    d3.selectAll(".manga-img").style("display", null);
+    d3.selectAll(".manga-mobile-img").style("display", null);
+    d3.selectAll(".manga-img div")
+        .style("height", null)
+        .style("width", null);
+    d3.selectAll(".character-group").style("height", null);
+    d3.select("#annotation-explanation").style("display", null);
+
 
     var base_width = 1600;
     var ww = window.innerWidth,
@@ -31,7 +49,7 @@ function create_CCS_chart() {
         else if(ww < 1100) width = ww/0.8;
         else width = ww/0.8;
     }//else
-    width = Math.round(Math.min(1600, width));
+    width = Math.round(Math.min(base_width, width));
     var height = width;
 
     //Scaling the entire visual, as compared to the base size
@@ -41,8 +59,11 @@ function create_CCS_chart() {
     container.style("height", height + "px");
     //Reset the body width
     var annotation_padding = width_too_small ? 0 : 240 * size_factor;
-    if((width + annotation_padding) > ww) document.body.style.width = (width + annotation_padding) + 'px';
-    d3.selectAll(".outer-container").style("width", (ww - 20 - 2*20) + "px"); //2 * 20px padding
+    var total_chart_width = width + annotation_padding;
+    var no_scrollbar_padding = total_chart_width > ww ? 0 : 20;
+    if(total_chart_width > ww) document.body.style.width = total_chart_width + 'px';
+    var outer_container_width = Math.min(base_width, ww - no_scrollbar_padding - 2*20); //2 * 20px padding
+    d3.selectAll(".outer-container").style("width", outer_container_width + "px"); 
 
     //Update the sizes of the images in the introduction
     if(ww > 900) {
@@ -50,7 +71,7 @@ function create_CCS_chart() {
         for(var i = 1; i <= 2 ; i++) {
             var par_height = document.getElementById("character-text-" + i).getBoundingClientRect().height;
             var div_width = document.getElementById("character-intro").getBoundingClientRect().width;
-            if((width + annotation_padding) > ww) var width_left = (parseInt(document.body.style.width) - div_width)/2;
+            if(total_chart_width > ww) var width_left = (parseInt(document.body.style.width) - div_width)/2;
             else var width_left = (window.innerWidth - div_width)/2 - 10;
 
             var max_width = par_height*1.99;
@@ -72,24 +93,28 @@ function create_CCS_chart() {
 
     //Do the read-more button
     d3.selectAll(".read-more").style("display","none");
+    var do_display_more = false;
     d3.select("#read-more-button p")
         .style("display","inline-block")
+        .html("read more...")
         .on("click", function() {
-            //d3.select("#read-more-button p").style("display","none");
-            d3.selectAll(".read-more").style("display", null);
-            d3.select("#character-group-1").style("padding-bottom", "60px");
+            do_display_more = !do_display_more;
+            d3.select("#read-more-button p").html(do_display_more ? "hide extra info" : "read more...");
+            d3.selectAll(".read-more").style("display", do_display_more ? null : "none");
         });
 
     //Move the window to the top left of the text if the chart is wider than the screen
-    if(width > ww) {
-        var pos = document.getElementById("top-outer-container").getBoundingClientRect()
-        window.scrollTo(pos.left,0);
-        //$.scrollTo(document.getElementById('top-outer-container'));
+    if(total_chart_width > ww) {
+        var pos = document.getElementById("top-outer-container").getBoundingClientRect();
+        var scrollX = pos.left - 15;
+        if(total_chart_width - ww < pos.left) {
+            scrollX = (total_chart_width - ww)/2; 
+        } else if(outer_container_width >= base_width) scrollX = pos.left - (parseInt(document.body.style.width) - pos.width)/4 - 10;
+        //Scroll to the new position on the horizontal
+        window.scrollTo(scrollX,0);
 
-        //This doesn't work in all browsers, so check (actually it only doesn't seem to work in Chrome...)
-        var pos = document.getElementById("top-outer-container").getBoundingClientRect()
-        if( Math.abs(pos.left) > 2 ) {
-            //$.scrollTo({left:0, top:0});
+        //This doesn't work in all browsers, so check (actually it only doesn't seem to work in Chrome mobile...)
+        if( Math.abs(window.scrollX - scrollX) > 2 ) {
             window.scrollTo(0,0)
             d3.selectAll(".outer-container")
                 .style("margin-left", 0 + "px")
@@ -118,6 +143,7 @@ function create_CCS_chart() {
 
     //SVG container
     var svg = container.append("svg")
+        .attr("id","CCS-SVG")
         .attr("width", width)
         .attr("height", height);
 
@@ -384,7 +410,6 @@ function create_CCS_chart() {
         function simulation_end() {
             //Create the CMYK halftones
             color_circle.style("fill", function (d, i) { return "url(#pattern-total-" + i + ")"; })
-    
         }//function simulation_end
 
         data_save = color_data; //So I save the final positions
@@ -914,7 +939,23 @@ function create_CCS_chart() {
             //     .on('end', dragended)
             // );
 
+        ///////////////////////////////////////////////////////////////////////////
+        //////////////////////// Create hover color circles ///////////////////////
+        ///////////////////////////////////////////////////////////////////////////  
 
+        //The stroked circle around the color circles that appears on a hover
+        var color_circle_hover_group = chart.append("g").attr("class", "color-circle-hover-group");
+        var color_hover_circle = color_circle_hover_group.selectAll(".color-hover-circle")
+            .data(chapter_location_data)
+            .enter().append("circle")
+            .attr("class", "color-hover-circle")
+            .attr("cx", function (d) { return rad_color * Math.cos(d.centerAngle - pi1_2); })
+            .attr("cy", function (d) { return rad_color * Math.sin(d.centerAngle - pi1_2); })
+            .attr("r",  36 * size_factor)
+            .style("fill", "none")
+            .style("stroke", color_sakura)
+            .style("stroke-width", chapter_dot_rad * 0.5 * 1.5)
+            .style("opacity", 0);
 
         ///////////////////////////////////////////////////////////////////////////
         ////////////////////// Create hidden cover hover areas ////////////////////
@@ -944,7 +985,7 @@ function create_CCS_chart() {
             ctx.clearRect(-width / 2, -height / 2, width, height);
             ctx.lineWidth = 4 * size_factor;
             ctx.globalAlpha = 1;
-            create_lines("cover", cover_data.filter(function (c) { return c.chapter === i+1; }));
+            create_lines("character", cover_data.filter(function (c) { return c.chapter === i+1; }));
             
             //Update label path
             line_label_path.attr("d", label_arc(d.centerAngle));
@@ -974,6 +1015,10 @@ function create_CCS_chart() {
             //Show the cover image in the center
             cover_image.attr("xlink:href", "img/ccs-chapter-" + (i+1) + ".jpg")
             cover_circle.style("fill", "url(#cover-image)");
+
+            //Show the circle around the color chapter group
+            color_hover_circle.filter(function (c, j) { return i === j; })
+                .style("opacity", 1);
         }//function mouse_over_cover
 
         ///////////////////////////////////////////////////////////////////////////
@@ -1018,6 +1063,8 @@ function create_CCS_chart() {
 
             //Hide the hover circle
             hover_circle.style("opacity", 0);
+            //Hide the circle around the color chapter group
+            color_hover_circle.style("opacity", 0);
 
             //Bring all relationships back
             relation_lines.style("opacity", 0.7);
@@ -1098,8 +1145,8 @@ function create_CCS_chart() {
                     className: "note-right note-story",
                     x: 745 * size_factor,
                     y: -115 * size_factor,
-                    cx: 610 * size_factor,
-                    cy: -160 * size_factor,
+                    cx: 612 * size_factor,
+                    cy: -161 * size_factor,
                     dx: 5 * size_factor,
                     dy: -5 * size_factor
                 },{
@@ -1162,27 +1209,11 @@ function create_CCS_chart() {
                     className: "note-right note-story",
                     x: -10 * size_factor,
                     y: 812 * size_factor,
-                    cx: -20 * size_factor,
-                    cy: 635 * size_factor,
+                    cx: -26 * size_factor,
+                    cy: 634 * size_factor,
                     dx: 5 * size_factor,
                     dy: -5 * size_factor
                 },{
-                //     note: {
-                //         label: "The '2nd arc' starts in which Sakura learns that she has to convert the cards into Sakura cards before she can use the card's magic",
-                //         title: "A new challenge",
-                //         wrap: 180*size_factor,
-                //         padding: 10*size_factor
-                //     },
-                //     chapter: 27,
-                //     extra_rad: 40 * size_factor,
-                //     className: "sakura-title eriol-connector sakura-eriol note-left",
-                //     x: -184 * size_factor,
-                //     y: 766 * size_factor,
-                //     cx: -130 * size_factor,
-                //     cy: 620 * size_factor,
-                //     dx: 5 * size_factor,
-                //     dy: -5 * size_factor
-                // },{
                     note: {
                         label: "Around the left half of the large circle you can see in which chapter the Clow cards were converted to Sakura cards",
                         title: "Sakura Cards",
@@ -1202,7 +1233,7 @@ function create_CCS_chart() {
                     note: {
                         label: "Syaoran finally understands that it's Sakura that he loves, not Yukito",
                         title: "First love",
-                        wrap: 160*size_factor,
+                        wrap: 170*size_factor,
                         padding: 10*size_factor
                     },
                     chapter: 31,
@@ -1210,7 +1241,7 @@ function create_CCS_chart() {
                     className: "note-left note-story",
                     x: -460 * size_factor,
                     y: 655 * size_factor,
-                    cx: -405 * size_factor,
+                    cx: -406 * size_factor,
                     cy: 485 * size_factor,
                     dx: 5 * size_factor,
                     dy: -5 * size_factor
@@ -1286,8 +1317,8 @@ function create_CCS_chart() {
                     className: "note-left note-story",
                     x: -125 * size_factor,
                     y: -660 * size_factor,
-                    cx: -45 * size_factor,
-                    cy: -635 * size_factor,
+                    cx: -48 * size_factor,
+                    cy: -633 * size_factor,
                     dx: 5 * size_factor,
                     dy: -5 * size_factor
                 }
@@ -1343,8 +1374,8 @@ function create_CCS_chart() {
             //Add circle to cover art annotation
             annotation_circle_group.append("circle")
                 .attr("class", "annotation-circle")
-                .attr("cx", 384 * size_factor)
-                .attr("cy", -458 * size_factor)
+                .attr("cx", rad_color * Math.cos(chapter_location_data[5].centerAngle - pi1_2))
+                .attr("cy", rad_color * Math.sin(chapter_location_data[5].centerAngle - pi1_2))
                 .attr("r", 38 * size_factor);
             
             //Add circle to first sakura card                       
@@ -1360,22 +1391,22 @@ function create_CCS_chart() {
                 .style("stroke", color_syaoran);
 
             //Make it possible to show/hide the annotations
-            var show_annotations = 1;
+            var show_annotations = true;
             d3.select("#story-annotation")
                 .style("opacity", 1)
                 .on("click", spoiler_click);
+
+            function spoiler_click() {
+                show_annotations = !show_annotations;
+                annotation_group.selectAll(".note-story")
+                    .style("opacity", show_annotations ? 1 : 0);
+                d3.select("#hide-show").html(show_annotations ? "hide" : "show");
+            }//function spoiler_click
 
         } else {
             //Hide the annotation mentions in the intro
             d3.select("#annotation-explanation").style("display","none");
         }//else
-
-        function spoiler_click() {
-            show_annotations = show_annotations === 1 ? 0 : 1 
-            annotation_group.selectAll(".note-story")
-                .style("opacity", show_annotations);
-            d3.select("#hide-show").html(show_annotations ? "hide" : "show");
-        }//function spoiler_click
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////// Create line title label /////////////////////////
@@ -1437,9 +1468,6 @@ function create_CCS_chart() {
                 d = data[i];
                 var line_data = [];
 
-                //if(d.character !== "Sakura" || d.chapter !== 46) continue;
-                //console.log(d);
-
                 var source_a = characterByName[d.character].name_angle,
                     source_r = characterByName[d.character].dot_name_rad
                 var target_a = chapter_location_data[d.chapter - 1].centerAngle,
@@ -1481,7 +1509,7 @@ function create_CCS_chart() {
                 var start_angle = source_a + angle_sign * scale_angle_start_offset(da) * Math.PI;
 
                 //Slightly offset the last point on the curve from the target
-                var range = type === "character" ? [0, 0.01] : [0, 0.07];
+                var range = type === "character" ? [0, 0.02] : [0, 0.07];
                 var scale_angle_end_offset = d3.scaleLinear()
                     .domain([0, 1])
                     .range(range);
@@ -1495,10 +1523,7 @@ function create_CCS_chart() {
                     var da_inner = (end_angle - start_angle);
                 } else if (target_a - source_a < 2 * Math.PI) {
                     var da_inner = pi2 - (end_angle - start_angle)
-                } else {
-                    console.log("here");
-                }//else
-                //console.log(source_a, target_a, da_inner)
+                }//else if
 
                 //Attach first point to data
                 line_data.push({
@@ -1513,7 +1538,7 @@ function create_CCS_chart() {
                 });
 
                 //Create points in between for the curve line
-                var step = 0.05;
+                var step = 0.06;
                 var n = Math.abs(Math.floor(da_inner / step));
                 var curve_angle = start_angle;
                 var sign = side === "cw" ? 1 : -1;
