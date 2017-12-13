@@ -543,7 +543,7 @@ canvas {
     border-top: 1px solid rgba(235, 84, 127, 0.5);
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
     #credit {
         width: calc(100% - 20px);
     }

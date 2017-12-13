@@ -14,11 +14,12 @@ function create_CCS_chart() {
     ////////////////////////////////////////////////////////////// 
     
     var container = d3.select("#chart");
+    
+    window.scroll(0,window.pageYOffset);
     //Remove anything that was still there
     container.selectAll("svg, canvas").remove();
     container.style("height", null);
     document.body.style.width = null;
-    window.scroll(0,0);
     d3.selectAll(".outer-container")
         .style("width", null)
         .style("margin-left", null)
@@ -111,11 +112,11 @@ function create_CCS_chart() {
             scrollX = (total_chart_width - ww)/2; 
         } else if(outer_container_width >= base_width) scrollX = pos.left - (parseInt(document.body.style.width) - pos.width)/4 - 10;
         //Scroll to the new position on the horizontal
-        window.scrollTo(scrollX,0);
+        window.scrollTo(scrollX,window.pageYOffset);
 
         //This doesn't work in all browsers, so check (actually it only doesn't seem to work in Chrome mobile...)
         if( Math.abs(window.scrollX - scrollX) > 2 ) {
-            window.scrollTo(0,0)
+            window.scrollTo(0,window.pageYOffset)
             d3.selectAll(".outer-container")
                 .style("margin-left", 0 + "px")
                 .style("margin-right", 0 + "px")
@@ -394,7 +395,7 @@ function create_CCS_chart() {
             .force("collide", d3.forceCollide(function (d) { return (d.radius * 1 + 2.5) * size_factor; }).strength(0))
             .on("tick", tick)
             .on("end", simulation_end)
-            .alphaMin(.1)
+            .alphaMin(.2)
             //.stop();
 
         //Run the simulation "manually"
@@ -947,17 +948,19 @@ function create_CCS_chart() {
             // );
 
         ///////////////////////////////////////////////////////////////////////////
-        //////////////////////// Create hover color circles ///////////////////////
+        //////////////////////// Create hover color circle ////////////////////////
         ///////////////////////////////////////////////////////////////////////////  
 
         //The stroked circle around the color circles that appears on a hover
         var color_circle_hover_group = chart.append("g").attr("class", "color-circle-hover-group");
-        var color_hover_circle = color_circle_hover_group.selectAll(".color-hover-circle")
-            .data(chapter_location_data)
-            .enter().append("circle")
+        var color_hover_circle = color_circle_hover_group
+            // .selectAll(".color-hover-circle")
+            // .data(chapter_location_data)
+            // .enter()
+            .append("circle")
             .attr("class", "color-hover-circle")
-            .attr("cx", function (d) { return rad_color * Math.cos(d.centerAngle - pi1_2); })
-            .attr("cy", function (d) { return rad_color * Math.sin(d.centerAngle - pi1_2); })
+            // .attr("cx", function (d) { return rad_color * Math.cos(d.centerAngle - pi1_2); })
+            // .attr("cy", function (d) { return rad_color * Math.sin(d.centerAngle - pi1_2); })
             .attr("r",  36 * size_factor)
             .style("fill", "none")
             .style("stroke", color_sakura)
@@ -1024,7 +1027,9 @@ function create_CCS_chart() {
             cover_circle.style("fill", "url(#cover-image)");
 
             //Show the circle around the color chapter group
-            color_hover_circle.filter(function (c, j) { return i === j; })
+            color_hover_circle
+                .attr("cx", rad_color * Math.cos(d.centerAngle - pi1_2))
+                .attr("cy", rad_color * Math.sin(d.centerAngle - pi1_2))
                 .style("opacity", 1);
         }//function mouse_over_cover
 
