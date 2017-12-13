@@ -125,8 +125,8 @@ function create_CCS_chart() {
         }//if
     }//if
 
-    document.querySelector('html').style.setProperty('--annotation-title-font-size', (15*size_factor) + 'px')
-    document.querySelector('html').style.setProperty('--annotation-label-font-size', (15*size_factor) + 'px')
+    document.querySelector('html').style.setProperty('--annotation-title-font-size', Math.min(14,15*size_factor) + 'px')
+    document.querySelector('html').style.setProperty('--annotation-label-font-size', Math.min(14,15*size_factor) + 'px')
 
     ////////////////////////////////////////////////////////////// 
     //////////////////// Create SVG & Canvas /////////////////////
@@ -1202,7 +1202,7 @@ function create_CCS_chart() {
                     note: {
                         label: "Kero can finally return to his full form after Sakura catches the Firey card",
                         title: "Cerberus",
-                        wrap: 200*size_factor,
+                        wrap: 180*size_factor,
                         padding: 10*size_factor
                     },
                     chapter: 23,
