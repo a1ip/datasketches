@@ -558,6 +558,7 @@ canvas {
 	font-weight: 600;
     font-size: 15px;
     margin-bottom: 8px;
+    line-height: 130%;
 }
 
 .credit-note {

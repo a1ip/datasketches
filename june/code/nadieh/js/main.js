@@ -292,103 +292,10 @@ function create_CCS_chart() {
             d.y = d.focusY + random();
         })//forEach
 
-        //////////////////////////////////////////////////////////////
-        /////////////////////// Create gradients /////////////////////
-        //////////////////////////////////////////////////////////////
-
-        //Gradient for the titles of the annotations
-        var grad = defs.append("linearGradient")
-            .attr("id", "gradient-title")
-            .attr("x1", "0%").attr("y1", "0%")
-            .attr("x2", "100%").attr("y2", "0%");
-        grad.append("stop")
-            .attr("offset", "50%")   
-            .attr("stop-color", color_sakura);
-        grad.append("stop")
-            .attr("offset", "200%")   
-            .attr("stop-color", "#ED8B6A");
-
-        //Gradient for the titles of the annotations
-        var grad = defs.append("linearGradient")
-            .attr("id", "gradient-title-legend")
-            .attr("x1", "0%").attr("y1", "0%")
-            .attr("x2", "100%").attr("y2", "0%");
-        grad.append("stop")
-            .attr("offset", "50%")   
-            .attr("stop-color", color_syaoran);
-        grad.append("stop")
-            .attr("offset", "200%")   
-            .attr("stop-color", "#9ABF2B");
-            
-        //////////////////////////////////////////////////////////////
-        ///////////////////// Create CMYK patterns ///////////////////
-        //////////////////////////////////////////////////////////////
-
-        //Patterns based on http://blockbuilder.org/veltman/50a350e86de82278ffb2df248499d3e2
-        var radius_color_max = 2 * size_factor;
-        var radius_color = d3.scaleSqrt().range([0, radius_color_max]);
-
-        var ccs_colors = color_data.map(function (d) { return d.color; }),
-            cmyk_colors = ["yellow", "magenta", "cyan", "black"],
-            rotation = [0, -15, 15, 45];
-
-        //Loop over the different colors in the palette
-        for (var j = 0; j < ccs_colors.length; j++) {
-            //Get the radius transformations for this color
-            var CMYK = rgbToCMYK(d3.rgb(ccs_colors[j]));
-
-            //Create 4 patterns, C-Y-M-K, together forming the color
-            defs.selectAll(".pattern-sub")
-                .data(cmyk_colors)
-                .enter().append("pattern")
-                .attr("id", function (d) { return "pattern-sub-" + d + "-" + j; })
-                .attr("patternUnits", "userSpaceOnUse")
-                .attr("patternTransform", function (d, i) { return "rotate(" + rotation[i] + ")"; })
-                .attr("width", 2 * radius_color_max)
-                .attr("height", 2 * radius_color_max)
-                .append("circle")
-                .attr("fill", Object)
-                .attr("cx", radius_color_max)
-                .attr("cy", radius_color_max)
-                .attr("r", function (d) { return radius_color(CMYK[d]); });
-
-            //Nest the CMYK patterns into a larger pattern
-            defs.append("pattern")
-                .attr("id", "pattern-total-" + j)
-                .attr("patternUnits", "userSpaceOnUse")
-                .attr("width", radius_color_max * 31)
-                .attr("height", radius_color_max * 31)
-                .selectAll(".dots")
-                .data(cmyk_colors)
-                .enter().append("rect")
-                .attr("class", "dots")
-                .attr("width", width)
-                .attr("height", height)
-                .attr("x", 0)
-                .attr("y", 0)
-                .style("mix-blend-mode", "multiply")
-                .attr("fill", function (d, i) { return "url(#pattern-sub-" + cmyk_colors[i] + "-" + j + ")"; })
-        }//for j
-
-        //Adding images of the characters
-        var image_radius = rad_image;
-        var image_group = defs.append("g").attr("class", "image-group");
-        //Had to add img width otherwise it wouldn't work in Safari & Firefox
-        //http://stackoverflow.com/questions/36390962/svg-image-tag-not-working-in-safari-and-firefox
-        var cover_image = image_group.append("pattern")
-            .attr("id", "cover-image")
-            .attr("class", "cover-image")
-            .attr("patternUnits", "objectBoundingBox")
-            .attr("height", "100%")
-            .attr("width", "100%")
-            .append("image")
-            .attr("xlink:href", "img/white-square.jpg")
-            .attr("height", 2 * image_radius)
-            .attr("width", 2 * image_radius);
-
         ///////////////////////////////////////////////////////////////////////////
         /////////////////////////// Run force simulation //////////////////////////
-        ///////////////////////////////////////////////////////////////////////////     
+        ///////////////////////////////////////////////////////////////////////////   
+        
         simulation = d3.forceSimulation(color_data)
             .force("x", d3.forceX().x(function (d) { return d.focusX; }).strength(0.05))
             .force("y", d3.forceY().y(function (d) { return d.focusY; }).strength(0.05))
@@ -421,6 +328,26 @@ function create_CCS_chart() {
         }//function simulation_end
 
         data_save = color_data; //So I save the final positions
+
+        //////////////////////////////////////////////////////////////
+        ///////////////////// Create circle for cover image ///////////////////
+        //////////////////////////////////////////////////////////////
+
+        //Adding images of the characters
+        var image_radius = rad_image;
+        var image_group = defs.append("g").attr("class", "image-group");
+        //Had to add img width otherwise it wouldn't work in Safari & Firefox
+        //http://stackoverflow.com/questions/36390962/svg-image-tag-not-working-in-safari-and-firefox
+        var cover_image = image_group.append("pattern")
+            .attr("id", "cover-image")
+            .attr("class", "cover-image")
+            .attr("patternUnits", "objectBoundingBox")
+            .attr("height", "100%")
+            .attr("width", "100%")
+            .append("image")
+            .attr("xlink:href", "img/white-square.jpg")
+            .attr("height", 2 * image_radius)
+            .attr("width", 2 * image_radius);
 
         ///////////////////////////////////////////////////////////////////////////
         /////////////////////// Create character donut chart //////////////////////
@@ -926,6 +853,56 @@ function create_CCS_chart() {
             cover_circle.style("fill", "url(#cover-image)");
         }//function mouse_over_chapter
 
+        //////////////////////////////////////////////////////////////
+        ///////////////////// Create CMYK patterns ///////////////////
+        //////////////////////////////////////////////////////////////
+
+        //Patterns based on http://blockbuilder.org/veltman/50a350e86de82278ffb2df248499d3e2
+        var radius_color_max = 2 * size_factor;
+        var radius_color = d3.scaleSqrt().range([0, radius_color_max]);
+
+        var ccs_colors = color_data.map(function (d) { return d.color; }),
+            cmyk_colors = ["yellow", "magenta", "cyan", "black"],
+            rotation = [0, -15, 15, 45];
+
+        //Loop over the different colors in the palette
+        for (var j = 0; j < ccs_colors.length; j++) {
+            //Get the radius transformations for this color
+            var CMYK = rgbToCMYK(d3.rgb(ccs_colors[j]));
+
+            //Create 4 patterns, C-Y-M-K, together forming the color
+            defs.selectAll(".pattern-sub")
+                .data(cmyk_colors)
+                .enter().append("pattern")
+                .attr("id", function (d) { return "pattern-sub-" + d + "-" + j; })
+                .attr("patternUnits", "userSpaceOnUse")
+                .attr("patternTransform", function (d, i) { return "rotate(" + rotation[i] + ")"; })
+                .attr("width", 2 * radius_color_max)
+                .attr("height", 2 * radius_color_max)
+                .append("circle")
+                .attr("fill", Object)
+                .attr("cx", radius_color_max)
+                .attr("cy", radius_color_max)
+                .attr("r", function (d) { return radius_color(CMYK[d]); });
+
+            //Nest the CMYK patterns into a larger pattern
+            defs.append("pattern")
+                .attr("id", "pattern-total-" + j)
+                .attr("patternUnits", "userSpaceOnUse")
+                .attr("width", radius_color_max * 31)
+                .attr("height", radius_color_max * 31)
+                .selectAll(".dots")
+                .data(cmyk_colors)
+                .enter().append("rect")
+                .attr("class", "dots")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("x", 0)
+                .attr("y", 0)
+                .style("mix-blend-mode", "multiply")
+                .attr("fill", function (d, i) { return "url(#pattern-sub-" + cmyk_colors[i] + "-" + j + ")"; })
+        }//for j
+
         ///////////////////////////////////////////////////////////////////////////
         /////////////////////////// Create color circles //////////////////////////
         ///////////////////////////////////////////////////////////////////////////    
@@ -1108,6 +1085,34 @@ function create_CCS_chart() {
             .style("font-size", (10 * size_factor) + "px")
             .text(function (d, i) { return d.card_captured; });
 
+        //////////////////////////////////////////////////////////////
+        ///////////////// Create annotation gradients ////////////////
+        //////////////////////////////////////////////////////////////
+
+        //Gradient for the titles of the annotations
+        var grad = defs.append("linearGradient")
+            .attr("id", "gradient-title")
+            .attr("x1", "0%").attr("y1", "0%")
+            .attr("x2", "100%").attr("y2", "0%");
+        grad.append("stop")
+            .attr("offset", "50%")   
+            .attr("stop-color", color_sakura);
+        grad.append("stop")
+            .attr("offset", "200%")   
+            .attr("stop-color", "#ED8B6A");
+
+        //Gradient for the titles of the annotations
+        var grad = defs.append("linearGradient")
+            .attr("id", "gradient-title-legend")
+            .attr("x1", "0%").attr("y1", "0%")
+            .attr("x2", "100%").attr("y2", "0%");
+        grad.append("stop")
+            .attr("offset", "50%")   
+            .attr("stop-color", color_syaoran);
+        grad.append("stop")
+            .attr("offset", "200%")   
+            .attr("stop-color", "#9ABF2B");
+        
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////// Create annotations //////////////////////////
         ///////////////////////////////////////////////////////////////////////////
