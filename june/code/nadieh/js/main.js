@@ -150,6 +150,12 @@ function create_CCS_chart() {
     var chart = svg.append("g")
         .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
 
+    chart.append("text")
+        .attr("x", -width/2 + 20)
+        .attr("y", -height/2 + 20)
+        .style("fill","black")
+        .text(ww)
+
     var defs = chart.append("defs");
 
     //////////////////////////////////////////////////////////////
