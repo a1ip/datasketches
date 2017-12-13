@@ -406,11 +406,12 @@ body {
         padding-top: 30px;
     }
 
-    .explanation {
-        width: 80%;
-    }
     #annotation-explanation {
         width: 70%;
+    }
+
+    #layer-legend {
+        max-width: 450px;
     }
 }
 
@@ -427,7 +428,7 @@ body {
     }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
     #main-title {
         font-size: 37px;
     }

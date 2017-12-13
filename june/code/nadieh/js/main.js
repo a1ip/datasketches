@@ -37,13 +37,13 @@ function create_CCS_chart() {
     var base_width = 1600;
     var ww = window.innerWidth,
         wh = window.innerHeight;
-    var width_too_small = ww < 400;
+    var width_too_small = ww < 500;
 
     var width;
     if(wh < ww) {
         width = wh/0.7;
     } else {
-        if(ww < 400) width = ww/0.5;
+        if(ww < width_too_small) width = ww/0.5;
         else if(ww < 600) width = ww/0.6;
         else if(ww < 800) width = ww/0.7;
         else if(ww < 1100) width = ww/0.8;
@@ -150,11 +150,12 @@ function create_CCS_chart() {
     var chart = svg.append("g")
         .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
 
-    chart.append("text")
-        .attr("x", -width/2 + 20)
-        .attr("y", -height/2 + 20)
-        .style("fill","black")
-        .text(ww)
+    // //Test to see the window width on mobile
+    // chart.append("text")
+    //     .attr("x", -width/2 + 20)
+    //     .attr("y", -height/2 + 20)
+    //     .style("fill","black")
+    //     .text(ww)
 
     var defs = chart.append("defs");
 
