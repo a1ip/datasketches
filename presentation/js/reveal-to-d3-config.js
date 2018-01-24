@@ -81,29 +81,44 @@ pt.slideIdToFunctions = {
       pt.chordToLoom2.moveApart(lotrWords);
     },
   },
-  'olympic-buildup': {
+  // 'olympic-buildup': {
+  //   'init': function() {
+  //     pt.olympicBuildUp.init(olympicData);
+  //   },
+  //   '-1': function() {
+  //     pt.olympicBuildUp.initializeCircles();
+  //   },
+  //   0: function() {
+  //     pt.olympicBuildUp.rotateCircles();
+  //   },
+  //   1: function() {
+  //     pt.olympicBuildUp.rotateFeathers();
+  //   },
+  //   2: function() {
+  //     pt.olympicBuildUp.outwardEditions();
+  //   },
+  //   3: function() {
+  //     pt.olympicBuildUp.outwardMedals();
+  //   },
+  // },
+  // 'magic-legend': {
+  //   'init': function() {
+  //     pt.magicLegend.init();
+  //   }
+  // },
+  'word-snake-sizes': {
     'init': function() {
-      pt.olympicBuildUp.init(olympicData);
-    },
-    '-1': function() {
-      pt.olympicBuildUp.initializeCircles();
-    },
-    0: function() {
-      pt.olympicBuildUp.rotateCircles();
-    },
-    1: function() {
-      pt.olympicBuildUp.rotateFeathers();
-    },
-    2: function() {
-      pt.olympicBuildUp.outwardEditions();
-    },
-    3: function() {
-      pt.olympicBuildUp.outwardMedals();
-    },
+      pt.wordSnakeSizes.init(top100Overall, top1);
+    }
   },
-  'magic-legend': {
+  'in-english-network-bad': {
     'init': function() {
-      pt.magicLegend.init();
+      pt.inEnglishNetwork.init(networkLinks, false, "in-english-network-bad", "inEnglishNetworkBad");
+    }
+  },
+  'in-english-network-good': {
+    'init': function() {
+      pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
     }
   },
   'end-slide': {
@@ -145,13 +160,21 @@ function removeSVGs() {
 
   //data - nadieh
   d3.select('#olympic-intro #olympicIntro svg').remove();
-  d3.select('#olympic-buildup #olympicBuildUp svg').remove();
+  // d3.select('#olympic-buildup #olympicBuildUp svg').remove();
 
   //sketch - nadieh
   d3.select('#royal-network #royalNetwork svg').remove();
 
   //code - nadieh
+  clearInterval(pt.wordSnakeSizes.loopWordsnakeWords);
+  clearInterval(pt.wordSnakeSizes.squeezeInterval);
+  d3.select('#word-snake-sizes #wordSnakeSizes svg').remove();
+
+  d3.select('#in-english-network-bad #inEnglishNetworkBad svg').remove();
+  d3.select('#in-english-network-good #inEnglishNetworkGood svg').remove();
+  
   d3.select('#lotr-intro #lotrIntro svg').remove();
+  
   //d3.select('#chord-to-loom-1 #chordToLoom svg').remove();
   //d3.select('#chord-to-loom-2 #chordToLoom2 svg').remove();
 
