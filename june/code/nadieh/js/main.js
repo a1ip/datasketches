@@ -883,7 +883,7 @@ function create_CCS_chart() {
                 .attr("fill", Object)
                 .attr("cx", radius_color_max)
                 .attr("cy", radius_color_max)
-                .attr("r", function (d) { return radius_color(CMYK[d]); });
+                .attr("r", function (d) { return Math.max(0.001, radius_color(CMYK[d])); });
 
             //Nest the CMYK patterns into a larger pattern
             defs.append("pattern")
