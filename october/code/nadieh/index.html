@@ -19,7 +19,7 @@
 		<link href="https://fonts.googleapis.com/css?family=IM+Fell+DW+Pica|Muli:300,400" rel="stylesheet">
 		
 		<!-- JavaScript files -->
-		<script src="../../../plugins/d3.js"></script>
+		<script src="../../../plugins/d3.min.js"></script>
 		<script src="js/createLegend.js"></script>
 		<script src="js/mouseEvents.js"></script>
 		<script src="js/clickEvents.js"></script>
@@ -36,7 +36,7 @@
 				<div id="legend"></div>
 				<div id="top-shortest-path">
 					<h3>Discover the shortest path between two royals</h3>
-					<p>If you click on a star you will select & fix that person. By clicking on another star the visual will show you the shortest path between the two (although sometimes multiple shortest paths exist. The algorithm will then show one of these). To clear the fix on the first person, click anywhere outside of the star filled area.</p>
+					<p>If you click on a star you will select & fix that person. By clicking on another star the visual will show you the shortest path between the two (although sometimes multiple shortest paths exist. The algorithm will then show one of these). To clear the fix on the first person, click anywhere that's not a circle.</p>
 				</div>
 			</div>
 			<div id="intro-text">
@@ -47,7 +47,6 @@
 					<p>This genealogy is far from complete, or perfect, probably many more interconnections exist, but this peek into the history of Europe's royals shows that it's all one big (happy?) family.</p>
 				</div>
 			</div>
-			<div id="top-chrome-note">- Performs & looks better in Chrome -</div>		
 		</div>
 
 		<div id="royal-chart"></div>

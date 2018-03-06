@@ -75,6 +75,18 @@ body {
 
 #royal-chart {
 	text-align: center;
+	position: relative;
+}
+
+#royal-chart canvas {
+	position: absolute;
+	top: 0;
+	pointer-events: none;
+	z-index: -1;
+}
+
+#royal-chart svg {
+	z-index: 2;
 }
 
 #credit {
@@ -139,6 +151,13 @@ a, a:link, a:visited, a:active {
 	text-anchor: end;
 	font-size: 12px;
 	fill: #7e7b72;
+}
+
+/* --- Hovering --- */
+
+.hoverRect {
+	fill: none;
+	pointer-events: all;
 }
 
 /* --- Tooltip --- */

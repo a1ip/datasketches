@@ -886,11 +886,22 @@ function create_CCS_chart() {
                 .attr("r", function (d) { return Math.max(0.001, radius_color(CMYK[d])); });
 
             //Nest the CMYK patterns into a larger pattern
-            defs.append("pattern")
+            var patterns = defs.append("pattern")
                 .attr("id", "pattern-total-" + j)
                 .attr("patternUnits", "userSpaceOnUse")
                 .attr("width", radius_color_max * 31)
                 .attr("height", radius_color_max * 31)
+
+            //Append white background
+            patterns.append("rect")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("x", 0)
+                .attr("y", 0)
+                .style("fill","white")
+
+            //Add the CMYK patterns
+            patterns
                 .selectAll(".dots")
                 .data(cmyk_colors)
                 .enter().append("rect")
