@@ -218,11 +218,6 @@ a, a:link, a:visited, a:active {
   pointer-events: none;
 }
 
-.circle-mouse-capture {
-	fill: none;
-	pointer-events: all;
-}
-
 /* --- Pulsing --- */
 
 .node-pulse, .node-pulse-legend {
