@@ -191,28 +191,40 @@
     </div>
   </footer>
 
-  <script>
-  function setTime() {
-    var format = 'h:mm a';
-    var time = new Date();
-    var nadieh = moment(time, format).tz("Europe/Amsterdam");
-    var shirley = moment(time, format).tz("America/Los_Angeles");
-    $('.nadieh .time').text(nadieh.format(format));
-    $('.shirley .time').text(shirley.format(format));
+    <script>
+        function setTime() {
+            var format = 'h:mm a';
+            var time = new Date();
+            var nadieh = moment(time, format).tz("Europe/Amsterdam");
+            var shirley = moment(time, format).tz("America/Los_Angeles");
+            $('.nadieh .time').text(nadieh.format(format));
+            $('.shirley .time').text(shirley.format(format));
 
-    var nadiehColor = nadieh.hour();
-    nadiehColor = nadiehColor >= 18 || nadiehColor <= 6 ? 'dark' : 'light';
-    var shirleyColor = shirley.hour();
-    shirleyColor = shirleyColor >= 18 || shirleyColor <= 6 ? 'dark' : 'light';
+            var nadiehColor = nadieh.hour();
+            nadiehColor = nadiehColor >= 18 || nadiehColor <= 6 ? 'dark' : 'light';
+            var shirleyColor = shirley.hour();
+            shirleyColor = shirleyColor >= 18 || shirleyColor <= 6 ? 'dark' : 'light';
 
-    $('.nadieh').removeClass('light dark').addClass(nadiehColor);
-    $('.shirley').removeClass('light dark').addClass(shirleyColor);
-  }
+            $('.nadieh').removeClass('light dark').addClass(nadiehColor);
+            $('.shirley').removeClass('light dark').addClass(shirleyColor);
+        }
 
-  $( document ).ready( function() {
-    setTime();
-    setInterval(setTime, 60000);
-  });
-	</script>
+        $(document).ready(function () {
+            setTime();
+            setInterval(setTime, 60000);
+        });
+    </script>
+    
+    <!-- Google analytics -->
+	<script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    
+            ga('create', 'UA-43942889-3', 'auto');
+            ga('set', 'anonymizeIp', true);
+            ga('send', 'pageview');
+        </script>
   </body>
 </html>
