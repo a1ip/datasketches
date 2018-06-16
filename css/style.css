@@ -514,7 +514,7 @@ header .month-guest-intro {
 
 .img-month-top {
 	margin-bottom: 30px;
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .img-gallery-wrapper {
@@ -522,7 +522,14 @@ header .month-guest-intro {
 }
 
 .img-gallery-3 {
-	max-width: 30%;
+	max-width: 32%;
+	display: inline-block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.img-gallery-2 {
+	max-width: 49%;
 	display: inline-block;
 	margin-top: 10px;
 	margin-bottom: 10px;

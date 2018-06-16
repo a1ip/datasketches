@@ -1,0 +1,91 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Muli', sans-serif; */
+    padding: 0;
+    margin: 0;
+}
+
+
+/* ---------- SECTION | HEADER ---------- */
+
+#header-section {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+/* ---------- SECTION | ORION ---------- */
+#orion-chart-section {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#orion-chart-section h3 {
+    /* font-family: 'Glass Antiqua', cursive; */
+    font-size: 22px;
+    font-weight: 300;
+    /* text-align: center; */
+    margin-bottom: 0;
+} 
+
+#chart-container-orion {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#chart-orion {
+    position: relative;
+    text-align: center;
+}
+
+#chart-orion canvas {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    /* z-index: -1; */
+    pointer-events: none;
+}
+
+#chart-orion svg {
+    overflow: visible;
+}
+
+.chart-orion-mini-map-culture {
+    font-family: 'Glass Antiqua', cursive;
+    font-size: 14px;
+}
+
+.chart-orion-title {
+    font-size: 14px;
+    fill: #001540;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.chart-orion-star-title {
+    font-family: 'Glass Antiqua', cursive;
+    font-size: 46px;
+    text-transform: inherit;
+    letter-spacing: unset;
+}
+
+.chart-orion-hide-group {
+    text-anchor: middle;
+}
+.chart-orion-hide-group text {
+    pointer-events: none;
+    fill: #001540;
+}
+.chart-orion-text {
+    font-size: 14px;
+}
+.chart-orion-text-culture {
+    font-size: 19px;
+    font-weight: 300;
+    font-style: italic;
+}
+.chart-orion-text-name {
+    font-family: 'Glass Antiqua', cursive;
+    font-size: 42px;
+}
