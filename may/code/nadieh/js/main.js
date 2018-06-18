@@ -82,7 +82,8 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
 
     //Orion's Betelgeuse
     focus = {
-        hip: 27989, //Betelgeuse
+        hip: 27989,
+        proper: "Betelgeuse",
         center: [5.603559, 3.20192], //ra in hours dec in degrees
         scale: 1950,
     }  //4: egyptian-005 & 11: navajo-008 & 15: tupi-002 & 16: western-Ori

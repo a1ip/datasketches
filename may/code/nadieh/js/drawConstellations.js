@@ -210,14 +210,28 @@ function drawConstellations(opts_general, opts) {
 
     ///////////// Draw ring around chosen star /////////////
 
+    let pos = pixelPos(chosen_star.ra, chosen_star.dec, projection)
+
     ctx.globalCompositeOperation = "source-over"
+    ctx.globalAlpha = 1
     ctx.shadowBlur = 0
     ctx.strokeStyle = type === "small" ? "black" : "#fff"
     ctx.lineWidth = type === "small" ? 9 : 4
     ctx.beginPath()
-    ctx.arc(...pixelPos(chosen_star.ra, chosen_star.dec, projection), opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : 13), 0, pi2)
+    ctx.arc(pos[0], pos[1], opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : 13), 0, pi2)
     ctx.closePath()
     ctx.stroke()
+
+    ///////////// Add proper name to chosen star /////////////
+
+    ctx.font = "22px " + font_family
+    ctx.textBaseline = "top" //"bottom"
+    ctx.textAlign = "end"
+    ctx.fillStyle = "white"
+
+    //Star dependant settings
+    let r = opts.radius_scale(chosen_star.mag)
+    ctx.fillText(chosen_star.proper, pos[0] - r, pos[1] + 15 + r)
 
     ///////////// Draw circle around it all for small versions /////////////
 

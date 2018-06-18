@@ -14,6 +14,7 @@ body {
 }
 
 /* ---------- SECTION | ORION ---------- */
+
 #orion-chart-section {
     max-width: 1000px;
     margin-left: auto;
@@ -58,10 +59,10 @@ body {
 }
 
 .chart-orion-title {
-    font-size: 12px;
+    font-size: 14px;
     fill: #001540;
-    text-transform: uppercase;
-    letter-spacing: 0.9px;
+    /* text-transform: uppercase; */
+    /* letter-spacing: 0.9px; */
 }
 .chart-orion-star-title {
     font-family: 'Glass Antiqua', cursive;

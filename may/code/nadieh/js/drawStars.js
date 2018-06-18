@@ -28,11 +28,12 @@ function drawStars(opts_general, opts) {
 
     ///////////// Draw stars /////////////
 
-    ctx.font = "10px " + font_family
-    // ctx.font = "italic 9px " + font_family
-    ctx.textBaseline = "bottom"
-    ctx.textAlign = "center"
-    ctx.fillStyle = "#9999bb"
+    // ctx.font = "12px " + font_family
+    // ctx.textBaseline = "bottom"
+    // ctx.textAlign = "center"
+
+    ctx.globalAlpha = 1
+    ctx.shadowBlur = 25
 
     //Draw the stars
     opts.stars.forEach(d => {
@@ -54,10 +55,10 @@ function drawStars(opts_general, opts) {
         grd.addColorStop(0.6,col)
         grd.addColorStop(1,col_dark)
         ctx.fillStyle = grd
-        ctx.globalAlpha = 1
-
+        
         //Create a glow around each star
-        ctx.shadowBlur = 25 //r * 2.5
+        // ctx.globalAlpha = 1
+        // ctx.shadowBlur = 25 //r * 2.5
         ctx.shadowColor = col
 
         //Draw the star
