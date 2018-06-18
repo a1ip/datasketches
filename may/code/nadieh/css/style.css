@@ -58,10 +58,10 @@ body {
 }
 
 .chart-orion-title {
-    font-size: 14px;
+    font-size: 12px;
     fill: #001540;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.9px;
 }
 .chart-orion-star-title {
     font-family: 'Glass Antiqua', cursive;

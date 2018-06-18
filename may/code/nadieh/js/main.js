@@ -127,7 +127,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         .attr("x", width/2 + margin.left)
         .attr("y", height/2 + margin.top - 55)
         .attr("dy", "0.35em")
-        .text("Creating new Sky Map of")
+        .text("Creating the Sky Map of")
     const svg_orion_text_const_name = svg_hide_group.append("text")
         .attr("class", "chart-orion-text-name")
         .attr("x", width/2 + margin.left)
@@ -144,7 +144,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     //Create the title in the top left corner
     const title_group = svg_orion.append("g")
         .attr("class", "chart-orion-title-group")
-    let offsets = [10, 30, 80]
+    let offsets = [10, 28, 78]
     title_group.selectAll(".chart-orion-title")
         .data(["The cultures & constellations","that use the star","Betelgeuse"])
         .enter().append("text")
@@ -269,17 +269,17 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         if(d === "body" && currentOrion === "all") return
         
         if (d !== "body" && d !== currentOrion) {
-                //If the same circle isn't clicked twice in a row, change to the new mini map
+            //If the same circle isn't clicked twice in a row, change to the new mini map
             chosen = d
             currentOrion = d
             //Update central text
             svg_orion_text_culture
                 .style("fill", cultures[constellationCulture(d)].color)
                 .text(constellationCultureCap(d))
-            let const_name = const_names[const_names.map(d => d.const_id).indexOf(d)].const_name
+            let const_name = const_names[const_names.map(c => c.const_id).indexOf(d)].const_name
             svg_orion_text_const_name.text(const_name)
             //Change the thick stroke of the chosen constellation
-            d3.selectAll(".mini-map-circle")
+            d3.selectAll(".chart-orion-mini-map-circle")
                 .transition("stroke").duration(600)
                 .style("stroke-width", c => (c === d ? 3 : 1) * stroke_w)
         } else {
@@ -290,7 +290,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             svg_orion_text_culture.text("")
             svg_orion_text_const_name.text("all cultures")
             //Remove the thicker stroke
-            d3.selectAll(".mini-map-circle")
+            d3.selectAll(".chart-orion-mini-map-circle")
                 .transition("stroke").duration(600)
                 .style("stroke-width", stroke_w)
         }//else

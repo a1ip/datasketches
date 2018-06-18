@@ -213,9 +213,9 @@ function drawConstellations(opts_general, opts) {
     ctx.globalCompositeOperation = "source-over"
     ctx.shadowBlur = 0
     ctx.strokeStyle = type === "small" ? "black" : "#fff"
-    ctx.lineWidth = type === "small" ? 9 : 3
+    ctx.lineWidth = type === "small" ? 9 : 4
     ctx.beginPath()
-    ctx.arc(...pixelPos(chosen_star.ra, chosen_star.dec, projection), opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : 12), 0, pi2)
+    ctx.arc(...pixelPos(chosen_star.ra, chosen_star.dec, projection), opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : 13), 0, pi2)
     ctx.closePath()
     ctx.stroke()
 
