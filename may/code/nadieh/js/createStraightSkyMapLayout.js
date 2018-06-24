@@ -114,7 +114,7 @@ function createStraightSkyMapLayout(opts, focus_map, w, w_increase, h, map_id) {
                 chosen_culture = el.attr("id").replace("culture-","")
 
                 //Update the title
-                d3.select("#chosen-culture-number").html()
+                d3.select("#chosen-culture-number").html(cultures[chosen_culture].count)
                 d3.select("#chosen-culture-title")
                     .style("color", cultures[chosen_culture].color)
                     .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
@@ -205,16 +205,17 @@ function setBorderColor(map_id, culture) {
 
 //////////////////////// Hover effect ////////////////////////
 function rectangularMoveEffect(map_id) {
-    
     let mouse_enter
-    d3.select(`#section-${map_id}`).on("mouseover", function() { mouse_enter = d3.mouse(this)[0]; console.log(mouse_enter) })
+    let mouse_pos = 0
+    d3.select(`#section-${map_id}`).on("mouseover", function() {
+        //Subtract the current value of the CSS variable from the mouse location, so eventually this will balance out in .withLatestFrom 
+        mouse_enter = d3.mouse(this)[0] - mouse_pos
+    })
         
-    // const canvas_node = document.querySelector("#chart-header")
     //https://codepen.io/flibbon/pen/zojKQB
     //https://codepen.io/davidkpiano/pen/YNOoEK
     //https://css-tricks.com/animated-intro-rxjs/
     const section = document.getElementById(`section-${map_id}`)
-    // const canvas_node = document.getElementById("canvas-" + map_id)
     const mouse_move$ = Rx.Observable
         .fromEvent(section, "mousemove")
         .map(e => ({ x: e.clientX }))
@@ -222,21 +223,24 @@ function rectangularMoveEffect(map_id) {
     const smooth_mouse$ = Rx.Observable
         .interval(0, Rx.Scheduler.animationFrame)
         // .withLatestFrom(mouse_move$, (tick, mouse) => mouse)
-        // .withLatestFrom(mouse_move$, (tick, mouse) => ({ x : mouse.x - mouse_enter }) )
-        .withLatestFrom(mouse_move$, (tick, mouse) => { console.log(mouse.x - mouse_enter); return { x : mouse.x - mouse_enter } })
+        .withLatestFrom(mouse_move$, (tick, mouse) => ({ x : Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1) }) )
+        // .withLatestFrom(mouse_move$, (tick, mouse) => { 
+        //     // console.log(mouse.x, mouse_enter, Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1)) 
+        //     return { x : Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1) } 
+        // })
         .scan(lerp, {x: 0})
 
     function lerp(start, end) {
+        // console.log(start, end)
         //Update position by 20% of the distance between position & target
         const rate = 0.02
         const dx = end.x - start.x
-        return { x: start.x + dx * rate}
+        return { x: start.x + dx * rate }
     }//function lerp
 
     smooth_mouse$.subscribe(pos => {
-        let final = Math.min(Math.max(pos.x, -(w_factor-1)), w_factor-1)
-        document.documentElement.style.setProperty(`--mouse-${map_id}-x`, final);
+        mouse_pos = pos.x
+        document.documentElement.style.setProperty(`--mouse-${map_id}-x`, pos.x);
     })
     // RxCSS({ mouse: smooth_mouse$ })
-
 }//function rectangularMoveEffect

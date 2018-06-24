@@ -1,6 +1,10 @@
 :root {
-    /* --mouse-header-x: 0; */
     --body-max-width: 1200px;
+}
+
+html {
+    --mouse-header-x: 0;
+    --mouse-constellations-x: 0;
 }
 
 body {
