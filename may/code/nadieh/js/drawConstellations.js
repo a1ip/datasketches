@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-///////////////////////// Draw constellations lines ///////////////////////
+//////////////////////// Draw constellations lines ////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
 function drawConstellations(opts_general, opts) {
@@ -21,23 +21,12 @@ function drawConstellations(opts_general, opts) {
     //Set to the clipped circle
     clipToCircle(ctx, opts_general.width, opts_general.height, opts_general.margin, opts_general.clip_radius)
 
-    ///////////// Set stylings /////////////
-
-    // ctx.globalCompositeOperation = "multiply"
-
-    // //Base color scale of X colors mapped to [0,1]
-    // // const colors = ["#2c7bb6", "#00a6ca","#00ccbc","#90eb9d","#ffff8c","#f9d057","#f29e2e","#e76818","#d7191c"]
-    // const colors = ["#EFB605", "#FE7E2D","#E01A25","#C20049","#991C71","#66489F","#10A4C0","#10A66E","#7EB852"]
-    // const color_scale_base = d3.scaleLinear()
-    //     .domain(d3.range(colors.length).map(d => d / (colors.length - 1) ))
-    //     .range(colors)
-
     ///////////// Get unique constellations /////////////
 
     //Get all the lines that are in these constellations
     let chosen_lines = opts.const_links.filter(d => opts.constellations.indexOf(d.const_id) > -1)
 
-    ///////////// Draw lines /////////////
+    ///////////// Draw nested lines /////////////
 
     // let line = d3.line()
     //     .curve(d3.curveNatural)
@@ -103,33 +92,118 @@ function drawConstellations(opts_general, opts) {
         })//forEach lines
     })//forEach nested_lines
 
-    // //Draw the constellation lines
-    // ctx.beginPath()
-    // chosen_lines.forEach(d => {
-    //     //if(const_ids.indexOf(d.const_id) > -1) { //} && d.const_id === "romanian-Cma") {
-    //         let s = star_by_id[d.source]
-    //         let pos_s = pixelPos(s.ra, s.dec, projection)
-    //         let t = star_by_id[d.target]
-    //         let pos_t = pixelPos(t.ra, t.dec, projection)
-    //         ctx.moveTo(pos_s[0], pos_s[1])
-    //         ctx.lineTo(pos_t[0], pos_t[1])
-    //     //}//if
-    // })
-    // ctx.stroke()
-    // ctx.closePath()
+    ///////////// Clip away the constellation lines in a circle around each star /////////////
+    //////////////////////////////// Draw donuts around stars ////////////////////////////////
+
+    drawStarDonuts(ctx, projection, star_by_id, chosen_lines, opts.radius_scale, type) 
+
+    ///////////// Draw ring around chosen star /////////////
+
+    let pos = pixelPos(chosen_star.ra, chosen_star.dec, projection)
+
+    ctx.globalCompositeOperation = "source-over"
+    ctx.globalAlpha = 1
+    ctx.shadowBlur = 0
+    ctx.strokeStyle = type === "small" ? "black" : "#fff"
+    ctx.lineWidth = type === "small" ? 9 : 4
+    ctx.beginPath()
+    ctx.arc(pos[0], pos[1], opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : 13), 0, pi2)
+    ctx.closePath()
+    ctx.stroke()
+
+    ///////////// Add proper name to chosen star /////////////
+
+    ctx.font = "22px " + font_family
+    ctx.textBaseline = "top" //"bottom"
+    ctx.textAlign = "end"
+    ctx.fillStyle = "white"
+
+    //Star dependant settings
+    let r = opts.radius_scale(chosen_star.mag)
+    ctx.fillText(chosen_star.proper, pos[0] - r, pos[1] + 15 + r)
+
+    return canvas
+}//function drawConstellations
+
+///////////////////////////////////////////////////////////////////////////
+//////////////////////// Simple constellation lines ///////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function drawConstellationsSimple(opts_general, opts, chosen_culture) {
+    
+    let projection = opts_general.projection
+    let chart_id = opts_general.chart_id
+
+    ///////////// Create canvas /////////////
+
+    const canvas = document.createElement("canvas")
+    const ctx = canvas.getContext("2d")
+    crispyCanvas(canvas, ctx, opts_general.width, opts_general.height, 1, opts_general.offset_x)
+
+    //Get unique constellations
+    let chosen_lines = opts.const_links.filter(d => d.const_culture === chosen_culture)
+
+    ///////////// Create path functions /////////////
+
+    //Set-up path creating function
+    const path = d3.geoPath()
+        .projection(projection)
+        .context(ctx)
+
+    const path_svg = d3.geoPath()
+        .projection(projection)
+
+    ///////////// Draw lines /////////////
+    ctx.globalCompositeOperation = "screen"
+    ctx.lineWidth = chart_id === "header" ? 1 : 1.5
+    ctx.globalAlpha = chart_id === "header" ? 0.8 : 1
+    ctx.strokeStyle = chart_id === "header" ? "#4c4c4c" : cultures[chosen_culture].color 
+
+    //Draw the constellation lines
+    ctx.beginPath()
+    chosen_lines.forEach(d => {
+        let s = opts.star_by_id[d.source]
+        let t = opts.star_by_id[d.target]
+        let line_string = {type: "LineString", 
+                           coordinates: [[-s.ra * (360/24), s.dec], 
+                                         [-t.ra * (360/24), t.dec]]}
+        let line = path_svg(line_string)
+        //If the path exists of multiple line segments, use the "great arc" method
+        //Otherwise draw straight lines
+        if(line.split("M").length - 1 >= 2) path(line_string)
+        else {
+            let pos_s = pixelPos(s.ra, s.dec, projection)
+            let pos_t = pixelPos(t.ra, t.dec, projection)
+            ctx.moveTo(pos_s[0], pos_s[1])
+            ctx.lineTo(pos_t[0], pos_t[1])
+        }//else
+    })
+    ctx.stroke()
+    ctx.closePath()
 
     ///////////// Clip away the constellation lines in a circle around each star /////////////
+    //////////////////////////////// Draw donuts around stars ////////////////////////////////
 
-    ctx.globalAlpha = 1
+    if(chart_id !== "header") drawStarDonuts(ctx, projection, star_by_id, chosen_lines, opts_general.radius_scale, opts_general.type_geo)
+        
+    return canvas
+    
+}//drawConstellationsSimple
 
-    let arc = d3.arc().context(ctx)
-    let pie = d3.pie().value(1).sort(null)
+///////////////////////////////////////////////////////////////////////////
+///////////// Draw small donuts around each constellation star ////////////
+///////////////////////////////////////////////////////////////////////////
+
+function drawStarDonuts(ctx, projection, star_by_id, chosen_lines, radius_scale, type) {
 
     //Get all the unique stars in the lines
     let chosen_stars = _.uniq([...chosen_lines.map(d => d.source), ...chosen_lines.map(d => d.target)])
 
-    ctx.globalCompositeOperation = "destination-out"
+    ///////////// Clip away the constellation lines in a circle around each star /////////////
 
+    ctx.globalAlpha = 1
+    ctx.globalCompositeOperation = "destination-out"
+    
     chosen_stars.forEach(d => {
         //Get the star's info and location
         let star = star_by_id[d]
@@ -155,14 +229,15 @@ function drawConstellations(opts_general, opts) {
 
     ///////////// Draw donuts around stars /////////////
 
-    // ctx.globalCompositeOperation = "multiply"
-
     ctx.globalCompositeOperation = "source-over"
 
     if(type !== "small") {
         ctx.shadowBlur = 5
         ctx.shadowColor = "#001540"
-    }
+    }//if
+
+    let arc = d3.arc().context(ctx)
+    let pie = d3.pie().value(1).sort(null)
 
     //Loop over all the stars and draw a small donut chart around it to show how many constellations use that star
     chosen_stars.forEach(d => {
@@ -179,7 +254,7 @@ function drawConstellations(opts_general, opts) {
         let inner = innerRad(star.mag)
         let outer = outerRad(star.mag)
         let corner = (outer - inner) * 0.5
-        let pad = const_ids.length > 10 ? 0.07 : 3 / Math.sqrt(inner*inner + outer*outer)
+        let pad = (const_ids.length > 10 ? 0.07 : (type === "equirectangular" ? 1.5 : 3) / Math.sqrt(inner*inner + outer*outer))
 
         //Create the data for the donut chart
         let arcs = pie(const_ids)
@@ -208,49 +283,8 @@ function drawConstellations(opts_general, opts) {
         ctx.restore()
     })//forEach chosen_stars
 
-    ///////////// Draw ring around chosen star /////////////
-
-    let pos = pixelPos(chosen_star.ra, chosen_star.dec, projection)
-
-    ctx.globalCompositeOperation = "source-over"
-    ctx.globalAlpha = 1
-    ctx.shadowBlur = 0
-    ctx.strokeStyle = type === "small" ? "black" : "#fff"
-    ctx.lineWidth = type === "small" ? 9 : 4
-    ctx.beginPath()
-    ctx.arc(pos[0], pos[1], opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : 13), 0, pi2)
-    ctx.closePath()
-    ctx.stroke()
-
-    ///////////// Add proper name to chosen star /////////////
-
-    ctx.font = "22px " + font_family
-    ctx.textBaseline = "top" //"bottom"
-    ctx.textAlign = "end"
-    ctx.fillStyle = "white"
-
-    //Star dependant settings
-    let r = opts.radius_scale(chosen_star.mag)
-    ctx.fillText(chosen_star.proper, pos[0] - r, pos[1] + 15 + r)
-
-    ///////////// Draw circle around it all for small versions /////////////
-
-    // if(type === "small") {
-    //     //Don't hold to the clipped circle anymore
-    //     ctx.restore()
-
-    //     //Draw the colored circle
-    //     ctx.strokeStyle = color_scale_base(opts.color_scale_const(opts.constellations))
-    //     ctx.lineWidth = 13
-    //     ctx.beginPath()
-    //     ctx.arc(total_width/2, total_height/2, 400, 0, pi2)
-    //     ctx.closePath()
-    //     ctx.stroke()
-    // }//if
-
     ///////////// Helper function /////////////
-    function innerRad(mag) { return opts.radius_scale(mag) + 5 }
-    function outerRad(mag) { return opts.radius_scale(mag) + (type === "small" ? 10 : 8) }
-
-    return canvas
-}//function drawConstellations
+    function innerRad(mag) { return radius_scale(mag) + (type === "equirectangular" ? 1.5 : 5) }
+    function outerRad(mag) { return radius_scale(mag) + (type === "equirectangular" ? 3 : (type === "small" ? 10 : 8)) }
+    
+}//function drawStarDonuts

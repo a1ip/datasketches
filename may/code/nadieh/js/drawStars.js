@@ -10,10 +10,10 @@ function drawStars(opts_general, opts) {
 
     const canvas = document.createElement("canvas")
     const ctx = canvas.getContext("2d")
-    crispyCanvas(canvas, ctx, total_width, total_height, 1)
+    crispyCanvas(canvas, ctx, total_width, total_height, 1, opts_general.offset_x)
 
     //Set to the clipped circle
-    clipToCircle(ctx, opts_general.width, opts_general.height, opts_general.margin, opts_general.clip_radius)
+    if(opts_general.type_geo === "stereographic") clipToCircle(ctx, opts_general.width, opts_general.height, opts_general.margin, opts_general.clip_radius)
 
     ///////////// Create scales /////////////
 
@@ -34,6 +34,7 @@ function drawStars(opts_general, opts) {
 
     ctx.globalAlpha = 1
     ctx.shadowBlur = 25
+    ctx.globalCompositeOperation = "source-over"
 
     //Draw the stars
     opts.stars.forEach(d => {
@@ -41,7 +42,7 @@ function drawStars(opts_general, opts) {
         let pos = pixelPos(d.ra, d.dec, opts_general.projection)
 
         //If this star falls outside of the map, don't plot
-        if(pos[0] < 0 || pos[0] > total_width || pos[1] < 0 || pos[1] > total_height) return
+        if(opts_general.type_geo === "stereographic" && (pos[0] < 0 || pos[0] > total_width || pos[1] < 0 || pos[1] > total_height)) return
 
         //Star dependant settings
         let r = opts.radius_scale(d.mag) //Math.pow(1.2, 5 - d.mag)
@@ -57,7 +58,6 @@ function drawStars(opts_general, opts) {
         ctx.fillStyle = grd
         
         //Create a glow around each star
-        // ctx.globalAlpha = 1
         // ctx.shadowBlur = 25 //r * 2.5
         ctx.shadowColor = col
 

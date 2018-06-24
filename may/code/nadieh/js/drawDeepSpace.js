@@ -84,6 +84,7 @@ function drawDeepSpace(opts_general, opts) {
     ctx.lineWidth = .75
     ctx.strokeStyle = '#40415D'
     ctx.stroke()
+    ctx.closePath()
 
     //Create ecliptic circle
     const circle = d3.geoCircle()
@@ -312,3 +313,75 @@ function drawDeepSpace(opts_general, opts) {
     return canvas
 
 } //function drawDeepSpace
+
+///////////////////////////////////////////////////////////////////////////
+///////////////// Create minimal milky way space base map /////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function drawDeepSpaceSimple(opts_general) {
+    
+    let width = opts_general.width
+    let height = opts_general.height
+
+    ///////////// Create canvas /////////////
+
+    const canvas = document.createElement("canvas")
+    const ctx = canvas.getContext("2d")
+    crispyCanvas(canvas, ctx, width, height, 1)
+
+    ///////////// Dark blue background /////////////
+
+    ctx.fillStyle = "#001540" // "#001133" //"#031845"
+    ctx.fillRect(0, 0, width, height)
+
+    ///////////// Create lighter blobs just because it looks interesting /////////////
+
+    //Set-up density contour https://github.com/d3/d3-contour
+    const contour = d3.contourDensity()
+        .x(d => d.x)
+        .y(d => d.y)
+        .size([width, height])
+        .cellSize(2)
+        .thresholds([0.01, 0.05, 0.07, 0.08])
+        .bandwidth(8)
+
+    //Create the color scale for the lighter patches of deep space
+    const colors_milky_way = ["#001b53", "#002269", "#002b82","#00339b"]
+    const color_scale_seep_space = d3.scaleLinear().range(colors_milky_way)
+
+    //Create the data to use for the density contour that represents the Milky Way
+    let space_swirl_data = []
+    const n = 2000
+    const offset_amp = 0.6 * height //The max height of the sine wave
+    let x_random = d3.randomNormal(width*0.5, width*0.20)
+    for(i = 0; i < n; i++) {
+        let x = x_random()
+        let y = height/2 + offset_amp * Math.cos(pi2*0.1 + pi2 * x/width) + d3.randomNormal(0, 60)()
+        // ctx.beginPath()
+        // ctx.arc(x, y, 3, 0, pi2)
+        // ctx.fillStyle = "hotpink"
+        // ctx.fill()
+        //Save in array
+        space_swirl_data.push({ x: x, y: y})
+    }//for i
+
+    //Calculate the contours
+    const space_swirl_contour = contour(space_swirl_data)
+    // console.table(space_swirl_contour)
+    //Base the colors on the final contour values
+    color_scale_seep_space.domain(space_swirl_contour.map(d => d.value))
+    //Plot the contours
+    const path_contour = d3.geoPath().context(ctx)
+
+    ctx.filter = 'blur(20px)'
+    space_swirl_contour.forEach(d => {
+            ctx.beginPath()
+            path_contour(d)
+            ctx.fillStyle = color_scale_seep_space(d.value)
+            ctx.fill()
+        })//forEach
+    ctx.filter = 'blur(0px)'
+
+    return canvas
+
+}//function drawDeepSpaceSimple

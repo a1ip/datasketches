@@ -2,10 +2,9 @@
 /////////////////////////// Create projection /////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-function createProjection(width, height, margin, focus, chosen_const, const_per_star) {
+function setupStereographicProjection(width, height, margin, focus, chosen_const, const_per_star) {
 
-    let total_width = margin.left + width + margin.right
-    let total_height = margin.top + height + margin.bottom
+    // let total_width = margin.left + width + margin.right
     let cultures = (typeof chosen_const === "string" ? "one" : "all")
     const clip_radius = width/2 * 0.95 //Clipping radius in pixels
     
@@ -91,4 +90,4 @@ function createProjection(width, height, margin, focus, chosen_const, const_per_
         return Math.max(...poly_inverse.map(d => Math.sqrt(d[0]*d[0] + d[1]*d[1]))) + padding
     }//function getMaxLength
     
-}//function createProjection
+}//function setupStereographicProjection
