@@ -176,14 +176,14 @@ function setCultureDivColors(chosen_culture) {
 
             //Reset colors
             el.style("color", color) //So I can use CSS currentcolor
-            el.style("background", null)
+            el.transition("color").duration(0).style("background", null)
             el.selectAll(".culture-name, .culture-number, .culture-text")
                 .classed("active", false)
 
             //Transition to the colors of the chosen culture
             if(culture === chosen_culture) {
                 //Change the look of the chosen culture's block
-                el.transition().duration(700)
+                el.transition("color").duration(700)
                     .styleTween("background", () => {
                         let interpolate = d3.interpolateLab("#f7f7f7", color)
                         return function(t) {
@@ -207,9 +207,10 @@ function setBorderColor(map_id, culture) {
 function rectangularMoveEffect(map_id) {
     let mouse_enter
     let mouse_pos = 0
-    d3.select(`#section-${map_id}`).on("mouseover", function() {
+    d3.select(`#section-${map_id}`).on("mouseover touchstart", function() {
         //Subtract the current value of the CSS variable from the mouse location, so eventually this will balance out in .withLatestFrom 
         mouse_enter = d3.mouse(this)[0] - mouse_pos
+        // console.log(d3.mouse(this)[0], mouse_pos, mouse_enter)
     })
         
     //https://codepen.io/flibbon/pen/zojKQB
@@ -218,16 +219,25 @@ function rectangularMoveEffect(map_id) {
     const section = document.getElementById(`section-${map_id}`)
     const mouse_move$ = Rx.Observable
         .fromEvent(section, "mousemove")
-        .map(e => ({ x: e.clientX }))
-    
+        .map(e => ({ x: e.clientX }) )
+        // .map(e => { console.log(e.clientX); return { x: e.clientX } })
+    const touch_move$ = Rx.Observable
+        .fromEvent(section, 'touchmove')
+        .map(event => ({
+            x: event.touches[0].clientX,
+            y: event.touches[0].clientY
+        }))
+    const move$ = Rx.Observable.merge(mouse_move$, touch_move$)
+
     const smooth_mouse$ = Rx.Observable
         .interval(0, Rx.Scheduler.animationFrame)
         // .withLatestFrom(mouse_move$, (tick, mouse) => mouse)
-        .withLatestFrom(mouse_move$, (tick, mouse) => ({ x : Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1) }) )
-        // .withLatestFrom(mouse_move$, (tick, mouse) => { 
-        //     // console.log(mouse.x, mouse_enter, Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1)) 
-        //     return { x : Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1) } 
-        // })
+        // .withLatestFrom(mouse_move$, (tick, mouse) => ({ x : Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1) }) )
+        .withLatestFrom(move$, (tick, mouse) => { 
+            // console.log(mouse_enter) 
+            // return { x : mouse.x - mouse_enter } 
+            return { x : Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1) } 
+        })
         .scan(lerp, {x: 0})
 
     function lerp(start, end) {

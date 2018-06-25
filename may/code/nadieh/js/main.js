@@ -1,9 +1,5 @@
-//TODO: Color + culture legend all the way at the bottom
 //TODO: Star names of non chosen stars?
 //TODO: Drawn images on top for the main one?
-//TODO: Resize of the rectangular star maps
-//TODO: Show extra info of culture on hover
-//TODO styletween on culture block background color
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Constants ////////////////////////////////

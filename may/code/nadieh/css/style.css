@@ -17,6 +17,7 @@ body {
 
 p {
     line-height: 1.6;
+    font-size: 16px;
 }
 
 /* ---------- SECTION | HEADER ---------- */
@@ -241,7 +242,7 @@ p {
 
 .culture-name {
     /* font-family: 'Glass Antiqua', cursive; */
-    font-size: 1em;
+    font-size: 0.95em;
     margin-top: 0.2em;
     margin-bottom: 0em;
     font-weight: 600;
