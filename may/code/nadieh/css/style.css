@@ -5,6 +5,7 @@
 html {
     --mouse-header-x: 0;
     --mouse-constellations-x: 0;
+    font-size: 16px;
 }
 
 body {
@@ -13,6 +14,7 @@ body {
     padding: 0;
     margin: 0;
     width: 100vw;
+    font-size: 16px;
 }
 
 p {
@@ -153,6 +155,15 @@ p {
     font-size: 42px;
 }
 
+/* ---------- SECTION | TEXT CULTURE ---------- */
+
+#section-text-culture {
+    position: relative;
+    max-width: var(--body-max-width);
+    margin: 10px auto 40px auto;
+    padding: 10px 20px;
+}
+
 /* ---------- SECTION | FULL CONSTELLATIONS SKY MAP ---------- */
 #section-chosen-culture {
     position: relative;
@@ -206,10 +217,11 @@ p {
     font-size: 2.2em;
     margin-top: 0.3em;
     margin-bottom: 0.2em;
+    font-weight: 400;
 }
 
 #cultures-explanation {
-    font-size: 14px;
+    font-size: 0.8em;
     margin-bottom: 20px;
 }
 
