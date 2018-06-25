@@ -223,10 +223,7 @@ function rectangularMoveEffect(map_id) {
         // .map(e => { console.log(e.clientX); return { x: e.clientX } })
     const touch_move$ = Rx.Observable
         .fromEvent(section, 'touchmove')
-        .map(event => ({
-            x: event.touches[0].clientX,
-            y: event.touches[0].clientY
-        }))
+        .map(e => ({ x: e.touches[0].clientX }))
     const move$ = Rx.Observable.merge(mouse_move$, touch_move$)
 
     const smooth_mouse$ = Rx.Observable
