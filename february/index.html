@@ -134,7 +134,7 @@
                 <p>The final thing that I tried was to also place markers at the start of each path, as if those were the butterflies (as I'd drawn in my sketches). The screen-shot below shows a test where I hadn't erased the earlier markers (here just circles), but it became clear quite fast that this was not going to be an improvement. The circles darting over the canvas were highly distracting and not really needed, in the first few seconds you can quite clearly see the different paths growing and twirling about, which was enough for me</p>
                 <a class="fancybox" href="code/nadieh/img/testing_markers.png"> <img src="code/nadieh/img/testing_markers_small.jpg" class="img-responsive img-month" alt="Testing markers at the start of each butterfly path"></a>
 
-                <p>After what seemed like endless tweaking of the paths to get better looking results I checked out my timing app and saw that I'd reached 19:45 hours for this month, so it was time to finish it off (with this write-up added I think I'll end somewhere around 21:30 hours). I added a link below that opens a version without all the white logo stuff on top and also a "button" (really only some text) in the bottom section to stop the animation, otherwise it just goes on an on eventually making the page white again.</p> 
+                <p>After what seemed like endless tweaking of the paths to get better looking results I checked out my timing app and saw that I'd reached 19:45 hours for this month, so it was time to finish it off (with this write-up added I think I'll end somewhere around 21:30 hours). I added a link below that opens a version without all the white logo stuff on top and also a "button" (really only some text) in the bottom section to stop the animation, otherwise it just goes on an on eventually making the page white again.</p>
 
                 <p>I've called it "Marble Butterflies" because the smoky lines across the screen remind me of the patterns in marble. You can see the final result below, although due to the randomness, every version will be a completely unique piece of data art 😉 </p>
                 <a href="code/nadieh/" target="_new"> <img src="code/nadieh/img/marble_butterflies_center_final_small.jpg" class="img-responsive img-month" alt="The final version where the butterflies start from the center"></a>
@@ -152,21 +152,113 @@
               <div class="time kingBasil"></div>
               <div class="location quicksand">san francisco</div>
 
-              <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
+              <a href="" target='_new'><img src="code/shirley/header.jpg" class="img-responsive img-month-top" alt=""></a>
+
+              <p>
+                Wow I don't know how to begin.  This month has taken me so long it's embarassing, but I'm also super glad it's done - huzzah!  When we first decided on the topic for February, I had intended to do something with BBC's Planet Earth 2.  I had even started getting data for the first episode, jotting down which animals appeared when.  But it didn't really go any further than that.  (I think I wasn't excited enough about the topic for the amount of manual data entry it required.)
+              </p>
+
+              <p>
+                More than a year later, I've finished a piece for SFMOMA that I'm happy can also double for datasketches.  I have to admit it's still sort of cheating - the data isn't about Nature, it's about texts sent to SFMOMA.  But I'm looking at individuals' texts and their interactions with SFMOMA, so I'm hoping it can fit under...<em>human</em> nature hehehe.  And plus there are flowers!  So nature!  I'm very thankful that Nadieh was ok with my little tweak to our rules - thank you Nadieh!
+              </p>
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-              <p></p>
-              <!-- <a class="fancybox" href="data/shirley/years.png"> <img src="data/shirley/years.png" class="img-responsive img-month"></a> -->
+              <p>
+                Last Last June, SFMOMA launched <a href='https://www.sfmoma.org/read/send-me-sfmoma/' target='_new'>Send Me SFMOMA</a>, a service where people could text a number requests like "send me love", or "send me art", and SFMOMA would respond with an artwork in their collection that best matched the request.  They received 5 million texts from hundreds of thousands of people.  Last October, they contacted me to do something with that data, and I was over the moon with excitement (bc SFMOMA!).
+              </p>
+
+              <p>
+                When I first started looking at the data, I did some simple exploration - what the attributes were, what keywords were most popular, what artworks came back the most often.  I also knew that I wanted the end result to be a painting, bc I'm a cheesy individual and I wanted to make art out of art.
+                <a class="fancybox" href="data/shirley/exploration.png"> <img src="data/shirley/exploration.png" class="img-responsive img-month" width='75%'></a>
+                The idea I ended up pitching to SFMOMA was to trace an individual's "journey" throughout the month, what positive or negative thing they might have asked for, what kind of artwork they got back.  I wanted to see if I can experience what that person experienced, and feel what that person felt.
+              </p>
+
+              <p>
+                Once I had the idea, the data part was quite easy - they gave me a huge file of all the texts they ever received, and another huge 1TB file of all the texts they ever sent back.  From that second file, I wrote a <a href='https://github.com/sxywu/moma/blob/master/offline_scripts/getTopTexters.js' target='_new'>simple script</a> to get the first 100 individuals.  I <a href='https://github.com/sxywu/moma/blob/master/offline_scripts/getSentiment.js' target='_new'>ran the keyword of each text through a sentiment library</a>, and my cousin Max (a junior in college studying CS) wrote a <a href='https://github.com/sxywu/moma/blob/master/offline_scripts/getTopTexterArt.js' target='_new'>script to get additional metadata</a> - including date, title, artists, country of origin, color palette, <a href='https://labs.cooperhewitt.org/2013/default-sort-or-what-would-shannon-do/' target='_new'>Shannon Entropy</a> - for each artwork from the SFMOMA API.
+              </p>
+
+              <p>
+                As far as data collection, prep, and cleaning went, this was probably one of the most straightforward months I've had while doing datasketches, for which I'm really happy about.
+              </p>
 
               <h3>week 2 <span class="light-grey">|</span> sketches</h3>
 
-              <p></p>
+              <p>
+                The very first thing I did once I had the data was to try and implement my own version of <a href='https://twitter.com/tylhobbs' target='_new'>Tyler Hobb</a>'s <a href='http://www.tylerlhobbs.com/writings/watercolor' target='_new'>watercolor effect</a>.  It didn't turn out quite well:
+                <a class="fancybox" href="sketches/shirley/tweet.png"> <img src="sketches/shirley/tweet.png" class="img-responsive img-month" width='75%'></a>
+                (<a href='https://twitter.com/sxywu/status/959168860518674432' target='_new'>The actual tweet</a> that has some great responses)
+              </p>
+
+              <p>
+                But thankfully, <a href='https://twitter.com/taylorbaldwin' target='_new'>Taylor Baldwin</a> came to the rescue with a <a href='https://github.com/rolyatmax/watercolor-canvas' target='_new'>link to his own implementation</a>, and later on Tyler <a href='https://twitter.com/tylhobbs/status/959178572375232517' target='_new'>chimed in with a fix</a>.  I was able to get my version looking more like Tyler's (top left in the screenshots below), but once I plugged in the actual data (where each blob is a color from an artwork that an individual got back), it was a mess again and I knew I had to try a different approach more than just watercolor blobs:
+                <a class="fancybox" href="sketches/shirley/watercolor.png"> <img src="sketches/shirley/watercolor.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                Around the time I was first working on this project, I had moved to Tokyo for 3 months.  Japan is a country that reveres nature and the change in seasons, and in March when I first arrived, flowers were everywhere.  I remember walking past this ad in a subway station and stopping and double tracking back because I just loved the whimsy and simple beauty of the flowers:
+                <a class="fancybox" href="sketches/shirley/flowers_subway.jpg"> <img src="sketches/shirley/flowers_subway.jpg" class="img-responsive img-month" width='75%'></a>
+
+                And I knew there and then that I wanted to work flowers and nature into the project (and when I also hatched the diabolical plan to turn a client project into a datasketches project yet again).
+                <a class="fancybox" href="sketches/shirley/flower_sketches.png"> <img src="sketches/shirley/flower_sketches.png" class="img-responsive img-month"></a>
+                As soon as I got back in front of my computer/laptop, I jotted down my ideas for how to incorporate flowers into the visualization.  At the same time, I started looking at the <a href='https://www.sfmoma.org/api/collection/' target='_new'>SFMOMA API</a> to see what kind of data I could get back about each artwork.  A few days later, I worked on the flower petals, taking what I learned from <a href='http://www.datasketch.es/july/' target='_new'>July film flowers</a> about SVG curve commands, as well as newly learned functions like P5's <a href='https://p5js.org/reference/#/p5/randomGaussian'>randomGaussian</a> and <a href='https://p5js.org/reference/#/p5/noise'>noise</a> to get a (hopefully) more natural flower petal shape:
+                <a class="fancybox" href="sketches/shirley/flowers.png"> <img src="sketches/shirley/flowers.png" class="img-responsive img-month"></a>
+                I especially loved the handdrawn effect I was able to get by using Perlin noise and varying the circle radius along the flower petal path, but unfortunately wasn't able to use it in the final visualization (it was just too computationally heavy especially when I was trying to draw dozens to hundreds of flowers).
+              </p>
+
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p></p>
+              <p>
+                So this is one of those months that prove that even if the data part goes smoothly and I know exactly what I want to do, the actual execution (code) can take a really really long time.
+              </p>
 
+              <p>
+                <a class="fancybox" href="code/shirley/very_first.png"> <img src="code/shirley/very_first.png" class="img-responsive img-month"></a>
+                This was my very first attempt, where each text was a flower placed around in a spiral, and was colored by a watercolor blob.  Not only was it aesthetically unappealing, it was so computationally heavy my Macbook Pro (with 16GB RAM!) was choking up.  I immediately moved the watercolor calculation into <a href='https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers'>a Web Worker</a> so they wouldn't clog up the UI.  I also got rid of the handdrawn petal path effect, because it was too subtle to appreciate when the flowers were at such small sizes and wasn't worth the CPU that it'd take to calculate them.
+              </p>
+
+              <p>
+                I didn't know how to deal with the aesthetics, until I went to the <a href='http://www.tokyoartbeat.com/event/2018/CA51.en' target='_new'>Joint Graduation Exhibition of 5 Art Universities in Tokyo</a> at the National Art Center and saw this piece:
+                <a class="fancybox" href="code/shirley/cutout.jpg"> <img src="code/shirley/cutout.jpg" class="img-responsive img-month" width='75%'></a>
+                (I'm really sorry for the horrible quality of this photo, and for not remembering to take a picture of the artist's name and title of artwork.)
+              </p>
+
+              <p>
+                I was immediately taken by the cutout effect of the flowers, and I knew I wanted to try and recreate it:
+                <a class="fancybox" href="code/shirley/cutout_effect1.jpg"> <img src="code/shirley/cutout_effect1.jpg" class="img-responsive img-month"></a>
+                I liked this effect very much, where the watercolor effects could mix together and there were cutouts for each flower.  Around this time I also realized that having a flower for every text was just too much, so I decided instead to only have a flower for each positive text that was sent.  I tried circles and squares for the neutral and negative texts, and eventually ended up with leaves.
+              </p>
+
+              <p>
+                But I was still unhappy with the layout of the flowers - for individuals who sent a <em>lot</em> of texts, they would overlap or be pushed off the edge of the screen.  I was stuck for weeks on how to best layout each text (and worked on other projects in the meanwhile), until cherry blossom season hit in Tokyo.  Suddenly there was pink everywhere, and it was gorgeous and emotional (I had lived in Japan for 6 years as a child and cherry blossoms are amongst my fondest childhood memories) and I basically spent the whole week going to different spots admiring cherry blossoms.
+              </p>
+
+              <p>
+                <a class="fancybox" href="code/shirley/sakura.jpg"> <img src="code/shirley/sakura.jpg" class="img-responsive img-month"></a>
+                It was on one of those walks through Shinjuku Gyoen (one of my favorite parks in Tokyo) that I started to realize, I've been trying to layout the flowers in random ways but actually, they're flowers so they grow on tree branches.  And <a href='https://natureofcode.com/book/chapter-8-fractals/' target='_new'>tree branches are just fractals</a>, and that's a very straightforward, very much solved computer science problem.
+                <a class="fancybox" href="code/shirley/tree.png"> <img src="code/shirley/tree.png" class="img-responsive img-month"></a>
+                So I drew my flowers with branches, and I immediately loved it:
+                <a class="fancybox" href="code/shirley/branches.png"> <img src="code/shirley/branches.png" class="img-responsive img-month"></a>
+                <video src="code/shirley/branches_circle.mp4" class="img-responsive img-month" autoplay loop />
+              </p>
+
+              <p>
+                It took another two months after this point of tweaking to get to the final product.  I added a slight curve to the branches to make them look a bit more natural, I made the flower petal shape less spiky, I fixed bugs...but most of all, I had a lot of trouble with the layout.  I didn't like the amount of overlap of the flowers in the circular layout, so I moved to a horizontal layout:
+                <a class="fancybox" href="code/shirley/horizontal1.png"> <img src="code/shirley/horizontal1.png" class="img-responsive img-month"></a>
+                But with this layout a lot of the tree was cut off, so SFMOMA suggested a carousel sort of format:
+                <a class="fancybox" href="code/shirley/horizontal2.png"> <img src="code/shirley/horizontal2.png" class="img-responsive img-month"></a>
+                And I had it in this format for a while, but I really missed being able to see all the days of the week at the same time, and finally I adopted a layout with one day expanded and the rest smaller:
+                <a class="fancybox" href="code/shirley/horizontal3.png"> <img src="code/shirley/horizontal3.png" class="img-responsive img-month"></a>
+                And this layout made me the happiest, not only because I could see all the trees at the same, but also because it was implemented with CSS Grid, it was perfectly responsive.
+              </p>
+
+              <p>
+                I then put together a legend for how to read the visualization (also implemented in CSS Grid!) and an introduction to the project for the final version:
+                <a href="" target='_new'> <img src="code/shirley/final.png" class="img-responsive img-month"></a>
+
+                I love this project so much because it had so many learnings and firsts: I learned Vue around this time, so all the data updates and interactions are managed in Vue.  I successfully used a Web Worker, and I learned CSS Grid to layout all of the trees.  It will also always remind me of all the experiences I had in Japan, since my stay there deeply influenced the form of this visualization.  I'll always have little tweaks I want to do (I'm never 100% satisfied with my projects), but it's one of those projects where I'm really happy with the outcome.
+              </p>
             </div>
           </div>
 
@@ -288,7 +380,7 @@
     });
   });
     </script>
-    
+
     <!-- Google analytics -->
 	<script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
