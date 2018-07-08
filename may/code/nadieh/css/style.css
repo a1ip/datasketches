@@ -14,6 +14,7 @@ body {
     padding: 0;
     margin: 0;
     width: 100vw;
+    min-width: var(--body-max-width);
     font-size: 16px;
 }
 
@@ -37,7 +38,7 @@ a, a:link, a:visited, a:active {
 .section-text,
 .section-mini-chart {
     position: relative;
-    max-width: var(--body-max-width);
+    width: var(--body-max-width);
     margin: 10px auto 40px auto;
     padding: 10px 20px;
 
@@ -88,6 +89,9 @@ a, a:link, a:visited, a:active {
 
 .egyptian {
     color: #DF1428;   
+}
+.macedonian {
+    color: #932278;
 }
 .navajo {
     color: #644AA0;   
@@ -247,6 +251,7 @@ a, a:link, a:visited, a:active {
 #section-chart-sirius,
 #section-chart-big-dipper  {
     margin-bottom: 10px;
+    padding: 0;
 }
 
 .chart-container-mini {
@@ -257,6 +262,11 @@ a, a:link, a:visited, a:active {
 #section-text-big-dipper,
 #section-text-multiple {
     margin-bottom: 10px;
+}
+
+#section-text-sirius .chart-explanation-text,
+#section-text-big-dipper .chart-explanation-text {
+    grid-column: 5 / span 7;
 }
 
 #chart-sirius,
@@ -276,9 +286,26 @@ a, a:link, a:visited, a:active {
 
 #chart-container-small-multiple {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); */
+    grid-template-columns: repeat(8, 1fr);
     /* grid-column-gap: 10px; */
     /* grid-row-gap: 10px; */
+}
+
+#chart-container-small-multiple canvas {
+    align-self: center;
+    justify-self: center;
+    grid-column-end: span 2;
+}
+
+#chart-container-small-multiple #row-2-left-padding {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#chart-container-small-multiple #row-2-right-padding {
+    grid-column: 8;
+    grid-row: 2;
 }
 
 /* ---------- SECTION | FULL CONSTELLATIONS SKY MAP ---------- */
@@ -304,7 +331,6 @@ a, a:link, a:visited, a:active {
 }
 
 #chart-constellations {
-    /* height: 650px; */
     margin: 20px 0;
 }
 

@@ -1,7 +1,8 @@
-//TODO: Star names of non chosen stars?
 //TODO: Drawn images on top for the main one?
 //TODO: Some hover for the constellation names (in the Sky map?)
 //TODO: Don't use basemap size, but actual final size (use type to figure it out)
+//TODO: Add variable to focus that says where the star's name should be (top-left, bottom-right)
+//TODO: Quick scroll up to Betelgeuse when clicked on a small circle
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Constants ////////////////////////////////
@@ -140,11 +141,11 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             })
             .then(() => {
                 //Create Sirius's small sky map
-                createMap(opts_data, 0, 450, 450, "#chart-sirius", focus_sirius, "mini")
+                createMap(opts_data, 0, 500, 500, "#chart-sirius", focus_sirius, "mini")
             })
             .then(() => {
                 //Create the Big Dipper's small sky map
-                createMap(opts_data, 0, 450, 450, "#chart-big-dipper", focus_big_dipper, "mini")
+                createMap(opts_data, 0, 500, 500, "#chart-big-dipper", focus_big_dipper, "mini")
             })
             .then(() => {
                 //Create the small multiple collection
