@@ -1,5 +1,7 @@
 //TODO: Star names of non chosen stars?
 //TODO: Drawn images on top for the main one?
+//TODO: Some hover for the constellation names (in the Sky map?)
+//TODO: Don't use basemap size, but actual final size (use type to figure it out)
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Constants ////////////////////////////////
@@ -80,12 +82,28 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     }  
     
     ////////////////////////// Orion mini circles //////////////////////////
-    let focus_circular = {
+    let focus_betelgeuse = {
         hip: 27989,
         proper: "Betelgeuse",
         center: [5.603559, 3.20192], //ra in hours dec in degrees
         scale: 1950,
     } //Interesting shapes | 4: egyptian-005 & 11: navajo-008 & 15: tupi-002 & 16: western-Ori
+
+    ////////////////////////// Sirius mini map //////////////////////////
+    let focus_sirius = {
+        hip: 32349,
+        proper: "Sirius",
+        center: [6.752481, -21], //ra in hours dec in degrees
+        scale: 2600,
+    } //Interesting shapes | 7: hawaiian_starlines-KOM & 11: western-CMa
+
+    ////////////////////////// Big Dipper mini map //////////////////////////
+    let focus_big_dipper = {
+        hip: 54061,
+        proper: "Dubhe",
+        center: [12.3, 56],
+        scale: 2200,
+    } //11: navajo-001 is a good one & 19: wester-UMa
 
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////// Create Small multiples //////////////////////////
@@ -98,7 +116,8 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
 
 
     ////////////////////////// Culture rectangular sky map //////////////////////////
-    chosen_culture = culture_names[Math.floor(Math.random() * culture_names.length)]
+    chosen_culture = "hawaiian_starlines"
+    // chosen_culture = culture_names[Math.floor(Math.random() * culture_names.length)]
     let focus_culture = {
         culture: chosen_culture,
         center: [0, 0], //ra in hours dec in degrees
@@ -117,14 +136,25 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             })
             .then(() => {
                 //Create Orion's big circular layout
-                createCentralCircleLayout(opts_data, focus_circular, 20, 950, 950, "orion")
+                createCentralCircleLayout(opts_data, focus_betelgeuse, 20, 950, 950, "orion")
+            })
+            .then(() => {
+                //Create Sirius's small sky map
+                createMap(opts_data, 0, 450, 450, "#chart-sirius", focus_sirius, "mini")
+            })
+            .then(() => {
+                //Create the Big Dipper's small sky map
+                createMap(opts_data, 0, 450, 450, "#chart-big-dipper", focus_big_dipper, "mini")
+            })
+            .then(() => {
+                //Create the small multiple collection
+                createSmallMultipleLayout(opts_data)
             })
             .then(() => {
                 //Create the general full Sky Map visual
                 createStraightSkyMapLayout(opts_data, focus_culture, window.innerWidth, 1.5, 650, "constellations")
                 //Update the title
-                d3.select("#chosen-culture-number").html(cultures[chosen_culture].count)
-                d3.select("#chosen-culture-title")
+                d3.selectAll(".chosen-culture-title")
                     .style("color", cultures[chosen_culture].color)
                     .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
                 //Set the colors on the culture divs
@@ -201,53 +231,6 @@ function toTitleCase(str) {
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////// Star focus settings ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
-
-//Maybe Altair: 97649 - [19.846388, 8.868322]
-// Acrux: 60718 - [12.443311, -63.099092]
-// Spica: 65474 - [13.419883, -11.161322]
-//Maybe Antares: 80763 - [16.490128, -26.432002]
-// Pollux: 37826 - [7.755277, 28.026199]
-
-// //Southern cross
-// let focus = {
-//     hip: 62434, //Becrux
-//     center: [12.55, -60], //ra in hours dec in degrees
-//     scale: 4500
-// }
-// //8: tupi-004 & 1: booring-Bun & 4: korean-022
-
-// //Sirius
-// //Interesting shapes | 7: hawaiian_starlines-KOM & 11: western-CMa
-// focus = {
-//     hip: 32349,
-//     proper: "Sirius",
-//     center: [6.752481, -19.71612], //ra in hours dec in degrees
-//     scale: 2200,
-// }
-
-// //Pleiades
-// let focus = {
-//     hip: 17702, //Alycone
-//     center: [3.791419, 24.10514],
-//     scale: 30050,
-// }
-
-// //Swan -> Cygnus: Central star Sadr
-// let focus = {
-//     // hip: 91262, //Vega
-//     hip: 102098, //Deneb
-//     // hip: 97649, //Altair
-//     center: [20.37047, 40.25668],
-//     scale: 1700, //1300,
-// }
-
-// //Big dipper
-// let focus = {
-//     hip: 54061,
-//     center: [11.5, 54],
-//     scale: 1500,
-// }
-// //11: navajo-001 is a good one & 19: wester-UMa
 
 // //The North, slightly offset
 // let focus = {

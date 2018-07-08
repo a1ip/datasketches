@@ -1,5 +1,5 @@
 :root {
-    --body-max-width: 1200px;
+    --body-max-width: 1000px;
 }
 
 html {
@@ -18,15 +18,89 @@ body {
 }
 
 p {
-    line-height: 1.6;
+    line-height: 1.8;
     font-size: 16px;
+    margin: 1.75em 0 1em 0;
+}
+p.no-top {
+    margin-top: 0;
+}
+
+a, a:link, a:visited, a:active {
+    color: inherit;
+    border-bottom: 0.08em solid #D80833;
+    text-decoration: none;
+}
+
+/* ---------- SECTION | TEXT CULTURE ---------- */
+
+.section-text,
+.section-mini-chart {
+    position: relative;
+    max-width: var(--body-max-width);
+    margin: 10px auto 40px auto;
+    padding: 10px 20px;
+
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 1em;
+}
+
+.section-text p,
+#cultures-explanation,
+.chart-container-mini {
+    grid-column: 4 / -1;
+}
+
+.section-text .sidenote {
+    grid-column: 1 / span 3;
+    align-self: center;
+    font-size: 0.7em;
+    font-style: italic;
+    line-height: 1.5;
+    color: #585858;
+}
+
+.section-text h2 {
+    font-family: 'Glass Antiqua', cursive;
+    font-size: 2.5em;
+    font-weight: 400;
+    margin-top: 1.4em;
+    margin-bottom: 0.2em;
+    grid-column: 1 / -1;
+}
+
+.section-text .chart-explanation-text {
+    font-size: 0.85em;
+    color: #585858;
+    margin: 1em auto 0em auto;
+}
+
+.red {
+    color: #D80833;
+}
+.aquamarine {
+    color: #17AA69;
+}
+.grey {
+    color: #9c9c9c;
+}
+
+.egyptian {
+    color: #DF1428;   
+}
+.navajo {
+    color: #644AA0;   
+}
+.tupi {
+    color: #55B558;   
 }
 
 /* ---------- SECTION | HEADER ---------- */
 
 #section-header {
     text-align: center;
-    margin-bottom: 100px;
+    margin-bottom: 10px;
     width: 100%;
     height: 500px;
     text-align: center;
@@ -38,6 +112,15 @@ p {
     height: 100%;
     display: grid;
     grid-template-columns: 1fr;
+}
+
+#header-background {
+    background-color: #001540;
+    z-index: -3;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: stretch;
+    align-self: stretch;
 }
 
 #chart-header {
@@ -87,13 +170,17 @@ p {
 
 /* ---------- SECTION | ORION ---------- */
 
-#orion-chart-section {
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+#betelgeuse-note {
+    display: none;
 }
 
 /* ---------- GENERAL | CIRCULAR CHART LAYOUT ---------- */
+
+.section-circular-chart {
+    max-width: var(--body-max-width);
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .chart-container-circular {
     text-align: center;
@@ -125,7 +212,7 @@ p {
 
 .chart-circular-title {
     font-size: 14px;
-    fill: #001540;
+    /* fill: #001540; */
 }
 
 .chart-circular-star-title {
@@ -155,28 +242,54 @@ p {
     font-size: 42px;
 }
 
-/* ---------- SECTION | TEXT CULTURE ---------- */
+/* ---------- SECTION | SIRIUS & BIG DIPPER CHART ---------- */
 
-#section-text-culture {
+#section-chart-sirius,
+#section-chart-big-dipper  {
+    margin-bottom: 10px;
+}
+
+.chart-container-mini {
+    text-align: center;
+}
+
+#section-text-sirius,
+#section-text-big-dipper,
+#section-text-multiple {
+    margin-bottom: 10px;
+}
+
+#chart-sirius,
+#chart-big-dipper,
+.canvas-small-multiple {
+    cursor: pointer;
+}
+
+/* ---------- SECTION | SMALL MULTIPLE ---------- */
+
+#section-chart-small-multiple {
     position: relative;
-    max-width: var(--body-max-width);
-    margin: 10px auto 40px auto;
+    max-width: calc(var(--body-max-width) + 200px);
+    margin: 10px auto 10px auto;
     padding: 10px 20px;
+}
+
+#chart-container-small-multiple {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* grid-column-gap: 10px; */
+    /* grid-row-gap: 10px; */
 }
 
 /* ---------- SECTION | FULL CONSTELLATIONS SKY MAP ---------- */
-#section-chosen-culture {
-    position: relative;
-    max-width: var(--body-max-width);
-    margin: 10px auto 0px auto;
-    padding: 10px 20px;
+
+#section-text-chosen-culture {
+    margin-bottom: 0px;
 }
 
-#section-chosen-culture h3 {
-    /* font-weight: 400; */
-    /* font-family: 'Glass Antiqua', cursive; */
-    text-align: center;
-    font-size: 1.5em;
+#section-text-chosen-culture h4 {
+    grid-column: 4 / -1;
+    font-size: 1.1em;
     margin-bottom: 0.2em;
 }
 
@@ -205,33 +318,17 @@ p {
 
 /* ---------- SECTION | CULTURE EXPLANATIONS ---------- */
 
-#section-cultures {
-    position: relative;
-    max-width: var(--body-max-width);
-    margin: 10px auto 40px auto;
-    padding: 10px 20px;
-}
-
 #section-cultures h2 {
-    font-family: 'Glass Antiqua', cursive;
-    font-size: 2.2em;
     margin-top: 0.3em;
-    margin-bottom: 0.2em;
-    font-weight: 400;
-}
-
-#cultures-explanation {
-    font-size: 0.8em;
-    margin-bottom: 20px;
 }
 
 #cultures-group {
-    margin-left: auto;
-    margin-right: auto;
     text-align: left;
+    grid-column: 1 / -1;
+    margin-top: 30px;
+    margin-bottom: 30px;
 
     display: grid;
-    /* grid-template-columns: repeat(5, 1fr); */
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     grid-column-gap: 10px;
     grid-row-gap: 10px;
@@ -300,4 +397,14 @@ p {
 }
 .culture-info-wrapper:hover .culture-text {
     display: block;
+}
+
+/* ---------- SECTION | CREDITS ---------- */
+
+#section-credits {
+    border-top: 1.5px solid #D80833;
+}
+
+#section-credits p {
+    grid-column: 1 / -1;
 }

@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////
 function drawDeepSpace(opts_general, opts) {
 
+    let type = opts_general.type
     let width = opts_general.width
     let height = opts_general.height
     let margin = opts_general.margin
@@ -74,17 +75,19 @@ function drawDeepSpace(opts_general, opts) {
         .projection(projection)
         .context(ctx)
 
-    //Create graticule lines
     const stepMinor_dec = 10
     const stepMinor_ra = 10
-    const graticule = d3.geoGraticule().stepMinor([stepMinor_ra, stepMinor_dec])
-    const grid = graticule()
-    ctx.beginPath()
-    path(grid)
-    ctx.lineWidth = .75
-    ctx.strokeStyle = '#40415D'
-    ctx.stroke()
-    ctx.closePath()
+    if(type === "big" || type === "mini") {
+        //Create graticule lines
+        const graticule = d3.geoGraticule().stepMinor([stepMinor_ra, stepMinor_dec])
+        const grid = graticule()
+        ctx.beginPath()
+        path(grid)
+        ctx.lineWidth = .75
+        ctx.strokeStyle = '#40415D'
+        ctx.stroke()
+        ctx.closePath()
+    }//if
 
     //Create ecliptic circle
     const circle = d3.geoCircle()
@@ -104,114 +107,73 @@ function drawDeepSpace(opts_general, opts) {
     //////////////// Find graticule - circle crossing positions ////////////////
     /////// It was Philippe Rivière (@fil) who came up with this solution //////
 
-    //Create a geoCircle that has a radius slightly smaller as the clipped one
-    const clip_circle = circle.radius(opts.clip_angle).center(projection.rotate().map(d => -d)).precision(0.1)()
-    //Take out the coordinates
-    const poly = clip_circle.coordinates[0].slice()
-    //Get the first to compare against in the loop
-    let cur = poly[0]
-    //Loop over all the points and see if it's a multiple of either the RA step in the x location or Declination in y location of each point. If yes, save in a new variable
-    let graticule_ticks = []
-    poly.forEach(function(p) {
-        let step_dec = (Math.abs(Math.round(p[1])) >= 80) ? 90 : 10
-        let step_ra = stepMinor_ra //1 hour is 15 degrees
-        if (Math.floor(p[1] / step_dec) != Math.floor(cur[1] / step_dec)) {
-            p.type = "dec"
-            p.dec = Math.round(p[1])
-            graticule_ticks.push(p)
-        } else if (Math.floor(p[0] / step_ra) != Math.floor(cur[0] / step_ra)) {
-            p.type = "ra"
-            //RA should run from 0 to 360 degrees
-            p.ra = Math.round(p[0])
-            if(p.ra > 0) {
-                p.ra = 360 - p.ra
-            } else if(p.ra < 0) {
-                p.ra = -1 * p.ra
-            }//else
-            graticule_ticks.push(p)
-        }//else if
-        cur = p
-    })//forEach
-
-    /////// Declination markings //////
-
-    //Set font settings
-    ctx.font = "13px " + font_family
-    ctx.textBaseline = "middle"
-    ctx.textAlign = "center"
-    ctx.fillStyle = "#9999bb"
-
-    //Draw the declination tick marks
-    graticule_ticks
-        .forEach(d => {
-            let pos = projection([d[0],d[1]])
-            if(d.type === "dec") ctx.fillText(d.dec + "°", pos[0], pos[1])
-        })
-
-    /////// Right ascension markings //////
-
-    // //Create zodiac base dataset
-    // let zodiac = {}
-    // zodiac[0] = {sign: "aries"}
-    // zodiac[30] = {sign: "taurus"}
-    // zodiac[60] = {sign: "gemini"}
-    // zodiac[90] = {sign: "cancer"}
-    // zodiac[120] = {sign: "leo"}
-    // zodiac[150] = {sign: "virgo"}
-    // zodiac[180] = {sign: "libra"}
-    // zodiac[210] = {sign: "scorpio"}
-    // zodiac[240] = {sign: "sagittarius"}
-    // zodiac[270] = {sign: "capricorn"}
-    // zodiac[300] = {sign: "aquarius"}
-    // zodiac[330] = {sign: "pisces"}
-
-    //Draw the right ascension tick marks & use zodiac signs for the 12 "special" numbers
-    const img_size_original = 200
-    const img_size = 18
-    // ctx.font = "italic 8px " + font_family
-    ctx.font = "9px " + font_family
-    graticule_ticks
-        .forEach(d => {
-            let pos = projection([d[0],d[1]])
-            if(d.type === "ra") {
-                if(zodiac[d.ra]) {
-                    ctx.globalAlpha = 0.7
-                    ctx.drawImage(zodiac[d.ra].img, pos[0] - img_size/2, pos[1] - img_size/2, img_size, img_size)
-                } else {
-                    ctx.globalAlpha = 1
-                    ctx.fillText(d.ra%30 + "°", pos[0], pos[1])
+    if(type === "big" || type === "mini") {
+        //Create a geoCircle that has a radius slightly smaller as the clipped one
+        const clip_circle = circle.radius(opts.clip_angle).center(projection.rotate().map(d => -d)).precision(0.1)()
+        //Take out the coordinates
+        const poly = clip_circle.coordinates[0].slice()
+        //Get the first to compare against in the loop
+        let cur = poly[0]
+        //Loop over all the points and see if it's a multiple of either the RA step in the x location or Declination in y location of each point. If yes, save in a new variable
+        let graticule_ticks = []
+        poly.forEach(function(p) {
+            let step_dec = (Math.abs(Math.round(p[1])) >= 80) ? 90 : 10
+            let step_ra = stepMinor_ra //1 hour is 15 degrees
+            if (Math.floor(p[1] / step_dec) != Math.floor(cur[1] / step_dec)) {
+                p.type = "dec"
+                p.dec = Math.round(p[1])
+                graticule_ticks.push(p)
+            } else if (Math.floor(p[0] / step_ra) != Math.floor(cur[0] / step_ra)) {
+                p.type = "ra"
+                //RA should run from 0 to 360 degrees
+                p.ra = Math.round(p[0])
+                if(p.ra > 0) {
+                    p.ra = 360 - p.ra
+                } else if(p.ra < 0) {
+                    p.ra = -1 * p.ra
                 }//else
-            }//if
+                graticule_ticks.push(p)
+            }//else if
+            cur = p
         })//forEach
-    ctx.globalAlpha = 1
 
-    /////// Tests //////
+        /////// Declination markings //////
 
-    // //Showing the clipped circle and locations
-    // ctx.strokeStyle = "hotpink"
-    // ctx.beginPath()
-    // path(clip_circle)
-    // ctx.stroke()
-    // ctx.closePath()
-    // graticule_ticks.forEach(d => {
-    //     ctx.beginPath()
-    //     ctx.arc(...projection(d), 5, 0, pi2)
-    //     ctx.fillStyle = 'white'
-    //     ctx.fill()
-    //     ctx.strokeStyle = d.color
-    //     ctx.lineWidth = 3
-    //     ctx.stroke()
-    // })
-    // ctx.lineWidth = 1
+        //Set font settings
+        ctx.font = "13px " + font_family
+        ctx.textBaseline = "middle"
+        ctx.textAlign = "center"
+        ctx.fillStyle = "#9999bb"
 
-    // //Using a temp canvas
-    // ctx_temp.strokeStyle = "#40415D"
-    // ctx_temp.lineWidth = 4
-    // ctx_temp.beginPath()
-    // path_temp(circle.center([90,90 - ecliptic_angle]).radius(90)())
-    // ctx_temp.stroke()
-    // ctx_temp.closePath()
-    // ctx.drawImage(canvas_temp, 0, 0)
+        //Draw the declination tick marks
+        graticule_ticks
+            .forEach(d => {
+                let pos = projection([d[0],d[1]])
+                if(d.type === "dec") ctx.fillText(d.dec + "°", pos[0], pos[1])
+            })
+
+        /////// Right ascension markings //////
+
+        //Draw the right ascension tick marks & use zodiac signs for the 12 "special" numbers
+        // const img_size_original = 200
+        const img_size = 18
+        // ctx.font = "italic 8px " + font_family
+        ctx.font = "9px " + font_family
+        graticule_ticks
+            .forEach(d => {
+                let pos = projection([d[0],d[1]])
+                if(d.type === "ra") {
+                    if(zodiac[d.ra]) {
+                        ctx.globalAlpha = 0.7
+                        ctx.drawImage(zodiac[d.ra].img, pos[0] - img_size/2, pos[1] - img_size/2, img_size, img_size)
+                    } else {
+                        ctx.globalAlpha = 1
+                        ctx.fillText(d.ra%30 + "°", pos[0], pos[1])
+                    }//else
+                }//if
+            })//forEach
+        ctx.globalAlpha = 1
+    }//if
 
     ///////////////////////////////////////////////////////////////////////////
     ////////////////////////// Create outside markings ////////////////////////
@@ -219,11 +181,15 @@ function drawDeepSpace(opts_general, opts) {
 
     ctx.restore()
 
-    const radius_outer_circle = width/2 * 0.95 + 8
+    const radius_outer_circle = width/2 * 0.95 + (type === "big" ? 8 : 9)
+    ctx.strokeStyle = "#031845"
+    ctx.fillStyle = "#031845"
 
     /////// Draw top and bottom pointing arrow //////
-    drawArrow(ctx, radius_outer_circle, "N")
-    drawArrow(ctx, radius_outer_circle, "S")
+    if(type === "big" || type === "mini") {
+        drawArrow(ctx, radius_outer_circle, "N")
+        drawArrow(ctx, radius_outer_circle, "S")
+    }//if
 
     //Draw a North or South pointing arrow on the outside markings
     //So many lines of code >_<
@@ -235,8 +201,6 @@ function drawDeepSpace(opts_general, opts) {
         const arrow_height = 20
 
         //Set stylings
-        ctx.strokeStyle = "#031845"
-        ctx.fillStyle = "#031845"
         ctx.lineWidth = 1.5
 
         //Center of the visual
@@ -276,7 +240,7 @@ function drawDeepSpace(opts_general, opts) {
         ctx.fill()
 
         //Place text on top
-        ctx.font = "22px " + font_family
+        ctx.font = (type === "big" ? "22px " : "28px ") + font_family
         ctx.textBaseline = (direction === "N" ? "bottom" : "top")
         ctx.textAlign = "center"
         ctx.fillStyle = "black"
@@ -286,29 +250,33 @@ function drawDeepSpace(opts_general, opts) {
 
     ///////Draw dashed circle around map //////
 
-    //Draw solid thick line
-    ctx.lineWidth = 6
-    drawCircle(ctx, radius_outer_circle)
+    if(type === "big" | type === "mini") {
+        let stroke_w = 6
+        
+        //Draw solid thick line
+        ctx.lineWidth = stroke_w
+        drawCircle(ctx, radius_outer_circle)
 
-    //Take out smaller line to get double line effect
-    ctx.globalCompositeOperation = 'destination-out'
-    ctx.lineWidth = 3
-    drawCircle(ctx, radius_outer_circle)
+        //Take out smaller line to get double line effect
+        ctx.globalCompositeOperation = 'destination-out'
+        ctx.lineWidth = stroke_w/2
+        drawCircle(ctx, radius_outer_circle)
 
-    //Draw dashed line on top
-    ctx.globalCompositeOperation = 'source-over'
-    ctx.lineWidth = 6
-    ctx.setLineDash([9.725,6])
-    drawCircle(ctx, radius_outer_circle)
-    ctx.setLineDash([])
+        //Draw dashed line on top
+        ctx.globalCompositeOperation = 'source-over'
+        ctx.lineWidth = stroke_w
+        ctx.setLineDash([9.725,6])
+        drawCircle(ctx, radius_outer_circle)
+        ctx.setLineDash([])
 
-    //Draw a canvas circle of a specific radius
-    function drawCircle(ctx, r) {
-        ctx.beginPath()
-        ctx.arc(width/2 + margin.left, height/2 + margin.top, r, 0, pi2)
-        ctx.closePath()
-        ctx.stroke()
-    }//function drawCircle
+        //Draw a canvas circle of a specific radius
+        function drawCircle(ctx, r) {
+            ctx.beginPath()
+            ctx.arc(width/2 + margin.left, height/2 + margin.top, r, 0, pi2)
+            ctx.closePath()
+            ctx.stroke()
+        }//function drawCircle
+    }//if
 
     return canvas
 

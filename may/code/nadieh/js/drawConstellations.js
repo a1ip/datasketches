@@ -105,22 +105,24 @@ function drawConstellations(opts_general, opts) {
     ctx.globalAlpha = 1
     ctx.shadowBlur = 0
     ctx.strokeStyle = type === "small" ? "black" : "#fff"
-    ctx.lineWidth = type === "small" ? 9 : 4
+    ctx.lineWidth = type === "small" ? 9 : type === "multiple" ? 6 : 4
     ctx.beginPath()
-    ctx.arc(pos[0], pos[1], opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : 13), 0, pi2)
+    ctx.arc(pos[0], pos[1], opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : type === "multiple" ? 18 : 13), 0, pi2)
     ctx.closePath()
     ctx.stroke()
 
     ///////////// Add proper name to chosen star /////////////
 
-    ctx.font = "22px " + font_family
-    ctx.textBaseline = "top" //"bottom"
-    ctx.textAlign = "end"
-    ctx.fillStyle = "white"
+    if(type === "big" || type === "mini") {
+        ctx.font = (type === "big" ? "22px " : "34px ") + font_family
+        ctx.textBaseline = "top" //"bottom"
+        ctx.textAlign = "end"
+        ctx.fillStyle = "white"
 
-    //Star dependant settings
-    let r = opts.radius_scale(chosen_star.mag)
-    ctx.fillText(chosen_star.proper, pos[0] - r, pos[1] + 15 + r)
+        //Star dependant settings
+        let r = opts.radius_scale(chosen_star.mag)
+        ctx.fillText(chosen_star.proper, pos[0] - r, pos[1] + 15 + r)
+    }//if
 
     return canvas
 }//function drawConstellations
@@ -231,7 +233,7 @@ function drawStarDonuts(ctx, projection, star_by_id, chosen_lines, radius_scale,
 
     ctx.globalCompositeOperation = "source-over"
 
-    if(type !== "small") {
+    if(type === "big" || type === "mini") {
         ctx.shadowBlur = 5
         ctx.shadowColor = "#001540"
     }//if

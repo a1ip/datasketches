@@ -14,6 +14,10 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
 
     ////////////////////////////// Create Canvases ///////////////////////////////
 
+    d3.select("#canvas-" + map_id).remove()
+    d3.select("#canvas-mini-" + map_id).remove()
+    d3.select("#svg-" + map_id).remove()
+
     //Create the canvas
     const canvas = d3.select("#chart-" + map_id).append("canvas")
         .attr("id", "canvas-" + map_id)
@@ -78,7 +82,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         .enter().append("text")
         .attr("class", "chart-circular-title")
         .classed("chart-circular-star-title", (d,i) => i === 2 ? true : false)
-        .attr("x", 25)
+        .attr("x", 0)
         .attr("y", (d,i) => offsets[i])
         .text(d => d)
 
@@ -100,7 +104,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         width: center_size, 
         height: center_size
     }
-    drawMap(opts_data, canvas, ctx, focus, chosen_const, location)
+    drawMap(opts_data, canvas, ctx, focus, chosen_const, location, "big")
 
     ////////////////////////////// Create mini-maps ///////////////////////////////
 
@@ -229,7 +233,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             .style("opacity", 1)
             .on("end", function() {
                 //Draw the new map
-                drawMap(opts_data, canvas, ctx, focus, chosen, location)
+                drawMap(opts_data, canvas, ctx, focus, chosen, location, "big")
                 //Fade back in
                 d3.select(this)
                     .transition("fade").duration(600).delay(1000)

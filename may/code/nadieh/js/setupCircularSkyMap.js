@@ -50,7 +50,7 @@ function createCircularBaseMap(opts_data, focus_star, chosen_const, type) {
     }
 
     /////////////////////// Draw deep space base map ////////////////////////
-    if(type === "big") {
+    if(type === "big" || type === "multiple" || type === "mini") {
         let opts_space = {
             clip_angle: clip_angle
         }
@@ -59,7 +59,7 @@ function createCircularBaseMap(opts_data, focus_star, chosen_const, type) {
     }//if
 
     /////////////////////// Draw stars ////////////////////////
-    if(type === "big") {
+    if(type === "big" || type === "multiple" || type === "mini") {
         let opts_stars = {
             stars: stars,
             radius_scale: radius_scale
@@ -87,9 +87,9 @@ function createCircularBaseMap(opts_data, focus_star, chosen_const, type) {
 ///////////////////////////////////////////////////////////////////////////
 
 ////////////////// Create the standard sky map with background, stars and lines //////////////////
-function drawMap(opts_data, canvas, ctx, focus, chosen_const, loc) {
+function drawMap(opts_data, canvas, ctx, focus, chosen_const, loc, type) {
     //Request the deep space, stars and constellation-lines offscreen canvases
-    const basemap = createCircularBaseMap(opts_data, focus, chosen_const, "big")
+    const basemap = createCircularBaseMap(opts_data, focus, chosen_const, type)
     //Draw them to the on-screen canvas
     ctx.clearRect(0, 0, canvas.width || canvas.node().width, canvas.height || canvas.node().height)
     ctx.drawImage(basemap.canvas_space, loc.x, loc.y, loc.width, loc.height)

@@ -114,8 +114,8 @@ function createStraightSkyMapLayout(opts, focus_map, w, w_increase, h, map_id) {
                 chosen_culture = el.attr("id").replace("culture-","")
 
                 //Update the title
-                d3.select("#chosen-culture-number").html(cultures[chosen_culture].count)
-                d3.select("#chosen-culture-title")
+                // d3.select("#chosen-culture-number").html(cultures[chosen_culture].count)
+                d3.selectAll(".chosen-culture-title")
                     .style("color", cultures[chosen_culture].color)
                     .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
 
