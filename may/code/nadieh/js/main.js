@@ -111,10 +111,12 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         scale: 2200,
     } //11: navajo-001 is a good one & 19: wester-UMa
 
+    ////////////////////////// Small multiple charts //////////////////////////
+    createSmallMultipleLayout(opts_data)
+
     ///////////////////////////////////////////////////////////////////////////
     //////////////////////// Create Statistical chart /////////////////////////
     ///////////////////////////////////////////////////////////////////////////
-
 
 
     ////////////////////////// Culture rectangular sky map //////////////////////////
@@ -148,10 +150,9 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
                 //Create the Big Dipper's small sky map
                 createMap(opts_data, 0, 500, 500, "#chart-big-dipper", focus_big_dipper, "medium")
             })
-            .then(() => {
-                //Create the small multiple collection
-                createSmallMultipleLayout(opts_data)
-            })
+            // .then(() => {
+
+            // })
             .then(() => {
                 //Create the general full Sky Map visual
                 createStraightSkyMapLayout(opts_data, focus_culture, window.innerWidth, 1.5, 650, "constellations")

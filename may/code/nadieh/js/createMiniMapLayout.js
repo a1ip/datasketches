@@ -185,39 +185,37 @@ function createSmallMultipleLayout(opts_data) {
     let colors = ["#EFB605","#E7A000","#E4650B","#E01A25","#CE003D","#B50655","#991C71","#7A3992","#4F56A6","#2074A0","#08977F","#2AAF61","#7EB852"]
 
     //Loop over each star and draw the mini map
-    breathe.times(focus.length, i => {
-        let p_name = focus[i].proper.toLowerCase()
+    focus.forEach((d,i) => {
+        let p_name = d.proper.toLowerCase()
         let chart_id = "div-" + p_name
         //Create a div to put this in
         const chart_group = d3.select("#chart-container-small-multiple").append("div")
+            .datum(d)
             .attr("id", chart_id)
             .attr("class", "div-group-small-multiple")
             .style("color", colors[i])
+            .on("click", d => smallMapClick(d, opts_data))
 
         //Add star's title on top
         chart_group.append("p")
             .attr("class", "small-multiple-chart-title")
-            .html(focus[i].proper)
+            .html(d.proper)
         //Add note about the star/constellation
         chart_group.append("p")
             .attr("class", "small-multiple-chart-sub-title red")
-            .html(focus[i].note)
+            .html(d.note)
 
         //Add image of small multiple
-        let chart_div = chart_group.append("div")
-            .datum(focus[i])
+        chart_group.append("div")
             .attr("id", "div-small-multiple-" + p_name)
             .attr("class", "div-small-multiple")
             .style("width", size + "px")
             .style("height", size + "px")
             .style("background-image", `url("img/small-multiple/small-multiple-${p_name}-2x-min.png")`)
 
-        //Make it clickable
-        chart_div.on("click", d => smallMapClick(d, opts_data))
-
         // //Draw the canvas instead
-        //createMap(opts_data, m, size, size, "#" + chart_id, focus[i], "multiple")
-    })//breathe focus
+        //createMap(opts_data, m, size, size, "#" + chart_id, d, "multiple")
+    })//forEach
 
 }//function createSmallMultipleLayout
 
