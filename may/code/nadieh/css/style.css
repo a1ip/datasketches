@@ -305,8 +305,17 @@ a, a:link, a:visited, a:active {
     grid-column: 5 / span 7;
 }
 
+#chart-sirius {
+    background-image: url("../img/medium-maps/sky-map-sirius-2x-min.png")
+}
+#chart-big-dipper {
+    background-image: url("../img/medium-maps/sky-map-dubhe-2x-min.png")
+}
+
 #chart-sirius,
 #chart-big-dipper {
+    width: 500px;
+    height: 500px;
     margin: 0 auto;
     cursor: pointer;
     background-repeat: no-repeat;
