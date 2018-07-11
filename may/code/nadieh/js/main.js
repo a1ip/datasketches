@@ -4,6 +4,9 @@
 //////////////////////////////// Constants ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
+//Scale factor of canvas
+let sf
+
 const pi1_2 = Math.PI / 2
 const pi = Math.PI
 const pi2 = Math.PI * 2
@@ -18,6 +21,9 @@ const basemap_margin = {
 const basemap_size = 800
 const basemap_total_size = basemap_size + basemap_margin.left + basemap_margin.right
 const size_factor = basemap_size / basemap_total_size
+
+const orion_m = 20
+const orion_size = 920
 
 const font_family = "Glass Antiqua"
 // const font_family = "Cormorant"
@@ -106,13 +112,9 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     } //11: navajo-001 is a good one & 19: wester-UMa
 
     ///////////////////////////////////////////////////////////////////////////
-    ///////////////////////// Create Small multiples //////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
-
-
-    ///////////////////////////////////////////////////////////////////////////
     //////////////////////// Create Statistical chart /////////////////////////
     ///////////////////////////////////////////////////////////////////////////
+
 
 
     ////////////////////////// Culture rectangular sky map //////////////////////////
@@ -136,7 +138,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             })
             .then(() => {
                 //Create Orion's big circular layout
-                createCentralCircleLayout(opts_data, focus_betelgeuse, 20, 920, 920, "orion")
+                createCentralCircleLayout(opts_data, focus_betelgeuse, orion_m, orion_size, orion_size, "orion")
             })
             .then(() => {
                 //Create Sirius's small sky map
@@ -192,9 +194,9 @@ function constellationCultureCap(s) {
 
 ////////////////// Retina non-blurry canvas //////////////////
 function crispyCanvas(canvas, ctx, total_width, total_height, offscreen, offset_x) {
-    let sf = Math.min(2, getPixelRatio(ctx)) //no more than 2
+    sf = Math.min(2, getPixelRatio(ctx)) //no more than 2
     if(screen.width < 500) sf = 1 //for small devices, 1 is enough
-    // console.log(sf)
+
     if(!offscreen) {
         canvas
             .attr("width", sf * total_width)

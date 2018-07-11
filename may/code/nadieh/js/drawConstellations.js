@@ -42,7 +42,7 @@ function drawConstellations(opts_general, opts) {
         .entries(chosen_lines)
     
     ctx.globalCompositeOperation = "screen"
-    ctx.lineWidth = type === "small" ? 3 : 2
+    ctx.lineWidth = type === "small" ? 4 : 2
     ctx.lineWidth = ctx.lineWidth * (opts.constellations.length > 1 ? 2 : 1)
     ctx.globalAlpha = 0.7
     let offset = 0.95 * ctx.lineWidth
@@ -106,9 +106,9 @@ function drawConstellations(opts_general, opts) {
     ctx.globalAlpha = 1
     ctx.shadowBlur = 0
     ctx.strokeStyle = type === "small" ? "black" : "#fff"
-    ctx.lineWidth = type === "small" ? 9 : type === "multiple" ? 6 : 4
+    ctx.lineWidth = type === "small" ? 10 : type === "multiple" ? 6 : 4
     ctx.beginPath()
-    ctx.arc(pos[0], pos[1], opts.radius_scale(chosen_star.mag) + (type === "small" ? 20 : type === "multiple" ? 18 : 13), 0, pi2)
+    ctx.arc(pos[0], pos[1], opts.radius_scale(chosen_star.mag) + (type === "small" ? 22 : type === "multiple" ? 18 : 13), 0, pi2)
     ctx.closePath()
     ctx.stroke()
 
@@ -307,6 +307,6 @@ function drawStarDonuts(ctx, projection, star_by_id, chosen_lines, radius_scale,
 
     ///////////// Helper function /////////////
     function innerRad(mag) { return radius_scale(mag) + (type === "equirectangular" ? 1.5 : 5) }
-    function outerRad(mag) { return radius_scale(mag) + (type === "equirectangular" ? 3 : (type === "small" ? 10 : 8)) }
+    function outerRad(mag) { return radius_scale(mag) + (type === "equirectangular" ? 3 : (type === "small" ? 12 : 8)) }
     
 }//function drawStarDonuts

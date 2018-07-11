@@ -180,9 +180,11 @@ function createSmallMultipleLayout(opts_data) {
 
     ////////////////////////////// Draw small multiples ///////////////////////////////
 
-    let m = -10
-    let size = window.innerWidth < 1200 ? 200 : 220
+    let m = 0
+    let size = window.innerWidth < 1200 ? 180 : 200
     let colors = ["#EFB605","#E7A000","#E4650B","#E01A25","#CE003D","#B50655","#991C71","#7A3992","#4F56A6","#2074A0","#08977F","#2AAF61","#7EB852"]
+
+    //Loop over each star and draw the mini map
     breathe.times(focus.length, i => {
         let p_name = focus[i].proper.toLowerCase()
         let chart_id = "div-" + p_name
@@ -201,14 +203,25 @@ function createSmallMultipleLayout(opts_data) {
             .attr("class", "small-multiple-chart-sub-title red")
             .html(focus[i].note)
 
-        //Draw the canvas
-        createMap(opts_data, m, size, size, "#" + chart_id, focus[i], "multiple")
+        //Add image of small multiple
+        let chart_div = chart_group.append("div")
+            .datum(focus[i])
+            .attr("id", "div-small-multiple-" + p_name)
+            .attr("class", "div-small-multiple")
+            .style("width", size + "px")
+            .style("height", size + "px")
+            .style("background-image", `url("img/small-multiple/small-multiple-${p_name}-2x-min.png")`)
+
+        //Make it clickable
+        chart_div.on("click", d => smallMapClick(d, opts_data))
+
+        // //Draw the canvas instead
+        //createMap(opts_data, m, size, size, "#" + chart_id, focus[i], "multiple")
     })//breathe focus
 
 }//function createSmallMultipleLayout
 
 function createMap(opts_data, m, w, h, container_id, focus, type) {
-
     ////////////////////////////// Set sizes ///////////////////////////////
     let margin = { left: m, top: m, right: m, bottom: m }
     let width = w
@@ -243,34 +256,28 @@ function createMap(opts_data, m, w, h, container_id, focus, type) {
     ////////////////////////////// Possible down-scaling for anti-alias ///////////////////////////////
 
     //Downscale in steps
-    if(type === "multiple") {
-        let new_size, new_canvas
+    if(type === "multiple" && sf < 2) {
         // Get the original constellation line canvas
         const basemap = createCircularBaseMap(opts_data, focus, chosen_const, type)
-        new_size = basemap_total_size / 2
-        new_canvas = drawToTemp(basemap, new_size, "origin")
+        let new_size = basemap_total_size / 2
+        let new_canvas = drawToTemp(basemap, new_size, "origin")
+
         new_size = new_size / 2
-        new_canvas = drawToTemp(new_canvas, new_size, "copy")
-        ctx.drawImage(new_canvas, 0, 0, new_size, new_size, location.x, location.y, location.width, location.height)
+        ctx.drawImage(new_canvas, location.x, location.y, location.width, location.height)
 
         //Down-scaling in steps to reduce anti-aliasing
         //Based on https://stackoverflow.com/a/17862644/2586314
-        function drawToTemp(canvas, size, type) {
+        function drawToTemp(canvas, size) {
             let canvas_temp = document.createElement('canvas') //offscreen canvas
             let ctx_temp = canvas_temp.getContext('2d')
             canvas_temp.width = size
             canvas_temp.height = size
-            if(type === "origin") {
-                ctx_temp.drawImage(canvas.canvas_space, 0, 0, canvas_temp.width, canvas_temp.height)
-                ctx_temp.drawImage(canvas.canvas_stars, 0, 0, canvas_temp.width, canvas_temp.height)
-                ctx_temp.drawImage(canvas.canvas_lines, 0, 0, canvas_temp.width, canvas_temp.height)
-            } else {
-                ctx_temp.drawImage(canvas, 0, 0, canvas_temp.width, canvas_temp.height)
-            }//else
+            ctx_temp.drawImage(canvas.canvas_space, 0, 0, canvas_temp.width, canvas_temp.height)
+            ctx_temp.drawImage(canvas.canvas_stars, 0, 0, canvas_temp.width, canvas_temp.height)
+            ctx_temp.drawImage(canvas.canvas_lines, 0, 0, canvas_temp.width, canvas_temp.height)
 
             return canvas_temp
         }//function drawToTemp
-
     } else {
         drawMap(opts_data, canvas, ctx, focus, chosen_const, location, type)
     }//else
@@ -278,23 +285,36 @@ function createMap(opts_data, m, w, h, container_id, focus, type) {
     ////////////////////////////// Add interactivity ///////////////////////////////
 
     //Make it clickable
-    canvas.on("click", d => {
-        d3.select("#betelgeuse-note").style("display", d.proper === "Betelgeuse" ? "none" : "inline")
-        // const section = document.getElementById("section-chart-orion")
-        // window.scrollBy({
-        //     top: section.getBoundingClientRect().top - 20, 
-        //     left: 0, 
-        //     behavior: "smooth"
-        // })
-        //Scroll to the original Orion chart
-        document.querySelector("#section-chart-orion").scrollIntoView({ 
-            behavior: "smooth",
-            block: "center"
-          });
-        //Create the new layout
-        setTimeout(() => {
-            createCentralCircleLayout(opts_data, d, 20, 950, 950, "orion")
-        }, 20)
-    })
-
+    canvas.on("click", d => smallMapClick(d, opts_data))
 }//function createMap
+
+//When clicking on this div, the visual scrolls to Orion and changes the map there to show the chosen star
+function smallMapClick(d, opts_data) {
+    d3.select("#betelgeuse-note").style("display", d.proper === "Betelgeuse" ? "none" : "inline")
+
+    //Fade in the group to hide the map and remove some elements from the Orion map
+    d3.selectAll("#canvas-orion, #canvas-mini-orion, #svg-orion .chart-circular-title-group, #svg-orion .chart-circular-mini-map-circle").remove()
+    const fade_group = d3.select("#svg-orion .chart-circular-hide-group")
+        .style("opacity", 1)
+    fade_group.select(".chart-circular-text-name")
+        .text(d.proper)
+    fade_group.select(".chart-circular-text-culture")
+        .text("")
+
+    //Scroll to the original Orion chart
+    document.querySelector("#section-chart-orion").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    })
+    // const section = document.getElementById("section-chart-orion")
+    // window.scrollBy({
+    //     top: section.getBoundingClientRect().top - 20, 
+    //     left: 0, 
+    //     behavior: "smooth"
+    // })
+
+    //Create the new layout, but wait a bit for the visual to have scrolled up
+    setTimeout(() => {
+        createCentralCircleLayout(opts_data, d, orion_m, orion_size, orion_size, "orion")
+    }, 1100)
+}//function smallMapClick

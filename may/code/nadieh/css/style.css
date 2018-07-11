@@ -195,6 +195,9 @@ a, a:link, a:visited, a:active {
 
 #section-chart-orion {
     height: 960px;
+    padding: 0 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 #betelgeuse-note {
@@ -388,8 +391,10 @@ a, a:link, a:visited, a:active {
     pointer-events: none;
 }
 
-.canvas-small-multiple {
-    z-index: -1;
+.div-small-multiple {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 @media screen and (max-width: 1200px) {

@@ -46,7 +46,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     //A group for the fade-out / fade-in group when an outside mini map is clicked
     const fade_group = svg.append("g")
         .attr("class", "chart-circular-hide-group")
-        .style("opacity", 0)
+        .style("opacity", 1)
     //Append a rectangle that is as big as the SVG
     fade_group.append("rect")
         .attr("width", total_width)
@@ -65,7 +65,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         .attr("x", width/2 + margin.left)
         .attr("y", height/2 + margin.top + 0)
         .attr("dy", "0.35em")
-        .text("")
+        .text(focus.proper)
     const svg_text_culture = fade_group.append("text")
         .attr("class", "chart-circular-text-culture")
         .attr("x", width/2 + margin.left)
@@ -106,6 +106,11 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     }
     drawMap(opts_data, canvas, ctx, focus, chosen_const, location, "big")
 
+    //Fade the center out 
+    fade_group.transition("fade")
+        .duration(600).delay(800)
+        .style("opacity", 0)
+        
     ////////////////////////////// Create mini-maps ///////////////////////////////
 
     //Figure out the sizes of the mini constellations-only circles around the central big one
@@ -182,12 +187,16 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         }//function drawToTemp
         
         //Downscale in steps
-        new_size = basemap_total_size / 2
-        new_canvas = drawToTemp(basemap.canvas_lines, new_size)
-        new_size = new_size / 2
-        new_canvas = drawToTemp(new_canvas, new_size)
-        ctx.drawImage(new_canvas, 0, 0, new_size, new_size, 
-                      loc.x, loc.y, loc.width, loc.height)
+        if(sf < 2) {
+            new_size = basemap_total_size / 2
+            new_canvas = drawToTemp(basemap.canvas_lines, new_size)
+            new_size = new_size / 2
+            new_canvas = drawToTemp(new_canvas, new_size)
+            ctx.drawImage(new_canvas, 0, 0, new_size, new_size, loc.x, loc.y, loc.width, loc.height)
+        } else {
+            new_size = basemap_total_size / 2
+            ctx.drawImage(basemap.canvas_lines, loc.x, loc.y, loc.width, loc.height)
+        }//else
 
     }//function miniMapsCircle
 
