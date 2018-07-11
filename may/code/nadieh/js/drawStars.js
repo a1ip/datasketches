@@ -14,7 +14,7 @@ function drawStars(opts_general, opts) {
     crispyCanvas(canvas, ctx, total_width, total_height, 1, opts_general.offset_x)
 
     //Set to the clipped circle
-    if(opts_general.type_geo === "stereographic") clipToCircle(ctx, opts_general.width, opts_general.height, opts_general.margin, opts_general.clip_radius)
+    if(opts_general.type_geo === "stereographic" && type !== "multiple") clipToCircle(ctx, opts_general.width, opts_general.height, opts_general.margin, opts_general.clip_radius)
 
     ///////////// Create scales /////////////
 

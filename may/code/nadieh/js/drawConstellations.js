@@ -20,7 +20,7 @@ function drawConstellations(opts_general, opts) {
     crispyCanvas(canvas, ctx, total_width, total_height, 1)
 
     //Set to the clipped circle
-    clipToCircle(ctx, opts_general.width, opts_general.height, opts_general.margin, opts_general.clip_radius)
+    if(type !== "multiple") clipToCircle(ctx, opts_general.width, opts_general.height, opts_general.margin, opts_general.clip_radius)
 
     ///////////// Get unique constellations /////////////
 

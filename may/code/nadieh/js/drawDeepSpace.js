@@ -17,20 +17,12 @@ function drawDeepSpace(opts_general, opts) {
     const canvas = document.createElement("canvas")
     const ctx = canvas.getContext("2d")
     crispyCanvas(canvas, ctx, total_width, total_height, 1)
+    if(type !== "multiple") clipToCircle(ctx, width, height, margin, opts_general.clip_radius)
 
     ///////////// Dark blue background /////////////
 
     ctx.fillStyle = "#001540" // "#001133" //"#031845"
-    // if(type === "multiple") {
-    //     ctx.arc(total_width/2, total_height/2, opts_general.clip_radius + 8, 0, pi2)
-    //     ctx.filter = 'blur(10px)'
-    //     ctx.fill()
-    //     ctx.filter = 'blur(0px)'
-    //     clipToCircle(ctx, width, height, margin, opts_general.clip_radius)
-    // } else {
-        clipToCircle(ctx, width, height, margin, opts_general.clip_radius)
-        ctx.fillRect(0, 0, total_width, total_height)
-    // }//else
+    ctx.fillRect(0, 0, total_width, total_height)
 
     ///////////// Create lighter blobs just because it looks interesting /////////////
 
@@ -69,6 +61,7 @@ function drawDeepSpace(opts_general, opts) {
     //Plot the contours
     const path_contour = d3.geoPath().context(ctx)
     ctx.filter = 'blur(20px)'
+    if(type === "multiple") ctx.globalAlpha = 0.6
     space_swirl_contour.forEach(d => {
             ctx.beginPath()
             path_contour(d)
@@ -76,6 +69,8 @@ function drawDeepSpace(opts_general, opts) {
             ctx.fill()
         })//forEach
     ctx.filter = 'blur(0px)'
+    ctx.globalAlpha = 1
+    
 
     ///////////// Graticule & Ecliptic lines /////////////
 

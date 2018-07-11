@@ -1,6 +1,7 @@
 :root {
     --body-max-width: 1000px;
     --title-font: 'Glass Antiqua', cursive;
+    --color-red: #D80833;
 }
 
 html {
@@ -192,6 +193,10 @@ a, a:link, a:visited, a:active {
 
 /* ---------- SECTION | ORION ---------- */
 
+#section-chart-orion {
+    height: 960px;
+}
+
 #betelgeuse-note {
     display: none;
 }
@@ -279,6 +284,7 @@ a, a:link, a:visited, a:active {
 #section-chart-big-dipper  {
     margin-bottom: 10px;
     padding: 0;
+    height: 510px;
 }
 
 .chart-container-mini {
@@ -309,6 +315,7 @@ a, a:link, a:visited, a:active {
     max-width: calc(var(--body-max-width) + 200px);
     margin: 10px auto 10px auto;
     padding: 10px 20px;
+    height: 940px;
 }
 
 #chart-container-small-multiple {
@@ -316,76 +323,73 @@ a, a:link, a:visited, a:active {
     /* grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); */
     grid-template-columns: repeat(10, 1fr);
     /* grid-column-gap: 10px; */
-    grid-row-gap: 20px;
+    grid-row-gap: 25px;
 }
 
 .div-group-small-multiple {
+    color: var(--color-red);
+    border-left: 6px solid currentColor;
+    border-bottom: 6px solid #FFF;
+    background: -webkit-linear-gradient(left, currentColor -220%, #f7f7f7 20%);
+    padding: 15px 0 0 0;
+    margin-bottom: 0;
+    line-height: 0.6;
+    text-align: left;
+    cursor: pointer;
+
     align-self: center;
     justify-self: center;
     grid-column-end: span 2;
 
-    /* display: grid; */
-    /* grid-template-columns: 1fr; */
+    transition: all 0.4s;
+}
+.div-group-small-multiple:hover {
+    border-bottom: 6px solid currentColor;
 }
 
-/* .div-group-small-multiple canvas, .div-group-small-multiple svg {
-    align-self: center;
-    justify-self: center;
-    grid-column: 1;
-    grid-row: 1;
-} */
-
-#chart-container-small-multiple #row-1-left-padding {
-    grid-column: 1;
+#chart-container-small-multiple .row-1{
     grid-row: 1;
 }
-#chart-container-small-multiple #row-3-left-padding {
-    grid-column: 1;
+#chart-container-small-multiple .row-2 {
+    grid-row: 2;
+}
+#chart-container-small-multiple .row-3 {
     grid-row: 3;
 }
-
-#chart-container-small-multiple #row-1-right-padding {
+#chart-container-small-multiple .row-left {
+    grid-column: 1;
+}
+#chart-container-small-multiple .row-right {
     grid-column: 10;
-    grid-row: 1;
-}
-#chart-container-small-multiple #row-3-right-padding {
-    grid-column: 10;
-    grid-row: 3;
-}
-
-.canvas-small-multiple {
-   z-index: -1;
-}
-
-.svg-small-multiple {
-    overflow: visible;
-}
-
-.small-multiple-path {
-    fill: none;
-    stroke: none;
 }
 
 .small-multiple-chart-title {
-    font-family: var(--title-font);
-    font-size: 1.7em;
+    font-weight: 600;
+    font-size: 1em;
     line-height: 1;
-    pointer-events: none;
     text-anchor: middle;
-    letter-spacing: 0.03em;
-    margin: 0 auto 0.1em auto;
-    /* fill: #D80833; */
+    color: currentColor;
+    padding-left: 10px;
+    /* letter-spacing: 0.03em; */
+    margin: 0 auto 0.6em auto;
+    pointer-events: none;
 }
 
 .small-multiple-chart-sub-title {
-    font-size: 0.7em;
-    pointer-events: none;
-    text-anchor: middle;
-    line-height: 1.4;
-    margin: 0 auto 0.5em auto;
-    /* color: #1d1d1d; */
-    max-width: 150px;
+    max-width: 180px;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 30px;
+    font-size: 0.7em;
+    line-height: 1.4;
+    color: #1d1d1d;
+    text-anchor: middle;
+    margin: 0.2em 0 1em 0;
+    pointer-events: none;
+}
+
+.canvas-small-multiple {
+    z-index: -1;
 }
 
 /* ---------- SECTION | FULL CONSTELLATIONS SKY MAP ---------- */
@@ -401,6 +405,7 @@ a, a:link, a:visited, a:active {
 }
 
 #section-constellations {
+    background-color: #001540;
     position: relative;
     text-align: center;
     margin-bottom: 0px;
