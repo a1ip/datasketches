@@ -17,12 +17,20 @@ function drawDeepSpace(opts_general, opts) {
     const canvas = document.createElement("canvas")
     const ctx = canvas.getContext("2d")
     crispyCanvas(canvas, ctx, total_width, total_height, 1)
-    clipToCircle(ctx, width, height, margin, opts_general.clip_radius)
 
     ///////////// Dark blue background /////////////
 
     ctx.fillStyle = "#001540" // "#001133" //"#031845"
-    ctx.fillRect(0, 0, total_width, total_height)
+    // if(type === "multiple") {
+    //     ctx.arc(total_width/2, total_height/2, opts_general.clip_radius + 8, 0, pi2)
+    //     ctx.filter = 'blur(10px)'
+    //     ctx.fill()
+    //     ctx.filter = 'blur(0px)'
+    //     clipToCircle(ctx, width, height, margin, opts_general.clip_radius)
+    // } else {
+        clipToCircle(ctx, width, height, margin, opts_general.clip_radius)
+        ctx.fillRect(0, 0, total_width, total_height)
+    // }//else
 
     ///////////// Create lighter blobs just because it looks interesting /////////////
 
@@ -77,22 +85,24 @@ function drawDeepSpace(opts_general, opts) {
 
     const stepMinor_dec = 10
     const stepMinor_ra = 10
-    if(type === "big" || type === "mini") {
+    if(type === "big" || type === "medium") {
         //Create graticule lines
         const graticule = d3.geoGraticule().stepMinor([stepMinor_ra, stepMinor_dec])
         const grid = graticule()
         ctx.beginPath()
         path(grid)
-        ctx.lineWidth = .75
-        ctx.strokeStyle = '#40415D'
+        ctx.globalAlpha = 0.7
+        ctx.lineWidth = type === "big" ? 0.75 : 1.25
+        ctx.strokeStyle = '#5c5d79'
         ctx.stroke()
         ctx.closePath()
     }//if
+    ctx.globalAlpha = 1
 
     //Create ecliptic circle
     const circle = d3.geoCircle()
     ctx.strokeStyle = "#6a6b8a"
-    ctx.lineWidth = 4
+    ctx.lineWidth = type === "multiple" ? 6 : 4
     ctx.setLineDash([2,3])
     ctx.beginPath()
     path(circle.center([90,90 - ecliptic_angle]).radius(90)())
@@ -107,7 +117,7 @@ function drawDeepSpace(opts_general, opts) {
     //////////////// Find graticule - circle crossing positions ////////////////
     /////// It was Philippe Rivière (@fil) who came up with this solution //////
 
-    if(type === "big" || type === "mini") {
+    if(type === "big" || type === "medium") {
         //Create a geoCircle that has a radius slightly smaller as the clipped one
         const clip_circle = circle.radius(opts.clip_angle).center(projection.rotate().map(d => -d)).precision(0.1)()
         //Take out the coordinates
@@ -186,7 +196,7 @@ function drawDeepSpace(opts_general, opts) {
     ctx.fillStyle = "#031845"
 
     /////// Draw top and bottom pointing arrow //////
-    if(type === "big" || type === "mini") {
+    if(type === "big" || type === "medium") {
         drawArrow(ctx, radius_outer_circle, "N")
         drawArrow(ctx, radius_outer_circle, "S")
     }//if
@@ -250,7 +260,7 @@ function drawDeepSpace(opts_general, opts) {
 
     ///////Draw dashed circle around map //////
 
-    if(type === "big" | type === "mini") {
+    if(type === "big" | type === "medium") {
         let stroke_w = 6
         
         //Draw solid thick line

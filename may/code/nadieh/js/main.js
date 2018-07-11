@@ -1,8 +1,4 @@
-//TODO: Drawn images on top for the main one?
-//TODO: Some hover for the constellation names (in the Sky map?)
 //TODO: Don't use basemap size, but actual final size (use type to figure it out)
-//TODO: Add variable to focus that says where the star's name should be (top-left, bottom-right)
-//TODO: Quick scroll up to Betelgeuse when clicked on a small circle
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Constants ////////////////////////////////
@@ -86,22 +82,25 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     let focus_betelgeuse = {
         hip: 27989,
         proper: "Betelgeuse",
+        title_position: "bottom-left",
         center: [5.603559, 3.20192], //ra in hours dec in degrees
         scale: 1950,
     } //Interesting shapes | 4: egyptian-005 & 11: navajo-008 & 15: tupi-002 & 16: western-Ori
 
-    ////////////////////////// Sirius mini map //////////////////////////
+    ////////////////////////// Sirius medium map //////////////////////////
     let focus_sirius = {
         hip: 32349,
         proper: "Sirius",
+        title_position: "top-right",
         center: [6.752481, -21], //ra in hours dec in degrees
         scale: 2600,
     } //Interesting shapes | 7: hawaiian_starlines-KOM & 11: western-CMa
 
-    ////////////////////////// Big Dipper mini map //////////////////////////
+    ////////////////////////// Big Dipper medium map //////////////////////////
     let focus_big_dipper = {
         hip: 54061,
         proper: "Dubhe",
+        title_position: "top-left",
         center: [12.3, 56],
         scale: 2200,
     } //11: navajo-001 is a good one & 19: wester-UMa
@@ -137,15 +136,15 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             })
             .then(() => {
                 //Create Orion's big circular layout
-                createCentralCircleLayout(opts_data, focus_betelgeuse, 20, 950, 950, "orion")
+                createCentralCircleLayout(opts_data, focus_betelgeuse, 20, 920, 920, "orion")
             })
             .then(() => {
                 //Create Sirius's small sky map
-                createMap(opts_data, 0, 500, 500, "#chart-sirius", focus_sirius, "mini")
+                createMap(opts_data, 0, 500, 500, "#chart-sirius", focus_sirius, "medium")
             })
             .then(() => {
                 //Create the Big Dipper's small sky map
-                createMap(opts_data, 0, 500, 500, "#chart-big-dipper", focus_big_dipper, "mini")
+                createMap(opts_data, 0, 500, 500, "#chart-big-dipper", focus_big_dipper, "medium")
             })
             .then(() => {
                 //Create the small multiple collection
@@ -193,7 +192,8 @@ function constellationCultureCap(s) {
 
 ////////////////// Retina non-blurry canvas //////////////////
 function crispyCanvas(canvas, ctx, total_width, total_height, offscreen, offset_x) {
-    let sf = getPixelRatio(ctx)
+    let sf = Math.min(2, getPixelRatio(ctx)) //no more than 2
+    if(screen.width < 500) sf = 1 //for small devices, 1 is enough
     // console.log(sf)
     if(!offscreen) {
         canvas
@@ -228,15 +228,3 @@ function toTitleCase(str) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
     })
 }//toTitleCase
-
-///////////////////////////////////////////////////////////////////////////
-////////////////////////// Star focus settings ////////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
-// //The North, slightly offset
-// let focus = {
-//     hip: 11767, //Polaris
-//     // hip: 67301,
-//     center: [270, 70],
-//     scale: 900,
-// }

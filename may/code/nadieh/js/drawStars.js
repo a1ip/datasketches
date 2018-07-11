@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////
 function drawStars(opts_general, opts) {
     
+    let type = opts_general.type
     let total_width = opts_general.width + opts_general.margin.left + opts_general.margin.right
     let total_height = opts_general.height + opts_general.margin.top + opts_general.margin.bottom
 
@@ -32,8 +33,8 @@ function drawStars(opts_general, opts) {
     // ctx.textBaseline = "bottom"
     // ctx.textAlign = "center"
 
+    if(type === "big" || type === "medium") ctx.shadowBlur = 25
     ctx.globalAlpha = 1
-    ctx.shadowBlur = 25
     ctx.globalCompositeOperation = "source-over"
 
     //Draw the stars
@@ -48,21 +49,24 @@ function drawStars(opts_general, opts) {
         let r = opts.radius_scale(d.mag) //Math.pow(1.2, 5 - d.mag)
         let col = d.t_eff ? color_scale(d.t_eff) : "white"
 
-        //Create a gradient to fill each star with: lighter in center and darker around edges
-        let grd = ctx.createRadialGradient(pos[0],pos[1],1,pos[0],pos[1],r*1.1)
-        let col_bright = chroma(col).brighten(1)
-        let col_dark = chroma(col).saturate(3).darken(1)
-        grd.addColorStop(0,col_bright)
-        grd.addColorStop(0.6,col)
-        grd.addColorStop(1,col_dark)
-        ctx.fillStyle = grd
-        
-        //Create a glow around each star
-        // ctx.shadowBlur = 25 //r * 2.5
-        ctx.shadowColor = col
+        if(type === "big" || type === "medium") {
+            //Create a gradient to fill each star with: lighter in center and darker around edges
+            let grd = ctx.createRadialGradient(pos[0],pos[1],1,pos[0],pos[1],r*1.1)
+            let col_bright = chroma(col).brighten(1)
+            let col_dark = chroma(col).saturate(3).darken(1)
+            grd.addColorStop(0,col_bright)
+            grd.addColorStop(0.6,col)
+            grd.addColorStop(1,col_dark)
+            ctx.fillStyle = grd
+            
+            //Create a glow around each star
+            // ctx.shadowBlur = 25 //r * 2.5
+            ctx.shadowColor = col
+        } else {
+            ctx.fillStyle = col
+        }//else
 
         //Draw the star
-        // ctx.fillStyle = col
         ctx.beginPath()
         ctx.arc(pos[0], pos[1], r, 0, pi2)
         ctx.fill()

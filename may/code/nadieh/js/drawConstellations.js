@@ -6,7 +6,8 @@ function drawConstellations(opts_general, opts) {
     
     let projection = opts_general.projection
     let star_by_id = opts.star_by_id
-    let chosen_star = star_by_id[opts_general.focus.hip]
+    let focus = opts_general.focus
+    let chosen_star = star_by_id[focus.hip]
     let type = opts_general.type
 
     let total_width = opts_general.width + opts_general.margin.left + opts_general.margin.right
@@ -113,15 +114,34 @@ function drawConstellations(opts_general, opts) {
 
     ///////////// Add proper name to chosen star /////////////
 
-    if(type === "big" || type === "mini") {
-        ctx.font = (type === "big" ? "22px " : "34px ") + font_family
-        ctx.textBaseline = "top" //"bottom"
-        ctx.textAlign = "end"
-        ctx.fillStyle = "white"
-
-        //Star dependant settings
+    if(type === "big" || type === "medium") {
         let r = opts.radius_scale(chosen_star.mag)
-        ctx.fillText(chosen_star.proper, pos[0] - r, pos[1] + 15 + r)
+        ctx.fillStyle = "white"
+        ctx.font = (type === "big" ? "22px " : "34px ") + font_family
+        
+        //Bottom-left position = default
+        ctx.textBaseline = "top"
+        ctx.textAlign = "end"
+        let pos_x = pos[0] - r
+        let pos_y = pos[1] + 15 + r
+        if(focus.title_position === "top-left") {
+            ctx.textBaseline = "bottom"
+            ctx.textAlign = "end"
+            pos_x = pos[0] - r
+            pos_y = pos[1] - 18 - r
+        } else if(focus.title_position === "top-right") {
+            ctx.textBaseline = "bottom"
+            ctx.textAlign = "start"
+            pos_x = pos[0] + r
+            pos_y = pos[1] - 18 - r
+        } else if(focus.title_position === "bottom-right") {
+            ctx.textBaseline = "top"
+            ctx.textAlign = "start"
+            pos_x = pos[0] + r
+            pos_y = pos[1] + 15 + r
+        }//else if
+
+        ctx.fillText(chosen_star.proper, pos_x, pos_y)
     }//if
 
     return canvas
@@ -233,7 +253,7 @@ function drawStarDonuts(ctx, projection, star_by_id, chosen_lines, radius_scale,
 
     ctx.globalCompositeOperation = "source-over"
 
-    if(type === "big" || type === "mini") {
+    if(type === "big" || type === "medium") {
         ctx.shadowBlur = 5
         ctx.shadowColor = "#001540"
     }//if
