@@ -306,9 +306,11 @@ a, a:link, a:visited, a:active {
 }
 
 #chart-sirius,
-#chart-big-dipper,
-.canvas-small-multiple {
+#chart-big-dipper {
+    margin: 0 auto;
     cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* ---------- SECTION | SMALL MULTIPLE ---------- */

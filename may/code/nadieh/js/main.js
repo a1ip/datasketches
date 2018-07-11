@@ -102,6 +102,14 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         scale: 2600,
     } //Interesting shapes | 7: hawaiian_starlines-KOM & 11: western-CMa
 
+    //Create a div to put the image in
+    d3.select("#chart-sirius")
+        .datum(focus_sirius)
+        .on("click", () => { smallMapClick(focus_sirius, opts_data) })
+        .style("width", 500 + "px")
+        .style("height", 500 + "px")
+        .style("background-image", `url("img/medium-maps/sky-map-${focus_sirius.proper.toLowerCase()}-2x-min.png")`)
+
     ////////////////////////// Big Dipper medium map //////////////////////////
     let focus_big_dipper = {
         hip: 54061,
@@ -110,6 +118,14 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         center: [12.3, 56],
         scale: 2200,
     } //11: navajo-001 is a good one & 19: wester-UMa
+
+    //Create a div to put this in
+    d3.select("#chart-big-dipper")
+        .datum(focus_big_dipper)
+        .on("click", () => { smallMapClick(focus_big_dipper, opts_data) })
+        .style("width", 500 + "px")
+        .style("height", 500 + "px")
+        .style("background-image", `url("img/medium-maps/sky-map-${focus_big_dipper.proper.toLowerCase()}-2x-min.png")`)
 
     ////////////////////////// Small multiple charts //////////////////////////
     createSmallMultipleLayout(opts_data)
@@ -138,20 +154,21 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
                 //Create the Sky Map behind the header
                 createStraightSkyMapLayout(opts_data, focus_header, window.innerWidth, 1.5, 500, "header")
             })
+            // .then(() => {
+            //     //Doesn't actually create canvases, only loads final png images now
+            //     createSmallMultipleLayout(opts_data)
+            // })
             .then(() => {
                 //Create Orion's big circular layout
                 createCentralCircleLayout(opts_data, focus_betelgeuse, orion_m, orion_size, orion_size, "orion")
             })
-            .then(() => {
-                //Create Sirius's small sky map
-                createMap(opts_data, 0, 500, 500, "#chart-sirius", focus_sirius, "medium")
-            })
-            .then(() => {
-                //Create the Big Dipper's small sky map
-                createMap(opts_data, 0, 500, 500, "#chart-big-dipper", focus_big_dipper, "medium")
-            })
             // .then(() => {
-
+            //     //Create Sirius's small sky map
+            //     createMap(opts_data, 0, 500, 500, "#chart-sirius", focus_sirius, "medium")
+            // })
+            // .then(() => {
+            //     //Create the Big Dipper's small sky map
+            //     createMap(opts_data, 0, 500, 500, "#chart-big-dipper", focus_big_dipper, "medium")
             // })
             .then(() => {
                 //Create the general full Sky Map visual
