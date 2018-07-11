@@ -181,7 +181,7 @@ function createSmallMultipleLayout(opts_data) {
     ////////////////////////////// Draw small multiples ///////////////////////////////
 
     let m = -10
-    let size = 220
+    let size = window.innerWidth < 1200 ? 200 : 220
     let colors = ["#EFB605","#E7A000","#E4650B","#E01A25","#CE003D","#B50655","#991C71","#7A3992","#4F56A6","#2074A0","#08977F","#2AAF61","#7EB852"]
     breathe.times(focus.length, i => {
         let p_name = focus[i].proper.toLowerCase()

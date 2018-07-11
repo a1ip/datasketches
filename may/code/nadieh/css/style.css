@@ -392,6 +392,13 @@ a, a:link, a:visited, a:active {
     z-index: -1;
 }
 
+@media screen and (max-width: 1200px) {
+    .small-multiple-chart-sub-title {
+        max-width: 160px;
+        height: 45px;
+    }
+}
+
 /* ---------- SECTION | FULL CONSTELLATIONS SKY MAP ---------- */
 
 #section-text-chosen-culture {
