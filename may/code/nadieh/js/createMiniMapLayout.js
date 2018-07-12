@@ -1,4 +1,4 @@
-function createSmallMultipleLayout(opts_data) {
+function createSmallMultipleLayout(opts_data, draw_type) {
     let focus = []
 
     ////////////////////////////// List of stars ///////////////////////////////
@@ -205,16 +205,18 @@ function createSmallMultipleLayout(opts_data) {
             .attr("class", "small-multiple-chart-sub-title red")
             .html(d.note)
 
-        //Add image of small multiple
-        chart_group.append("div")
-            .attr("id", "div-small-multiple-" + p_name)
-            .attr("class", "div-small-multiple")
-            .style("width", size + "px")
-            .style("height", size + "px")
-            .style("background-image", `url("img/small-multiple/small-multiple-${p_name}-2x-min.png")`)
-
-        // //Draw the canvas instead
-        //createMap(opts_data, m, size, size, "#" + chart_id, d, "multiple")
+        if(draw_type === "image") {
+            //Add image of small multiple
+            chart_group.append("div")
+                .attr("id", "div-small-multiple-" + p_name)
+                .attr("class", "div-small-multiple")
+                .style("width", size + "px")
+                .style("height", size + "px")
+                .style("background-image", `url("img/small-multiple/small-multiple-${p_name}-2x-min.png")`)
+        } else {
+            //Draw the canvas instead
+            createMap(opts_data, m, size, size, "#" + chart_id, d, "multiple")
+        }//else
     })//forEach
 
 }//function createSmallMultipleLayout
@@ -238,7 +240,7 @@ function createMap(opts_data, m, w, h, container_id, focus, type) {
     ////////////////////////////// Create sky map ///////////////////////////////
 
     //Get all of the constellations that include the chosen star
-    let constellations = const_per_star
+    let constellations = opts_data.const_per_star
         .filter(d => d.star_id === focus.hip)
         .map(d => d.const_id)
         .sort()

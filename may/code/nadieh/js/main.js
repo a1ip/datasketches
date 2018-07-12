@@ -86,7 +86,8 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         center: [0, 0], //ra in hours dec in degrees
         scale: 250,
     }  
-    
+    rectangularMoveEffect("header","image") 
+
     ////////////////////////// Orion mini circles //////////////////////////
     let focus_betelgeuse = {
         hip: 27989,
@@ -123,7 +124,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         .on("click", () => { smallMapClick(focus_big_dipper, opts_data) })
 
     ////////////////////////// Small multiple charts //////////////////////////
-    createSmallMultipleLayout(opts_data)
+    createSmallMultipleLayout(opts_data, "image")
 
     ///////////////////////////////////////////////////////////////////////////
     //////////////////////// Create Statistical chart /////////////////////////
@@ -141,42 +142,44 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         scale: 250,
     }
 
+    d3.selectAll(".chosen-culture-title")
+        .style("color", cultures[chosen_culture].color)
+        .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
+    //Set the colors on the culture divs
+    setCultureDivColors(chosen_culture)
+
     ///////////////////////////////////////////////////////////////////////////
     ////////////////////////// Run all the functions //////////////////////////
     ///////////////////////////////////////////////////////////////////////////
 
     function breathableConcat() {
         return breathe.chain()   // creates a breathable chain
-            .then(() => {
-                //Create the Sky Map behind the header - no longer needed, image is loaded
-                // createStraightSkyMapLayoutFullCanvas(opts_data, focus_header, window.innerWidth, 1.5, 500, "header")
-                rectangularMoveEffect("header","image") 
-            })
+            // .then(() => {
+            //     //Create the Sky Map behind the header - no longer needed, image is loaded
+            //     //The full canvas version - no longer needed, image is loaded
+            //     createStraightSkyMapLayoutFullCanvas(opts_data, focus_header, window.innerWidth, 1.5, 500, "header")
+            // })
             .then(() => {
                 //Create Orion's big circular layout
                 createCentralCircleLayout(opts_data, focus_betelgeuse, orion_m, orion_size, orion_size, "orion")
             })
             // .then(() => {
-            //     //Create Sirius's medium sky map
+            //     //Create Sirius's medium sky map - no longer needed, final result is image
             //     createMap(opts_data, 0, 500, 500, "#chart-sirius", focus_sirius, "medium")
             // })
             // .then(() => {
-            //     //Create the Big Dipper's medium sky map
+            //     //Create the Big Dipper's medium sky map - no longer needed, final result is image
             //     createMap(opts_data, 0, 500, 500, "#chart-big-dipper", focus_big_dipper, "medium")
             // })
             // .then(() => {
             //     //Doesn't actually create canvases, only loads final png images now
-            //     createSmallMultipleLayout(opts_data)
+            //     createSmallMultipleLayout(opts_data, "canvas")
             // })
             .then(() => {
-                //Update the title
-                d3.selectAll(".chosen-culture-title")
-                    .style("color", cultures[chosen_culture].color)
-                    .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
-                //Set the colors on the culture divs
-                setCultureDivColors(chosen_culture)
-                //Create the general full Sky Map visual
+                //Create the general full Sky Map visual - now creates only the lines and uses that as a background image
                 createStraightSkyMapLayout(opts_data, focus_culture, 650, "constellations")
+                // //The full canvas version
+                // createStraightSkyMapLayoutFullCanvas(opts_data, focus_culture, window.innerWidth, 1.5, 650, "constellations")
             })
     }//function breathableConcat
 
@@ -385,7 +388,7 @@ function constellationCultureCap(s) {
 
 ////////////////// Retina non-blurry canvas //////////////////
 function crispyCanvas(canvas, ctx, total_width, total_height, offscreen, offset_x) {
-    sf = Math.min(2, getPixelRatio(ctx)) //no more than 2
+    sf = 2 //Math.min(2, getPixelRatio(ctx)) //no more than 2
     if(screen.width < 500) sf = 1 //for small devices, 1 is enough
 
     if(!offscreen) {

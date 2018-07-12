@@ -21,7 +21,7 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
 
     let proj_min = projection([-180,0])[0]
     let proj_max = projection([180,0])[0]
-    let proj_width = proj_max - proj_min
+    let proj_width = Math.round(proj_max - proj_min)
     let width = proj_width
 
     //Radius of the stars

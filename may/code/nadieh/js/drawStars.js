@@ -32,7 +32,7 @@ function drawStars(opts_general, opts) {
     // ctx.textBaseline = "bottom"
     // ctx.textAlign = "center"
 
-    if(type !== "multiple") ctx.shadowBlur = 25
+    ctx.shadowBlur = 25
     ctx.globalAlpha = 1
     ctx.globalCompositeOperation = "source-over"
 
@@ -48,36 +48,24 @@ function drawStars(opts_general, opts) {
         let r = opts.radius_scale(d.mag) //Math.pow(1.2, 5 - d.mag)
         let col = d.t_eff ? star_color_scale(d.t_eff) : "white"
 
-        if(type !== "multiple") {
-            //Create a gradient to fill each star with: lighter in center and darker around edges
-            let grd = ctx.createRadialGradient(pos[0],pos[1],1,pos[0],pos[1],r*1.1)
-            let col_bright = chroma(col).brighten(1)
-            let col_dark = chroma(col).saturate(3).darken(1)
-            grd.addColorStop(0,col_bright)
-            grd.addColorStop(0.6,col)
-            grd.addColorStop(1,col_dark)
-            ctx.fillStyle = grd
-            
-            //Create a glow around each star
-            // ctx.shadowBlur = 25 //r * 2.5
-            ctx.shadowColor = col
-        } else {
-            ctx.fillStyle = col
-        }//else
+        //Create a gradient to fill each star with: lighter in center and darker around edges
+        let grd = ctx.createRadialGradient(pos[0],pos[1],1,pos[0],pos[1],r*1.1)
+        let col_bright = chroma(col).brighten(1)
+        let col_dark = chroma(col).saturate(3).darken(1)
+        grd.addColorStop(0,col_bright)
+        grd.addColorStop(0.6,col)
+        grd.addColorStop(1,col_dark)
+        ctx.fillStyle = grd
+        
+        //Create a glow around each star
+        ctx.shadowColor = col
+        // ctx.fillStyle = col
 
         //Draw the star
         ctx.beginPath()
         ctx.arc(pos[0], pos[1], r, 0, pi2)
         ctx.fill()
         ctx.closePath()
-
-        // //If there is a star name, add it
-        // if(d.proper !== "") {
-        //     ctx.fillStyle = "white"
-        //     ctx.globalAlpha = 0.5
-        //     ctx.shadowBlur = 0
-        //     ctx.fillText(d.proper, pos[0], pos[1] - 2 - r)
-        // }//if
     })
 
     return canvas

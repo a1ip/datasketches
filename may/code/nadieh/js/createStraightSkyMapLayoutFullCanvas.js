@@ -1,6 +1,6 @@
 let w_factor
 
-function createStraightSkyMapLayout(opts, focus_map, w, w_increase, h, map_id, type) {
+function createStraightSkyMapLayoutFullCanvas(opts, focus_map, w, w_increase, h, map_id, type) {
 
     let chosen_culture = focus_map.culture
     let margin = { top: 0, right: 0, bottom: 0, left: 0}
@@ -18,7 +18,7 @@ function createStraightSkyMapLayout(opts, focus_map, w, w_increase, h, map_id, t
 
     let proj_min = projection([-180,0])[0]
     let proj_max = projection([180,0])[0]
-    let proj_width = proj_max - proj_min
+    let proj_width = Math.round(proj_max - proj_min)
 
     //Radius of the stars
     const radius_scale = d3.scalePow()
