@@ -52,8 +52,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         .attr("height", total_height)
         .style("fill", "white")
         .on("click", () => {
-            clearTimeout(timeout_switch)
-            timeout_switch = setTimeout(() => switchSkyMapCenter("body"), 200)
+            switchSkyMapCenter("body")
         })
     //Append text in the middle
     fade_group.append("text")
@@ -157,7 +156,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             .on("click touchstart", d => {
                 d3.event.stopPropagation()
                 clearTimeout(timeout_switch)
-                timeout_switch = setTimeout(() => switchSkyMapCenter(d), 200)
+                timeout_switch = setTimeout(() => switchSkyMapCenter(d), 300)
             })
 
         //Draw the culture name on the path
@@ -244,6 +243,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             svg_text_culture
                 .style("fill", cultures[constellationCulture(d)].color)
                 .text(constellationCultureCap(d))
+                
             //Update the constellation name
             let const_name = const_names[const_names.map(c => c.const_id).indexOf(d)].const_name
             svg_text_const_name.text(const_name)
