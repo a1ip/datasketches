@@ -22,10 +22,9 @@ function drawStars(opts_general, opts) {
     //https://gka.github.io/chroma.js/
     const star_colors = ["#9db4ff","#aabfff","#cad8ff","#fbf8ff","#fff4e8","#ffddb4","#ffbd6f","#f84235","#AC3D5A","#5A4D6E"]
     const star_temperatures = [30000,20000,8500,6800,5600,4500,3000,2000,1000,500]
-    const color_scale = chroma
+    const star_color_scale = chroma
         .scale(star_colors)
         .domain(star_temperatures)
-        // .mode("hsl")
 
     ///////////// Draw stars /////////////
 
@@ -33,7 +32,7 @@ function drawStars(opts_general, opts) {
     // ctx.textBaseline = "bottom"
     // ctx.textAlign = "center"
 
-    if(type === "big" || type === "medium") ctx.shadowBlur = 25
+    if(type !== "multiple") ctx.shadowBlur = 25
     ctx.globalAlpha = 1
     ctx.globalCompositeOperation = "source-over"
 
@@ -47,9 +46,9 @@ function drawStars(opts_general, opts) {
 
         //Star dependant settings
         let r = opts.radius_scale(d.mag) //Math.pow(1.2, 5 - d.mag)
-        let col = d.t_eff ? color_scale(d.t_eff) : "white"
+        let col = d.t_eff ? star_color_scale(d.t_eff) : "white"
 
-        if(type === "big" || type === "medium") {
+        if(type !== "multiple") {
             //Create a gradient to fill each star with: lighter in center and darker around edges
             let grd = ctx.createRadialGradient(pos[0],pos[1],1,pos[0],pos[1],r*1.1)
             let col_bright = chroma(col).brighten(1)

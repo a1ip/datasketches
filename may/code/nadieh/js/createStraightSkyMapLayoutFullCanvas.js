@@ -1,11 +1,8 @@
-function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
+let w_factor
+
+function createStraightSkyMapLayout(opts, focus_map, w, w_increase, h, map_id, type) {
 
     let chosen_culture = focus_map.culture
-    let lines_div = document.getElementById(map_id + "-lines")
-    let data_image
-
-    ////////////////////////////// Set sizes ///////////////////////////////
-
     let margin = { top: 0, right: 0, bottom: 0, left: 0}
     let height = h
     let focus = JSON.parse(JSON.stringify(focus_map)) //Create deep clone
@@ -22,7 +19,6 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
     let proj_min = projection([-180,0])[0]
     let proj_max = projection([180,0])[0]
     let proj_width = proj_max - proj_min
-    let width = proj_width
 
     //Radius of the stars
     const radius_scale = d3.scalePow()
@@ -35,14 +31,22 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
             return d * focus_scale(focus.scale)
         }))  
 
+    ////////////////////////////// Set sizes ///////////////////////////////
+
+    let width = w * w_increase //proj_width to get exactly 1
+    //The offset needed because the canvas is bigger than the screen
+    w_factor = (width - w)/2
+
     ////////////////////////////// Create Canvases ///////////////////////////////
 
-    //Create the canvas that's exactly as wide as a full projection
+    //Create the canvas
     const canvas = d3.select("#chart-" + map_id).append("canvas")
         .attr("id", `canvas-${map_id}`)
         .attr("class", "canvas-rectangular")
     const ctx = canvas.node().getContext("2d")
     crispyCanvas(canvas, ctx, width, height, 0)
+
+    if(map_id !== "header") canvas.style("color", cultures[chosen_culture].color)
 
     ///////////////////////////////////////////////////////////////////////////
     ///////////////////////////// Create Sky maps /////////////////////////////
@@ -61,6 +65,9 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
         type_geo: "equirectangular"
     }
 
+    /////////////////////// Deep space base map ////////////////////////
+    let canvas_space = drawDeepSpaceSimple(opts_general)
+
     /////////////////////// Constellations ////////////////////////
     let opts_lines = {
         chosen_culture: focus.culture,
@@ -69,22 +76,35 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
     }
     let canvas_lines = drawConstellationsSimple(opts_general, opts_lines, chosen_culture)
 
-    //Draw the map on the canvas
-    ctx.save()
-    ctx.translate(-proj_min, 0)
-    ctx.drawImage(canvas_lines, proj_min, 0, proj_width, height)
-    ctx.restore()
-    //Save into data and apply to the background image of the div
-    data_image = canvas.node().toDataURL()
-    lines_div.style.backgroundImage = `url(${data_image})`
+    /////////////////////// Stars ////////////////////////
+    let opts_stars = {
+        stars: opts.stars,
+        radius_scale: radius_scale
+    }
+    let canvas_stars = drawStars(opts_general, opts_stars) 
+
+    //////////// Fill up the entire width with duplicating versions ////////////
+    function fillEntireCanvas(ctx, canvas_space, canvas_lines, canvas_stars, proj_min, proj_width, height, width) {
+        let offset = proj_min
+        ctx.save()
+        ctx.translate(-proj_min, 0)
+        while(offset - proj_width < width/2) {
+            ctx.drawImage(canvas_space, proj_min, 0, proj_width, height)
+            ctx.drawImage(canvas_lines, proj_min, 0, proj_width, height)
+            ctx.drawImage(canvas_stars, proj_min, 0, proj_width, height)
+            ctx.translate(proj_width, 0)
+            offset += proj_width
+        }//while
+        ctx.restore()
+    }//function fillEntireCanvas
+
+    fillEntireCanvas(ctx, canvas_space, canvas_lines, canvas_stars, proj_min, proj_width, height, width)
 
     ///////////// Initiate the hover movement effect /////////////
-    rectangularMoveEffect(map_id) 
+    rectangularMoveEffect(map_id, "canvas") 
 
     ///////////// Set the culture div click event /////////////
     if(map_id === "constellations") {
-        // canvas.style("color", cultures[chosen_culture].color)
-
         d3.selectAll(".culture-info-wrapper")
             .on("click", function() {
                 let el = d3.select(this).select(".culture-info")
@@ -92,27 +112,43 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
                 chosen_culture = el.attr("id").replace("culture-","")
 
                 //Update the title
+                // d3.select("#chosen-culture-number").html(cultures[chosen_culture].count)
                 d3.selectAll(".chosen-culture-title")
                     .style("color", cultures[chosen_culture].color)
                     .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
 
-                //Create a new layer with only the lines from that culture and apply that to the background image
-                ctx.clearRect(0, 0, width, height)
-                ctx.save()
-                ctx.translate(-proj_min, 0)
+                //Create a new layer with only the lines from that culture
                 let canvas_lines = drawConstellationsSimple(opts_general, opts_lines, chosen_culture)
-                ctx.drawImage(canvas_lines, proj_min, 0, proj_width, height)
-                ctx.restore()
-                data_image = canvas.node().toDataURL()
-                lines_div.style.backgroundImage = `url(${data_image})`
+                //Fill up the entire canvas with this culture
+                fillEntireCanvas(ctx, canvas_space, canvas_lines, canvas_stars, proj_min, proj_width, height, width)
 
                 //Change the color of the top and bottom border through currentColor
-                d3.select("#constellations-border-div").style("color", cultures[chosen_culture].color)
+                d3.select("#canvas-constellations").style("color", cultures[chosen_culture].color)
 
                 //Set the colors of the culture info div
                 setCultureDivColors(chosen_culture)
             })//on
     }//if
+
+    ///////////// Set the rectangle resize function /////////////
+    let current_width = window.innerWidth
+    let resizeTimer
+    window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer)
+        resizeTimer = setTimeout(function() {
+            //Only resize if the width is changed
+            if(window.innerWidth !== current_width) {
+                //Update several widths
+                current_width = window.innerWidth
+                width = window.innerWidth * w_increase
+                w_factor = (width - window.innerWidth)/2
+                opts_general.width_canvas = width
+                crispyCanvas(canvas, ctx, width, height, 0)
+                //Fill the new canvas from start to finish
+                fillEntireCanvas(ctx, canvas_space, canvas_lines, canvas_stars, proj_min, proj_width, height, width)
+            }//if  
+        }, 250)//setTimeout
+    })//on resize
 
 }//createStraightSkyMapLayout
 
@@ -147,7 +183,7 @@ function setCultureDivColors(chosen_culture) {
 }//function setCultureDivColors
 
 //////////////////////// Hover effect ////////////////////////
-function rectangularMoveEffect(map_id) {
+function rectangularMoveEffect(map_id, type) {
     let mouse_enter
     let mouse_pos = 0
     d3.select(`#section-${map_id}`).on("mouseover touchstart", function() {
@@ -172,10 +208,11 @@ function rectangularMoveEffect(map_id) {
     const smooth_mouse$ = Rx.Observable
         .interval(0, Rx.Scheduler.animationFrame)
         // .withLatestFrom(mouse_move$, (tick, mouse) => mouse)
-        // .withLatestFrom(mouse_move$, (tick, mouse) => ({ x : mouse.x - mouse_enter }) )
+        // .withLatestFrom(mouse_move$, (tick, mouse) => ({ x : Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1) }) )
         .withLatestFrom(move$, (tick, mouse) => { 
             // console.log(mouse_enter) 
-            return { x : _.round(mouse.x - mouse_enter,1)}  
+            if(type === "image") return { x : mouse.x - mouse_enter}  
+            else return { x : Math.min(Math.max(mouse.x - mouse_enter, -(w_factor-1)), w_factor-1) } 
         })
         .scan(lerp, {x: 0})
 
@@ -184,12 +221,12 @@ function rectangularMoveEffect(map_id) {
         //Update position by 20% of the distance between position & target
         const rate = 0.02
         const dx = end.x - start.x
-        return { x: _.round(start.x + dx * rate,1) }
+        return { x: start.x + dx * rate }
     }//function lerp
 
     smooth_mouse$.subscribe(pos => {
         mouse_pos = pos.x
-        document.documentElement.style.setProperty(`--mouse-${map_id}-x`, _.round(pos.x, 1));
+        document.documentElement.style.setProperty(`--mouse-${map_id}-x`, pos.x);
     })
     // RxCSS({ mouse: smooth_mouse$ })
 }//function rectangularMoveEffect

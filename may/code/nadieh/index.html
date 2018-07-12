@@ -3,7 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- <meta name="viewport" content="width=width, initial-scale=1"/> -->
 
 	<title>Figures in the Stars</title>
 	<meta name="author" content="Nadieh Bremer">
@@ -64,13 +65,14 @@
 
 </head>
 
-<body>
+<body onload="loadAllAssets()">
 
     <!-- Title -->
     <section id="section-header">
         <div id="header-group">
-            <div id="header-background"></div>
-            <div id="chart-header" class="chart-rectangular"></div>
+            <div id="chart-header" class="chart-rectangular">
+                <div class="background"></div>
+            </div>
             <div id="title-header-group">
                 <h1>Figures in the Sky</h1>
                 <h3>How cultures across the World have seen their myths and legends in the stars</h3>
@@ -160,9 +162,12 @@
 
     <!-- TODO Charts with some stats -->
     <section id="section-chart-stats">
-        <div id="chart-container-stats" class="chart-container-circular">
-            <div id="chart-stats" class="chart-circular"></div>
-        </div>        
+        <div class="chart-container-stats">
+            <div id="chart-stats-stars" class="chart-stats"></div>
+        </div>
+        <div class="chart-container-stats">
+            <div id="chart-stats-cultures" class="chart-stats"></div>
+        </div>    
     </section>
 
     <!-- Text Full Sky Map -->
@@ -176,7 +181,11 @@
 
     <!-- Chart Rectangular Sky Map -->
     <section id="section-constellations">
-        <div id="chart-constellations" class="chart-rectangular"></div>
+        <div id="chart-constellations" class="chart-rectangular">
+            <div id="constellations-background" class="background"></div>
+            <div id="constellations-lines" class="background"></div>
+            <div id="constellations-border-div"></div>
+        </div>
     </section>
 
     <!-- Text Culture explanations -->
@@ -396,121 +405,120 @@
 
     <script>
 
-        ///////////////////////////////////////////////////////////////////////////
-        ////////////////////////// Load zodiac images /////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////
+        //Loaded on body load
+        function loadAllAssets() {
 
-        //Create zodiac base dataset
-        let zodiac = {}
-        zodiac[0] = {sign: "aries"}
-        zodiac[30] = {sign: "taurus"}
-        zodiac[60] = {sign: "gemini"}
-        zodiac[90] = {sign: "cancer"}
-        zodiac[120] = {sign: "leo"}
-        zodiac[150] = {sign: "virgo"}
-        zodiac[180] = {sign: "libra"}
-        zodiac[210] = {sign: "scorpio"}
-        zodiac[240] = {sign: "sagittarius"}
-        zodiac[270] = {sign: "capricorn"}
-        zodiac[300] = {sign: "aquarius"}
-        zodiac[330] = {sign: "pisces"}
+            ///////////////////////////////////////////////////////////////////////////
+            ////////////////////////// Load zodiac images /////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////
 
-        for (let key in zodiac) {
-            if (zodiac.hasOwnProperty(key)) {
-                zodiac[key].img = new Image()
-                zodiac[key].img.src = "img/zodiac/" + zodiac[key].sign + ".png"
-                zodiac[key].img.onload = onImgLoad
-            }//if
-        }//for key
+            //Create zodiac base dataset
+            let zodiac = {}
+            zodiac[0] = {sign: "aries"}
+            zodiac[30] = {sign: "taurus"}
+            zodiac[60] = {sign: "gemini"}
+            zodiac[90] = {sign: "cancer"}
+            zodiac[120] = {sign: "leo"}
+            zodiac[150] = {sign: "virgo"}
+            zodiac[180] = {sign: "libra"}
+            zodiac[210] = {sign: "scorpio"}
+            zodiac[240] = {sign: "sagittarius"}
+            zodiac[270] = {sign: "capricorn"}
+            zodiac[300] = {sign: "aquarius"}
+            zodiac[330] = {sign: "pisces"}
 
-        let num_img_loaded = 0
-        const num_img = 12
-        let img_loaded = false
-        function onImgLoad() {
-            num_img_loaded++
-            if (num_img_loaded === num_img) {
-                // console.log("imgs loaded")
-                img_loaded = true
+            for (let key in zodiac) {
+                if (zodiac.hasOwnProperty(key)) {
+                    zodiac[key].img = new Image()
+                    zodiac[key].img.src = "img/zodiac/" + zodiac[key].sign + ".png"
+                    zodiac[key].img.onload = onImgLoad
+                }//if
+            }//for key
+
+            let num_img_loaded = 0
+            const num_img = 12
+            let img_loaded = false
+            function onImgLoad() {
+                num_img_loaded++
+                if (num_img_loaded === num_img) {
+                    img_loaded = true
+                    checkAllLoaded()
+                }//if
+            }//function onImgLoad
+
+            ///////////////////////////////////////////////////////////////////////////
+            ////////////////////////////// Load fonts /////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////
+
+            let font_loaded = false
+            // //Edge can't handle this
+            // document.fonts.ready.then(() => {
+            //     console.log("ready fonts")
+            // })
+            WebFont.load({
+                google: {
+                    families: ['Glass Antiqua']
+                    // families: ['Cormorant:400,400i']
+                },
+                active: function () {
+                    font_loaded = true
+                    checkAllLoaded()
+                }
+            });
+
+            ///////////////////////////////////////////////////////////////////////////
+            /////////////////////////////// Load data /////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////
+
+            d3.queue() 
+                .defer(d3.csv, "../../data/nadieh/stars.csv")
+                .defer(d3.csv, "../../data/nadieh/constellation_links.csv")
+                .defer(d3.csv, "../../data/nadieh/constellation_names.csv")
+                .defer(d3.csv, "../../data/nadieh/constellations_per_star.csv")
+                .await(dataLoaded)
+
+            let data_loaded = false
+            let stars, const_links, const_names, const_per_star
+            let star_by_id = {}
+            function dataLoaded() {
+                //Put loaded data into the variables
+                [error, stars, const_links, const_names, const_per_star] = [...arguments]
+                if (error) throw error
+
+                stars.forEach(d => {
+                    d.hip = +d.hip
+                    d.ra = +d.ra
+                    d.dec = +d.dec
+                    d.mag = +d.mag
+                    d.t_eff = +d.t_eff
+                    d.constellations = +d.constellations
+                })//forEach
+
+                const_links.forEach(d => {
+                    d.source = +d.source
+                    d.target = +d.target
+                })//forEach
+
+                const_per_star.forEach(d => {
+                    d.star_id = +d.star_id
+                })//forEach
+
+                stars.forEach(d => {
+                    star_by_id[d.hip] = d
+                })//forEach
+
+                data_loaded = true
                 checkAllLoaded()
-            }//if
-        }//function onImgLoad
+            }//function dataLoaded
 
-        ///////////////////////////////////////////////////////////////////////////
-        ////////////////////////////// Load fonts /////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////
+            ///////////////////////// Run when all loaded /////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////
 
-        let font_loaded = false
-        // //Edge can't handle this
-        // document.fonts.ready.then(() => {
-        //     console.log("ready fonts")
-        // })
-        WebFont.load({
-            google: {
-                families: ['Glass Antiqua']
-                // families: ['Cormorant:400,400i']
-            },
-            active: function () {
-                // console.log("fonts loaded")
-                font_loaded = true
-                checkAllLoaded()
-            }
-        });
-
-        ///////////////////////////////////////////////////////////////////////////
-        /////////////////////////////// Load data /////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////
-
-        d3.queue() 
-            .defer(d3.csv, "../../data/nadieh/stars.csv")
-            .defer(d3.csv, "../../data/nadieh/constellation_links.csv")
-            .defer(d3.csv, "../../data/nadieh/constellation_names.csv")
-            .defer(d3.csv, "../../data/nadieh/constellations_per_star.csv")
-            .await(dataLoaded)
-
-        let data_loaded = false
-        let stars, const_links, const_names, const_per_star
-        let star_by_id = {}
-        function dataLoaded() {
-            //Put loaded data into the variables
-            [error, stars, const_links, const_names, const_per_star] = [...arguments]
-            if (error) throw error
-
-            stars.forEach(d => {
-                d.hip = +d.hip
-                d.ra = +d.ra
-                d.dec = +d.dec
-                d.mag = +d.mag
-                d.t_eff = +d.t_eff
-            })//forEach
-
-            const_links.forEach(d => {
-                d.source = +d.source
-                d.target = +d.target
-            })//forEach
-
-            const_per_star.forEach(d => {
-                d.star_id = +d.star_id
-            })//forEach
-
-            stars.forEach(d => {
-                star_by_id[d.hip] = d
-            })//forEach
-
-            // console.log("data loaded")
-            data_loaded = true
-            checkAllLoaded()
-        }//function dataLoaded
-
-        ///////////////////////////////////////////////////////////////////////////
-        ///////////////////////// Run when all loaded /////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////
-
-        function checkAllLoaded() {
-            if(img_loaded && font_loaded && data_loaded) {
-                // console.log("drawing")
-                setupStarMaps(stars, star_by_id, const_links, const_names, const_per_star, zodiac)
-            }//if
-        }//function checkAllLoaded
+            function checkAllLoaded() {
+                if(img_loaded && font_loaded && data_loaded) setupStarMaps(stars, star_by_id, const_links, const_names, const_per_star, zodiac)
+            }//function checkAllLoaded
+        }//function loadAllAssets
 
     </script>
     

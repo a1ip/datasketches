@@ -168,9 +168,9 @@ function drawDeepSpace(opts_general, opts) {
             .forEach(d => {
                 let pos = projection([d[0],d[1]])
                 if(d.type === "ra") {
-                    if(zodiac[d.ra]) {
+                    if(opts.zodiac[d.ra]) {
                         ctx.globalAlpha = 0.7
-                        ctx.drawImage(zodiac[d.ra].img, pos[0] - img_size/2, pos[1] - img_size/2, img_size, img_size)
+                        ctx.drawImage(opts.zodiac[d.ra].img, pos[0] - img_size/2, pos[1] - img_size/2, img_size, img_size)
                     } else {
                         ctx.globalAlpha = 1
                         ctx.fillText(d.ra%30 + "°", pos[0], pos[1])

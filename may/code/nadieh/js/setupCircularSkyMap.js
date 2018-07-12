@@ -21,7 +21,7 @@ function createCircularBaseMap(opts_data, focus_star, chosen_const, type) {
     ///////////////////////////////////////////////////////////////////////////
 
     //Get the projection variables
-    const [projection, clip_radius, clip_angle] = setupStereographicProjection(width, height, margin, focus, chosen_const, const_per_star)
+    const [projection, clip_radius, clip_angle] = setupStereographicProjection(width, height, margin, focus, chosen_const, const_per_star, star_by_id)
    
     //Radius of the stars
     const radius_scale = d3.scalePow()
@@ -52,6 +52,7 @@ function createCircularBaseMap(opts_data, focus_star, chosen_const, type) {
     /////////////////////// Draw deep space base map ////////////////////////
     if(type === "big" || type === "multiple" || type === "medium") {
         let opts_space = {
+            zodiac: opts_data.zodiac,
             clip_angle: clip_angle
         }
         canvas_space = drawDeepSpace(opts_general, opts_space)

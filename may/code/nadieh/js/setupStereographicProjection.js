@@ -2,7 +2,7 @@
 /////////////////////////// Create projection /////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-function setupStereographicProjection(width, height, margin, focus, chosen_const, const_per_star) {
+function setupStereographicProjection(width, height, margin, focus, chosen_const, const_per_star, star_by_id) {
 
     // let total_width = margin.left + width + margin.right
     let cultures = (typeof chosen_const === "string" ? "one" : "all")

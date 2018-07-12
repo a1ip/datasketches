@@ -206,7 +206,7 @@ function drawConstellationsSimple(opts_general, opts, chosen_culture) {
     ///////////// Clip away the constellation lines in a circle around each star /////////////
     //////////////////////////////// Draw donuts around stars ////////////////////////////////
 
-    if(chart_id !== "header") drawStarDonuts(ctx, projection, star_by_id, chosen_lines, opts_general.radius_scale, opts_general.type_geo)
+    if(chart_id !== "header") drawStarDonuts(ctx, projection, opts.star_by_id, chosen_lines, opts_general.radius_scale, opts_general.type_geo)
         
     return canvas
     

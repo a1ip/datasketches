@@ -1,6 +1,7 @@
 :root {
     --body-max-width: 1000px;
     --title-font: 'Glass Antiqua', cursive;
+    --body-font: 'Poppins', sans-serif;
     --color-red: #D80833;
 }
 
@@ -11,7 +12,7 @@ html {
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--body-font);
     /* font-family: 'Muli', sans-serif; */
     padding: 0;
     margin: 0;
@@ -137,21 +138,32 @@ a, a:link, a:visited, a:active {
     grid-template-columns: 1fr;
 }
 
-#header-background {
-    background-color: #001540;
-    z-index: -3;
-    grid-column: 1 / -1;
-    grid-row: 1;
-    justify-self: stretch;
-    align-self: stretch;
-}
-
 #chart-header {
     grid-column: 1 / -1;
     grid-row: 1;
     justify-self: center;
     align-self: center;
     z-index: -1;
+    /* height: 500px; */
+}
+
+#chart-header .background {
+    /* overflow: hidden; */
+    position: absolute;
+    top: 0;
+    /* left: -25%; */
+    /* height: 100%; */
+    /* width: 150%;  */
+    /* transform: translateX(calc(var(--mouse-header-x) * 1px)); */
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #001540;
+    background-image: url("../img/full-sky-map/full-sky-header-2x-min.png");
+    background-position-x: calc(var(--mouse-header-x) * 1px);
+    background-position-y: top;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
 }
 
 #chart-header canvas {
@@ -236,7 +248,6 @@ a, a:link, a:visited, a:active {
 }
 
 .chart-circular canvas {
-    /* z-index: -1; */
     pointer-events: none;
 }
 
@@ -244,14 +255,37 @@ a, a:link, a:visited, a:active {
     overflow: visible;
 }
 
+.chart-circular-mini-map-circle {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    cursor: pointer;
+    pointer-events: all;
+}
+.chart-circular-mini-map-name-path {
+    fill: none;
+    pointer-events: none;
+}
+
 .chart-circular-mini-map-culture {
     font-family: var(--title-font);
     font-size: 14px;
+    text-anchor: middle;
+    fill: currentColor;
+    pointer-events: none;
+}
+.chart-circular-mini-map-name {
+    font-size: 9px;
+    text-anchor: middle;
+    fill: currentColor;
+    letter-spacing: 0.03em;
+    text-transform: lowercase;
+    font-style: italic;
+    pointer-events: none;
 }
 
 .chart-circular-title {
     font-size: 14px;
-    /* fill: #001540; */
 }
 
 .chart-circular-star-title {
@@ -415,6 +449,52 @@ a, a:link, a:visited, a:active {
     }
 }
 
+/* ---------- SECTION | STATISTICAL CHARTS ---------- */
+
+#section-chart-stats {
+    position: relative;
+    max-width: var(--body-max-width);
+    margin: 10px auto 10px auto;
+    padding: 10px 20px;
+    /* height: 940px; */
+    display: grid;
+    grid-template-columns: 66% auto;
+    grid-column-gap: 10px;
+}
+
+.chart-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.chart-stats canvas, .chart-stats svg {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.chart-stats-title {
+    text-anchor: middle;
+}
+
+.chart-stats-axis-title {
+    font-family: var(--body-font);
+    fill: #000;
+    font-size: 12px;
+    text-transform: lowercase;
+}
+
+.chart-stats .axis text {
+    font-family: var(--body-font);
+}
+
+.chart-stats .axis .tick text {
+    fill: #707070;
+}
+
+.chart-stats .axis line, .chart-stats .axis path {
+    stroke: #cacaca;
+}
+
 /* ---------- SECTION | FULL CONSTELLATIONS SKY MAP ---------- */
 
 #section-text-chosen-culture {
@@ -428,26 +508,51 @@ a, a:link, a:visited, a:active {
 }
 
 #section-constellations {
-    background-color: #001540;
     position: relative;
     text-align: center;
     margin-bottom: 0px;
     width: 100%;
-    height: 670px; /* 650 + 2 * 10px border */
+    height: 650px; 
     overflow-x: hidden;
     text-align: center;
 }
 
-#chart-constellations {
-    margin: 20px 0;
+#chart-constellations #constellations-background {
+    background-color: #001540;
+    background-image: url("../img/full-sky-map/full-sky-map-2x-min.png");
+}
+#chart-constellations #constellations-border-div {
+    height: 630px; /* 650 + 2 * 10px border */
+    color: #D80533;
+    border-top: 10px solid currentColor;
+    border-bottom: 10px solid currentColor;
+}
+
+#chart-constellations .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    background-position-x: calc(var(--mouse-constellations-x) * 1px);
+    background-position-y: top;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+
 }
 
 #chart-constellations canvas {
+    display: none;
     overflow: hidden;
     position: absolute;
     top: 0;
-    left: -25%;
-    transform: translateX(calc(var(--mouse-constellations-x) * 1px));
+    left: 0;
+    /* left: -25%; */
+    /* transform: translateX(calc(var(--mouse-constellations-x) * 1px)); */
+    /* color: #D80533;
+    border-top: 10px solid currentColor;
+    border-bottom: 10px solid currentColor; */
 }
 
 /* ---------- SECTION | CULTURE EXPLANATIONS ---------- */

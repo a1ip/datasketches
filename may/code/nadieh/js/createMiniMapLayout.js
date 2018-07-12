@@ -291,7 +291,7 @@ function smallMapClick(d, opts_data) {
     d3.select("#betelgeuse-note").style("display", d.proper === "Betelgeuse" ? "none" : "inline")
 
     //Fade in the group to hide the map and remove some elements from the Orion map
-    d3.selectAll("#canvas-orion, #canvas-mini-orion, #svg-orion .chart-circular-title-group, #svg-orion .chart-circular-mini-map-circle").remove()
+    d3.selectAll("#canvas-orion, #canvas-mini-orion, #svg-orion .chart-circular-title-group, #svg-orion .chart-circular-mini-map-group").remove()
     const fade_group = d3.select("#svg-orion .chart-circular-hide-group")
         .style("opacity", 1)
     fade_group.select(".chart-circular-text-name")

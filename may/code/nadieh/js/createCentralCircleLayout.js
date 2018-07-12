@@ -89,7 +89,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     ////////////////////////////// Create center ///////////////////////////////
 
     //Get all of the constellations that include the chosen star
-    constellations = const_per_star
+    constellations = opts_data.const_per_star
         .filter(d => d.star_id === focus.hip)
         .map(d => d.const_id)
         .sort()
@@ -116,8 +116,8 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     //Figure out the sizes of the mini constellations-only circles around the central big one
     let n_const = constellations.length
     let angle = pi / n_const
-    let padding = 40
-    let padding_center = 35
+    let padding = 60
+    let padding_center = 60
     let r = Math.min(90, ((center_size/2 - padding) * Math.sin(angle))/(1 - Math.sin(angle)))
     let rR = center_size/2 - padding + r + padding_center
 
@@ -135,36 +135,56 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
 
         //Create the circle and text on the svg
         let const_color = cultures[constellationCulture(chosen_const)].color
-        svg.append("path")
+
+        let const_text_group = svg.append("g")
+            .attr("class", "chart-circular-mini-map-group")
+            .style("color", const_color)
+
+        //Circle and the path for the culture title
+        const_text_group.append("path")
             .datum(chosen_const)
             .attr("class", "chart-circular-mini-map-circle")
-            .attr("id", "chart-mini-map-path-" + map_id + "-" + i)
+            .attr("id", `chart-mini-map-path-${map_id}-${i}`)
             .attr("d", () => {
-                let rad = r * size_factor// + stroke_w/2
+                let rad = r * size_factor
                 let cx = x + width/2 + margin.left
                 let cy = y + height/2 + margin.top
                 return "M " + [cx, cy + rad] + " A " + [rad, rad] + " 0 1 1 " + [cx + 0.01, cy + rad] 
             })
-            .style("fill", "none")
-            // .style("fill-opacity", 0.5)
-            .style("stroke", const_color)
             .style("stroke-width", stroke_w)
-            .style("cursor", "pointer")
-            .style("pointer-events", "all")
-            // .style("opacity",0)
             .on("click", switchSkyMapCenter)
 
-        //Draw the text on top
-        svg.append("text")
+        //Draw the culture name on the path
+        const_text_group.append("text")
             .attr("class", "chart-circular-mini-map-culture")
-            .attr("dy", -6)
+            .attr("dy", -5)
             .append("textPath")
-            .attr("xlink:href", "#chart-mini-map-path-" + map_id + "-" + i)
+            .attr("xlink:href", `#chart-mini-map-path-${map_id}-${i}`)
             .attr("startOffset", "50%")
-            .style("text-anchor", "middle")
-            .style("fill", const_color)
             .text(constellationCultureCap(chosen_const))
-    })
+
+        if(r * size_factor > 45) {
+            //Create the path for the constellation name
+            const_text_group.append("path")
+                .attr("class", "chart-circular-mini-map-name-path")
+                .attr("id", `chart-mini-map-name-path-${map_id}-${i}`)
+                .attr("d", () => {
+                    let rad = r * size_factor
+                    let cx = x + width/2 + margin.left
+                    let cy = y + height/2 + margin.top
+                    return "M " + [cx, cy - rad] + " A " + [rad, rad] + " 0 1 0 " + [cx + 0.01, cy - rad] 
+                })
+
+            //Add the constellation name to the path
+            const_text_group.append("text")
+                .attr("class", "chart-circular-mini-map-name")
+                .attr("dy", 11)
+                .append("textPath")
+                .attr("xlink:href", `#chart-mini-map-name-path-${map_id}-${i}`)
+                .attr("startOffset", "50%")
+                .text(opts_data.const_names[opts_data.const_names.map(c => c.const_id).indexOf(chosen_const)].const_name)
+        }//if
+    })//breathe constellations
 
     //Function to create, downscale and draw the mini constellation charts
     function miniMapsCircle(ctx, focus, chosen_const, loc) {
