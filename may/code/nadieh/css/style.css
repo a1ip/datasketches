@@ -228,6 +228,18 @@ a, a:link, a:visited, a:active {
     align-self: center;
 }
 
+#canvas-orion {
+    z-index: -1;
+}
+#canvas-mini-orion {
+    z-index: 1;
+    -webkit-transform: translate3d(0,0,0);
+}
+#svg-orion {
+    z-index: 0;
+    -webkit-transform: translate3d(0,0,0);
+}
+
 /* ---------- GENERAL | CIRCULAR CHART LAYOUT ---------- */
 
 .section-circular-chart {
@@ -523,7 +535,7 @@ a, a:link, a:visited, a:active {
 }
 #chart-constellations #constellations-border-div {
     height: 630px; /* 650 + 2 * 10px border */
-    color: #D80533;
+    color: var(--color-red);
     border-top: 10px solid currentColor;
     border-bottom: 10px solid currentColor;
 }
@@ -553,6 +565,10 @@ a, a:link, a:visited, a:active {
     /* color: #D80533;
     border-top: 10px solid currentColor;
     border-bottom: 10px solid currentColor; */
+}
+
+.chosen-culture-title {
+    color: var(--color-red);
 }
 
 /* ---------- SECTION | CULTURE EXPLANATIONS ---------- */

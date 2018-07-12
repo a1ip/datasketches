@@ -85,7 +85,8 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         culture: "western",
         center: [0, 0], //ra in hours dec in degrees
         scale: 250,
-    }  
+    }
+    //Add the mouseover move effect
     rectangularMoveEffect("header","image") 
 
     ////////////////////////// Orion mini circles //////////////////////////
@@ -126,25 +127,18 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     ////////////////////////// Small multiple charts //////////////////////////
     createSmallMultipleLayout(opts_data, "image")
 
-    ///////////////////////////////////////////////////////////////////////////
-    //////////////////////// Create Statistical chart /////////////////////////
-    ///////////////////////////////////////////////////////////////////////////
-
+    ////////////////////////// Statistical charts //////////////////////////
     createStatChartStars("stats-stars", 30, 600, 450, stars)
     createStatChartCultures("stats-cultures", 10, 330, 450, cultures)
 
     ////////////////////////// Culture rectangular sky map //////////////////////////
     chosen_culture = "hawaiian_starlines"
-    // chosen_culture = culture_names[Math.floor(Math.random() * culture_names.length)]
     let focus_culture = {
         culture: chosen_culture,
         center: [0, 0], //ra in hours dec in degrees
         scale: 250,
     }
 
-    d3.selectAll(".chosen-culture-title")
-        .style("color", cultures[chosen_culture].color)
-        .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
     //Set the colors on the culture divs
     setCultureDivColors(chosen_culture)
 
@@ -257,7 +251,7 @@ function createStatChartStars(map_id, m, w, h, stars) {
 
     ctx.globalAlpha = 1
     ctx.globalCompositeOperation = "multiply"
-    ctx.shadowBlur = 8
+    ctx.shadowBlur = 4
 
     stars.forEach(d => {
         if(d.constellations === 0 || d.mag > 6.5) return
@@ -388,7 +382,7 @@ function constellationCultureCap(s) {
 
 ////////////////// Retina non-blurry canvas //////////////////
 function crispyCanvas(canvas, ctx, total_width, total_height, offscreen, offset_x) {
-    sf = 2 //Math.min(2, getPixelRatio(ctx)) //no more than 2
+    sf = Math.min(2, getPixelRatio(ctx)) //no more than 2
     if(screen.width < 500) sf = 1 //for small devices, 1 is enough
 
     if(!offscreen) {

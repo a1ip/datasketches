@@ -86,7 +86,7 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
         // canvas.style("color", cultures[chosen_culture].color)
 
         d3.selectAll(".culture-info-wrapper")
-            .on("click", function() {
+            .on("click touchstart", function() {
                 let el = d3.select(this).select(".culture-info")
                 //Get the new chosen culture
                 chosen_culture = el.attr("id").replace("culture-","")

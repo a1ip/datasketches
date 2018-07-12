@@ -2,7 +2,9 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
 
     let current_center_const = "all" //constellation (group) currently visible in the center
     let constellations, chosen_const
+    let const_names = opts_data.const_names
     let location
+    let timeout_switch
 
     ////////////////////////////// Set sizes ///////////////////////////////
 
@@ -22,7 +24,6 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     const canvas = d3.select("#chart-" + map_id).append("canvas")
         .attr("id", "canvas-" + map_id)
         .attr("class", "canvas-circular")
-        .style("z-index", -1)
     const ctx = canvas.node().getContext("2d")
     crispyCanvas(canvas, ctx, total_width, total_height, 0)
 
@@ -40,9 +41,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         .attr("class", "svg-circular")
         .attr("width", total_width)
         .attr("height", total_height)
-        // .append("g")
-        //.attr("transform", "translate(" + [margin.left, margin.top] + ")")
-    
+
     //A group for the fade-out / fade-in group when an outside mini map is clicked
     const fade_group = svg.append("g")
         .attr("class", "chart-circular-hide-group")
@@ -52,7 +51,10 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         .attr("width", total_width)
         .attr("height", total_height)
         .style("fill", "white")
-        .on("click", () => { switchSkyMapCenter("body") })
+        .on("click", () => {
+            clearTimeout(timeout_switch)
+            timeout_switch = setTimeout(() => switchSkyMapCenter("body"), 200)
+        })
     //Append text in the middle
     fade_group.append("text")
         .attr("class", "chart-circular-text")
@@ -130,8 +132,8 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         let y = rR * Math.sin((i) * 2*angle - pi1_2)
         let location = {x: x + width/2 + margin.left - r, y: y + height/2 + margin.top - r, width: 2*r, height: 2*r}
 
-        //Create and draw the map on the canvas
         miniMapsCircle(ctx_mini, focus, chosen_const, location)
+        //Create and draw the map on the canvas
 
         //Create the circle and text on the svg
         let const_color = cultures[constellationCulture(chosen_const)].color
@@ -152,7 +154,11 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
                 return "M " + [cx, cy + rad] + " A " + [rad, rad] + " 0 1 1 " + [cx + 0.01, cy + rad] 
             })
             .style("stroke-width", stroke_w)
-            .on("click", switchSkyMapCenter)
+            .on("click touchstart", d => {
+                d3.event.stopPropagation()
+                clearTimeout(timeout_switch)
+                timeout_switch = setTimeout(() => switchSkyMapCenter(d), 200)
+            })
 
         //Draw the culture name on the path
         const_text_group.append("text")
@@ -182,7 +188,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
                 .append("textPath")
                 .attr("xlink:href", `#chart-mini-map-name-path-${map_id}-${i}`)
                 .attr("startOffset", "50%")
-                .text(opts_data.const_names[opts_data.const_names.map(c => c.const_id).indexOf(chosen_const)].const_name)
+                .text(const_names[const_names.map(c => c.const_id).indexOf(chosen_const)].const_name)
         }//if
     })//breathe constellations
 
@@ -224,41 +230,46 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
 
     //Switch the star map in the middle to the clicked on constellation
     function switchSkyMapCenter(d) {
-        d3.event.stopPropagation()
         let chosen
 
         //Don't do anything if the click comes not from a mini-map and the central map is already all
         if(d === "body" && current_center_const === "all") return
         
-        if (d !== "body" && d !== current_center_const) {
+        if(d !== "body" && d !== current_center_const) {
             //If the same circle isn't clicked twice in a row, change to the new mini map
             chosen = d
             current_center_const = d
+
             //Update central text
             svg_text_culture
                 .style("fill", cultures[constellationCulture(d)].color)
                 .text(constellationCultureCap(d))
+            //Update the constellation name
             let const_name = const_names[const_names.map(c => c.const_id).indexOf(d)].const_name
             svg_text_const_name.text(const_name)
+
             //Change the thick stroke of the chosen constellation
             svg.selectAll(".chart-circular-mini-map-circle")
                 .transition("stroke").duration(600)
-                .style("stroke-width", c => (c === d ? 3 : 1) * stroke_w)
+                .style("stroke-width", c => ((c === d ? 3 : 1) * stroke_w) + "px")
         } else {
             //If the same one is clicked again, go back to "all"
             chosen = chosen_const
             current_center_const = "all"
+
             //Update central text
             svg_text_culture.text("")
             svg_text_const_name.text("all cultures")
+
             //Remove the thicker stroke
             svg.selectAll(".chart-circular-mini-map-circle")
                 .transition("stroke").duration(600)
-                .style("stroke-width", stroke_w)
+                .style("stroke-width", stroke_w + "px")
         }//else
 
         //Fade the center in and out 
-        fade_group.transition("fade").duration(600)
+        fade_group
+            .transition("fade").duration(600)
             .style("opacity", 1)
             .on("end", function() {
                 //Draw the new map
@@ -268,6 +279,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
                     .transition("fade").duration(600).delay(1000)
                     .style("opacity", 0)
             })
+
     }//function switchSkyMapCenter
 
 }//function createCentralCircleLayout
