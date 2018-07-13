@@ -465,23 +465,25 @@ a, a:link, a:visited, a:active {
 
 #section-chart-stats {
     position: relative;
-    max-width: var(--body-max-width);
+    width: calc(var(--body-max-width) - 2 * 20px);
     margin: 10px auto 10px auto;
     padding: 10px 20px;
     /* height: 940px; */
-    display: grid;
-    grid-template-columns: 66% auto;
-    grid-column-gap: 10px;
 }
 
 .chart-stats {
     display: grid;
     grid-template-columns: 1fr;
+    justify-items: center;
 }
 
 .chart-stats canvas, .chart-stats svg {
     grid-column: 1;
     grid-row: 1;
+}
+
+#svg-stats-cultures {
+    overflow: visible;
 }
 
 .chart-stats-title {
@@ -505,6 +507,36 @@ a, a:link, a:visited, a:active {
 
 .chart-stats .axis line, .chart-stats .axis path {
     stroke: #cacaca;
+}
+
+.annotations {
+    pointer-events: none;
+}
+
+.annotation-note-title {
+    fill: black;
+    font-size: 14px;
+}
+
+.annotation-note-label {
+    font-size: 12px;
+    fill: black;
+}
+
+.annotation-subject path {
+    stroke-linecap: round;
+    stroke-dasharray: 0,5;
+    stroke-width: 2.5px;
+    stroke: #d6d6d6;
+}
+
+.circle-hide .annotation-subject path {
+    display: none;
+}
+
+.annotation-connector path, .annotation-note path {
+    stroke: #d6d6d6;
+    stroke-width: 1.5px;
 }
 
 /* ---------- SECTION | FULL CONSTELLATIONS SKY MAP ---------- */
@@ -532,6 +564,9 @@ a, a:link, a:visited, a:active {
 #chart-constellations #constellations-background {
     background-color: #001540;
     background-image: url("../img/full-sky-map/full-sky-map-2x-min.png");
+}
+#chart-constellations #constellations-lines {
+    background-image: url("../img/full-sky-map/full-sky-map-hawaiian-2x-min.png");
 }
 #chart-constellations #constellations-border-div {
     height: 630px; /* 650 + 2 * 10px border */

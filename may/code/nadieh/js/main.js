@@ -63,8 +63,8 @@ cultures["tupi"] = {culture: "tupi", color: "#55B558", count: 7, mean_stars: 21.
 cultures["western"] = {culture: "western", color: "#7EB852", count: 88, mean_stars: 7.90}
 
 //Create array with all culture names
-let culture_names = []
-for(culture in cultures) culture_names.push(culture)
+let culture_names = d3.keys(cultures)
+// for(culture in cultures) culture_names.push(culture)
 
 function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_star, zodiac) {
 
@@ -128,8 +128,10 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     createSmallMultipleLayout(opts_data, "image")
 
     ////////////////////////// Statistical charts //////////////////////////
-    createStatChartStars("stats-stars", 30, 600, 450, stars)
-    createStatChartCultures("stats-cultures", 10, 330, 450, cultures)
+
+    createStatChartStars("stats-stars", stars)
+
+    //createStatChartCultures("stats-cultures", 30, 330, 450, cultures)
 
     ////////////////////////// Culture rectangular sky map //////////////////////////
     chosen_culture = "hawaiian_starlines"
@@ -182,20 +184,22 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
 }//function setupStarMaps
 
 
-function createStatChartStars(map_id, m, w, h, stars) {
+function createStatChartStars(map_id, stars) {
 
     ////////////////////////////// Set sizes ///////////////////////////////
-    let margin = { left: m, top: m, right: m, bottom: m }
-    let width = w
-    let height = h
-    let total_width = margin.left + width + margin.right
-    let total_height = margin.top + height + margin.bottom
+    let total_width = document.getElementById("chart-" + map_id).offsetWidth - 2 * 20
+    let margin = { left: 40, top: 60, right: 200, bottom: 40 }
+    // let margin = { left: 0, top: 0, right: 200, bottom: 40 }
+    let width = total_width - margin.left - margin.right
+    let total_height = Math.round(width * 0.8)
+    let height = total_height - margin.top - margin.bottom
 
     ////////////////////////////// Create canvas ///////////////////////////////
     const canvas = d3.select("#chart-" + map_id).append("canvas")
         .attr("id", "canvas-" + map_id)
         .attr("class", "canvas-circular")
-        .style("z-index", 2)
+        .style("z-index", -1)
+        .style("pointer-events", "none")
     const ctx = canvas.node().getContext("2d")
     crispyCanvas(canvas, ctx, total_width, total_height, 0)
     ctx.translate(margin.left, margin.top)
@@ -208,9 +212,10 @@ function createStatChartStars(map_id, m, w, h, stars) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-    ////////////////////////////// Create svg ///////////////////////////////
-    const x_jitter = d3.randomUniform(-0.2, 0.2)
-    const y_jitter = d3.randomUniform(-0.5, 0.5)
+    ////////////////////////////// Create scales ///////////////////////////////
+    Math.seedrandom('a13219765bc7c488a3a47') //Produce the same results always
+    // const y_jitter = d3.randomUniform(-0.5, 0.5)
+    const y_jitter = d3.randomUniform(-0.01, 0.01)
 
     const x_scale = d3.scaleLinear() //mag
         .domain([6.5, -1.5])
@@ -222,17 +227,66 @@ function createStatChartStars(map_id, m, w, h, stars) {
 
     const r_scale = d3.scaleSqrt()
         .domain([10, -15])
-        .range([0, 5])
+        .range([1, 5])
         .clamp(true)
 
-    // //Colors of the stars based on their effective temperature
-    // //https://gka.github.io/chroma.js/
-    // const star_colors = ["#9db4ff","#aabfff","#cad8ff","#fbf8ff","#fff4e8","#ffddb4","#ffbd6f","#f84235","#AC3D5A","#5A4D6E"]
-    // const star_temperatures = [30000,20000,8500,6800,5600,4500,3000,2000,1000,500]
-    // const star_color_scale = chroma
-    //     .scale(star_colors)
-    //     .domain(star_temperatures)
+    ////////////// Add voronoi hover //////////////
 
+    const voronoi = d3.voronoi()
+        // .extent([[0,0], [width, height]])
+        .x(d => x_scale(d.mag))
+        .y(d => y_scale(d.constellations))
+
+    let diagram = voronoi(stars)
+
+    function moved() {
+        let m = d3.mouse(this)
+        let found = diagram.find(m[0], m[1], 5)
+        if(found) {
+            found = found.data
+            console.log(found.hip, found.proper, found.mag, found.constellations, found.absmag)
+
+            if(found.proper !== "") star_name.text("That's " + focus.proper)
+            else star_name.text("No 'fancy' star name known")
+
+            star_hip_id.text("HIP id: " + focus.hip)
+            star_constellation.text("Found in the constellation area of" + focus.constellation)
+
+        }//if
+    }//function moved
+
+    //Add rect that will capture the mouse event
+    svg.append("rect")
+        .attr("class", "hover-rect")
+        .attr("x", -margin.left)
+        .attr("y", -margin.top)
+        .attr("width", total_width)
+        .attr("height", total_height)
+        .style("fill", "none")
+        .style("pointer-events", "all")
+        .on("mousemove", moved)
+
+    //Create an info group to show on hover
+    let info_group = svg.append("g").attr("class", "info-group")
+        .attr("transform", "translate(" + [width, height - 200] + ")")
+
+    // let star_name = info_group.append("text")
+    //     .attr("id", "info-group-star-name")
+    //     .attr("class", "info-group-text")
+    //     .attr("y", 0)
+    //     .attr("dy", "0.35em")
+    //     .text("That's Betelgeuse")
+
+    // let star_hip_id = info_group.append("text")
+    //     .attr("id", "info-group-star-hip-id")
+    //     .attr("class", "info-group-text")
+    //     .attr("y", 20)
+    //     .attr("dy", "0.35em")
+    //     .text("HIP id: 409913")
+
+    //constellation area
+
+    ////////////////////////////// Create color scale ///////////////////////////////
     var star_colors_yor = ["#F6E153", "#EFB605", "#F7980C", "#F2691B", "#E6330A", "#D3351D", "#AC3D5A", "#5A4D6E"]
     var star_temperatures_yor = [6510, 6000, 5000, 4000, 3000, 2000, 1000, 500]
     var color_scale_yor = chroma.scale(star_colors_yor)
@@ -256,7 +310,7 @@ function createStatChartStars(map_id, m, w, h, stars) {
     stars.forEach(d => {
         if(d.constellations === 0 || d.mag > 6.5) return
 
-        let x = x_scale(d.mag + x_jitter())
+        let x = x_scale(d.mag)
         let y = y_scale(d.constellations + y_jitter())
         let r = r_scale(d.absmag)
 
@@ -285,25 +339,15 @@ function createStatChartStars(map_id, m, w, h, stars) {
         .attr("class", "axis x")
         .attr("transform", "translate(0 " + height + ")")
         .call(d3.axisBottom(x_scale)
-            .ticks(2))
+            .ticks(10))
     x_axis.selectAll(".tick").remove()
 
     let y_axis = svg.append("g") //y scale - num constellations
         .attr("class", "axis y")
-        .call(d3.axisLeft(y_scale)
-            .ticks(5)
-            //.tickFormat(d3.format("$,.0s"))
-        )
+        .call(d3.axisLeft(y_scale).ticks(4))
     y_axis.selectAll("path").remove()
 
     ////////////// Create titles //////////////
-
-    //Add chart title
-    svg.append("text")
-        .attr("class", "chart-stats-title")
-        .attr("x", width / 2)
-        .attr("y", -10)
-        .text("Explanatory chart title")
 
     //Add x title
     x_axis.selectAll(".chart-stats-axis-title")
@@ -318,11 +362,215 @@ function createStatChartStars(map_id, m, w, h, stars) {
     //Add y title
     y_axis.append("text")
         .attr("class", "chart-stats-axis-title")
-        // .attr("x", 0)
-        // .attr("y", 50)
-        .attr("transform", `translate(15,0)rotate(-90)`)
-        .text("No. of constellations")
+        .attr("x", -20)
+        .attr("y", 15)
+        .attr("text-anchor","start")
+        .text("No. of")
+    y_axis.append("text")
+        .attr("class", "chart-stats-axis-title")
+        .attr("x", -20)
+        .attr("y", 27)
+        .attr("text-anchor","start")
+        .text("constellations")
 
+    ////////////// Add annotations //////////////
+
+    const annotationData = [
+        {
+            className: "orion-note",
+            note: {
+                title: "Orion's belt",
+                label: "The 3 stars that make up 'Orion's belt' are used in a constellation across most cultures. Some even more than once", 
+                wrap: 200 
+            },
+            data: {mag: 1.95, constellations: 32.3},
+            type: d3.annotationCalloutCircle,
+            dy: -1,
+            dx: 80,
+            subject: {
+                radius: 45,
+                radiusPadding: 5
+            }
+        },
+        {
+            className: "orion-note",
+            note: {
+                label: "Betelgeuse and Rigel, Orion's two bright corner stars", 
+                wrap: 180,
+                padding: 0
+            },
+            data: {mag: 0.315, constellations: 17.5},
+            type: d3.annotationCalloutCircle,
+            dy: -60,
+            dx: 40,
+            subject: {
+                radius: 28,
+                radiusPadding: 5
+            }
+        },
+        // {
+        //     className: "Aldebaran-note circle-hide",
+        //     note: {
+        //         label: "Aldebaran",
+        //         padding: 0
+        //     },
+        //     data: {mag: 0.87, constellations: 23},
+        //     type: d3.annotationCalloutCircle,
+        //     dy: -20,
+        //     dx: 20,
+        //     subject: {
+        //         radius: 8,
+        //         radiusPadding: 0
+        //     }
+        // },
+        {
+            className: "Dubhe-note circle-hide",
+            note: {
+                label: "Dubhe",
+                padding: 0
+            },
+            data: {mag: 1.81, constellations: 20},
+            type: d3.annotationCalloutCircle,
+            dy: -15,
+            dx: 15,
+            subject: {
+                radius: 8,
+                radiusPadding: 0
+            }
+        },
+        {
+            className: "sirius-note circle-hide",
+            note: {
+                title: "Sirius",
+                label: "The brightest star isn't used in constellations often; perhaps it needed brighter companion stars",
+                wrap: 160 
+            },
+            data: {mag: -1.44, constellations: 12.05},
+            type: d3.annotationCalloutCircle,
+            dy: -20,
+            dx: 30,
+            subject: {
+                radius: 10,
+                radiusPadding: 0
+            }
+        },
+        {
+            className: "pleiades-note circle-hide",
+            note: {
+                title: "Pleiades",
+                label: "These 9 tightly packed stars are used in constellations more often than expected for their brightness. Most likely due to their ease of recognition", 
+                wrap: 230 
+            },
+            data: {mag: 2.85, constellations: 19},
+            type: d3.annotationCalloutCircle,
+            dy: -75,
+            dx: -40,
+            subject: {
+                radius: 10,
+                radiusPadding: 0
+            }
+        },
+        {
+            className: "pleiades-note circle-hide",
+            note: {label: "" },
+            data: {mag: 5.76, constellations: 8},
+            type: d3.annotationCalloutCircle,
+            dy: -208,
+            dx: 0,
+            subject: {
+                radius: 10,
+                radiusPadding: 0
+            }
+        },
+        {
+            className: "pleiades-note circle-hide",
+            note: {label: "" },
+            data: {mag: 5.45, constellations: 8},
+            type: d3.annotationCalloutCircle,
+            dy: -208,
+            dx: 0,
+            subject: {
+                radius: 10,
+                radiusPadding: 0
+            }
+        },
+        {
+            className: "pleiades-note circle-hide",
+            note: {label: "" },
+            data: {mag: 5.05, constellations: 7},
+            type: d3.annotationCalloutCircle,
+            dy: -221,
+            dx: -15,
+            subject: {
+                radius: 10,
+                radiusPadding: 0
+            }
+        },
+        {
+            className: "pleiades-note circle-hide",
+            note: {label: "" },
+            data: {mag: 3.87, constellations: 9},
+            type: d3.annotationCalloutCircle,
+            dy: -195,
+            dx: -80,
+            subject: {
+                radius: 10,
+                radiusPadding: 0
+            }
+        },
+        {
+            className: "pleiades-note circle-hide",
+            note: {label: "" },
+            data: {mag: 4.3, constellations: 18},
+            type: d3.annotationCalloutCircle,
+            dy: -81,
+            dx: -15,
+            subject: {
+                radius: 10,
+                radiusPadding: 0
+            }
+        },
+        {
+            className: "pleiades-note circle-hide",
+            note: {label: "" },
+            data: {mag: 4.14, constellations: 20},
+            type: d3.annotationCalloutCircle,
+            dy: -55,
+            dx: 0,
+            subject: {
+                radius: 10,
+                radiusPadding: 0
+            }
+        },
+
+        {
+            className: "pleiades-note",
+            note: {label: ""},
+            data: {mag: 3.67, constellations: 22},
+            type: d3.annotationCalloutCircle,
+            dy: -30,
+            dx: -20,
+            subject: {
+                radius: 15,
+                radiusPadding: 4
+            }
+        },
+    ]
+
+    //Set-up the annotation
+    const makeAnnotations = d3.annotation()
+        // .editMode(true)
+        .accessors({
+            x: d => x_scale(d.mag),
+            y: d => y_scale(d.constellations)
+        })
+        .notePadding(3)
+        .annotations(annotationData)
+
+    //Create the annotation
+    svg.append("g")
+        .attr("class", "annotation-group")
+        .call(makeAnnotations)
 }//function createStatChartStars
 
 
@@ -330,20 +578,11 @@ function createStatChartStars(map_id, m, w, h, stars) {
 function createStatChartCultures(map_id, m, w, h, cultures) {
 
     ////////////////////////////// Set sizes ///////////////////////////////
-    let margin = { left: m, top: m, right: m, bottom: m }
+    let margin = { left: 70, top: m, right: 10, bottom: m }
     let width = w
     let height = h
-    let total_width = margin.left + width + margin.right
-    let total_height = margin.top + height + margin.bottom
-
-    // ////////////////////////////// Create canvas ///////////////////////////////
-    // const canvas = d3.select("#chart-" + map_id).append("canvas")
-    //     .attr("id", "canvas-" + map_id)
-    //     .attr("class", "canvas-circular")
-    //     .style("z-index", 2)
-    // const ctx = canvas.node().getContext("2d")
-    // crispyCanvas(canvas, ctx, total_width, total_height, 0)
-    // ctx.translate(margin.left, margin.top)
+    // let total_width = margin.left + width + margin.right
+    // let total_height = margin.top + height + margin.bottom
 
     ////////////////////////////// Create svg ///////////////////////////////
     const svg = d3.select("#chart-" + map_id).append("svg")
@@ -352,6 +591,40 @@ function createStatChartCultures(map_id, m, w, h, cultures) {
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+    ////////////////////////////// Create scales ///////////////////////////////
+    let x_scale = d3.scaleLinear()
+        .domain([0, 25])
+        .rangeRound([0, width])
+
+    let y_scale = d3.scaleBand()
+        .domain(culture_names.map(d => constellationCultureCap(d)))
+        .rangeRound([0, height])
+        .padding(0.1)
+
+    ////////////// Create axes //////////////
+
+    let x_axis = svg.append("g") //x scale - the average
+        .attr("class", "axis x")
+        .attr("transform", "translate(0 " + height + ")")
+        .call(d3.axisBottom(x_scale).ticks(3))
+    
+    let y_axis = svg.append("g") //y scale - cultures
+        .attr("class", "axis y")
+        .call(d3.axisLeft(y_scale))
+    y_axis.selectAll(".tick line, path").remove()
+
+    ////////////// Create bars //////////////
+
+    svg.selectAll(".bar")
+        .data(d3.values(cultures))
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", 0)
+        .attr("y", d => y_scale(constellationCultureCap(d.culture)))
+        .attr("width", d => x_scale(d.mean_stars))
+        .attr("height", y_scale.bandwidth())
+        .style("fill", d => d.color)
 
 }//function createStatChartCultures
 

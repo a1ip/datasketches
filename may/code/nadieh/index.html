@@ -34,9 +34,11 @@
     <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
     <script src="plugins/d3.min.js"></script>
     <script src="plugins/d3-contour.v1.min.js"></script>
+    <script src="plugins/d3-annotation.min.js"></script>
     <!-- <script src="../../../plugins/lodash.min.js"></script> -->
     <!-- TODO: Only used for _.uniq() now so maybe create simple replacement function ? -->
-	<script src="plugins/lodash.min.js"></script>
+    <script src="plugins/lodash.min.js"></script>
+    <script src="plugins/seedrandom.min.js"></script>
     <!-- <script src="../../../plugins/d3-annotation.min.js"></script> -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script> -->
     <script src="plugins/webfont.js"></script>
@@ -165,10 +167,7 @@
     <section id="section-chart-stats">
         <div class="chart-container-stats">
             <div id="chart-stats-stars" class="chart-stats"></div>
-        </div>
-        <div class="chart-container-stats">
-            <div id="chart-stats-cultures" class="chart-stats"></div>
-        </div>    
+        </div> 
     </section>
 
     <!-- Text Full Sky Map -->
@@ -491,6 +490,7 @@
                     d.ra = +d.ra
                     d.dec = +d.dec
                     d.mag = +d.mag
+                    d.absmag = +d.absmag
                     d.t_eff = +d.t_eff
                     d.constellations = +d.constellations
                 })//forEach
