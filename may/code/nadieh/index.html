@@ -54,6 +54,7 @@
 	<script src="js/drawStars.js"></script>
 	<script src="js/setupStereographicProjection.js"></script>
 	<script src="js/setupCircularSkyMap.js"></script>
+	<script src="js/createStatisticalChart.js"></script>
 	<script src="js/createStraightSkyMapLayout.js"></script>
 	<!-- <script src="js/createStraightSkyMapLayoutFullCanvas.js"></script> -->
 	<script src="js/createCentralCircleLayout.js"></script>
@@ -159,15 +160,19 @@
 
     <!-- Text Intro to stats -->
     <section id="section-text-stats" class="section-text">
-        <h2>Some title with Sky</h2>
-        <p>Intro text to stats part</p>
+        <h2>Brightness doesn't determine all in the sky</h2>
+        <p class="sidenote">Several of the sky cultures are "incomplete"; not all constellations are known today. Nevertheless, the trend of "the brighter, the more constellations" is apparent in the chart below</p>
+        <p>Looking at all ±2200 unique stars that are included in at least one constellation of the <a href="#sky-cultures">sky cultures</a> shows a general trend: The brighter the star, the more constellations it's included in. This makes sense, since brighter stars just stand out more.</p>
+        <p>Some stars stand out because they "rise" from the general mass; they are included in constellations more often that you'd expect based on their brightness. Part of this could be due to a "good placement" so it's visible in many regions of the Earth. However. the main reason is that they are often included in an easy to recognize "shape" of stars, such as Orion's "belt", the Pleiades, the Corona Borealis and Taurus constellations for example.</p>
+        <p>And vice versa, several other stars "fall" from the trend and are used less often than expected for their brightness. This appears to be often due to the star being a bit of a loner. There is no group of close-by stars to form an "obvious shape" with, such as with Sirius.</p>
     </section>
 
     <!-- TODO Charts with some stats -->
     <section id="section-chart-stats">
-        <div class="chart-container-stats">
+        <div id="chart-container-stats">
             <div id="chart-stats-stars" class="chart-stats"></div>
-        </div> 
+        </div>
+        <p id="chart-stats-explanation-text">NOTE | Star colors have been exaggerated for better visibility. The sizes of the stars are (not-linearly) scaled to the <i>actual brightness</i> of the stars (called absolute magnitude).</p>
     </section>
 
     <!-- Text Full Sky Map -->

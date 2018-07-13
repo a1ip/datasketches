@@ -469,6 +469,21 @@ a, a:link, a:visited, a:active {
     margin: 10px auto 10px auto;
     padding: 10px 20px;
     /* height: 940px; */
+
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-column-gap: 1em;
+}
+
+#chart-container-stats {
+    grid-column: 1 / -1;
+}
+
+#chart-stats-explanation-text {
+    font-size: 12px;
+    color: #585858;
+    margin: 1em auto 0em auto;
+    grid-column: 4 / -1;
 }
 
 .chart-stats {
@@ -497,6 +512,11 @@ a, a:link, a:visited, a:active {
     text-transform: lowercase;
 }
 
+.chart-stats-axis-note {
+    font-size: 10px;
+    fill: #4c4c4c;
+}
+
 .chart-stats .axis text {
     font-family: var(--body-font);
 }
@@ -507,6 +527,28 @@ a, a:link, a:visited, a:active {
 
 .chart-stats .axis line, .chart-stats .axis path {
     stroke: #cacaca;
+}
+
+/* #chart-stats-note-div {
+    font-size: 10px;
+    color: #606060;
+} */
+
+#info-group-star-name {
+    fill: var(--color-red);
+    font-weight: 600;
+}
+
+#info-group-star-const-name{
+    font-size: 12px;
+    font-style: italic;
+    fill: #838383;
+}
+
+#info-group-star-hip-id {
+    font-size: 12px;
+    font-style: italic;
+    fill: #838383;
 }
 
 .annotations {
