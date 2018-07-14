@@ -1,3 +1,5 @@
+//TODO: Make lightbox out of the non-betelgeuse options?
+
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Constants ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -23,6 +25,7 @@ const size_factor = basemap_size / basemap_total_size
 
 const orion_m = 20
 const orion_size = 920
+let current_orion_map = "Betelgeuse"
 
 ///////////// Culture data /////////////
 
@@ -240,3 +243,9 @@ function toTitleCase(str) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
     })
 }//toTitleCase
+
+////////////////// Round to decimal //////////////////
+function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+}

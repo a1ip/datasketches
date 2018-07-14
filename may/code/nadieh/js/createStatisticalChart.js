@@ -26,9 +26,6 @@ function createStatChartStars(map_id, stars) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     ////////////////////////////// Create scales ///////////////////////////////
-    Math.seedrandom('a13219765bc7c488a3a47') //Produce the same results always
-    const y_jitter = d3.randomUniform(-0.01, 0.01)
-
     const x_scale = d3.scaleLinear() //mag
         .domain([6.5, -1.5])
         .range([0, width])
@@ -46,28 +43,48 @@ function createStatChartStars(map_id, stars) {
     const voronoi = d3.voronoi()
         .x(d => x_scale(d.mag))
         .y(d => y_scale(d.constellations))
-    let diagram = voronoi(stars)
+    let diagram = voronoi(stars.filter(d => d.constellations > 0))
     
-    let current_found = ""
+    let current_found = "betelgeuse"
     function moved() {
         let m = d3.mouse(this)
-        let found = diagram.find(m[0], m[1], 20)
+        let found = diagram.find(m[0], m[1], 15)
         if(found) {
             found = found.data
             if(current_found !== found) {
                 current_found = found
-                if(found.proper !== "") star_name.text("That's " + found.proper)
-                else star_name.text("That's a nameless star")
 
+                //Show the hover star
+                hover_star
+                    .attr("cx", x_scale(found.mag))
+                    .attr("cy", y_scale(found.constellations))
+                    .attr("r", r_scale(found.absmag))
+                    .style("fill", found.col)
+                hover_star_marker
+                    .attr("cx", x_scale(found.mag))
+                    .attr("cy", y_scale(found.constellations))
+                    .attr("r", r_scale(found.absmag) + 4)
+                hover_star_group.style("opacity", 1)
+
+                //Adjust the text
+                if(found.proper !== "") {
+                    star_name.text("That's " + found.proper)
+                    star_hip_id.text("HIP " + found.hip)
+                } else {
+                    star_name.text("That's HIP " + found.hip)
+                    star_hip_id.text("")
+                }//else
                 star_const_name.text("Found in the area of " + found.const_name)
-                star_hip_id.text("HIP " + found.hip)
-
+                //Reveal the info group in the bottom right
                 info_group
                     .transition("fade").duration(100)
                     .style("opacity", 1)
+
             }//if
         } else {
             current_found = ""
+            hover_star_group.style("opacity", 0)
+            //Hide the info group in the bottom right
             info_group
                 .transition("fade").duration(200)
                 .style("opacity", 0)
@@ -86,7 +103,8 @@ function createStatChartStars(map_id, stars) {
         .on("mousemove", moved)
 
     //Create an info group to show on hover
-    let info_group = svg.append("g").attr("class", "info-group")
+    let info_group = svg.append("g")
+        .attr("class", "info-group")
         .attr("transform", "translate(" + [width - 30, height - 70] + ")")
         .style("opacity", 0)
 
@@ -147,17 +165,17 @@ function createStatChartStars(map_id, stars) {
         if(d.constellations === 0 || d.mag > 6.5) return
 
         let x = x_scale(d.mag)
-        let y = y_scale(d.constellations + y_jitter())
+        let y = y_scale(d.constellations)
         let r = r_scale(d.absmag)
 
-        let col = "white"
+        d.col = "white"
         if(d.t_eff) {
             let color_scale = d.t_eff > 6510 ? color_scale_blue : color_scale_yor
-            col = color_scale(d.t_eff)
+            d.col = color_scale(d.t_eff)
         }//if
-        ctx.fillStyle = col
+        ctx.fillStyle = d.col
         //Create a glow around each star
-        ctx.shadowColor = col
+        ctx.shadowColor = d.col
 
         //Draw the circle
         ctx.beginPath()
@@ -414,6 +432,20 @@ function createStatChartStars(map_id, stars) {
     svg.append("g")
         .attr("class", "annotation-group")
         .call(makeAnnotations)
+
+    ////////////// Add hover star section //////////////
+
+    let hover_star_group = svg.append("g")
+        .attr("class", "hover-star-group")
+        .style("pointer-events","none")
+        // .style("opacity", 0)
+
+    let hover_star = hover_star_group.append("circle")
+        .attr("id", "hover-star")
+
+    let hover_star_marker = hover_star_group.append("circle")
+        .attr("id", "hover-star-marker")
+
 }//function createStatChartStars
 
 

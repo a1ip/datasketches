@@ -51,9 +51,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         .attr("width", total_width)
         .attr("height", total_height)
         .style("fill", "white")
-        .on("click", () => {
-            switchSkyMapCenter("body")
-        })
+        .on("click", () => { switchSkyMapCenter("body") })
     //Append text in the middle
     fade_group.append("text")
         .attr("class", "chart-circular-text")
@@ -106,6 +104,21 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         height: center_size
     }
     drawMap(opts_data, canvas, ctx, focus, chosen_const, location, "big")
+
+    //Add a circle there that shows a pointer
+    let central_path = svg.append("path")
+        .datum(constellations)
+        .attr("id", "chart-circular-mini-map-center")
+        .attr("class", "chart-circular-mini-map-circle")
+        .attr("d", () => {
+            let rad = center_size/2 * 0.85
+            let cx = width/2 + margin.left
+            let cy = height/2 + margin.top
+            return "M " + [cx, cy + rad] + " A " + [rad, rad] + " 0 1 1 " + [cx + 0.01, cy + rad] 
+        })
+        .style("stroke-opacity", 0)
+        .style("cursor", "default")
+        .on("click", () => { switchSkyMapCenter("body") })
 
     //Fade the center out 
     fade_group.transition("fade")
@@ -160,35 +173,37 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             })
 
         //Draw the culture name on the path
+        let font_size = (r * size_factor > 45 ? 14 : 12) 
         const_text_group.append("text")
             .attr("class", "chart-circular-mini-map-culture")
-            .attr("dy", -5)
+            .attr("dy", "-0.3em")
+            .style("font-size", font_size)
             .append("textPath")
             .attr("xlink:href", `#chart-mini-map-path-${map_id}-${i}`)
             .attr("startOffset", "50%")
             .text(constellationCultureCap(chosen_const))
 
-        if(r * size_factor > 45) {
-            //Create the path for the constellation name
-            const_text_group.append("path")
-                .attr("class", "chart-circular-mini-map-name-path")
-                .attr("id", `chart-mini-map-name-path-${map_id}-${i}`)
-                .attr("d", () => {
-                    let rad = r * size_factor
-                    let cx = x + width/2 + margin.left
-                    let cy = y + height/2 + margin.top
-                    return "M " + [cx, cy - rad] + " A " + [rad, rad] + " 0 1 0 " + [cx + 0.01, cy - rad] 
-                })
+        //Create the path for the constellation name
+        const_text_group.append("path")
+            .attr("class", "chart-circular-mini-map-name-path")
+            .attr("id", `chart-mini-map-name-path-${map_id}-${i}`)
+            .attr("d", () => {
+                let rad = r * size_factor
+                let cx = x + width/2 + margin.left
+                let cy = y + height/2 + margin.top
+                return "M " + [cx, cy - rad] + " A " + [rad, rad] + " 0 1 0 " + [cx + 0.01, cy - rad] 
+            })
 
-            //Add the constellation name to the path
-            const_text_group.append("text")
-                .attr("class", "chart-circular-mini-map-name")
-                .attr("dy", 11)
-                .append("textPath")
-                .attr("xlink:href", `#chart-mini-map-name-path-${map_id}-${i}`)
-                .attr("startOffset", "50%")
-                .text(const_names[const_names.map(c => c.const_id).indexOf(chosen_const)].const_name)
-        }//if
+        //Add the constellation name to the path
+        let font_size_name = (r * size_factor > 45 ? 9 : 7) 
+        const_text_group.append("text")
+            .attr("class", "chart-circular-mini-map-name")
+            .attr("dy", "1.15em")
+            .style("font-size", font_size_name)
+            .append("textPath")
+            .attr("xlink:href", `#chart-mini-map-name-path-${map_id}-${i}`)
+            .attr("startOffset", "50%")
+            .text(const_names[const_names.map(c => c.const_id).indexOf(chosen_const)].const_name)
     })//breathe constellations
 
     //Function to create, downscale and draw the mini constellation charts
@@ -232,12 +247,16 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         let chosen
 
         //Don't do anything if the click comes not from a mini-map and the central map is already all
+        central_path.style("cursor", "default")
         if(d === "body" && current_center_const === "all") return
         
         if(d !== "body" && d !== current_center_const) {
             //If the same circle isn't clicked twice in a row, change to the new mini map
             chosen = d
             current_center_const = d
+
+            //Add hand pointer back to central chart
+            central_path.style("cursor", "pointer")
 
             //Update central text
             svg_text_culture
@@ -274,10 +293,10 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             .on("end", function() {
                 //Draw the new map
                 drawMap(opts_data, canvas, ctx, focus, chosen, location, "big")
-                //Fade back in
-                d3.select(this)
-                    .transition("fade").duration(600).delay(1000)
-                    .style("opacity", 0)
+                //Fade back in - Now happens in drawMap itself
+                // d3.select(this)
+                //     .transition("fade").duration(600).delay(1000)
+                //     .style("opacity", 0)
             })
 
     }//function switchSkyMapCenter

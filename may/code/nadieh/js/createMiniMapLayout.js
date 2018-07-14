@@ -237,6 +237,15 @@ function createSmallMultipleLayout(opts_data, draw_type) {
         }//else
     })//forEach
 
+    ////////////////////////////// Clickable text ///////////////////////////////
+
+    //Make some texts in the body copy clickable too
+    let clickable_stars = ["Betelgeuse","Sirius","Dubhe","Alphekka","Mirphak","Atlas","Aldebaran"]
+    clickable_stars.forEach(d => {
+        d3.selectAll(`.${d.toLowerCase()}-click`)
+            .on("click", () => smallMapClick(focus.filter(s => s.proper === d)[0], opts_data))
+    })
+
 }//function createSmallMultipleLayout
 
 function createMap(opts_data, m, w, h, container_id, focus, type) {
@@ -304,10 +313,20 @@ function createMap(opts_data, m, w, h, container_id, focus, type) {
 
     //Make it clickable
     canvas.on("click", d => smallMapClick(d, opts_data))
+
 }//function createMap
 
 //When clicking on this div, the visual scrolls to Orion and changes the map there to show the chosen star
 function smallMapClick(d, opts_data) {
+    //Scroll to the original Orion chart
+    document.querySelector("#section-chart-orion").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    })
+
+    if(d.proper === current_orion_map) return
+    current_orion_map = d.proper
+
     d3.select("#betelgeuse-note").style("display", d.proper === "Betelgeuse" ? "none" : "inline")
 
     //Fade in the group to hide the map and remove some elements from the Orion map
@@ -319,11 +338,6 @@ function smallMapClick(d, opts_data) {
     fade_group.select(".chart-circular-text-culture")
         .text("")
 
-    //Scroll to the original Orion chart
-    document.querySelector("#section-chart-orion").scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    })
     // const section = document.getElementById("section-chart-orion")
     // window.scrollBy({
     //     top: section.getBoundingClientRect().top - 20, 

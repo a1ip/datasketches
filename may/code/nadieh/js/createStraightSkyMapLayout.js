@@ -81,18 +81,40 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
     rectangularMoveEffect(map_id) 
 
     ///////////// Set the culture div click event /////////////
+    let culture_timeout = null
     if(map_id === "constellations") {
         d3.selectAll(".culture-info-wrapper")
             .on("click touchstart", function() {
                 let el = d3.select(this).select(".culture-info")
-                //Get the new chosen culture
-                chosen_culture = el.attr("id").replace("culture-","")
+                clearTimeout(culture_timeout)
+                culture_timeout = setTimeout(() => { changeCulture(el) }, 250)
+            })//on
+    }//if
 
-                //Update the title in the section above the sky map
-                d3.selectAll(".chosen-culture-title")
-                    .style("color", cultures[chosen_culture].color)
-                    .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
+    function changeCulture(el) {
+        //Get the new chosen culture
+        chosen_culture = el.attr("id").replace("culture-","")
 
+        //Update the title in the section above the sky map
+        d3.selectAll(".chosen-culture-title")
+            .style("color", cultures[chosen_culture].color)
+            .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
+
+        //Change the color of the top and bottom border through currentColor
+        d3.select("#constellations-border-div").style("color", cultures[chosen_culture].color)
+
+        //Set the colors of the culture info div
+        setCultureDivColors(chosen_culture)
+
+        setTimeout(() => {
+            //Scroll to the original Orion chart
+            document.querySelector("#section-constellations").scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            })
+
+            //Scroll to the Sky Map, but wait just a little to finish the croll
+            setTimeout(() => {
                 //Create a new layer with only the lines from that culture and apply that to the background image
                 ctx.clearRect(0, 0, width, height)
                 ctx.save()
@@ -102,14 +124,9 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
                 ctx.restore()
                 data_image = canvas.node().toDataURL()
                 lines_div.style.backgroundImage = `url(${data_image})`
-
-                //Change the color of the top and bottom border through currentColor
-                d3.select("#constellations-border-div").style("color", cultures[chosen_culture].color)
-
-                //Set the colors of the culture info div
-                setCultureDivColors(chosen_culture)
-            })//on
-    }//if
+            }, 500)
+        }, 500)
+    }//function changeCulture
 
 }//createStraightSkyMapLayout
 
@@ -130,7 +147,7 @@ function setCultureDivColors(chosen_culture) {
             //Transition to the colors of the chosen culture
             if(culture === chosen_culture) {
                 //Change the look of the chosen culture's block
-                el.transition("color").duration(700)
+                el.transition("color").duration(400)
                     .styleTween("background", () => {
                         let interpolate = d3.interpolateLab("#f7f7f7", color)
                         return function(t) {
@@ -190,8 +207,3 @@ function rectangularMoveEffect(map_id) {
     })
     // RxCSS({ mouse: smooth_mouse$ })
 }//function rectangularMoveEffect
-
-function round(value, precision) {
-    var multiplier = Math.pow(10, precision || 0);
-    return Math.round(value * multiplier) / multiplier;
-}

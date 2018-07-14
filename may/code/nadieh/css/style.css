@@ -29,10 +29,14 @@ p.no-top {
     margin-top: 0;
 }
 
-a, a:link, a:visited, a:active {
+a, a:link, a:visited, a:active, .string-click {
     color: inherit;
     border-bottom: 0.08em solid #D80833;
     text-decoration: none;
+}
+
+.string-click {
+    cursor: pointer;
 }
 
 /* ---------- SECTION | GENERAL ---------- */
@@ -263,7 +267,7 @@ a, a:link, a:visited, a:active {
     height: 960px;
     padding: 0 20px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 #betelgeuse-note {
@@ -576,6 +580,13 @@ a, a:link, a:visited, a:active {
     fill: #838383;
 }
 
+#hover-star-marker {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: var(--color-red);
+    /* stroke: black; */
+}
+
 .annotations {
     pointer-events: none;
 }
@@ -706,6 +717,10 @@ a, a:link, a:visited, a:active {
     pointer-events: none;
 }
 
+.em-divider {
+    color: #c4c4c4;
+}
+
 .culture-name {
     font-size: 0.95em;
     margin-top: 0.2em;
@@ -713,7 +728,7 @@ a, a:link, a:visited, a:active {
     font-weight: 600;
     pointer-events: none;
     color: currentColor;
-    transition: color 0.7s;
+    transition: color 0.3s;
 }
 .culture-name.active {
     color: white;
@@ -725,7 +740,7 @@ a, a:link, a:visited, a:active {
     text-transform: lowercase;
     pointer-events: none;
     color: #585858;
-    transition: color 0.7s;
+    transition: color 0.3s;
 }
 .culture-number.active, .culture-mean-stars-note.active {
     color: white;
@@ -743,7 +758,7 @@ a, a:link, a:visited, a:active {
     font-size: 12px;
     pointer-events: none;
     display: none;
-    transition: color 0.7s;
+    transition: color 0.3s;
     color: black;
     margin-top: 1em;
     margin-bottom: 0.4em;

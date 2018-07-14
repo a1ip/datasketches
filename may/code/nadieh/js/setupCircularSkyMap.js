@@ -96,6 +96,11 @@ function drawMap(opts_data, canvas, ctx, focus, chosen_const, loc, type) {
     if(basemap.canvas_space) ctx.drawImage(basemap.canvas_space, loc.x, loc.y, loc.width, loc.height)
     if(basemap.canvas_stars) ctx.drawImage(basemap.canvas_stars, loc.x, loc.y, loc.width, loc.height)
     ctx.drawImage(basemap.canvas_lines, loc.x, loc.y, loc.width, loc.height)
+
+    //Fade out the "hiding-rect" in the circular sky map
+    d3.select(".chart-circular-hide-group")
+        .transition("fade").duration(900).delay(100)
+        .style("opacity", 0)
 }//function drawMap
 
 ////////////////// Clip the canvas image to the circle //////////////////
