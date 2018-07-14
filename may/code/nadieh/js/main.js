@@ -1,15 +1,10 @@
-//TODO: Add pleiades & taurus & canopus to small multiple?
-//TODO: Again look at small multiple design, not this offset but normal grid?
-
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Constants ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-//Scale factor of canvas
-let sf
 
+let sf //Scale factor of canvas
 const font_family = "Glass Antiqua"
-// const font_family = "Cormorant"
 
 const pi1_2 = Math.PI / 2
 const pi = Math.PI
@@ -81,11 +76,11 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     }
 
     ////////////////////////// Header sky map //////////////////////////
-    let focus_header = {
-        culture: "western",
-        center: [0, 0], //ra in hours dec in degrees
-        scale: 250,
-    }
+    // let focus_header = {
+    //     culture: "western",
+    //     center: [0, 0],
+    //     scale: 250,
+    // }
     //Add the mouseover move effect
     rectangularMoveEffect("header","image") 
 
@@ -96,7 +91,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         title_position: "bottom-left",
         center: [5.603559, 3.20192], //ra in hours dec in degrees
         scale: 1950,
-    } //Interesting shapes | 4: egyptian-005 & 11: navajo-008 & 15: tupi-002 & 16: western-Ori
+    }
 
     ////////////////////////// Sirius medium map //////////////////////////
     let focus_sirius = {
@@ -105,7 +100,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         title_position: "top-right",
         center: [6.752481, -21], //ra in hours dec in degrees
         scale: 2600,
-    } //Interesting shapes | 7: hawaiian_starlines-KOM & 11: western-CMa
+    }
 
     //Attach click event to the correct div
     d3.select("#chart-sirius")
@@ -118,7 +113,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         title_position: "top-left",
         center: [12.3, 56],
         scale: 2200,
-    } //11: navajo-001 is a good one & 19: wester-UMa
+    }
 
     //Attach click event to the correct div
     d3.select("#chart-big-dipper")
@@ -128,16 +123,13 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     createSmallMultipleLayout(opts_data, "image")
 
     ////////////////////////// Statistical charts //////////////////////////
-
-    createStatChartStars("stats-stars", stars)
-
-    //createStatChartCultures("stats-cultures", 30, 330, 450, cultures)
+    // createStatChartStars("stats-stars", stars)
 
     ////////////////////////// Culture rectangular sky map //////////////////////////
     chosen_culture = "hawaiian_starlines"
     let focus_culture = {
         culture: chosen_culture,
-        center: [0, 0], //ra in hours dec in degrees
+        center: [0, 0],
         scale: 250,
     }
 
@@ -171,6 +163,9 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             //     //Doesn't actually create canvases, only loads final png images now
             //     createSmallMultipleLayout(opts_data, "canvas")
             // })
+            .then(() => {
+                createStatChartStars("stats-stars", stars)
+            })
             .then(() => {
                 //Create the general full Sky Map visual - now creates only the lines and uses that as a background image
                 createStraightSkyMapLayout(opts_data, focus_culture, 650, "constellations")

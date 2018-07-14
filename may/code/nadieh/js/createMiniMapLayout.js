@@ -12,20 +12,20 @@ function createSmallMultipleLayout(opts_data, draw_type) {
         scale: 6000,
     })
 
-    // focus.push({
-    //     hip: 21421,
-    //     proper: "Aldebaran",
-    //     title_position: "bottom-left",
-    //     note: "After Orion's 'belt' this star is used across most cultures",
-    //     center: [4.5, 18],
-    //     scale: 3000,
-    // })
+    focus.push({
+        hip: 21421,
+        proper: "Aldebaran",
+        title_position: "bottom-left",
+        note: "After Orion's 'belt' this star is used in most constellations",
+        center: [4.5, 18],
+        scale: 6000,
+    })
 
     focus.push({
         hip: 76267,
         proper: "Alphekka",
         title_position: "bottom-right",
-        note: "A great number of things can be seen in a half circular shape",
+        note: "A great number of things are seen in this half circular 'Corona Borealis'",
         center: [15.7,29],
         scale: 3800,
     })
@@ -60,6 +60,15 @@ function createSmallMultipleLayout(opts_data, draw_type) {
     })
 
     focus.push({
+        hip: 17847,
+        proper: "Atlas",
+        title_position: "bottom-right",
+        note: "Part of the Pleiades, a tightly packed cluster of 9 bright stars",
+        center: [3.8, 24],
+        scale: 15000,
+    })
+
+    focus.push({
         hip: 80763,
         proper: "Antares",
         title_position: "top-left",
@@ -85,6 +94,15 @@ function createSmallMultipleLayout(opts_data, draw_type) {
         center: [5.603559, 3.20192],
         scale: 1950,
     })
+
+    // focus.push({
+    //     hip: 30438,
+    //     proper: "Canopus",
+    //     title_position: "bottom-right",
+    //     note: "The second brightest star, but also not used very often",
+    //     center: [7.8, -49],
+    //     scale: 1700,
+    // })
 
     focus.push({
         hip: 24608,
@@ -182,7 +200,7 @@ function createSmallMultipleLayout(opts_data, draw_type) {
 
     let m = 0
     let size = 170
-    let colors = ["#EFB605","#E7A000","#E4650B","#E01A25","#CE003D","#B50655","#991C71","#7A3992","#4F56A6","#2074A0","#08977F","#2AAF61","#7EB852"]
+    // let colors = ["#EFB605","#E7A000","#E4650B","#E01A25","#CE003D","#B50655","#991C71","#7A3992","#4F56A6","#2074A0","#08977F","#2AAF61","#7EB852"]
 
     //Loop over each star and draw the mini map
     focus.forEach((d,i) => {
@@ -193,7 +211,7 @@ function createSmallMultipleLayout(opts_data, draw_type) {
             .datum(d)
             .attr("id", chart_id)
             .attr("class", "div-group-small-multiple")
-            .style("color", colors[i])
+            //.style("color", colors[i])
             .on("click", d => smallMapClick(d, opts_data))
 
         //Add star's title on top
