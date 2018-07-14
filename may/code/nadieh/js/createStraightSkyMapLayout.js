@@ -172,7 +172,7 @@ function rectangularMoveEffect(map_id) {
         // .withLatestFrom(mouse_move$, (tick, mouse) => ({ x : mouse.x - mouse_enter }) )
         .withLatestFrom(move$, (tick, mouse) => { 
             // console.log(mouse_enter) 
-            return { x : Math.round(mouse.x - mouse_enter,1)}  
+            return { x : round(mouse.x - mouse_enter,1)}  
         })
         .scan(lerp, {x: 0})
 
@@ -181,12 +181,17 @@ function rectangularMoveEffect(map_id) {
         //Update position by 20% of the distance between position & target
         const rate = 0.02
         const dx = end.x - start.x
-        return { x: Math.round(start.x + dx * rate,1) }
+        return { x: round(start.x + dx * rate,1) }
     }//function lerp
 
     smooth_mouse$.subscribe(pos => {
         mouse_pos = pos.x
-        document.documentElement.style.setProperty(`--mouse-${map_id}-x`, Math.round(pos.x, 1));
+        document.documentElement.style.setProperty(`--mouse-${map_id}-x`, round(pos.x, 1));
     })
     // RxCSS({ mouse: smooth_mouse$ })
 }//function rectangularMoveEffect
+
+function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+}
