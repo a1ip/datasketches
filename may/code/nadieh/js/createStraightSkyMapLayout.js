@@ -61,37 +61,34 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
         type_geo: "equirectangular"
     }
 
-    /////////////////////// Constellations ////////////////////////
     let opts_lines = {
         chosen_culture: focus.culture,
         star_by_id: opts.star_by_id,
         const_links: opts.const_links
     }
-    let canvas_lines = drawConstellationsSimple(opts_general, opts_lines, chosen_culture)
 
-    //Draw the map on the canvas
-    ctx.save()
-    ctx.translate(-proj_min, 0)
-    ctx.drawImage(canvas_lines, proj_min, 0, proj_width, height)
-    ctx.restore()
-    //Save into data and apply to the background image of the div
-    data_image = canvas.node().toDataURL()
-    lines_div.style.backgroundImage = `url(${data_image})`
+    ///////////// Set mean-stars bars to good height /////////////
+
+    const width_scale = d3.scaleLinear()
+        .domain([0, 22])
+        .range([0, 100])  
+
+    d3.selectAll(".culture-info .culture-mean-stars")
+        .transition().duration(750)
+        .style("width", (d,i) => width_scale(cultures[culture_names[i]].mean_stars) + "%")
 
     ///////////// Initiate the hover movement effect /////////////
     rectangularMoveEffect(map_id) 
 
     ///////////// Set the culture div click event /////////////
     if(map_id === "constellations") {
-        // canvas.style("color", cultures[chosen_culture].color)
-
         d3.selectAll(".culture-info-wrapper")
             .on("click touchstart", function() {
                 let el = d3.select(this).select(".culture-info")
                 //Get the new chosen culture
                 chosen_culture = el.attr("id").replace("culture-","")
 
-                //Update the title
+                //Update the title in the section above the sky map
                 d3.selectAll(".chosen-culture-title")
                     .style("color", cultures[chosen_culture].color)
                     .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
@@ -127,7 +124,7 @@ function setCultureDivColors(chosen_culture) {
             //Reset colors
             el.style("color", color) //So I can use CSS currentcolor
             el.transition("color").duration(0).style("background", null)
-            el.selectAll(".culture-name, .culture-number, .culture-text")
+            el.selectAll(".culture-name, .culture-number, .culture-text, .culture-mean-stars-note, .culture-mean-stars")
                 .classed("active", false)
 
             //Transition to the colors of the chosen culture
@@ -140,7 +137,7 @@ function setCultureDivColors(chosen_culture) {
                             return `-webkit-linear-gradient(left, ${color} -250%, ${interpolate(t)} 20%`
                         }//return
                     })
-                el.selectAll(".culture-name, .culture-number, .culture-text")
+                el.selectAll(".culture-name, .culture-number, .culture-text, .culture-mean-stars-note, .culture-mean-stars")
                     .classed("active", true)
             }//if
         })//each
@@ -175,7 +172,7 @@ function rectangularMoveEffect(map_id) {
         // .withLatestFrom(mouse_move$, (tick, mouse) => ({ x : mouse.x - mouse_enter }) )
         .withLatestFrom(move$, (tick, mouse) => { 
             // console.log(mouse_enter) 
-            return { x : _.round(mouse.x - mouse_enter,1)}  
+            return { x : Math.round(mouse.x - mouse_enter,1)}  
         })
         .scan(lerp, {x: 0})
 
@@ -184,12 +181,12 @@ function rectangularMoveEffect(map_id) {
         //Update position by 20% of the distance between position & target
         const rate = 0.02
         const dx = end.x - start.x
-        return { x: _.round(start.x + dx * rate,1) }
+        return { x: Math.round(start.x + dx * rate,1) }
     }//function lerp
 
     smooth_mouse$.subscribe(pos => {
         mouse_pos = pos.x
-        document.documentElement.style.setProperty(`--mouse-${map_id}-x`, _.round(pos.x, 1));
+        document.documentElement.style.setProperty(`--mouse-${map_id}-x`, Math.round(pos.x, 1));
     })
     // RxCSS({ mouse: smooth_mouse$ })
 }//function rectangularMoveEffect

@@ -3,7 +3,6 @@ function createStatChartStars(map_id, stars) {
     ////////////////////////////// Set sizes ///////////////////////////////
     let total_width = document.getElementById("chart-" + map_id).offsetWidth - 2 * 20
     let margin = { left: 40, top: 60, right: 200, bottom: 50 }
-    // let margin = { left: 0, top: 0, right: 200, bottom: 40 }
     let width = total_width - margin.left - margin.right
     let total_height = Math.round(width * 0.8)
     let height = total_height - margin.top - margin.bottom
@@ -28,7 +27,6 @@ function createStatChartStars(map_id, stars) {
 
     ////////////////////////////// Create scales ///////////////////////////////
     Math.seedrandom('a13219765bc7c488a3a47') //Produce the same results always
-    // const y_jitter = d3.randomUniform(-0.5, 0.5)
     const y_jitter = d3.randomUniform(-0.01, 0.01)
 
     const x_scale = d3.scaleLinear() //mag
@@ -48,16 +46,14 @@ function createStatChartStars(map_id, stars) {
     const voronoi = d3.voronoi()
         .x(d => x_scale(d.mag))
         .y(d => y_scale(d.constellations))
-
     let diagram = voronoi(stars)
-
+    
     let current_found = ""
     function moved() {
         let m = d3.mouse(this)
         let found = diagram.find(m[0], m[1], 20)
         if(found) {
             found = found.data
-            // console.log(found.hip, found.proper, found.mag, found.constellations, found.absmag)
             if(current_found !== found) {
                 current_found = found
                 if(found.proper !== "") star_name.text("That's " + found.proper)
@@ -210,13 +206,13 @@ function createStatChartStars(map_id, stars) {
     y_axis.append("text")
         .attr("class", "chart-stats-axis-title")
         .attr("x", -20)
-        .attr("y", 15)
+        .attr("y", 10)
         .attr("text-anchor","start")
         .text("No. of")
     y_axis.append("text")
         .attr("class", "chart-stats-axis-title")
         .attr("x", -20)
-        .attr("y", 27)
+        .attr("y", 22)
         .attr("text-anchor","start")
         .text("constellations")
 
@@ -227,7 +223,7 @@ function createStatChartStars(map_id, stars) {
             className: "orion-note",
             note: {
                 title: "Orion's belt",
-                label: "The 3 stars that make up 'Orion's belt' are used in a constellation across most cultures. Some even more than once", 
+                label: "The 3 stars that make up 'Orion's belt' are used in a constellation across most cultures. Some even more than once per culture", 
                 wrap: 200 
             },
             data: {mag: 1.95, constellations: 32.3},

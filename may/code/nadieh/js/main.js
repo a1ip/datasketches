@@ -1,11 +1,5 @@
-//TODO: Don't use basemap size, but actual final size (use type to figure it out)
-//TODO: set up header stuff
-//TODO: Add pleiades to small multiple?
+//TODO: Add pleiades & taurus & canopus to small multiple?
 //TODO: Again look at small multiple design, not this offset but normal grid?
-//TODO: Create a class per culture, which gives the color and apply to the culture blocks
-//TODO: Add "mean stars oer constellation" bar into the culture blocks
-//TODO: Write statistics text
-//TODO: Write conclusion text
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Constants ////////////////////////////////

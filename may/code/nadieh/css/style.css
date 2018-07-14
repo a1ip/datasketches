@@ -13,7 +13,6 @@ html {
 
 body {
     font-family: var(--body-font);
-    /* font-family: 'Muli', sans-serif; */
     padding: 0;
     margin: 0;
     width: calc(100vw - (100vw - 100%)); /* body width minus scrollbar*/
@@ -36,13 +35,7 @@ a, a:link, a:visited, a:active {
     text-decoration: none;
 }
 
-/* @media screen and (max-width: 700px) {
-    body {
-        width: 100vw;
-    }
-} */
-
-/* ---------- SECTION | TEXT CULTURE ---------- */
+/* ---------- SECTION | GENERAL ---------- */
 
 .section-text,
 .section-mini-chart {
@@ -83,7 +76,7 @@ a, a:link, a:visited, a:active {
 .section-text .chart-explanation-text {
     font-size: 0.85em;
     color: #585858;
-    margin: 1em auto 0em auto;
+    margin: 1em 0 0em 0;
 }
 
 .red {
@@ -96,29 +89,90 @@ a, a:link, a:visited, a:active {
     color: #9c9c9c;
 }
 
+.arabic {
+    color: #EFB605;  
+}
+.arabic_moon_stations {
+    color: #EBAF02;  
+}
+.aztec  {
+    color: #E8A400;  
+}
+.belarusian {
+    color: #E69201;  
+}
+.boorong {
+    color: #E47607;  
+}
+.chinese {
+    color: #E45311;  
+}
+.dakota {
+    color: #E3301C;  
+}
 .egyptian {
     color: #DF1428;   
+}
+.hawaiian_starlines {
+    color: #D80533;  
+}
+.indian {
+    color: #CE003D;  
+}
+.inuit {
+    color: #C30048;  
+}
+.japanese_moon_stations {
+    color: #B80452;  
+}
+.kamilaroi {
+    color: #AC0C5E;  
+}
+.korean {
+    color: #9F166A;  
 }
 .macedonian {
     color: #932278;
 }
+.maori {
+    color: #852F87;  
+}
+.mongolian {
+    color: #763C95;  
+}
 .navajo {
     color: #644AA0;   
+}
+.norse {
+    color: #4F56A6;  
+}
+.ojibwe {
+    color: #3963A7;  
+}
+.romanian {
+    color: #2570A2;  
+}
+.sami {
+    color: #148097;  
+}
+.sardinian {
+    color: #0A9087;  
+}
+.siberian {
+    color: #099E77;  
+}
+.tongan {
+    color: #17AA69;  
+}
+.tukano {
+    color: #31B15F;  
 }
 .tupi {
     color: #55B558;   
 }
-
-/* @media screen and (max-width: 700px) {
-    .section-text,
-    .section-mini-chart {    
-        display: block;
-    }
-
-    .section-text .sidenote {
-        display: none;
-    }
-} */
+.western {
+    color: #7EB852;  
+}
 
 /* ---------- SECTION | HEADER ---------- */
 
@@ -372,7 +426,7 @@ a, a:link, a:visited, a:active {
 
 #section-chart-small-multiple {
     position: relative;
-    max-width: calc(var(--body-max-width) + 200px);
+    width: calc(var(--body-max-width) - 2 * 20px);
     margin: 10px auto 10px auto;
     padding: 10px 20px;
     height: 940px;
@@ -407,7 +461,7 @@ a, a:link, a:visited, a:active {
     border-bottom: 6px solid currentColor;
 }
 
-#chart-container-small-multiple .row-1{
+/* #chart-container-small-multiple .row-1{
     grid-row: 1;
 }
 #chart-container-small-multiple .row-2 {
@@ -421,7 +475,7 @@ a, a:link, a:visited, a:active {
 }
 #chart-container-small-multiple .row-right {
     grid-column: 10;
-}
+} */
 
 .small-multiple-chart-title {
     font-weight: 600;
@@ -436,10 +490,10 @@ a, a:link, a:visited, a:active {
 }
 
 .small-multiple-chart-sub-title {
-    max-width: 180px;
+    max-width: 160px;
+    height: 45px;
     padding-left: 10px;
     padding-right: 10px;
-    height: 30px;
     font-size: 0.7em;
     line-height: 1.4;
     color: #1d1d1d;
@@ -454,13 +508,6 @@ a, a:link, a:visited, a:active {
     background-size: cover;
 }
 
-@media screen and (max-width: 1200px) {
-    .small-multiple-chart-sub-title {
-        max-width: 160px;
-        height: 45px;
-    }
-}
-
 /* ---------- SECTION | STATISTICAL CHARTS ---------- */
 
 #section-chart-stats {
@@ -468,7 +515,6 @@ a, a:link, a:visited, a:active {
     width: calc(var(--body-max-width) - 2 * 20px);
     margin: 10px auto 10px auto;
     padding: 10px 20px;
-    /* height: 940px; */
 
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -477,6 +523,7 @@ a, a:link, a:visited, a:active {
 
 #chart-container-stats {
     grid-column: 1 / -1;
+    min-height: 550px;
 }
 
 #chart-stats-explanation-text {
@@ -528,11 +575,6 @@ a, a:link, a:visited, a:active {
 .chart-stats .axis line, .chart-stats .axis path {
     stroke: #cacaca;
 }
-
-/* #chart-stats-note-div {
-    font-size: 10px;
-    color: #606060;
-} */
 
 #info-group-star-name {
     fill: var(--color-red);
@@ -667,7 +709,7 @@ a, a:link, a:visited, a:active {
 }
 
 .culture-info-wrapper {
-    height: 64px;
+    height: 88px;
     cursor: pointer;
     pointer-events: all;
 }
@@ -682,7 +724,6 @@ a, a:link, a:visited, a:active {
 }
 
 .culture-name {
-    /* font-family: 'Glass Antiqua', cursive; */
     font-size: 0.95em;
     margin-top: 0.2em;
     margin-bottom: 0em;
@@ -695,18 +736,24 @@ a, a:link, a:visited, a:active {
     color: white;
 }
 
-.culture-number {
+.culture-number, .culture-mean-stars-note {
     font-size: 10px;
     font-style: italic;
     text-transform: lowercase;
-    margin-top: 0.3em;
-    margin-bottom: 0.2em;
     pointer-events: none;
     color: #585858;
     transition: color 0.7s;
 }
-.culture-number.active {
+.culture-number.active, .culture-mean-stars-note.active {
     color: white;
+}
+.culture-number {
+    margin-top: 0.4em;
+    margin-bottom: 0em;
+}
+.culture-mean-stars-note {
+    margin-top: -0.4em;
+    margin-bottom: 0.2em;
 }
 
 .culture-text {
@@ -715,10 +762,22 @@ a, a:link, a:visited, a:active {
     display: none;
     transition: color 0.7s;
     color: black;
+    margin-top: 1em;
     margin-bottom: 0.4em;
+    padding-right: 10px;
 }
 .culture-text.active {
     color: white;
+}
+
+.culture-mean-stars {
+    background-color: currentColor;
+    height: 3px;
+    width: 0%;
+    margin-bottom: 7px;
+}
+.culture-mean-stars.active {
+    background-color: white;
 }
 
 .culture-info-wrapper:hover {
@@ -734,6 +793,7 @@ a, a:link, a:visited, a:active {
 /* ---------- SECTION | CREDITS ---------- */
 
 #section-credits {
+    margin-top: 4em;
     border-top: 1.5px solid #D80833;
 }
 

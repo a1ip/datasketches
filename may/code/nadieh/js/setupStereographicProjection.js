@@ -24,7 +24,7 @@ function setupStereographicProjection(width, height, margin, focus, chosen_const
     if(cultures === "one") {
         //Find a good center in terms of ra and dec
         //since the chosen point doesn't have to be in the center of this constellation
-        chosen_stars = _.uniq(const_per_star.filter(d => d.const_id === chosen_const).map(d => d.star_id))
+        chosen_stars = [...new Set(const_per_star.filter(d => d.const_id === chosen_const).map(d => d.star_id))]
         poly = chosen_stars.map(d => [-star_by_id[d].ra * 360 / 24, star_by_id[d].dec])
         ra_ext = d3.extent(poly, d => d[0])
         dec_ext = d3.extent(poly, d => d[1])

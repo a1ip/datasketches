@@ -219,7 +219,7 @@ function drawConstellationsSimple(opts_general, opts, chosen_culture) {
 function drawStarDonuts(ctx, projection, star_by_id, chosen_lines, radius_scale, type) {
 
     //Get all the unique stars in the lines
-    let chosen_stars = _.uniq([...chosen_lines.map(d => d.source), ...chosen_lines.map(d => d.target)])
+    let chosen_stars = [...new Set([...chosen_lines.map(d => d.source), ...chosen_lines.map(d => d.target)])]
 
     ///////////// Clip away the constellation lines in a circle around each star /////////////
 
@@ -270,7 +270,7 @@ function drawStarDonuts(ctx, projection, star_by_id, chosen_lines, radius_scale,
         let s_star = chosen_lines.filter(s => s.source === d)
         let t_star = chosen_lines.filter(s => s.target === d)
         //Get the unique id's of these constellations
-        let const_ids = _.uniq([...s_star, ...t_star].map(d => d.const_id)).sort()
+        let const_ids = [...new Set([...s_star, ...t_star].map(d => d.const_id))].sort()
 
         //Donut size settings
         let inner = innerRad(star.mag)

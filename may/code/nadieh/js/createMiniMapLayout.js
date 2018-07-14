@@ -181,7 +181,7 @@ function createSmallMultipleLayout(opts_data, draw_type) {
     ////////////////////////////// Draw small multiples ///////////////////////////////
 
     let m = 0
-    let size = window.innerWidth < 1200 ? 180 : 200
+    let size = 170
     let colors = ["#EFB605","#E7A000","#E4650B","#E01A25","#CE003D","#B50655","#991C71","#7A3992","#4F56A6","#2074A0","#08977F","#2AAF61","#7EB852"]
 
     //Loop over each star and draw the mini map
