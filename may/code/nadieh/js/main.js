@@ -167,6 +167,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             //     createSmallMultipleLayout(opts_data, "canvas")
             // })
             .then(() => {
+                //Create the scatterplot
                 createStatChartStars("stats-stars", stars)
             })
             .then(() => {
@@ -247,5 +248,5 @@ function toTitleCase(str) {
 ////////////////// Round to decimal //////////////////
 function round(value, precision) {
     var multiplier = Math.pow(10, precision || 0);
-    return Math.round(value * multiplier) / multiplier;
-}
+    return Math.round(value * multiplier) / multiplier
+}//function round

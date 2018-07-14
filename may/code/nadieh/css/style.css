@@ -267,33 +267,46 @@ a, a:link, a:visited, a:active, .string-click {
     height: 960px;
     padding: 0 20px;
     margin-top: 30px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+}
+
+#section-chart-modal {
+    height: calc(100vh - 40px - 30px);
+    max-height: calc(960px);
+    /* width: 1000px; */
+    width: auto;
+    max-width: 100%;
+    margin-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 30px;
 }
 
 #betelgeuse-note {
     display: none;
 }
 
-#chart-orion {
+#chart-orion, #chart-modal {
     display: grid;
     grid-template-columns: 1fr;
 }
 
-#chart-orion canvas, #chart-orion svg {
+#chart-orion canvas, #chart-orion svg,
+#chart-modal canvas, #chart-modal svg {
     grid-column: 1;
     grid-row: 1;
     justify-self: center;
     align-self: center;
 }
 
-#canvas-orion {
+#canvas-orion, #canvas-modal {
     z-index: -1;
 }
-#canvas-mini-orion {
+#canvas-mini-orion, #canvas-mini-modal {
     z-index: 1;
     -webkit-transform: translate3d(0,0,0);
 }
-#svg-orion {
+#svg-orion, #svg-modal {
     z-index: 0;
     -webkit-transform: translate3d(0,0,0);
 }

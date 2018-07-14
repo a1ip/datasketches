@@ -318,26 +318,11 @@ function createMap(opts_data, m, w, h, container_id, focus, type) {
 
 //When clicking on this div, the visual scrolls to Orion and changes the map there to show the chosen star
 function smallMapClick(d, opts_data) {
-    //Scroll to the original Orion chart
-    document.querySelector("#section-chart-orion").scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    })
-
-    if(d.proper === current_orion_map) return
-    current_orion_map = d.proper
-
-    d3.select("#betelgeuse-note").style("display", d.proper === "Betelgeuse" ? "none" : "inline")
-
-    //Fade in the group to hide the map and remove some elements from the Orion map
-    d3.selectAll("#canvas-orion, #canvas-mini-orion, #svg-orion .chart-circular-title-group, #svg-orion .chart-circular-mini-map-group").remove()
-    const fade_group = d3.select("#svg-orion .chart-circular-hide-group")
-        .style("opacity", 1)
-    fade_group.select(".chart-circular-text-name")
-        .text(d.proper)
-    fade_group.select(".chart-circular-text-culture")
-        .text("")
-
+    // //Scroll to the original Orion chart
+    // document.querySelector("#section-chart-orion").scrollIntoView({
+    //     behavior: "smooth",
+    //     block: "center"
+    // })
     // const section = document.getElementById("section-chart-orion")
     // window.scrollBy({
     //     top: section.getBoundingClientRect().top - 20, 
@@ -345,8 +330,34 @@ function smallMapClick(d, opts_data) {
     //     behavior: "smooth"
     // })
 
+    //Show the modal
+    simple_modal.open("#chart-modal")
+
+    if(d.proper === current_orion_map) return
+    current_orion_map = d.proper
+
+    // d3.select("#betelgeuse-note").style("display", d.proper === "Betelgeuse" ? "none" : "inline")
+
+    //Fade in the group to hide the map and remove some elements from the Orion map
+    let map_id = "modal"
+    d3.selectAll(`#canvas-${map_id}, #canvas-mini-${map_id}, #svg-${map_id} .chart-circular-title-group, #svg-${map_id} .chart-circular-mini-map-group`).remove()
+    const fade_group = d3.select(`#svg-${map_id} .chart-circular-hide-group`)
+        .style("opacity", 1)
+    fade_group.select(".chart-circular-text-name")
+        .text(d.proper)
+    fade_group.select(".chart-circular-text-culture")
+        .text("")
+
     //Create the new layout, but wait a bit for the visual to have scrolled up
-    setTimeout(() => {
-        createCentralCircleLayout(opts_data, d, orion_m, orion_size, orion_size, "orion")
-    }, 1100)
+    // setTimeout(() => {
+        let scale_factor = Math.min(1, (window.innerHeight - 100) / orion_size)
+        if(window.innerHeight > window.innerWidth) {
+            d3.select("#section-chart-modal").style("height","auto")
+        }//if
+        let new_size = orion_size * scale_factor
+        let new_m = orion_m * scale_factor
+        createCentralCircleLayout(opts_data, d, new_m, new_size, new_size, map_id)
+        // createCentralCircleLayout(opts_data, d, orion_m, orion_size, orion_size, map_id)
+    // }, 1100)
+    
 }//function smallMapClick

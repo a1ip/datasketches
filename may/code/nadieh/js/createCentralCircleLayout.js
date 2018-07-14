@@ -5,6 +5,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     let const_names = opts_data.const_names
     let location
     let timeout_switch
+    let scale_factor = w / orion_size
 
     ////////////////////////////// Set sizes ///////////////////////////////
 
@@ -75,7 +76,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     //Create the title in the top left corner
     const title_group = svg.append("g")
         .attr("class", "chart-circular-title-group")
-    let offsets = [10, 28, 78]
+    let offsets = [10, 28, 78].map(d => d * scale_factor)
     title_group.selectAll(".chart-circular-title")
         .data(["The cultures & constellations", "that use the star", focus.proper])
         .enter().append("text")
@@ -83,6 +84,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         .classed("chart-circular-star-title", (d,i) => i === 2 ? true : false)
         .attr("x", 0)
         .attr("y", (d,i) => offsets[i])
+        .style("font-size", (d,i) => round((i === 2 ? 46 : 14) * scale_factor, 2))
         .text(d => d)
 
     ////////////////////////////// Create center ///////////////////////////////
@@ -95,7 +97,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     // console.log(chosen_const)
     
     //Create the central image of all constellations that use the chosen star
-    let center_size = 650
+    let center_size = 650 * scale_factor
     chosen_const = constellations
     location = {
         x: (total_width - center_size)/2, 
@@ -130,9 +132,9 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     //Figure out the sizes of the mini constellations-only circles around the central big one
     let n_const = constellations.length
     let angle = pi / n_const
-    let padding = 60
-    let padding_center = 60
-    let r = Math.min(90, ((center_size/2 - padding) * Math.sin(angle))/(1 - Math.sin(angle)))
+    let padding = 60 * scale_factor
+    let padding_center = 60 * scale_factor
+    let r = Math.min(90 * scale_factor, ((center_size/2 - padding) * Math.sin(angle))/(1 - Math.sin(angle)))
     let rR = center_size/2 - padding + r + padding_center
 
     let stroke_w = 1.5
@@ -173,7 +175,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             })
 
         //Draw the culture name on the path
-        let font_size = (r * size_factor > 45 ? 14 : 12) 
+        let font_size = round((r * size_factor > 45 ? 14 : 12) * scale_factor,2)
         const_text_group.append("text")
             .attr("class", "chart-circular-mini-map-culture")
             .attr("dy", "-0.3em")
@@ -195,7 +197,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             })
 
         //Add the constellation name to the path
-        let font_size_name = (r * size_factor > 45 ? 9 : 7) 
+        let font_size_name = round((r * size_factor > 45 ? 9 : 7) * scale_factor,2)
         const_text_group.append("text")
             .attr("class", "chart-circular-mini-map-name")
             .attr("dy", "1.15em")

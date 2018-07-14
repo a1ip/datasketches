@@ -37,6 +37,7 @@
     <script src="plugins/webfont.js"></script>
     <script src="plugins/chroma.js"></script>
     <script src="plugins/rxjs.min.js"></script>
+    <script src="plugins/modal.min.js"></script>
     <script src="plugins/breathe.js"></script>
     
     <!-- Custom JavaScript files -->
@@ -53,6 +54,7 @@
 	<script src="js/createMiniMapLayout.js"></script>
 
 	<!-- Styling -->
+    <link href="css/modal.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     
     <!-- Google fonts -->
@@ -456,7 +458,28 @@
         </div>
     </section>
 
+    <!-- The modal that pops up when a person node is clicked -->
+    <div class="modal">
+        <div class="modal-inner">
+            <a data-modal-close>x</a>
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div id="chart-modal" style="display:none">
+        <!-- Everything in here is ported over to the "modal" inside the "chart-container" div when clicked on a clickable text or small multiple chart -->
+        <div id="chart-modal-inner">
+            <section id="section-chart-modal" class="section-circular-chart">
+                <div id="chart-container-modal" class="chart-container-circular">
+                    <div id="chart-modal" class="chart-circular"></div>
+                </div>
+            </section>
+        </div>
+    </div>
     <script>
+
+        //From https://github.com/benceg/vanilla-modal
+        let simple_modal = new VanillaModal.default()
 
         //Loaded on body load
         function loadAllAssets() {
