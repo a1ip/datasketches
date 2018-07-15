@@ -49,7 +49,7 @@
   max-width: 100%; /*NB 90%*/
   max-height: 100%; /*NB 90%*/
   overflow-x: auto; /*NB hidden*/
-  overflow-y: auto;
+  overflow-y: hidden; /*NB auto*/
   background: #fff;
   z-index: -1;
   opacity: 0;

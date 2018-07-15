@@ -265,20 +265,20 @@ a, a:link, a:visited, a:active, .string-click {
 }
 
 #section-chart-modal {
-    height: calc(100vh - 40px - 30px);
+    height: calc(100vh - 20px);
     max-height: calc(960px);
     min-width: 600px;
     width: auto;
     max-width: calc(100% - 40px - 40px);
     margin-left: 40px;
     margin-right: 40px;
-    margin-top: 40px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 0px;
 }
 
-#betelgeuse-note {
+/* #betelgeuse-note {
     display: none;
-}
+} */
 
 #chart-container-modal, #chart-modal {
     height: 100%;

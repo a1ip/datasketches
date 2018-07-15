@@ -232,48 +232,47 @@ function createSmallMultipleLayout(opts_data, draw_type) {
 
     let m = 0
     let size = 170
-    // let colors = ["#EFB605","#E7A000","#E4650B","#E01A25","#CE003D","#B50655","#991C71","#7A3992","#4F56A6","#2074A0","#08977F","#2AAF61","#7EB852"]
 
     //Loop over each star and draw the mini map
     focus
         .filter(d => d.small_multiple)
         .forEach((d,i) => {
-        let p_name = d.proper.toLowerCase()
-        let chart_id = "div-" + p_name
-        //Create a div to put this in
-        const chart_group = d3.select("#chart-container-small-multiple").append("div")
-            .datum(d)
-            .attr("id", chart_id)
-            .attr("class", "div-group-small-multiple")
-            //.style("color", colors[i])
-            .on("click", d => smallMapClick(d, opts_data))
+            let p_name = d.proper.toLowerCase()
+            let chart_id = "div-" + p_name
+            //Create a div to put this in
+            const chart_group = d3.select("#chart-container-small-multiple").append("div")
+                .datum(d)
+                .attr("id", chart_id)
+                .attr("class", "div-group-small-multiple")
+                //.style("color", colors[i])
+                .on("click", d => smallMapClick(d, opts_data))
 
-        //Add star's title on top
-        chart_group.append("p")
-            .attr("class", "small-multiple-chart-title")
-            .html(d.proper)
-        //Add note about the star/constellation
-        chart_group.append("p")
-            .attr("class", "small-multiple-chart-sub-title red")
-            .html(d.note)
+            //Add star's title on top
+            chart_group.append("p")
+                .attr("class", "small-multiple-chart-title")
+                .html(d.proper)
+            //Add note about the star/constellation
+            chart_group.append("p")
+                .attr("class", "small-multiple-chart-sub-title red")
+                .html(d.note)
 
-        if(draw_type === "image") {
-            //Add image of small multiple
-            chart_group.append("div")
-                .attr("id", "div-small-multiple-" + p_name)
-                .attr("class", "div-small-multiple")
-                .style("width", size + "px")
-                .style("height", size + "px")
-                .style("background-image", `url("img/small-multiple/small-multiple-${p_name}-2x-min.png")`)
-        } else {
-            //Draw the canvas instead
-            createMap(opts_data, m, size, size, "#" + chart_id, d, "multiple")
-        }//else
-    })//forEach
+            if(draw_type === "image") {
+                //Add image of small multiple
+                chart_group.append("div")
+                    .attr("id", "div-small-multiple-" + p_name)
+                    .attr("class", "div-small-multiple")
+                    .style("width", size + "px")
+                    .style("height", size + "px")
+                    .style("background-image", `url("img/small-multiple/small-multiple-${p_name}-2x-min.png")`)
+            } else {
+                //Draw the canvas instead
+                createMap(opts_data, m, size, size, "#" + chart_id, d, "multiple")
+            }//else
+        })//forEach
 
     ////////////////////////////// Clickable text ///////////////////////////////
 
-    //Make some texts in the body copy clickable too
+    //Make some texts in the body copy clickable
     focus.forEach(d => {
         d3.selectAll(`.${d.proper.toLowerCase()}-click`)
             .on("click", () => smallMapClick(focus.filter(s => s.proper === d.proper)[0], opts_data))
@@ -371,7 +370,7 @@ function smallMapClick(d, opts_data) {
 
     // d3.select("#betelgeuse-note").style("display", d.proper === "Betelgeuse" ? "none" : "inline")
 
-    //Fade in the group to hide the map and remove some elements from the Orion map
+    //Fade in the group to hide the map and remove some elements from the base map
     let map_id = "modal"
     d3.selectAll(`#canvas-${map_id}, #canvas-mini-${map_id}, #svg-${map_id} .chart-circular-title-group, #svg-${map_id} .chart-circular-mini-map-group`).remove()
     const fade_group = d3.select(`#svg-${map_id} .chart-circular-hide-group`).style("opacity", 1)
@@ -380,17 +379,24 @@ function smallMapClick(d, opts_data) {
 
     //Create the new layout, but wait a bit for the visual to have scrolled up
     setTimeout(() => {
-        // let num_const = 
-        let scale_factor = Math.min(1, (window.innerHeight - 100) / orion_size)
+        let size_decrease_scale = d3.scaleLinear()
+            .domain([6,23])
+            .range([110,40])
+        let num_const = opts_data.const_per_star.filter(s => s.star_id === d.hip).length
+        let scale_factor = Math.min(1, (window.innerHeight - size_decrease_scale(num_const)) / orion_size)
+        let new_size = orion_size * scale_factor
+        let new_m = orion_m * scale_factor
+
         if(window.innerHeight > window.innerWidth) {
             d3.select("#section-chart-modal")
                 .style("height","auto")
                 .style("max-width", "100%")
                 .style("margin-left", 20 + "px")
                 .style("margin-right", 20 + "px")
+                .style("margin-top", 40 + "px")
+                .style("margin-bottom", 40 + "px")
         }//if
-        let new_size = orion_size * scale_factor
-        let new_m = orion_m * scale_factor
+
         createCentralCircleLayout(opts_data, d, new_m, new_size, new_size, map_id)
         // createCentralCircleLayout(opts_data, d, orion_m, orion_size, orion_size, map_id)
     }, 200)
