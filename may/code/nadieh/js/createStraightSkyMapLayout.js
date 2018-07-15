@@ -202,6 +202,8 @@ function rectangularMoveEffect(map_id) {
     }//function lerp
 
     smooth_mouse$.subscribe(pos => {
+        //Sometimes soon after page load, pos.x becomes NaN, so make sure it only ever returns a number
+        if(!isNumeric(pos.x)) pos.x = 0
         mouse_pos = pos.x
         document.documentElement.style.setProperty(`--mouse-${map_id}-x`, round(pos.x, 1));
     })

@@ -1,4 +1,5 @@
-//TODO: Make lightbox out of the non-betelgeuse options?
+//TODO: Add thank you paragraph in credits
+//TODO: Create favicon
 
 ///////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Constants ////////////////////////////////
@@ -84,8 +85,6 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     //     center: [0, 0],
     //     scale: 250,
     // }
-    //Add the mouseover move effect
-    rectangularMoveEffect("header","image") 
 
     ////////////////////////// Orion mini circles //////////////////////////
     let focus_betelgeuse = {
@@ -145,11 +144,14 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
 
     function breathableConcat() {
         return breathe.chain()   // creates a breathable chain
-            // .then(() => {
-            //     //Create the Sky Map behind the header - no longer needed, image is loaded
-            //     //The full canvas version - no longer needed, image is loaded
-            //     createStraightSkyMapLayoutFullCanvas(opts_data, focus_header, window.innerWidth, 1.5, 500, "header")
-            // })
+            .then(() => {
+                // //Create the Sky Map behind the header - no longer needed, image is loaded
+                // //The full canvas version - no longer needed, image is loaded
+                // createStraightSkyMapLayoutFullCanvas(opts_data, focus_header, window.innerWidth, 1.5, 500, "header")
+
+                //Add the mouseover move effect
+                rectangularMoveEffect("header","image") 
+            })
             .then(() => {
                 //Create Orion's big circular layout
                 createCentralCircleLayout(opts_data, focus_betelgeuse, orion_m, orion_size, orion_size, "orion")
@@ -250,3 +252,6 @@ function round(value, precision) {
     var multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier
 }//function round
+
+////////////////// Check for number //////////////////
+function isNumeric(n) { return !isNaN(parseFloat(n)) && isFinite(n) }

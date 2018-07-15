@@ -29,11 +29,11 @@
 	<meta name="twitter:image:src" content="http://www.datasketch.es/may/code/nadieh/img/figures_in_the_sky_feature.jpg">
 
 	<!-- JavaScript plugin files -->
-    <!-- <script src="../../../plugins/d3.min.js"></script> -->
-    <script src="plugins/d3.min.js"></script>
+    <script src="../../../plugins/d3.min.js"></script>
+    <!-- <script src="plugins/d3.min.js"></script> -->
+    <script src="../../../plugins/d3-annotation.min.js"></script>
+    <!-- <script src="plugins/d3-annotation.min.js"></script> -->
     <script src="plugins/d3-contour.v1.min.js"></script>
-    <!-- <script src="../../../plugins/d3-annotation.min.js"></script> -->
-    <script src="plugins/d3-annotation.min.js"></script>
     <script src="plugins/webfont.js"></script>
     <script src="plugins/chroma.js"></script>
     <script src="plugins/rxjs.min.js"></script>
@@ -91,7 +91,7 @@
 
         <!-- <p class="sidenote">Meaning that out of the 28 available cultures, 17 of them have used <span class="red">Betelgeuse</span> in a constellation.</p> -->
         <p>The visualization below shows how <span class="red">Betelgeuse</span> has been used by 17 cultures (out of the 28) to form constellations, each represented by a different color.<!--<span id="betelgeuse-note" class="red"> (Well, if you hadn't clicked on another star, it would've shown <b class="string-click betelgeuse-click">Betelgeuse</b> (•‿•) )</span>--> The main shape of a <i>long rectangle that is "tightened by a belt" in the center</i> is clearly visible, with many lines of different constellations appearing side by side. These bright stars thus seem to form a distinctive figure. However, there are some fascinating alternates in there too; mostly humanoid shapes by the <span class="egyptian">Egyptians</span>, <span class="navajo">Navajo</span> and <span class="tupi">Tupi</span>.</p>
-        <p class="chart-explanation-text">The separate constellation shapes of each culture can be found in a ring around the main circle. <span class="red">Click</span> on any of the smaller circles to make it appear in the center. To get back to the default view showing all constellations simultaneously, click on the central star map.</p>
+        <p class="chart-explanation-text">The separate constellation shapes of each culture can be found in a ring around the main circle. <span class="red">Click</span> on any of the smaller circles to make it appear in the center. To get back to the default view showing all constellations simultaneously, <span class="red">click</span> on the central star map.</p>
     </section>
 
     <!-- Chart Orion -->
@@ -106,7 +106,7 @@
         <p class="sidenote"><span class="red">Sirius</span>, said to literally mean "scorching", is quite an appropriate name</p>
         <p class="no-top">However, if we instead focus on <b class="red string-click sirius-click">Sirius</b>, the brightest star in the night sky, no clear shape is shared across cultures. In Western culture it belongs to <span class="red">Canis Major</span>, i.e. the Large Dog, and a dog shape can indeed be recognized. But other cultures have seen Sirius as part of an Eagle, Wolf and several more animals.</p>
 
-        <p class="chart-explanation-text"><span class="red">Click</span> on the sky map of Sirius below if you want to see it visualized in a bigger sky map with all of the separate constellations around it.</p>
+        <p class="chart-explanation-text"><span class="red">Click</span> on the sky map of <span class="red">Sirius</span> below if you want to see it visualized in a bigger sky map with all of the separate constellations around it.</p>
     </section>
 
     <!-- Chart Sirius -->
@@ -121,7 +121,7 @@
         <p class="sidenote">The Big Dipper is actually part of a larger Western constellation known as <span class="red">Ursa Major</span>, or Big Bear</p>
         <p class="no-top">Perhaps the most universally recognized figure across all cultures is the first one that many people learn as a kid; the <span class="red">Big Dipper</span>. Roughly 17 out of the 20 constellations that use <b class="red string-click dubhe-click">Dubhe</b>, the top right star, share practically the same "cooking pan" shape. And even though the shapes are almost the same, the <i>actual figures</i> that were seen differ quite a lot. From an Elk, a Caribou, to Carts, and even a "Group of organized thieves" by the <span class="macedonian">Macedonians</span>.</p>
 
-        <p class="chart-explanation-text"><span class="red">Click</span> on the sky map of Dubhe below if you want to see it visualized in a bigger sky map with all of the separate constellations around it.</p>
+        <p class="chart-explanation-text"><span class="red">Click</span> on the sky map of <span class="red">Dubhe</span> below if you want to see it visualized in a bigger sky map with all of the separate constellations around it.</p>
     </section>
 
     <!-- Chart Big Dipper -->
@@ -157,7 +157,7 @@
         <div id="chart-container-stats">
             <div id="chart-stats-stars" class="chart-stats"></div>
         </div>
-        <p id="chart-stats-explanation-text"><b>NOTE</b> | Star colors, based on their actual visible colors, have been exaggerated/saturated for better visibility. The sizes of the stars are (not-linearly) scaled to the <i>actual brightness</i> of the stars (called absolute magnitude); how bright they would be of they were all placed the same distance from Earth. Because stars are all at widely different distances from the Earth, how bright a star appears to us is called the <i>apparent</i> magnitude.</p>
+        <p id="chart-stats-explanation-text"><b>NOTE</b> | Star colors, based on their actual visible colors, have been exaggerated/saturated for better visibility. The sizes of the stars are (not-linearly) scaled to the <i>actual brightness</i> of the stars (called absolute magnitude); how bright they would be if they were all placed the same distance from Earth. Because stars are all at widely different distances from the Earth, how bright a star appears to us is called the <i>apparent</i> magnitude.</p>
         <p class="sidenote"><span class="red">Sirius</span> is about 25 times more luminous than the Sun, but <span class="red">Canopus</span> is ~10,000 times more luminous!</p>
         <p id="chart-stats-explanation-text">Take Sirius, the brightest star, it appears almost twice as bright to us as Canopus, the next brightest star. However, compared to the other stars we see at night it's actually not exceptionally bright. The reason it appears so bright to <i>us</i>, is because it's one of our closest neighboring stars (at 8.6 light-years).</p>
     </section>
@@ -456,7 +456,7 @@
             <p class="credit-big">Created with <span class="egyptian" style="font-size: 1.2em;">❤</span> by astronomer & dataviz lover <a href="https://twitter.com/NadiehBremer" target="_new"><b class="egyptian">Nadieh Bremer</b></a></p>
             <p class="credit-small" style="margin-top: -1.6em;">See more of her works on <a href="http://www.visualcinnamon.com/" target="_new"><b class="egyptian">Visual Cinnamon</b></a></p>
             <p class="credit-small">Go to the <a href="../..">datasketches' May month</a> to read about the data preparation, design, coding & more.</p>
-            <p class="credit-small" style="margin-top: -0.9em;">The data about the stars comes from the <a href="https://github.com/astronexus/HYG-Database">HYG star database</a>. The constellation data comes from <a href="http://stellarium.org/">Stellarium</a>, a free and open source planetarium.</p>
+            <p class="credit-small" style="margin-top: -0.9em;">The data about the stars comes from the <a href="https://github.com/astronexus/HYG-Database">HYG star database</a>. The constellation data comes from <a href="http://stellarium.org/">Stellarium</a>, a free and open source planetarium. And then there was a lot of data cleaning,  preparation & analysis to create this final piece.</p>
         </div>
     </section>
 
@@ -484,7 +484,7 @@
         </div>
     </div>
 
-    
+
     <script>
 
         //From https://github.com/benceg/vanilla-modal

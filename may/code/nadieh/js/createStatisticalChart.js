@@ -48,7 +48,7 @@ function createStatChartStars(map_id, stars) {
     let current_found = "betelgeuse"
     function moved() {
         let m = d3.mouse(this)
-        let found = diagram.find(m[0], m[1], 15)
+        let found = diagram.find(m[0], m[1], 20)
         if(found) {
             found = found.data
             if(current_found !== found) {
@@ -447,58 +447,3 @@ function createStatChartStars(map_id, stars) {
         .attr("id", "hover-star-marker")
 
 }//function createStatChartStars
-
-
-
-function createStatChartCultures(map_id, m, w, h, cultures) {
-
-    ////////////////////////////// Set sizes ///////////////////////////////
-    let margin = { left: 70, top: m, right: 10, bottom: m }
-    let width = w
-    let height = h
-    // let total_width = margin.left + width + margin.right
-    // let total_height = margin.top + height + margin.bottom
-
-    ////////////////////////////// Create svg ///////////////////////////////
-    const svg = d3.select("#chart-" + map_id).append("svg")
-        .attr("id", "svg-" + map_id)
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-    ////////////////////////////// Create scales ///////////////////////////////
-    let x_scale = d3.scaleLinear()
-        .domain([0, 25])
-        .rangeRound([0, width])
-
-    let y_scale = d3.scaleBand()
-        .domain(culture_names.map(d => constellationCultureCap(d)))
-        .rangeRound([0, height])
-        .padding(0.1)
-
-    ////////////// Create axes //////////////
-
-    let x_axis = svg.append("g") //x scale - the average
-        .attr("class", "axis x")
-        .attr("transform", "translate(0 " + height + ")")
-        .call(d3.axisBottom(x_scale).ticks(3))
-    
-    let y_axis = svg.append("g") //y scale - cultures
-        .attr("class", "axis y")
-        .call(d3.axisLeft(y_scale))
-    y_axis.selectAll(".tick line, path").remove()
-
-    ////////////// Create bars //////////////
-
-    svg.selectAll(".bar")
-        .data(d3.values(cultures))
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", 0)
-        .attr("y", d => y_scale(constellationCultureCap(d.culture)))
-        .attr("width", d => x_scale(d.mean_stars))
-        .attr("height", y_scale.bandwidth())
-        .style("fill", d => d.color)
-
-}//function createStatChartCultures

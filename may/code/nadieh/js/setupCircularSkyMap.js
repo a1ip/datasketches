@@ -99,7 +99,7 @@ function drawMap(opts_data, canvas, ctx, focus, chosen_const, loc, type) {
 
     //Fade out the "hiding-rect" in the circular sky map
     d3.selectAll(".chart-circular-hide-group")
-        .transition("fade").duration(900).delay(100)
+        .transition("fade").duration(900).delay(1000)
         .style("opacity", 0)
 }//function drawMap
 

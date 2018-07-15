@@ -569,6 +569,7 @@ a, a:link, a:visited, a:active, .string-click {
 
 #svg-stats-cultures {
     overflow: visible;
+    -webkit-transform: translate3d(0,0,0);
 }
 
 .chart-stats-title {
@@ -620,7 +621,6 @@ a, a:link, a:visited, a:active, .string-click {
     fill: none;
     stroke-width: 1.5px;
     stroke: var(--color-red);
-    /* stroke: black; */
 }
 
 .annotations {
@@ -683,7 +683,7 @@ a, a:link, a:visited, a:active, .string-click {
     background-image: url("../img/full-sky-map/full-sky-map-hawaiian-2x-min.png");
 }
 #chart-constellations #constellations-border-div {
-    height: 630px; /* 650 + 2 * 10px border */
+    height: 630px;
     color: var(--color-red);
     border-top: 10px solid currentColor;
     border-bottom: 10px solid currentColor;
@@ -709,11 +709,6 @@ a, a:link, a:visited, a:active, .string-click {
     position: absolute;
     top: 0;
     left: 0;
-    /* left: -25%; */
-    /* transform: translateX(calc(var(--mouse-constellations-x) * 1px)); */
-    /* color: #D80533;
-    border-top: 10px solid currentColor;
-    border-bottom: 10px solid currentColor; */
 }
 
 .chosen-culture-title {
