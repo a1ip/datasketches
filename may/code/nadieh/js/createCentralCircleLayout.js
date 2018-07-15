@@ -57,20 +57,23 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     fade_group.append("text")
         .attr("class", "chart-circular-text")
         .attr("x", width/2 + margin.left)
-        .attr("y", height/2 + margin.top - 55)
+        .attr("y", height/2 + margin.top - 55 * scale_factor)
         .attr("dy", "0.35em")
+        .style("font-size", (14 * scale_factor) + "px")
         .text("Creating the Sky Map of")
     const svg_text_const_name = fade_group.append("text")
         .attr("class", "chart-circular-text-name")
         .attr("x", width/2 + margin.left)
         .attr("y", height/2 + margin.top + 0)
         .attr("dy", "0.35em")
+        .style("font-size", (42 * scale_factor) + "px")
         .text(focus.proper)
     const svg_text_culture = fade_group.append("text")
         .attr("class", "chart-circular-text-culture")
         .attr("x", width/2 + margin.left)
-        .attr("y", height/2 + margin.top + 40)
+        .attr("y", height/2 + margin.top + 40 * scale_factor)
         .attr("dy", "0.35em")
+        .style("font-size", (19 * scale_factor) + "px")
         .text("")
 
     //Create the title in the top left corner
@@ -84,7 +87,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         .classed("chart-circular-star-title", (d,i) => i === 2 ? true : false)
         .attr("x", 0)
         .attr("y", (d,i) => offsets[i])
-        .style("font-size", (d,i) => round((i === 2 ? 46 : 14) * scale_factor, 2))
+        .style("font-size", (d,i) => round((i === 2 ? 46 : 14) * scale_factor, 2) + "px")
         .text(d => d)
 
     ////////////////////////////// Create center ///////////////////////////////
@@ -137,7 +140,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     let r = Math.min(90 * scale_factor, ((center_size/2 - padding) * Math.sin(angle))/(1 - Math.sin(angle)))
     let rR = center_size/2 - padding + r + padding_center
 
-    let stroke_w = 1.5
+    let stroke_w = 1.5 * scale_factor
     breathe.times(constellations.length, i => {
     // constellations.forEach((d,i) => {
         //Find the central location
@@ -167,19 +170,21 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
                 let cy = y + height/2 + margin.top
                 return "M " + [cx, cy + rad] + " A " + [rad, rad] + " 0 1 1 " + [cx + 0.01, cy + rad] 
             })
-            .style("stroke-width", stroke_w)
+            // .style("stroke-width", stroke_w)
             .on("click touchstart", d => {
                 d3.event.stopPropagation()
                 clearTimeout(timeout_switch)
                 timeout_switch = setTimeout(() => switchSkyMapCenter(d), 300)
             })
+            .on("mouseover", function() { d3.select(this).classed("active", true) })
+            .on("mouseout", function() { d3.select(this).classed("active", false) })
 
         //Draw the culture name on the path
         let font_size = round((r * size_factor > 45 ? 14 : 12) * scale_factor,2)
         const_text_group.append("text")
             .attr("class", "chart-circular-mini-map-culture")
             .attr("dy", "-0.3em")
-            .style("font-size", font_size)
+            .style("font-size", font_size + "px")
             .append("textPath")
             .attr("xlink:href", `#chart-mini-map-path-${map_id}-${i}`)
             .attr("startOffset", "50%")
@@ -201,7 +206,7 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
         const_text_group.append("text")
             .attr("class", "chart-circular-mini-map-name")
             .attr("dy", "1.15em")
-            .style("font-size", font_size_name)
+            .style("font-size", font_size_name + "px")
             .append("textPath")
             .attr("xlink:href", `#chart-mini-map-name-path-${map_id}-${i}`)
             .attr("startOffset", "50%")
@@ -248,10 +253,15 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     function switchSkyMapCenter(d) {
         let chosen
 
-        //Don't do anything if the click comes not from a mini-map and the central map is already all
+        //Default to no pointer cursor in the center
         central_path.style("cursor", "default")
+
+        //Don't do anything if the click comes not from a mini-map and the central map is already all
         if(d === "body" && current_center_const === "all") return
         
+        //Update the stroke thickness
+        d3.selectAll(".chart-circular-mini-map-circle").classed("clicked", c => c === d ? true : false)
+
         if(d !== "body" && d !== current_center_const) {
             //If the same circle isn't clicked twice in a row, change to the new mini map
             chosen = d
@@ -268,11 +278,6 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             //Update the constellation name
             let const_name = const_names[const_names.map(c => c.const_id).indexOf(d)].const_name
             svg_text_const_name.text(const_name)
-
-            //Change the thick stroke of the chosen constellation
-            svg.selectAll(".chart-circular-mini-map-circle")
-                .transition("stroke").duration(600)
-                .style("stroke-width", c => ((c === d ? 3 : 1) * stroke_w) + "px")
         } else {
             //If the same one is clicked again, go back to "all"
             chosen = chosen_const
@@ -281,11 +286,6 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
             //Update central text
             svg_text_culture.text("")
             svg_text_const_name.text("all cultures")
-
-            //Remove the thicker stroke
-            svg.selectAll(".chart-circular-mini-map-circle")
-                .transition("stroke").duration(600)
-                .style("stroke-width", stroke_w + "px")
         }//else
 
         //Fade the center in and out 

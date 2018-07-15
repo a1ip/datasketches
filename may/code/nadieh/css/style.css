@@ -3,6 +3,7 @@
     --title-font: 'Glass Antiqua', cursive;
     --body-font: 'Poppins', sans-serif;
     --color-red: #D80833;
+    --scale-factor-circular: 1;
 }
 
 html {
@@ -59,7 +60,8 @@ a, a:link, a:visited, a:active, .string-click {
     grid-column: 4 / -1;
 }
 
-.section-text .sidenote {
+.section-text .sidenote,
+.sidenote {
     grid-column: 1 / span 3;
     align-self: center;
     font-size: 0.7em;
@@ -85,9 +87,6 @@ a, a:link, a:visited, a:active, .string-click {
 
 .red {
     color: #D80833;
-}
-.aquamarine {
-    color: #17AA69;
 }
 .grey {
     color: #9c9c9c;
@@ -206,13 +205,8 @@ a, a:link, a:visited, a:active, .string-click {
 }
 
 #chart-header .background {
-    /* overflow: hidden; */
     position: absolute;
     top: 0;
-    /* left: -25%; */
-    /* height: 100%; */
-    /* width: 150%;  */
-    /* transform: translateX(calc(var(--mouse-header-x) * 1px)); */
     left: 0;
     height: 100%;
     width: 100%;
@@ -261,29 +255,33 @@ a, a:link, a:visited, a:active, .string-click {
     text-shadow: 1px 0px 2px #000, 0px 1px 2px #000, -1px 0px 2px #000, 0px -1px 2px #000;
 }
 
-/* ---------- SECTION | ORION ---------- */
+/* ---------- SECTION | ORION & MODAL ---------- */
 
 #section-chart-orion {
     height: 960px;
     padding: 0 20px;
     margin-top: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 #section-chart-modal {
     height: calc(100vh - 40px - 30px);
     max-height: calc(960px);
-    /* width: 1000px; */
+    min-width: 600px;
     width: auto;
-    max-width: 100%;
+    max-width: calc(100% - 40px - 40px);
+    margin-left: 40px;
+    margin-right: 40px;
     margin-top: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
     margin-bottom: 30px;
 }
 
 #betelgeuse-note {
     display: none;
+}
+
+#chart-container-modal, #chart-modal {
+    height: 100%;
 }
 
 #chart-orion, #chart-modal {
@@ -292,7 +290,8 @@ a, a:link, a:visited, a:active, .string-click {
 }
 
 #chart-orion canvas, #chart-orion svg,
-#chart-modal canvas, #chart-modal svg {
+#chart-modal canvas, #chart-modal svg,
+#chart-modal-note  {
     grid-column: 1;
     grid-row: 1;
     justify-self: center;
@@ -309,6 +308,24 @@ a, a:link, a:visited, a:active, .string-click {
 #svg-orion, #svg-modal {
     z-index: 0;
     -webkit-transform: translate3d(0,0,0);
+}
+
+#chart-modal-note {
+    margin: auto;
+    z-index: -2;
+}
+
+#chart-modal-note-top {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+}
+
+#chart-modal-note-bottom {
+    margin-top: 0.2em;
+    font-style: italic;
+    font-size: 14px;
 }
 
 /* ---------- GENERAL | CIRCULAR CHART LAYOUT ---------- */
@@ -341,10 +358,16 @@ a, a:link, a:visited, a:active, .string-click {
 .chart-circular-mini-map-circle {
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.5;
+    stroke-width: 1.5px;
     cursor: pointer;
     pointer-events: all;
+    transition: stroke-width 0.4s;
 }
+.chart-circular-mini-map-circle.clicked, .chart-circular-mini-map-circle.active {
+    stroke-width: 4px;
+}
+
+
 .chart-circular-mini-map-name-path {
     fill: none;
     pointer-events: none;
@@ -453,7 +476,7 @@ a, a:link, a:visited, a:active, .string-click {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-column-gap: 10px;
-    grid-row-gap: 25px;
+    grid-row-gap: 20px;
 }
 
 .div-group-small-multiple {

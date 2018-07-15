@@ -123,6 +123,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
         .on("click", () => { smallMapClick(focus_big_dipper, opts_data) })
 
     ////////////////////////// Small multiple charts //////////////////////////
+    // createSmallMultipleLayout(opts_data, "canvas")
     createSmallMultipleLayout(opts_data, "image")
 
     ////////////////////////// Statistical charts //////////////////////////
