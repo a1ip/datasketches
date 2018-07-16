@@ -567,7 +567,13 @@ a, a:link, a:visited, a:active, .string-click {
     grid-row: 1;
 }
 
-#svg-stats-cultures {
+#canvas-stats-stars {
+    z-index: -1;
+    pointer-events: none;
+}
+
+#svg-stats-stars {
+    z-index: 2;
     overflow: visible;
     -webkit-transform: translate3d(0,0,0);
 }
@@ -744,7 +750,7 @@ a, a:link, a:visited, a:active, .string-click {
     padding: 8px 8px;
     border-left: 6px solid black;
     border-left-color: currentColor;
-    background: -webkit-linear-gradient(left, currentColor -250%, #f7f7f7 20%);
+    background: -webkit-linear-gradient(left, currentColor -210%, #f7f7f7 20%);
     pointer-events: none;
 }
 
@@ -824,13 +830,16 @@ a, a:link, a:visited, a:active, .string-click {
 #section-credits {
     position: relative;
     width: 100%;
-    height: 250px;
+    height: 300px;
     text-align: center;
     overflow-x: hidden;
-
+    color: white;
+    text-align: left;
     margin-top: 4em;
     font-size: 17px;
-    /* border-top: 1.5px solid #D80833; */
+    font-weight: 300;
+    text-shadow: 1px 0px 2px #001540, 0px 1px 2px #001540, -1px 0px 2px #001540, 0px -1px 2px #001540;
+    /* border-top: 4px solid var(--color-red); */
 }
 
 #section-credits .background {
@@ -849,13 +858,34 @@ a, a:link, a:visited, a:active, .string-click {
     background-size: auto 100%;
 }
 
-#section-credits .credit-text {
-    width: calc(var(--body-max-width) - 2 * 20px);
-    margin: 10px auto 10px auto;
-    padding: 10px 20px;
-    text-align: left;
-    color: white;
-    text-shadow: 1px 0px 2px #001540, 0px 1px 2px #001540, -1px 0px 2px #001540, 0px -1px 2px #001540;
+#credit-text-group {
+    position: relative;
+    width: var(--body-max-width);
+    margin: 2.5em auto 0 auto;
+    background: rgba(0, 21, 64, 0.4);
+    display: grid;
+    grid-template-columns: 55% auto;
+    grid-column-gap: 2em;
+    align-items: start;
+}
+
+#credit-share{
+    grid-column: 1;
+    padding-left: 20px;
+}
+
+#credit-methodology {
+    grid-column: 2;
+    padding-right: 20px;
+}
+
+/* #credit-methodology p:first-of-type,  */
+#credit-share p:first-of-type {
+    margin-top: 20px;
+}
+
+#credit-share-p {
+    font-size: 1.1em;
 }
 
 #section-credits .credit-big {
@@ -864,4 +894,11 @@ a, a:link, a:visited, a:active, .string-click {
 
 #section-credits .credit-small {
     font-size: 0.75em;
+}
+
+#credit-text-group .divider {
+    display: inline-block;
+    width: 14px;
+    text-align: center;
+    color: var(--color-red);
 }

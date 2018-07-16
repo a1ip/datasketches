@@ -151,7 +151,7 @@ function setCultureDivColors(chosen_culture) {
                     .styleTween("background", () => {
                         let interpolate = d3.interpolateLab("#f7f7f7", color)
                         return function(t) {
-                            return `-webkit-linear-gradient(left, ${color} -250%, ${interpolate(t)} 20%`
+                            return `-webkit-linear-gradient(left, ${color} -210%, ${interpolate(t)} 20%`
                         }//return
                     })
                 el.selectAll(".culture-name, .culture-number, .culture-text, .culture-mean-stars-note, .culture-mean-stars")

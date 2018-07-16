@@ -11,8 +11,6 @@ function createStatChartStars(map_id, stars) {
     const canvas = d3.select("#chart-" + map_id).append("canvas")
         .attr("id", "canvas-" + map_id)
         .attr("class", "canvas-circular")
-        .style("z-index", -1)
-        .style("pointer-events", "none")
     const ctx = canvas.node().getContext("2d")
     crispyCanvas(canvas, ctx, total_width, total_height, 0)
     ctx.translate(margin.left, margin.top)
