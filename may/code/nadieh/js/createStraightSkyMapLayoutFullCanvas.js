@@ -33,7 +33,8 @@ function createStraightSkyMapLayoutFullCanvas(opts, focus_map, w, w_increase, h,
 
     ////////////////////////////// Set sizes ///////////////////////////////
 
-    let width = w * w_increase //proj_width to get exactly 1
+    // let width = w * w_increase
+    let width = proj_width //to get exactly 1
     //The offset needed because the canvas is bigger than the screen
     w_factor = (width - w)/2
 
@@ -101,7 +102,7 @@ function createStraightSkyMapLayoutFullCanvas(opts, focus_map, w, w_increase, h,
     fillEntireCanvas(ctx, canvas_space, canvas_lines, canvas_stars, proj_min, proj_width, height, width)
 
     ///////////// Initiate the hover movement effect /////////////
-    rectangularMoveEffect(map_id, "canvas") 
+    // rectangularMoveEffect(map_id, "canvas") 
 
     ///////////// Set the culture div click event /////////////
     if(map_id === "constellations") {

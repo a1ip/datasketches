@@ -365,6 +365,7 @@ function smallMapClick(d, opts_data) {
     //Show the modal
     simple_modal.open("#chart-modal")
 
+    //Don't do anything else if the person clicked the same star twice
     if(d.proper === current_orion_map) return
     current_orion_map = d.proper
 
@@ -377,7 +378,7 @@ function smallMapClick(d, opts_data) {
     fade_group.select(".chart-circular-text-name").text(d.proper)
     fade_group.select(".chart-circular-text-culture").text("")
 
-    //Create the new layout, but wait a bit for the visual to have scrolled up
+    //Create the new layout, but wait a bit for the pop-up to have appeared
     setTimeout(() => {
         let size_decrease_scale = d3.scaleLinear()
             .domain([6,23])
@@ -387,6 +388,7 @@ function smallMapClick(d, opts_data) {
         let new_size = orion_size * scale_factor
         let new_m = orion_m * scale_factor
 
+        //Portrait screens
         if(window.innerHeight > window.innerWidth) {
             d3.select("#section-chart-modal")
                 .style("height","auto")

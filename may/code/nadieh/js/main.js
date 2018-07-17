@@ -2,8 +2,8 @@
 //////////////////////////////// Constants ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-
 let sf //Scale factor of canvas
+let pixel_ratio
 const font_family = "Glass Antiqua"
 
 const pi1_2 = Math.PI / 2
@@ -77,11 +77,14 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     }
 
     ////////////////////////// Header sky map //////////////////////////
-    // let focus_header = {
-    //     culture: "western",
-    //     center: [0, 0],
-    //     scale: 250,
-    // }
+    let focus_header = {
+        culture: "western",
+        center: [0, 0],
+        scale: 250,
+    }
+
+    //Add the mouseover move effect to the background image divs
+    rectangularMoveEffect("header","image") 
 
     ////////////////////////// Orion mini circles //////////////////////////
     let focus_betelgeuse = {
@@ -122,7 +125,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
     createSmallMultipleLayout(opts_data, "image")
 
     ////////////////////////// Statistical charts //////////////////////////
-    // createStatChartStars("stats-stars", stars)
+    createStatChartStars("stats-stars", stars)
 
     ////////////////////////// Culture rectangular sky map //////////////////////////
     chosen_culture = "hawaiian_starlines"
@@ -141,14 +144,11 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
 
     function breathableConcat() {
         return breathe.chain()   // creates a breathable chain
-            .then(() => {
-                // //Create the Sky Map behind the header - no longer needed, image is loaded
-                // //The full canvas version - no longer needed, image is loaded
-                // createStraightSkyMapLayoutFullCanvas(opts_data, focus_header, window.innerWidth, 1.5, 500, "header")
-
-                //Add the mouseover move effect
-                rectangularMoveEffect("header","image") 
-            })
+            // .then(() => {
+            //     //Create the Sky Map behind the header - no longer needed, image is loaded
+            //     //The full canvas version - no longer needed, image is loaded
+            //     createStraightSkyMapLayoutFullCanvas(opts_data, focus_header, window.innerWidth, 1.5, 500, "header")
+            // })
             .then(() => {
                 //Create Orion's big circular layout
                 createCentralCircleLayout(opts_data, focus_betelgeuse, orion_m, orion_size, orion_size, "orion")
@@ -165,10 +165,10 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             //     //Doesn't actually create canvases, only loads final png images now
             //     createSmallMultipleLayout(opts_data, "canvas")
             // })
-            .then(() => {
-                //Create the scatterplot
-                createStatChartStars("stats-stars", stars)
-            })
+            // .then(() => {
+            //     //Create the scatterplot
+            //     createStatChartStars("stats-stars", stars)
+            // })
             .then(() => {
                 //Create the general full Sky Map visual - now creates only the lines and uses that as a background image
                 createStraightSkyMapLayout(opts_data, focus_culture, 650, "constellations")
@@ -177,7 +177,7 @@ function setupStarMaps(stars, star_by_id, const_links, const_names, const_per_st
             })
     }//function breathableConcat
 
-    breathableConcat()
+    setTimeout(breathableConcat,500)
 
 }//function setupStarMaps
 
@@ -207,9 +207,10 @@ function constellationCultureCap(s) {
 
 ////////////////// Retina non-blurry canvas //////////////////
 function crispyCanvas(canvas, ctx, total_width, total_height, offscreen, offset_x) {
-    sf = Math.min(2, getPixelRatio(ctx)) //no more than 2
+    pixel_ratio = (!pixel_ratio ? getPixelRatio(ctx) : pixel_ratio)
+    sf = Math.min(2, pixel_ratio) //no more than 2
     if(screen.width < 500) sf = 1 //for small devices, 1 is enough
-
+    
     if(!offscreen) {
         canvas
             .attr("width", sf * total_width)

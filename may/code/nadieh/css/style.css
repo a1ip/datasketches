@@ -232,6 +232,7 @@ a, a:link, a:visited, a:active, .string-click {
     justify-self: center;
     align-self: center;
     z-index: 2;
+    -webkit-transform: translate3d(0,0,0);
     pointer-events: none;
     color: white;
 }
@@ -298,7 +299,7 @@ a, a:link, a:visited, a:active, .string-click {
     z-index: -1;
 }
 #canvas-mini-orion, #canvas-mini-modal {
-    z-index: 1;
+    z-index: 2;
     -webkit-transform: translate3d(0,0,0);
 }
 #svg-orion, #svg-modal {

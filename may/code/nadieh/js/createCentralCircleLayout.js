@@ -47,12 +47,20 @@ function createCentralCircleLayout(opts_data, focus, m, w, h, map_id) {
     const fade_group = svg.append("g")
         .attr("class", "chart-circular-hide-group")
         .style("opacity", 1)
-    //Append a rectangle that is as big as the SVG
+    //Append a rectangle that is as big as the SVG to capture the click event
     fade_group.append("rect")
         .attr("width", total_width)
         .attr("height", total_height)
-        .style("fill", "white")
+        .style("fill", "none")
+        .style("pointer-events", "all")
         .on("click", () => { switchSkyMapCenter("body") })
+    //Add circle that will appear to show the white area during a mini circle change
+    fade_group.append("circle")
+        .attr("cx", width/2 + margin.left)
+        .attr("cy", height/2 + margin.top)
+        .attr("r", 650/2 * scale_factor)
+        .style("fill", "white")
+        .style("pointer-events", "none")
     //Append text in the middle
     fade_group.append("text")
         .attr("class", "chart-circular-text")
