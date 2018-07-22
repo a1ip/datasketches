@@ -247,9 +247,11 @@ function toTitleCase(str) {
 
 ////////////////// Round to decimal //////////////////
 function round(value, precision) {
-    var multiplier = Math.pow(10, precision || 0);
+    var multiplier = Math.pow(10, precision || 0)
     return Math.round(value * multiplier) / multiplier
 }//function round
+
+function roundHalf(num) { return Math.round(num*2)/2 }
 
 ////////////////// Check for number //////////////////
 function isNumeric(n) { return !isNaN(parseFloat(n)) && isFinite(n) }

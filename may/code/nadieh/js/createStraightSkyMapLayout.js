@@ -99,6 +99,8 @@ function createStraightSkyMapLayout(opts, focus_map, h, map_id) {
         d3.selectAll(".chosen-culture-title")
             .style("color", cultures[chosen_culture].color)
             .html(toTitleCase(chosen_culture.replace(/_/g, ' ')))
+        d3.select("#chosen-culture-number").html(cultures[chosen_culture].count)
+        d3.select("#chosen-culture-average").html(roundHalf(cultures[chosen_culture].mean_stars))
 
         //Change the color of the top and bottom border through currentColor
         d3.select("#constellations-border-div").style("color", cultures[chosen_culture].color)

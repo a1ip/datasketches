@@ -180,7 +180,6 @@ a, a:link, a:visited, a:active, .string-click {
 /* ---------- SECTION | HEADER ---------- */
 
 #section-header {
-    text-align: center;
     margin-bottom: 10px;
     width: 100%;
     height: 500px;
@@ -191,17 +190,14 @@ a, a:link, a:visited, a:active, .string-click {
 #header-group {
     position: relative;
     height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #chart-header {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    justify-self: center;
-    align-self: center;
     z-index: -1;
-    /* height: 500px; */
 }
 
 #chart-header .background {
@@ -227,10 +223,6 @@ a, a:link, a:visited, a:active, .string-click {
 }
 
 #title-header-group {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    justify-self: center;
-    align-self: center;
     z-index: 2;
     -webkit-transform: translate3d(0,0,0);
     pointer-events: none;
@@ -281,18 +273,17 @@ a, a:link, a:visited, a:active, .string-click {
     height: 100%;
 }
 
-#chart-orion, #chart-modal {
-    display: grid;
-    grid-template-columns: 1fr;
+#chart-orion canvas, #chart-modal canvas {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-#chart-orion canvas, #chart-orion svg,
-#chart-modal canvas, #chart-modal svg,
-#chart-modal-note  {
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: center;
-    align-self: center;
+#chart-modal-note {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #canvas-orion, #canvas-modal {
@@ -470,10 +461,21 @@ a, a:link, a:visited, a:active, .string-click {
 }
 
 #chart-container-small-multiple {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+@supports (display: grid) {
+    #chart-container-small-multiple {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-column-gap: 10px;
+        grid-row-gap: 20px;
+    }
 }
 
 .div-group-small-multiple {
@@ -489,12 +491,17 @@ a, a:link, a:visited, a:active, .string-click {
 
     align-self: center;
     justify-self: center;
-    /* grid-column-end: span 2; */
 
     transition: all 0.4s;
 }
 .div-group-small-multiple:hover {
     border-bottom: 6px solid currentColor;
+}
+
+@supports not (display: grid) {
+    .div-group-small-multiple {
+        margin: 10px 0;
+    }
 }
 
 .small-multiple-chart-title {
@@ -504,7 +511,6 @@ a, a:link, a:visited, a:active, .string-click {
     text-anchor: middle;
     color: currentColor;
     padding-left: 10px;
-    /* letter-spacing: 0.03em; */
     margin: 0 auto 0.6em auto;
     pointer-events: none;
 }
@@ -554,14 +560,14 @@ a, a:link, a:visited, a:active, .string-click {
 }
 
 .chart-stats {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
+    position: relative;
+    text-align: center;
 }
 
-.chart-stats canvas, .chart-stats svg {
-    grid-column: 1;
-    grid-row: 1;
+.chart-stats canvas {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #canvas-stats-stars {
@@ -668,6 +674,20 @@ a, a:link, a:visited, a:active, .string-click {
     margin-bottom: 0.2em;
 }
 
+#chosen-culture-stats {
+    grid-column: 4 / -1;
+    margin-top: 0.5em;
+    margin-bottom: 0.3em;
+}
+#chosen-culture-stats p {
+    color: #585858;
+    font-style: italic;
+    font-size: 12px;
+    margin: 0;
+    text-align: left;
+    line-height: 1.5;
+}
+
 #section-constellations {
     position: relative;
     text-align: center;
@@ -726,20 +746,39 @@ a, a:link, a:visited, a:active, .string-click {
 
 #cultures-group {
     text-align: left;
-    grid-column: 1 / -1;
     margin-top: 30px;
     margin-bottom: 30px;
 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+@supports (display: grid) {
+    #cultures-group {
+        grid-column: 1 / -1;
+
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+    }
 }
 
 .culture-info-wrapper {
     height: 88px;
     cursor: pointer;
     pointer-events: all;
+}
+
+@supports not (display: grid) {
+    .culture-info-wrapper {
+        width: calc(25% - 2 * 5px);
+        margin: 5px;
+    }
 }
 
 .culture-info {
@@ -848,7 +887,6 @@ a, a:link, a:visited, a:active, .string-click {
     width: 100%;
     background-color: #001540;
     background-image: url("../img/full-sky-map/full-sky-header-2x-min.png");
-    /* background-position-x: calc(var(--mouse-header-x) * 1px); */
     background-position-x: left;
     background-position-y: top;
     background-repeat: repeat-x;
@@ -860,13 +898,25 @@ a, a:link, a:visited, a:active, .string-click {
     width: var(--body-max-width);
     margin: 2.5em auto 0 auto;
     background: rgba(0, 21, 64, 0.4);
-    display: grid;
-    grid-template-columns: 55% auto;
-    grid-column-gap: 2em;
-    align-items: start;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
 }
 
-#credit-share{
+@supports (display: grid) {
+    #credit-text-group {
+        display: grid;
+        grid-template-columns: 55% auto;
+        grid-column-gap: 2em;
+        align-items: start;
+    }
+}
+
+#credit-share {
     grid-column: 1;
     padding-left: 20px;
 }
@@ -876,7 +926,16 @@ a, a:link, a:visited, a:active, .string-click {
     padding-right: 20px;
 }
 
-/* #credit-methodology p:first-of-type,  */
+@supports not (display: grid) {
+    #credit-share {
+        width: 55%;
+    }
+    
+    #credit-methodology {
+        width: 40%;
+    }
+}
+
 #credit-share p:first-of-type {
     margin-top: 20px;
 }
