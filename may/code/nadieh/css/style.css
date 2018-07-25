@@ -214,13 +214,13 @@ a, a:link, a:visited, a:active, .string-click {
     background-size: auto 100%;
 }
 
-#chart-header canvas {
+/* #chart-header canvas {
     overflow: hidden;
     position: absolute;
     top: 0;
     left: -25%;
     transform: translateX(calc(var(--mouse-header-x) * 1px));
-}
+} */
 
 #title-header-group {
     z-index: 2;
@@ -269,6 +269,12 @@ a, a:link, a:visited, a:active, .string-click {
     margin-bottom: 0px;
 }
 
+#chart-orion, #chart-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #chart-container-modal, #chart-modal {
     height: 100%;
 }
@@ -276,7 +282,8 @@ a, a:link, a:visited, a:active, .string-click {
 #chart-orion canvas, #chart-modal canvas {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #chart-modal-note {
