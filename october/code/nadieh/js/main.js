@@ -27,24 +27,28 @@ var width = totalWidth - margin.left - margin.right;
 var height = totalHeight - margin.top - margin.bottom;
 
 //Canvas
-var canvasLinks = d3.select('#royal-chart')
-  .append("canvas")
-  .attr('width', 2 * totalWidth)
-  .attr('height', 2 * totalHeight)
+var canvasLinks = d3.select('#royal-chart').append("canvas")
+var ctxLinks = canvasLinks.node().getContext("2d")
+var sf = Math.min(2, getPixelRatio(ctxLinks)) //no more than 2
+if(screen.width < 500) sf = 1 //for small devices, 1 is enough
+
+canvasLinks
+  .attr('width', sf * totalWidth)
+  .attr('height', sf * totalHeight)
   .style('width', totalWidth + "px")
   .style('height', totalHeight + "px")
-var ctxLinks = canvasLinks.node().getContext("2d")
-ctxLinks.scale(2,2);
+
+ctxLinks.scale(sf,sf);
 ctxLinks.translate(margin.left + width/2, margin.top);
 
 var canvasNodes = d3.select('#royal-chart')
   .append("canvas")
-  .attr('width', 2 * totalWidth)
-  .attr('height', 2 * totalHeight)
+  .attr('width', sf * totalWidth)
+  .attr('height', sf * totalHeight)
   .style('width', totalWidth + "px")
   .style('height', totalHeight + "px")
 var ctxNodes = canvasNodes.node().getContext("2d")
-ctxNodes.scale(2,2);
+ctxNodes.scale(sf,sf);
 ctxNodes.translate(margin.left + width/2, margin.top);
 			
 //SVG container
@@ -577,3 +581,16 @@ function wrap(text, width, heightLine) {
     }
   });
 }//wrap
+
+//Find the device pixel ratio
+function getPixelRatio(ctx) {
+    //From https://www.html5rocks.com/en/tutorials/canvas/hidpi/
+    let devicePixelRatio = window.devicePixelRatio || 1
+    let backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+        ctx.mozBackingStorePixelRatio ||
+        ctx.msBackingStorePixelRatio ||
+        ctx.oBackingStorePixelRatio ||
+        ctx.backingStorePixelRatio || 1
+    let ratio = devicePixelRatio / backingStoreRatio
+    return ratio
+}//function getPixelRatio
