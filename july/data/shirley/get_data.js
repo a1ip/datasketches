@@ -34,16 +34,16 @@ function getAllMovieDetails(titles, callback) {
 // get top summer movie titles for the year
 function getSummerMoviesByYear(year) {
   console.log(year);
-  if (year > 2016) {
-    fs.writeFile('./movies.json', JSON.stringify(movieDetails), 'utf8');
+  if (year > 2018) {
+    fs.writeFileSync('./movies_all.json', JSON.stringify(movieDetails), 'utf8');
     return;
   }
 
   var options = {
     host: 'www.imdb.com',
-    path: '/search/title?countries=us&languages=en&' +
-      'release_date=' + year + '-06-01,' + year + '-08-30&' +
-      'sort=boxoffice_gross_us,desc&title_type=feature'
+    path: '/search/title?countries=us&amp;languages=en&amp;' +
+      'release_date' + year + '-01-01,' + year + '-12-31&amp;' +
+      'sort=boxoffice_gross_us,desc&amp;title_type=feature'
   }
 
   http.request(options, function(response) {
@@ -51,6 +51,7 @@ function getSummerMoviesByYear(year) {
     response.on('data', function (chunk) {
       // make chunk of data into string
       var str = '' + chunk;
+      console.log(str)
       // get the title id from the string
       var matched = str.match(/data-tconst="([a-zA-Z0-9]+)"/gi)
       _.each(matched, title => {
@@ -61,7 +62,7 @@ function getSummerMoviesByYear(year) {
     response.on('end', function() {
       // take only the top 5 movies
       titles = _.chain(titles)
-        .uniq().take(5).value();
+        .uniq().take(20).value();
 
       console.log(titles)
       getAllMovieDetails(titles, function() {
@@ -71,4 +72,4 @@ function getSummerMoviesByYear(year) {
   }).end();
 }
 
-getSummerMoviesByYear(1989);
+getSummerMoviesByYear(2007);
