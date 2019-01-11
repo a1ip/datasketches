@@ -91,7 +91,7 @@
                     <a class="fancybox" rel="gallery-quickdraw" href="data/nadieh/img/quickdraw_ian.jpg"><img src="data/nadieh/img/quickdraw_ian.jpg" class="img-responsive img-gallery-2" alt="A t-SNE based visual of Quickdraw's dataset on drawing brushes, made by Ian Johnson" /></a>
                     <a class="fancybox" rel="gallery-quickdraw" href="data/nadieh/img/quickdraw_skulls_ian.jpg"><img src="data/nadieh/img/quickdraw_skulls_ian.jpg" class="img-responsive img-gallery-2" alt="A t-SNE based visual of Quickdraw's dataset on drawing skulls, made by Ian Johnson" /></a>
                 </div>
-                    
+
                 <p>Maybe something about the "mythical" words in Quickdraw and how they're drawn, like dragons and mermaids? Something about dragons in general? Or about myths from many different cultures and their timelines and similarities? But no, that would probably mean <i>a lot</i> of manual data gathering... However, myths across cultures... that suddenly reminded me of constellations! Myths and legends in the sky! I know my favorite constellations: Orion & the Swan (or to be more precise, the "Summer triangle"). But what did other cultures make of those same stars? What shapes and figures did they see in the same sky?</p>
                 <p>And finally, that idea sparked a feeling of enthusiasm and wonder in me in such a way that I knew it felt right. Of course, as an Astronomer, it also felt kind of appropriate to have my final data sketches project to be connected to actual stars ^_^</p>
 
@@ -121,7 +121,7 @@
 
                 <p>This month was very light on actual sketching. Mostly because the basic idea in itself is quit simple: focus on 1 star and visualize all the constellations that use that star. Using different colored lines for each constellation and surrounding each star with a donut-like mini chart that would show by which constellations that star is used (apart from the "main focus" star). You can see the tiny sketch in my brainstorm below (bottom of the left page)</p>
                 <a class="fancybox" href="sketch/nadieh/sketch_ideas.png"> <img src="sketch/nadieh/sketch_ideas_small.jpg" class="img-responsive img-month" alt="Brainstorming ideas for this month"></a>
-                
+
                 <p>I wanted the map of the stars to look like a combination between current and ancient Sky Maps. To use the deep blue colors of space. Set data-based sizes and colors of the stars (and make them glow!). But to also draw the ecliptic line, use the markings of the background lines ("grid-lines" in the sky in a way), where some would be signified by the Zodiac sign; in general give it a feel of the old maps. Such as this exquisite one made by Alexander Jamieson in 1822</p>
                 <a class="fancybox" href="sketch/nadieh/Alexander_Jamieson_Celestial_Atlas.jpg"> <img src="sketch/nadieh/Alexander_Jamieson_Celestial_Atlas_small.jpg" class="img-responsive img-month" alt="Plate 1 from A Celestial Atlas by Alexander Jamieson from 1822"></a>
 
@@ -130,7 +130,7 @@
 
                 <p>I started out thinking it would probably require a combination of sines and cosines, with perhaps four different cases (how the target star was positioned relative to the source star). In the sketches above and below how I'm trying to see if there are indeed different solutions for those four cases. But eventually it all came to do relatively simple vector math; finding the <i>normal vector</i>, and for each new constellation move up a little farther along the normal vector (I only realized this solution very late, which is contained within that sort-of red circles small drawing that my Apple pencil is pointing to)</p>
                 <a class="fancybox" href="sketch/nadieh/sketch_lines_2.png"> <img src="sketch/nadieh/sketch_lines_2_small.jpg" class="img-responsive img-month" alt="Sketches of the math trying to figure out how to get lines next to each other"></a>
-                
+
                 <p>On the right-bottom side of the sketch above you can see the final piece of math that I needed to position the constellations around one big main map. Like I've mentioned a few times before, math is truly your best friend in creating more unique data visuals, especially geometry!</p>
 
                 <p>Finally, as mentioned in the data section, I wanted to add some more "statistical" charts. The first was a scatterplot showing star brightness versus the number of constellations it appeared in. The image below left is the, extremely rough, sketch I drew. Really, it's so simple, it almost wasn't needed. But it's always good to roughly sketch out an idea, in case you're mind is glossing over some thinking error.</p>
@@ -140,9 +140,9 @@
                 </div>
 
                 <p>I also wanted to show people that some cultures have very small constellations on average (few stars per shape) and others have very intricate ones. For that I draw the, also extremely rough, bar chart in the sketch above right. As you'll see in the code section below, I did create a basic version of it, but ended up incorporating this data in quite a different (visual) way.</p>
-                
+
                 <h3>week 3 & 4 & 5 & 6 & 7 & 8 <span class="light-grey">|</span> code</h3>
-                
+
                 <p>My first goal, before focusing on the actual data visualization side of things, was to create a "base map" of the sky. I've never created my own, so I did a little research on what kind of <a href="https://github.com/d3/d3-geo#projections">projection</a> is typically used, and decided to go with a <a href="https://github.com/d3/d3-geo#geoStereographic">Stereographic</a> projection.</p>
 
                 <p>With about 9000 stars for the full sky, mini donut charts and many constellation lines, I knew that I wanted to create this project with HTML5 canvas, not SVG, due to performance reasons. So, I loaded my star data, set-up my d3 code following <a href="http://bl.ocks.org/nitaku/9607405">several</a> <a href="https://bl.ocks.org/mbostock/c7e85d2b47d11982db38">other</a> <a href="https://bl.ocks.org/pmplewa/0e36cce6c9c5edb31e18d41ad1f82c4e">examples</a> of sky maps found on <a href="http://blockbuilder.org/search">blockbuilder</a>. I thought I had done everything right, pressed save and saw a thin weird stripe of stars (image below left), which gave me the feeling of "Ugh, with such a crappy first result that I thought would be correct, did I take on the wrong subject...?" (I've never truly worked with projections before, outside of the extremely default Mercator).</p>
@@ -169,7 +169,7 @@
                 </div>
 
                 <p>Most sky maps that I'm familiar with are not rectangular. They ones I used as a child, and those I find most beautiful, are circular. I therefore clipped the square to a circle. And on the outside I added a dashed line around it. It's typically used to denote degrees, but here it's just there for ornamentation.</p>
-                <p>I also added a dashed line inside the map to show the so-called <i>ecliptic</i>. You can faintly see it curving from North to South on the right-hand side in the image below. This is the path that the Sun makes across the sky (relative to us). Because our Earth's rotational axis is 23.44° tilted with respect to the plane in which the planets go around the Sun, the ecliptic is not a straight line following 0° declination. Again, just an embellishment to make the whole look more interesting (although the ecliptic at least reveals information).</p> 
+                <p>I also added a dashed line inside the map to show the so-called <i>ecliptic</i>. You can faintly see it curving from North to South on the right-hand side in the image below. This is the path that the Sun makes across the sky (relative to us). Because our Earth's rotational axis is 23.44° tilted with respect to the plane in which the planets go around the Sun, the ecliptic is not a straight line following 0° declination. Again, just an embellishment to make the whole look more interesting (although the ecliptic at least reveals information).</p>
                 <a class="fancybox" href="code/nadieh/img-write-up/skymap_circle_clip.png"> <img src="code/nadieh/img-write-up/skymap_circle_clip_small.jpg" class="img-responsive img-month" alt="Clipping the map to a circle"></a>
 
                 <p>Similar to maps of Earth, maps of the stars also often show a grid of lines with the hours of RA (24 hours being a full day) and degrees of declination along the outside edge. In the crazy number of the useful features d3's geo functionality has, I hoped that perhaps it would also have some function that would calculate the graticule-edge-crossing-location, but sadly it didn't.</p>
@@ -183,7 +183,7 @@
                     <a class="fancybox" rel="gallery-skymap-graticule" href="code/nadieh/img-write-up/graticule_edges_location.png"><img src="code/nadieh/img-write-up/graticule_edges_location_small.jpg" class="img-responsive img-gallery-2" alt="Checking to see if the code found the right locations of the graticule line edges" /></a>
                     <a class="fancybox" rel="gallery-skymap-graticule" href="code/nadieh/img-write-up/graticule_edge_symbols.png"><img src="code/nadieh/img-write-up/graticule_edge_symbols.png" class="img-responsive img-gallery-2" alt="Placing zodiac symbols on the correct Right Ascension line" /></a>
                 </div>
-                
+
                 <p>And then it was time for the final big aspect that I had in mind for the sky map base; space itself. Right now the background color of "space" was the same dark blue. But I've been fortunate enough to visit some truly amazing places for star gazing during vacations, such as the Namib or Australian deserts. And I'll never forget how awestruck I was by seeing the tendrils, "clouds" and glow of the Milky Way streaking across the sky.</p>
                 <p>And this is really where my design was taking a step away from reality, but I <i>really</i> wanted to add some depth to each image by mimicking some lighter color streaks across the background. Not quite insinuating it was the Milky Way, but just not perfectly the same color. A bit like I'd seen in Nicholas Rougeux's <a href="https://www.c82.net/work/?id=357">Literary Constellations</a> project.</p>
                 <p>At OpenVisConf I'd just seen some "behind-the-scenes" tests by Ian for his Quickdraw talk. And a few bloopers too, although they looked more like abstract art that I wouldn't mind having in my house :) In some of those tests and bloopers he was using <a href="https://github.com/d3/d3-contour">d3's contour</a> function to show densities and it gave exactly the kind of feeling I was looking for.</p>
@@ -275,7 +275,7 @@
                 <p>However, I felt that the colors were still too soft. Therefore, I made the colors more vibrant an added a bit of "glow" around the edges. Cleaned up the axes a bit and the visual style of the scatterplot was done.</p>
                 <p>But initially I wanted to add another chart next to it. One that would show that some cultures use very few stars on average in constellations and others use a lot. A simple bar chart seemed like it would work. However, when I had a simple one on my screen, I noticed that it wasn't fitting with the color scheme of the scatterplot. And more importantly, the two charts just weren't about the same topic/insight, so no use in putting them side by side. Eventually I implemented the essence of the bar chart into the culture "boxes" at the bottom of the article. And that freed up some space on the right of the scatterplot for annotations!</p>
                 <a class="fancybox" href="code/nadieh/img-write-up/scatterplot_bar_chart.png"> <img src="code/nadieh/img-write-up/scatterplot_bar_chart.png" class="img-responsive img-month" alt="An almost finished scatterplot and bar chart"></a>
-                
+
                 <p>Often overlooked, but annotations are one of the best ways to make a chart understandable to an audience, and it's the ideal way to highlight exactly those things that you, as the creator, want. And for at least a year now, my go-to is the wonderful <a href="http://d3-annotation.susielu.com/">d3-annotations plugin</a> by <a href="http://www.susielu.com/">Susie Lu</a>. Yup. made <i>heavy</i> use of annotations in this particular chart 😉</p>
                 <a class="fancybox" href="code/nadieh/img-write-up/scatterplot_annotations.png"> <img src="code/nadieh/img-write-up/scatterplot_annotations_small.jpg" class="img-responsive img-month" alt="The final look of the scatterplot with many annotations"></a>
 
@@ -284,7 +284,7 @@
                 <p>Not a dataviz element, but I added a section at the bottom of the article that tells more about each culture. From where they are for the lesser known ones, or some other small tidbit of info that reveals itself on a hover. It's here that I implemented the bar chart as those tiny bars at the bottom of each box.</p>
                 <p>When you select a culture, the full sky map updates to show the constellations of that culture. But the selected culture also becomes fully colored. And as a general tip, as far as I know you can't animate gradients in CSS. However, using d3's <i>styleTween</i> function on the <i>background</i> CSS property you can! I could mimic the animation of the background from the subtle color on the left + grey on the right, to full color throughout 😄</p>
                 <a class="fancybox" href="code/nadieh/img-write-up/culture_boxes.png"> <img src="code/nadieh/img-write-up/culture_boxes.png" class="img-responsive img-month" alt="All the cultures in their own overview"></a>
-                
+
                 <p>And then, then I replaced as many of the visuals as I could by images! 😱 Yes, no use to have each visitor's browser build up the quite heave sky maps if they weren't interactive. I started with the small multiples, saving each tiny canvas as a png, running them through <a href="https://imagecompressor.com/">an optimizer</a> to reduce file size, and then only referencing the images and not running the functions anymore.</p>
                 <p>When I saw how well that was working to reducing the page load time on my older devices, I started replacing more. Such as the smaller images of Sirius and Dubhe. And the header above. Which before was a canvas that you could only move back and forth a little. But by saving the image and applying that to the background of the header section, I could use the wonderful background properties or <i>repeat</i> to make the sky map infinitely long and moveable.</p>
                 <p>For the full sky map at the bottom of the page I use a mix of images and canvas. The canvas part now only draws the constellation lines on top of an image. Well, to be exact, I draw the canvas to the <i>background-image</i> CSS property using canvas' handy <i>dataToURL</i> function. The final result is thus really two full width divs; the bottom one that never changes and has space + stars, and a top one with constellation lines that is a background image which gets redrawn/replaced whenever a new culture is selected.</p>
@@ -310,9 +310,46 @@
 
               <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
 
+              <h3 class="margin-top-10">year 1 <span class="light-grey">|</span> inspiration</h3>
+
+              <p>
+                So just like Nadieh, this month took me <em>forever</em> to figure out a dataset and angle for.  So even though it says May, I didn't finish this until December 2018 (wow I'm bad), and I'm writing this in January 2019 (wow I'm SUPER bad).
+              </p>
+
+              <p>
+                And just like Nadieh says, we thought this would be a super project with RJ and Mara about all the different tellings of Cinderella.  But after a few months of working on it on the side, the project quietly fizzled out (probably mainly to do with time issues with everyone's busy schedules).  After that, I was quite honestly at a loss.  We had chosen this topic, myths & legends, because it had sounded like a cool topic with a lot of potential.  But when I actually sat down to think about it, what I came up with either didn't excite me, or would have been logistically difficult to get the data.  I bounced from Chinese and Asian mythology, to class Chinese literature, to Mythbusters episodes.
+              </p>
+
+              <p>
+                Then, the idea came to me after watching <a href='http://www.crazyrichasiansmovie.com/' target='_new'>Crazy Rich Asians</a>.  I loved <a href='https://en.wikipedia.org/wiki/Michelle_Yeoh' target='_new'>Michelle Yeoh</a> in the movie, but it wasn't until I went and read up more about her that I learned she was accomplished and legendary and badass.  It made me wonder about all the legendary women that I have no idea about, and the idea took shape from there.
+              </p>
+
+
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-              <p></p>
+              <p>
+                Once I had the idea about legendary women, the next question was how to go about gathering the data.  Pretty early on I decided to use Wikipedia, and I thought I might try to scrape it for the "top" women on there.  I didn't have any idea how to define "top", though (page views? page length? links into page?) and even though I saw <a href='https://pudding.cool/2018/10/wiki-breakout/' target='_new'>a Pudding article that scraped Wikipedia</a>, I still wasn't sure how I wanted to go about it.  (I was also on a bit of a time crunch.)
+              </p>
+
+              <p>
+                Then it hit me that perhaps I should be looking for a definitive list, and I somehow ended up on <a href='https://en.wikipedia.org/wiki/List_of_female_Nobel_laureates' target='_new'>a page of the 51 female Noble Laureates</a>.  I hadn't heard of most of them, and I wanted to learn more about them.  It was perfect.
+              </p>
+
+              <p>
+                From there, all I had to research was the different ways to access the Wikipedia API.  It was a little hard to navigate (I wasn't sure if I should be using <a href='https://www.wikidata.org/wiki/Wikidata:Main_Page' target='_new'>Wikidata</a> or <a href='https://www.mediawiki.org/wiki/API:Main_page' target='_new'>MediaWiki</a> which is what comes up when I search "Wikipedia API", for example), but thankfully Pudding had me covered.  A quick dig through their <a href='https://github.com/the-pudding/wiki-billboard-data' target='_new'>wiki-billboard-data repo</a> led me to <a href='https://github.com/the-pudding/wiki-billboard-data/blob/54a0acb25413f02fc5938b05254239fdaa5ad8bc/scripts/current/get-people.js#L2' target='_new'>their script</a> using <a href='https://www.npmjs.com/package/wikijs' target='_new'>wikijs</a>, and I could just interface with that node package instead.
+              </p>
+
+              <p>
+                From there, all I had to do was copy and paste the table of female Noble Laureates into <a href='https://docs.google.com/spreadsheets/d/1Y9AETF58KMmp4_S2Mp7u0opsOEjee9hA8TfcdSBkQpI/edit?usp=sharing' target='_new'>a spreadsheet</a>, and do some light formatting/cleaning.  (This is probably one of the most important lessons I learned about data gathering from Nadieh, which is that spreadsheets are great for cleaning data.  The unenlightened me used to try and write code to scrape it, and it'd take me so much longer.  When I gathered data for Hamilton, I literally typed out the commas between each cell in a row in my CSV, I was so stupid.)  I then exported the spreadsheet as CSV, then used an <a href='https://www.csvjson.com/csv2json' target='_new'>online converter</a> to get the <a href='https://github.com/sxywu/legends/blob/master/scripts/legends_raw.json' target='_new'>data into JSON format</a>.
+              </p>
+
+              <p>
+                After that, I wrote a <a href='https://github.com/sxywu/legends/blob/master/scripts/getWiki.js' target='_new'>simple script</a> using wikijs to grab some more information about each woman, including the number of links in to their page ("backlinks") and the number of sources at the bottom to get the <a href='https://github.com/sxywu/legends/blob/master/assets/legends.json' target='_new'>final dataset</a>.
+              </p>
+
+              <p>
+                Even though the idea took forever to come up with, the actual data gathering only took a few hours 😅
+              </p>
                 <!-- <a class="fancybox" href="data/shirley/years.png"> <img src="data/shirley/years.png" class="img-responsive img-month"></a> -->
 
               <h3>week 2 <span class="light-grey">|</span> sketch</h3>
@@ -321,7 +358,10 @@
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p></p>
+              <p>
+
+                This month was super fun, and I'm so proud that I was able to finish it in 3 weeks - which I haven't been able to achieve since my <a href='http://datasketch.es/september' target='_new'>September</a> project about travel.  Most importantly, I was able to learn and teach myself three.js and a little bit of GLSL which I've been wanting to do for a long time.  It's really given me the confidence to go forward with more 3D projects and I'm excited to do more with it in the future.
+              </p>
 
             </div>
           </div>
@@ -436,7 +476,7 @@
     });
   });
     </script>
-    
+
     <!-- Google analytics -->
 	<script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
