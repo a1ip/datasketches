@@ -387,8 +387,117 @@
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
               <p>
+                This was a great month for code.
+              </p>
 
-                This month was super fun, and I'm so proud that I was able to finish it in 3 weeks - which I haven't been able to achieve since my <a href='http://datasketch.es/september' target='_new'>September</a> project about travel.  Most importantly, I was able to learn and teach myself three.js and a little bit of GLSL which I've been wanting to do for a long time.  It's really given me the confidence to go forward with more 3D projects and I'm excited to do more with it in the future.
+              <p>
+                For the last few years, I've been wanting to make a physical <em>something</em>, and last year (2018) I finally decided to make it a goal to be part of a physical installation.  But for majority of the year, I didn't know what I wanted to <em>do</em> for a physical installation.  Every time I thought about it, I'd just get stuck thinking in terms of 2D projections on the walls and not know how to take advantage of all the <em>floor space</em>.
+              </p>
+
+              <p>
+                And then one day, it hit me (I'm not sure what triggered it) that of course I don't know how to think in 3D physical spaces, because I work digitally in 2D all day long.  So if I could teach myself to work in 3D digitally, then it should follow that I could think in 3D physical spaces also.  I put three.js and WebGL at the top of my to-learn list.
+              </p>
+
+              <p>
+                In late October, I took <a href='https://twitter.com/mattdesl' target='_new'>Matt</a>'s <a href='https://frontendmasters.com/courses/canvas-webgl/'>Creative Coding workshop</a>, and learned the basics of three.js and an intro to fragment and vertex shaders.  I learned the <a href='https://en.wikipedia.org/wiki/Right-hand_rule' target='_new'>right-hand rule</a>: use the thumb for x-axis (increases going right), index finger for y-axis (increases going up, which is the opposite of SVG and canvas), and the middle finger for z-axis (increases out the screen and coming towards us).  I learned that the WebGL world doesn't operate in pixels, but rather units (that we can think of as feet or meters or whatever we like).
+                <a class="fancybox" href="code/shirley/workshop.jpg"> <img src="code/shirley/workshop.jpg" class="img-responsive img-month"></a>
+                <em>(Notes from the workshop, and from the <a href='https://thebookofshaders.com' target='_new'>Book of Shaders</a>.)</em>
+              <p>
+
+              <p>
+                Then in mid-November, <a href='https://twitter.com/makio64' target='_new'>David Ronai</a> asked me if I was interested in participating in <a href='https://christmasexperiments.com' target='_new'>Christmas Experiments</a>, an annual WebGL advent calendar.  I was really hesitant to accept, since I had never worked in WebGL before, but David encouraged me to give it a try and that he'd put me later in the month so that I'd have more time.  I agreed, knowing that the deadline would give me the motivation I needed to complete the project.
+              </p>
+
+              <p>
+                I started on December 1st, and made it a goal to do a little bit each weekday until I could get to something presentable on the 23rd (the slotted date for my Christmas XP).
+              </p>
+
+              <p>
+                I started by reading the first two chapters of <a href='https://www.amazon.com/WebGL-Programming-Guide-Interactive-Graphics/dp/0321902920' target='_new'>WebGL Programming Guide</a> that <a href='https://twitter.com/misaki_mofu' target='_new'>Misaki Nakano</a> recommended for me, which taught me how WebGL was set up.  I then re-took just the three.js section of Matt's workshop so that I could see what heavy lifting three.js was doing for us.  After the workshop, I started an <a href='https://beta.observablehq.com/@sxywu/three-js-exploration-shapes' target='_new'>Observable notebook</a> to figure out the minimum amount of setup it took to draw something in three.js (a renderer, a camera, and a scene, and then call <code>renderer.render(scene, camera)</code> to draw).  I always like understanding how something works at its base, so this was really helpful to figure out.
+              </p>
+
+              <p>
+                After setting up the notebook, I wanted to create a crystal shape.  I decided to use the <a href='https://threejs.org/docs/index.html#api/en/geometries/PolyhedronGeometry' target='_new'>PolyhedronGeometry</a> because I could just define a set of vertices and then specify the vertices that would make up a triangular face.  On the first day, I only managed to create one triangle:
+                <a class="fancybox" href="code/shirley/triangle.jpg"> <img src="code/shirley/triangle.jpg" class="img-responsive img-month"></a>
+                And on the second day, a crystal (which took two attempts because the first had incorrect math):
+                <a class="fancybox" href="code/shirley/diamond2.gif"> <img src="code/shirley/diamond2.gif" class="img-responsive img-month"></a>
+                And then eventually the crystal shape I had in my mind:
+                <a class="fancybox" href="code/shirley/diamond3.gif"> <img src="code/shirley/diamond3.gif" class="img-responsive img-month"></a>
+                Even though I later realized there were better ways to do what I wanted (and in fact, PolyhedronGeometry was a rather tedious way to do what I wanted), I'm really glad for the practice it gave me in thinking through WebGL's x/y/z coordinates.
+              </p>
+
+              <p>
+                Once I was satisfied with creating shapes, I moved on to learning how to color the shapes.  For this, I went back through Matt's section on vertex and fragment shaders, and <a href='https://github.com/sxywu/three-workshop/blob/master/noise-shader.js' target='_new'>played around with his shader code</a>:
+                <a class="fancybox" href="code/shirley/circle_noise.jpg"> <img src="code/shirley/circle_noise.jpg" class="img-responsive img-month"></a>
+                The next goal was to use the fragment shader to color the crystal shape.  I took a bit of a detour here, because I couldn't figure out how to use <a href='https://github.com/glslify/glslify' target='_new'>glslify</a> (a node-style module system for GLSL, the language shaders are written in, that Matt's code used to load in the noise function) in Observable.  Instead, I started to explore different bundlers/build tools so that I could eventually deploy my code to the web.  In the end, I decided to go with <a href='https://parceljs.org/' target='_new'>Parcel</a> (instead of the <a href='https://cli.vuejs.org/' target='_new'>Vue CLI</a> that I've been regularly using for the last half year), because it had built-in support for both Vue and GLSL.
+              </p>
+
+              <p>
+                Here's the crystal with that same noise pattern applied:
+                <a class="fancybox" href="code/shirley/diamond4.gif"> <img src="code/shirley/diamond4.gif" class="img-responsive img-month"></a>
+
+                I wasn't a fan, so I decided I needed to learn more about shaders and using colors in shaders.  This is when I turned more heavily to <a href='https://twitter.com/patriciogv' target='_new'>Patricio Gonzalez Vivo</a>'s <a href='https://thebookofshaders.com/' target='_new'>Book of Shaders</a>, and in particular his <a href='https://thebookofshaders.com/05/' target='_new'>chapter on Shaping Functions</a>.  I learned about sines, cosines, polynomials and exponentials - functions that can take a number (or a set of numbers) and output another.  I also learned about mixing colors, and how we could take two colors and not just get a new color between those two, but also to mix colors at the RGB levels and make completely new colors.  And once we combine that with the shaping functions, we can get gradients and shapes:
+                <a class="fancybox" href="code/shirley/gradients.jpg"> <img src="code/shirley/gradients.jpg" class="img-responsive img-month"></a>
+                (These were accomplished by mixing blue and yellow, and tweaking the RGB values at each position with powers, sines, absolutes, steps, and smoothsteps.)
+              </p>
+
+              <p>
+                Once I felt happy with the potential colors, I switched gears and plugged in the data: number of faces for number of references at bottom of Wikipedia page, size for number of Wikipedia backlinks, color for the category of their Nobel Prize.
+                <a class="fancybox" href="code/shirley/data_in.png"> <img src="code/shirley/data_in.png" class="img-responsive img-month"></a>
+
+                But I really didn't like this output for two reasons:
+                <ul>
+                  <li>I was hard coding each shape, so I only had three distinct shapes: rectangle, rectangle with triangle on top, and rectangle with triangle on top and bottom.  This meant most of the "crystals" were just rectangles.</li>
+                  <li>
+                    I also wanted a color for each category for a total of six colors, so for each crystal I was only passing in one color and doing a shaping function.  The colors didn't look good at all.
+                  </li>
+                </ul>
+
+                It was around this time that I came across an example for UnrealBloomPass (a post-processing effect to give glow), and in that example there were round, gem-like objects that looked quite close to the crystals I wanted.  When I looked at the code, I learned that they were using SphereGeometry:
+                <a class="fancybox" href="code/shirley/sphere.png"> <img src="code/shirley/sphere.png" class="img-responsive img-month"></a>
+
+                And that was when I realized: just like how I can manipulate and mix colors to get new colors completely different from the original, I can actually manipulate the settings on a geometry (like the number of faces) and get a new geometry that looks similar but different from their name.
+              </p>
+
+              <p>
+                So I swapped out the PolyhedronGeometry with SphereGeometry, set the height segment to 4 and the width segment to the data, stretched out the shape by setting the vertical scale to twice the horizontal scale, added jitter to each vertex, and I had much more interesting shapes:
+                <a class="fancybox" href="code/shirley/shape.png"> <img src="code/shirley/shape.png" class="img-responsive img-month"></a>
+                Now that I had the shape solved, I went back to the color.  This time, I used two colors and mixed them with the shaping functions:
+                <a class="fancybox" href="code/shirley/gradient1.png"> <img src="code/shirley/gradient1.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/gradient2.png"> <img src="code/shirley/gradient2.png" class="img-responsive img-month"></a>
+                (I love how much the first one looks like sweet potatoes 😆)
+              </p>
+
+              <p>
+                Because the shader by default just wraps around the shape (at least that's how I like to think about it), I lost the edges.  Thankfully, Matt taught me how to get the definition back: by calling <code>computeFlatVertexNormals()</code> on the geometry, getting the normals in the vertex shader, and passing it to the fragment shader and adding it to the color.  This not only made the edges really apparent, but also gave a fake sense of light and shadow:
+                <a class="fancybox" href="code/shirley/facenormals.png"> <img src="code/shirley/facenormals.png" class="img-responsive img-month"></a>
+                (<em><a href='https://github.com/sxywu/legends/commit/fbdc2c24e20696941b694d7f4caaeb07aabf2126' target='_new'>Code for adding face normals</a></em>)
+              </p>
+
+              <p>
+                From there, I played around with two sets of gradients: one for "humanities" (Peace, Literature, Economic Sciences), and another for "natural sciences" (Physics, Chemistry, Medicine).
+                <a class="fancybox" href="code/shirley/twocolors.png"> <img src="code/shirley/twocolors.png" class="img-responsive img-month"></a>
+
+                Next came background.  I created a "floor" by using a PlaneGeometry and randomly jittering the y-position of each vertex (inspired by this <a href='https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/' target='_new'>article from codrops</a>), and the "sky" by creating a huge sphere around the scene.  I experimented with three different kinds of lights: hemisphere and ambient to give the "sky" a nice sunset/sunrise sort of glow, and directional to cast shadows from the crystals to the "floor".
+                <a class="fancybox" href="code/shirley/floorandsky.png"> <img src="code/shirley/floorandsky.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                To finish up the piece, I added "stars" that represent all the men who have won the prize in the same time period, as well as annotations for each crystal and the decades.  It was a fun lesson trying to get the text in, mainly because with all the text I had, using TextGeometry was completely unperformant.  The solution I found upon Googling was to render the text within an HTML5 Canvas, create a PlaneGeometry, and use that Canvas as a texture to fill the PlaneGeometry with - what an interesting approach.  (<a href='https://github.com/sxywu/legends/blob/master/components/World.vue#L295-L303' target='_new'>Here is the code</a>.)
+              </p>
+
+              <p>
+                My favorite part was that I was able to find a good reason to use that third dimension: the decade of their awards.  So the closer that they are to the front, the more recent their award, and the further back they are, the further back in history.  But I don't reveal those decades unless the user "flies up" to view the crystals from above. If they are "walking through" the crystals at the ground level, I only show information about each woman - because I want the visitor to concentrate on only the women as they "walk through".
+                <a class="fancybox" href="code/shirley/overhead.png"> <img src="code/shirley/overhead.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                Here is the final (I'm sorry for the poor quality of video, I compressed it down to <1MB):
+                <video src="code/shirley/final.mp4" class="img-responsive img-month" autoplay="true" loop="true"></video>
+              </p>
+
+              <p>
+                This month was super fun, and I'm so proud that I was able to finish it in 3 weeks - which I haven't been able to achieve since my <a href='http://datasketch.es/september' target='_new'>September</a> project about travel.  I was also able to learn and teach myself three.js and a little bit of GLSL which I've been wanting to do for a long time - it's really given me the confidence to go forward with more 3D projects and I'm excited to do more with it in the future.  But most importantly, I'm so glad I chose this dataset of women Nobel Laureates - it's taught me a lot, and have given me a whole set of topics I'm interested in exploring and building out as dataviz.
               </p>
 
             </div>
