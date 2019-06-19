@@ -91,7 +91,7 @@
 
                 <p>There are 50 chapters in the original CCS manga, divided into two "arcs". I went through all 12 CCS volumes to see what image was on the cover of each chapter (btw, you can also read CCS online, for example <a href="https://mangarock.com/manga/mrs-serie-287638/chapter/mrs-chapter-287639" target="_new">here</a>). In my volumes the covers are printed in black and white. However, all of those chapter covers have since been published in full-color in several CCS art books. I therefore searched for and downloaded the corresponding color image from the <a href="http://ccsakura.wikia.com/wiki/Artbook" target="_new">CCS Wiki page</a>.</p>
                 <a class="fancybox" href="data/nadieh/img/CCS_manga_collection.jpg"> <img src="data/nadieh/img/CCS_manga_collection_small.jpg" class="img-responsive img-month" alt="All 12 manga volumes of Card Captor Sakura"></a>
-                
+
                 <p>Using the <a href="https://cran.r-project.org/web/packages/imager/index.html" target="_new">imager package</a> in R, I loaded the images into R where each pixel was transformed into a multidimensional array of RGBA values. I converted that complex array into a more simple data frame of (number of pixels) * 3 (for r, g, and b value) size. To figure out which algorithm would cluster the pixel values into decent colors groups I tried several things. First I experimented with using different clustering techniques: from the standard K-means, to hierarchical clustering and even tSNE. But I also converted the RGB values of each pixel into other color spaces (where colors have different "distances" to each other and can thus result into different clustering results), using, amongst others, the <a href="https://cran.r-project.org/web/packages/colorspace/index.html" target="_new">colorspace</a> package.</p>
 
                 <p>I often converted the results of each test into a bar chart such as below to see the color groups found. Eventually, I found that using Kmeans together with the colors converted to "Lab" visually gave the best fitting results.</p>
@@ -156,12 +156,12 @@
 
                 <p>I didn't make a note of how long this particular section of "creating the lines" took, but my guess is somewhere between 8 - 10 hours. After which I was left with the following when I visualized all of the lines (they represent the chapters that each character appears in):</p>
                 <a class="fancybox" href="code/nadieh/img-write-up/character_lines_swirly_all.png"> <img src="code/nadieh/img-write-up/character_lines_swirly_all_small.jpg" class="img-responsive img-month" alt="All the lines, correctly and at once"></a>
-                
+
                 <p>Awesome, that looked like one big <i>mess</i>! There were too many lines in there to glean any insight. That would mean I'd have to create some sort of hover interaction that only shows you a subset of the lines when you hover over a character or a chapter.</p>
 
                 <p>Ugh, enough time spend on those lines for now. I therefore moved on to adding the chapter and volume numbers. The inner donut chart inspired me to try something similar for the chapters as well. A donut chart with 50 equally sized, rounded-off sections, in which I could place a number. I was happy with the end result and could quickly move on.</p>
                 <p>For the volumes (typically a collection of ±4 chapters) I started out with the same idea; a donut chart, but made even thinner, which I placed outside the ring of circles. Hmmmm, wasn't as happy with that, but in the meantime something else was bothering even more. Now that I'd placed more elements on the page and all of it seemed to get a sense of "consistency", those inner lines just felt way off 😕</p>
-                
+
                 <p>Perhaps they should have more "body", by making them tapered, as I did in my <a href="../january/code/nadieh" target="_new">January visualization about Dragonball Z</a>? That again took more time tweaking my line formulas... Although I think it did improve things over the same-width lines I hade before:</p>
                 <a class="fancybox" href="code/nadieh/img-write-up/character_lines_swirly_tapered_all.png"> <img src="code/nadieh/img-write-up/character_lines_swirly_tapered_all_small.jpg" class="img-responsive img-month" alt="Adding the chapter and volume indicators"></a>
 
@@ -184,7 +184,7 @@
 
                 <p>The observant person will notice that I've actually implemented two slightly different line drawing "types". One is drawn by default when you're not hovering, but also when you hover over a character or color circle group. But <i>another</i> is used when you hover over a chapter. Try it for yourself and see what changes 😉</p>
                 <img src="code/nadieh/img-write-up/ccs_interactions.gif" class="img-responsive img-month" alt="The possible interactions in the final visualization">
-                
+
                 <p>Since part of the visualization was about the covers of the chapters. And because I knew most people that would land on the page would probably not know about CCS, I wanted to incorporate some of its imagery. And I just so happened to have a nice large circular area in the center :) It took a while to manually "cut-out" a good looking square image from all 50 chapter covers. But at that time I was in an airport and on a plane anyway (coming back from a great night at the Information is Beautiful Awards where <i>data sketches</i> won GOLD!! Woohoo!).</p>
                 <a class="fancybox" href="code/nadieh/img-write-up/character_lines_sakura.png"> <img src="code/nadieh/img-write-up/character_lines_sakura_small.jpg" class="img-responsive img-month" alt="Hovering over Sakura reveals an image of her"></a>
 
@@ -208,7 +208,7 @@
                 <a href="code/nadieh" target="_new"> <img src="code/nadieh/img-write-up/ccs_fifty_chapters_of_adorable_cuteness_final_small.jpg" class="img-responsive img-month" alt="Cardcaptor Sakura - Fifty chapters of adorable cuteness"></a>
 
                 <p>This month took me 86 hours to create. However, a lot of that time went into things that were not used in the final result. Such as ±5 hours on a CMYK canvas based dot effect, or ±15 hours on swirly lines and also ±6 hours on a page layout that isn't even really visible on the final page (except when you press "read more"), or ±2 hours on stupid Chrome bug about horizontal scrolling (and how to come up with a "fix")</p>
-                
+
                 <p>Still, I'm quite happy with how the visualization turned out :) I feel I haven't quite seen a similar radial visualization like it before. And data sketches is all about experimenting with new ideas, so it's always a joy when one turns out good ^_^ I hope you enjoy interacting with the visualization, even if you've never heard of Cardcaptor Sakura before (it's great! Trust me ;) )</p>
 
 
@@ -223,10 +223,62 @@
               <div class="location quicksand">san francisco</div>
 
               <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
+              <p>
+                Ok buckle up, kids (sorry I know you're not kids, I just feel like that phrase sounds better with "kids"), because it's another wild one.  And probably a long one.  *Heaves heavy sigh*.  I'm sorry.
+              </p>
 
-              <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+              <p>
+                I guess before we get into all the technical nitty-gritty, I should talk about feelings first.  I don't like talking about feelings here because I like to keep these write-ups purely about process, about the data and the sketching and the coding.  But oftentimes in my projects, feelings play a big part.  And for this particular one, the feelings were HUGE.
+              </p>
 
-              <p></p>
+              <p>
+                In particular, huge feelings of *INSECURITY*.
+              </p>
+
+              <p>
+                You see, I never expected <a href='https://pudding.cool/2017/03/hamilton' target='_new'>Hamilton</a> to do as well as it did.  And I'm super grateful that it did so well, but for a few projects after that I was paralyzed with the fear that none of them would live up to it.  And indeed, none of them has.  But after a few months, I learned to be ok with that.  I learned to internalize that external validation is never a good motivator, that it just will lead me into dangerous pits of despair when projects I pour my soul into don't get an equivalent amount of likes and retweets (and it's really a super entitled way of thinking: "I put a lot of work into this, so you all MUST like it!!!").  So instead, I tried to do projects that I would enjoy, to create dataviz that I'd personally want to read and consume - because then I'd have at least one consumer of the visualization.  And if other people liked it, that's great.  But if not, at least I liked it.
+              </p>
+
+              <p>
+                This mantra worked for most of my projects.  But for some reason, for this month of June - this month of "fun", this last month of Data Sketches - I just couldn't internalize it.
+              </p>
+
+              <p>
+                I cared too much.
+              </p>
+
+              <p>
+                I decided on the dataset back in summer 2017.  The new Taylor Swift single ("Look What You Made Me Do") had just come out, and it hit me: what would be more fun than doing something with the entire collection of Taylor Swift songs?  Taylor Swift songs, like Hamilton, is one of my great obsessions.  I feel like she's heralded me through my young adulthood, and her songs are attached to some of my greatest memories.  Whenever she released a new album, I'd have it on repeat for months.
+              </p>
+
+              <p>
+                So, I cared too much.
+              </p>
+
+              <p>
+                I kept feeling like it needed to live up to the quality, the attention to detail, the obsession, the analysis and the story I had for Hamilton.  I kept feeling like I needed to create a second Hamilton.
+              </p>
+
+              <p>
+                The problem was, Hamilton the Musical was a self-contained work rich with nuance and literary gold.  It was purposefully full of interesting patterns and insights; it was a masterpiece.  Taylor Swift's six albums (soon to be seven), though rich with easter eggs, are almost like a series of diary entries - chronicles of her dreams, her romances, her breakups, her feuds, her opinions, her views.
+              </p>
+
+              <p>
+                So of course there weren't Hamilton-level analysis to be done.  It wasn't going to be another Hamilton.  And it's taken me two years to be ok with that.
+              </p>
+
+              <p>
+                Thank you for reading this far about my feelings.  I'm still working on my insecurities.  I don't think they'll ever go away, and maybe it's better that they don't; they're one of my primary motivations for striving to be better.  And in the grand scheme of things, this little project amongst the billions on the internet, is just another project.  A blip in peoples' memories, if it ever makes it in there.  That eases my insecurities by a lot.
+              </p>
+
+              <p>
+                Ok, now back to your regularly scheduled programming of data, sketch, and code.
+              </p>
+
+              <h3 class="margin-top-10">year 1 <span class="light-grey">|</span> first version</h3>
+
+
+
                 <!-- <a class="fancybox" href="data/shirley/years.png"> <img src="data/shirley/years.png" class="img-responsive img-month"></a> -->
 
               <h3>week 2 <span class="light-grey">|</span> sketch</h3>
@@ -235,7 +287,9 @@
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p></p>
+              <p>
+                Now that TS7 is so colorful, it might be fun to eventually finish the colors version.
+              </p>
 
             </div>
           </div>
@@ -350,7 +404,7 @@
     });
   });
     </script>
-    
+
     <!-- Google analytics -->
 	<script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
