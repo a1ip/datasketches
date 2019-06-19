@@ -277,9 +277,26 @@
 
               <h3 class="margin-top-10">year 1 <span class="light-grey">|</span> first version</h3>
 
+              <p>
+                When I first decided on Taylor Swift songs, I decided to look at the colors in her music videos instead of analyzing her lyrics.  I had just seen Vox's analysis of <a href='https://www.vox.com/culture/2017/8/24/16162814/game-of-thrones-color-spectrum' target='_new'>how color had changed throughout Game of Thrones' seven seasons</a>, and wanted to do something similar.  I also wanted to try a different angle from the usual literary analysis.
+              </p>
+
+              <p>
+                So I went off to get my data, helped by knowledge from my <a href='/october/' target='_new'>October Obamas</a> project (in fact, I'm pretty sure I just copy and pasted the first two scripts, yay for reusability!):
+                <ol>
+                  <li>Use the <a href='https://en.wikipedia.org/wiki/Taylor_Swift_videography' target='_new'>Wikipedia page for Taylor Swift's videography</a> to compile a <a href='https://github.com/sxywu/taytay/blob/master/src/data/metadata.json' target='_new'>list of her music videos</a>, with additional metadata including album, year, director, bpm, and youtube id.</li>
+                  <li>Loop through the list and download the corresponding Youtube videos (<a href='https://github.com/sxywu/taytay/blob/v1/scripts/downloadYoutube.js' target='_new'>downloadYoutube.js</a>).</li>
+                  <li>Take screenshots every 5 seconds for every music video (<a href='https://github.com/sxywu/taytay/blob/master/scripts/takeScreenshot.js' target='_new'>takeScreenshot.js</a>).</li>
+                  <li>For every image, grab the RGB information for every 5 pixels.  Plug all the colors into <a href='https://harthur.github.io/clusterfck/' target='_new'>clusterfck</a>, a Node package for hierarchical clustering (no longer maintained).  Save each cluster color and size (<a href='https://github.com/sxywu/taytay/blob/master/scripts/getClusterColors.js' target='_new'>getClusterColors.js</a>).</li>
+                </ol>
+
+                This was the result scene by scene (the x-axis is the hue, and the y-axis is the lightness):
+                <a class="fancybox" href="code/shirley/v1_byscene.jpg"> <img src="code/shirley/v1_byscene.jpg" class="img-responsive img-month"></a>
+                And by video:
+                <a class="fancybox" href="code/shirley/v1_byvideo.png"> <img src="code/shirley/v1_byvideo.png" class="img-responsive img-month"></a>
+              </p>
 
 
-                <!-- <a class="fancybox" href="data/shirley/years.png"> <img src="data/shirley/years.png" class="img-responsive img-month"></a> -->
 
               <h3>week 2 <span class="light-grey">|</span> sketch</h3>
 
