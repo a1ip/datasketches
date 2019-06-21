@@ -290,19 +290,70 @@
                   <li>For every image, grab the RGB information for every 5 pixels.  Plug all the colors into <a href='https://harthur.github.io/clusterfck/' target='_new'>clusterfck</a>, a Node package for hierarchical clustering (no longer maintained).  Save each cluster color and size (<a href='https://github.com/sxywu/taytay/blob/master/scripts/getClusterColors.js' target='_new'>getClusterColors.js</a>).</li>
                 </ol>
 
-                This was the result scene by scene (the x-axis is the hue, and the y-axis is the lightness):
+                This was the result scene by scene (the x-axis is the hue, and the y-axis is the lightness), which was pretty cool:
                 <a class="fancybox" href="code/shirley/v1_byscene.jpg"> <img src="code/shirley/v1_byscene.jpg" class="img-responsive img-month"></a>
                 And by video:
                 <a class="fancybox" href="code/shirley/v1_byvideo.png"> <img src="code/shirley/v1_byvideo.png" class="img-responsive img-month"></a>
+
+                I liked being able to see all the colors by video, but I didn't like that there was so much overlap.  So I thought of having a histogram of all the hues in a video, and a heatmap underneath so that I could see the spread of the colors scene by scene:
+                <a class="fancybox" href="sketch/shirley/tswift_sketch.jpg"> <img src="sketch/shirley/tswift_sketch.jpg" class="img-responsive img-month"></a>
+
+                The histogram turned out to be very aesthetically pleasing:
+                <a class="fancybox" href="code/shirley/histogram_light.png"> <img src="code/shirley/histogram_light.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/histogram_dark.png"> <img src="code/shirley/histogram_dark.png" class="img-responsive img-month"></a>
+                But I'm not sure if it told me anything other than that her MVs have a lot of oranges and blues.  Which makes sense, since most of the oranges are various lightness/saturations of her skin tone, and the blues are commonly used to dramatically complement the orange.  Nothing new or mind-blowing there.
               </p>
 
+              <p>
+                I tried to add in the heatmap for every song, where the x-axis is still the hue, but the y-axis is the time in the music video.  For some of the songs, like "Fifteen", I could see distinct scene changes:
+                <a class="fancybox" href="code/shirley/heatmap.png"> <img src="code/shirley/heatmap.png" class="img-responsive img-month"></a>
+                But for most of the songs there weren't anything too interesting to comment on, and the visualizations for each song took up too much screenspace.  I wasn't quite sure how to go forward with what I had, and for some reason I thought that if I wasn't getting (what I thought was) interesting with the detailed view, then I had to dig even <em>deeper</em>.
+              </p>
 
+              <p>
+                So I decided to build a tool where I could <em>filter each image by hue or saturation</em>.  It was so extra.  To accomplish it, I read the image data using Canvas and sent that image data (and the range of hue and saturation to filter by) to a Web Worker that looped through each pixel in the image and decided whether it could be kept or not.  I also tried using the GPU since each of the pixel calculations were self-contained, but (I think I was doing something wrong) it turned out to be slower than just using the Web Worker.  At one point, I even tried to send the data to the GPU from within the Web Worker, but found out that it wasn't supported in most browsers (this was early 2018).  It was all so unnecessary.  I think I just wanted to do it because it was technically fun, and it had nothing to do with whether the end result would be a good user experience.
+              </p>
+
+              <p>
+                But it did give some interesting results, especially when filtering down to just red colors: in 2006, she wore a red babydoll dress surrounded by red roses, the epitome of innocense.  In 2017, her red dress is deep cut, her lips are deep red, and she stands in front of a bright magenta background, parodying the way media portrays her.
+                <a class="fancybox" href="code/shirley/red_2006.png"> <img src="code/shirley/red_2006.png" class="img-responsive img-month"></a>
+                <em>Scenes from "Our Song", 2006</em>
+                <a class="fancybox" href="code/shirley/red_2017.png"> <img src="code/shirley/red_2017.png" class="img-responsive img-month"></a>
+                <em>Scenes from "Look What You Made Me Do", 2017</em>
+              </p>
+
+              <p>
+                This made me wonder if she ever repeated certain colors with certain objects across songs.  I went through every song and filtered by every hue of the rainbow.  I found that she frequently had red cars and trucks throughout her country songs, and red lips through her later pop songs.  That was cool, but it didn't feel like enough.
+              </p>
+
+              <p>
+                (NOTHING FELT LIKE ENOUGH 😭😱)
+              </p>
+
+              <p>
+                So I decided to try another approach: since going deep in a song didn't give me enough interesting things, I decided to go broad and see if there were interesting trends across the songs.  I went back to the histograms and grouped them by album:
+                <a class="fancybox" href="code/shirley/v1_byalbum.png"> <img src="code/shirley/v1_byalbum.png" class="img-responsive img-month"></a>
+                But the songs were still too far apart, and I wanted a way to quickly scan through the songs and see if there were any changes in hue, saturation, and lightness.  I sketched out two ideas: one that was a combination of beeswarm and line chart that would show saturation, and another that would group arrange the colors into a block or color wheel to show hue.
+                <a class="fancybox" href="sketch/shirley/changeovertime.jpg"> <img src="sketch/shirley/changeovertime.jpg" class="img-responsive img-month"></a>
+                The saturation went all over the place (maybe looking at lightness would have been more interesting?):
+                <a class="fancybox" href="code/shirley/saturation.png"> <img src="code/shirley/saturation.png" class="img-responsive img-month"></a>
+                And as for hue, there were some interesting songs, like "Love Song" that stayed almsot all yellow and green, or the three songs in 1989 that were mostly orange and blue.
+                <a class="fancybox" href="code/shirley/hue.jpg"> <img src="code/shirley/hue.jpg" class="img-responsive img-month"></a>
+                But for most other songs, there weren't any such clear delineations in hue that I could see, that would be worth writing about.
+              </p>
+
+              <p>
+                By now, I was really discouraged.  I had to admit to myself that I really didn't know much about color and especially color use in music videos, and that I should find a new angle.
+              </p>
 
               <h3>week 2 <span class="light-grey">|</span> sketch</h3>
 
               <p></p>
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+
+              <p>
+              </p>
 
               <p>
                 Now that TS7 is so colorful, it might be fun to eventually finish the colors version.
