@@ -453,10 +453,10 @@
                   </li>
                 </ul>
 
-                It was around this time that I came across an example for UnrealBloomPass (a post-processing effect to give glow), and in that example there were round, gem-like objects that looked quite close to the crystals I wanted.  When I looked at the code, I learned that they were using SphereGeometry:
+                It was around this time that I came across <a href='https://vanruesc.github.io/postprocessing/public/demo/#bloom' target='_new'>a demo for Bloom</a> (a post-processing effect to give glow), and in that example there were round, gem-like objects that looked quite close to the crystals I wanted:
                 <a class="fancybox" href="code/shirley/sphere.png"> <img src="code/shirley/sphere.png" class="img-responsive img-month"></a>
 
-                And that was when I realized: just like how I can manipulate and mix colors to get new colors completely different from the original, I can actually manipulate the settings on a geometry (like the number of faces) and get a new geometry that looks similar but different from their name.
+                When I looked at the code, I learned that they were using SphereGeometry but with flatShading on - so instead of rendering a smooth surface it showed each distinct face.  And that was when I realized: just like how I can manipulate and mix colors to get new colors completely different from the original, I can actually manipulate the settings on a geometry (like the number of faces) and get a new geometry that looks similar but different from their name.
               </p>
 
               <p>
