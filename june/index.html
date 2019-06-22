@@ -307,11 +307,13 @@
               <p>
                 I tried to add in the heatmap for every song, where the x-axis is still the hue, but the y-axis is the time in the music video.  For some of the songs, like "Fifteen", I could see distinct scene changes:
                 <a class="fancybox" href="code/shirley/heatmap.png"> <img src="code/shirley/heatmap.png" class="img-responsive img-month"></a>
-                But for most of the songs there weren't anything too interesting to comment on, and the visualizations for each song took up too much screenspace.  I wasn't quite sure how to go forward with what I had, and for some reason I thought that if I wasn't getting (what I thought was) interesting with the detailed view, then I had to dig even <em>deeper</em>.
+                But for most of the songs there weren't anything too interesting to comment on, and the visualizations for each song took up too much screenspace.
+                <a class="fancybox" href="code/shirley/heatmap.gif"> <img src="code/shirley/heatmap.gif" class="img-responsive img-month"></a>
+                (I did like this hover interaction I built for the heatmap though.)
               </p>
 
               <p>
-                So I decided to build a tool where I could <em>filter each image by hue or saturation</em>.  It was so extra.  To accomplish it, I read the image data using Canvas and sent that image data (and the range of hue and saturation to filter by) to a Web Worker that looped through each pixel in the image and decided whether it could be kept or not.  I also tried using the GPU since each of the pixel calculations were self-contained, but (I think I was doing something wrong) it turned out to be slower than just using the Web Worker.  At one point, I even tried to send the data to the GPU from within the Web Worker, but found out that it wasn't supported in most browsers (this was early 2018).  It was all so unnecessary.  I think I just wanted to do it because it was technically fun, and it had nothing to do with whether the end result would be a good user experience.
+                I wasn't quite sure how to go forward with what I had, and for some reason I thought that if I wasn't getting (what I thought was) interesting with the detailed view, then I had to dig even <em>deeper</em>. So I decided to build a tool where I could <em>filter each image by hue or saturation</em>.  It was so extra.  To accomplish it, I read the image data using Canvas and sent that image data (and the range of hue and saturation to filter by) to a Web Worker that looped through each pixel in the image and decided whether it could be kept or not.  I also tried using the GPU since each of the pixel calculations were self-contained, but (I think I was doing something wrong) it turned out to be slower than just using the Web Worker.  At one point, I even tried to send the data to the GPU from within the Web Worker, but found out that it wasn't supported in most browsers (this was early 2018).  It was all so unnecessary.  I think I just wanted to do it because it was technically fun, and it had nothing to do with whether the end result would be a good user experience.
               </p>
 
               <p>
@@ -323,7 +325,9 @@
               </p>
 
               <p>
-                This made me wonder if she ever repeated certain colors with certain objects across songs.  I went through every song and filtered by every hue of the rainbow.  I found that she frequently had red cars and trucks throughout her country songs, and red lips through her later pop songs.  That was cool, but it didn't feel like enough.
+                This made me wonder if she ever repeated certain colors with certain objects across songs.  I went through every song and filtered by every hue of the rainbow:
+                <a class="fancybox" href="code/shirley/filter_hsl.gif"> <img src="code/shirley/filter_hsl.gif" class="img-responsive img-month"></a>
+                I found that she frequently had red cars and trucks throughout her country songs, and red lips through her later pop songs.  That was cool, but it didn't feel like enough.
               </p>
 
               <p>
