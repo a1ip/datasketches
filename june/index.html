@@ -374,13 +374,48 @@
                 The problem, though, was that because the lexicon only contained the most common 14k words, a lot of the words in the lyrics were unaccounted for.  I was concerned for the accuracy of the dataset, and started to look for an alternative.  I tried to look for a sentiment analysis package, but they all only told me whether a phrase was positive or negative, until I found IBM Watson's Tone Analyzer.  I wrote a script to pass every line of every song into the Tone Analyzer, and remember the set of emotions Watson found in that line as well as its confidence of those emotions existing (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/toneAnalyzer.js' target='_new'>toneAnalyzer.js</a>).  Out of all the tones Watson came back with, I decided to concentrate on just the five <em>Inside Out</em> emotions: joy, sadness, fear, disgust, anger.  I wrote another script to reduce the data file to just those five emotions for each lyric (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/getTopTones.js' target='_new'>getTopTones.js</a>) to get my (almost) final dataset.
               </p>
 
-              <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+              <h3>year 2 <span class="light-grey">|</span> sketch & code</h3>
 
               <p>
+                I was trying to figure out a visual representation/metaphor for these emotion, when on a random drive home, it hit me: emotions are gooey!  They're messy and amorphous and gooey (for some reason I thought of lava lamps).  And so I immediately plugged the data in, drew each emotion as a circle, and applied the "gooey effect" - a set of SVG filters that blurs the circles and then ups the contrast (<a href='https://css-tricks.com/gooey-effect/' target='_new'>CSS Tricks has a great explainer on how this all works</a>):
+                <a class="fancybox" href="code/shirley/v2_gooey.png"> <img src="code/shirley/v2_gooey.png" class="img-responsive img-month"></a>
+                Each of the emotions are mapped to a color: joy is yellow, sadness is blue, disgust is green, fear is purple, and anger is red (just like <em>Inside Out</em>!).  They are sized by Watson's confidence of that emotion existing.  I also tried to position the emotions by when they appear in the song, starting at the top and going clockwise.  I did this so that I could have consistency between the overview and the detailed view of each song, where the gooey emotions animate to the center when its corresponding lyric is played:
+                <a class="fancybox" href="code/shirley/blankspace.gif"> <img src="code/shirley/blankspace.gif" class="img-responsive img-month"></a>
+                I liked this idea, but I didn't like how quickly I had to animate through each line (lest the animation take too long), and how hard it was to associate the lyric with the emotion before it disappeared.  So I brainstormed and sketched out some other ideas:
+                <a class="fancybox" href="sketch/shirley/v2.jpg"> <img src="sketch/shirley/v2.jpg" class="img-responsive img-month"></a>
+                For some reason, while thinking of the confidence level of emotions across time, I thought of the lines that lie detecters drew and overlapping each of the emotion-lines around the gooey.  While thinking of an order to overlap the emotions, I also thought of vertically sorting the emotions in the gooey, so that joy - the "lightest", "airiest" emotion - floated at the top, and anger - the "heaviest" emotion - sat at the bottom.
               </p>
 
               <p>
-                Now that TS7 is so colorful, it might be fun to eventually finish the colors version.
+                Here's the sketch implemented:
+                <a class="fancybox" href="code/shirley/v2_lyrics.png"> <img src="code/shirley/v2_lyrics.png" class="img-responsive img-month"></a>
+                Because the lines were too messy and hard to track around a circle, I filled them in and also used a multiply blend mode so that I could see the overlapping emotions.  I also added the lyrics on the right, and for any lines with emotions I denoted them with a mini version of the circles - that way I wouldn't have to keep going back and forth between the visualization and the lyrics to match the emotions with the words.
+              </p>
+
+              <p>
+                I liked this version, but it was hard to see which emotions were most prominent across the whole song, since it's really hard to compare heights when those heights wrap in a circle.  I tried this next:
+                <a class="fancybox" href="code/shirley/v2_horizontal.png"> <img src="code/shirley/v2_horizontal.png" class="img-responsive img-month"></a>
+                But while I could now easily scan and see which emotions have the highest peak, I really disliked the aesthetic - it reminded me of a sun over a bunch of little mountains, and that was definitely not a look I was going for.
+              </p>
+
+              <p>
+                So I went back to the area chart around the circle, but this time I used annotations to indicate the highest emotions.  It also let me bring the lyrics in underneath the visualization, and thus make each visualization more compact (which I always like):
+                <a class="fancybox" href="sketch/shirley/v2_annotations.jpg"> <img src="sketch/shirley/v2_annotations.jpg" class="img-responsive img-month"></a>
+                I was able to stay pretty faithful to my sketch in my implementation, and even added an extra annotation to show the cutoff for where Watson was confident (or not confident) with its analysis:
+                <a class="fancybox" href="code/shirley/annotated1.png"> <img src="code/shirley/annotated1.png" class="img-responsive img-month"></a>
+                But I didn't like how spiky the area chart got when there were longer lyrics, so I tried a rectangular shape instead:
+                <a class="fancybox" href="code/shirley/annotated2.png"> <img src="code/shirley/annotated2.png" class="img-responsive img-month"></a>
+                And also a rounded version:
+                <a class="fancybox" href="code/shirley/annotated3.png"> <img src="code/shirley/annotated3.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                At this point, I was pretty satisfied with the look of the detail view, so I decided to work on the title page - and this is where I ran into performance issues trying to animate the gooeys.
+              </p>
+
+              <p>
+                <!-- SOME SCREENSHOTS OF BUGS? -->
+                <!-- Now that TS7 is so colorful, it might be fun to eventually finish the colors version. -->
               </p>
 
             </div>
