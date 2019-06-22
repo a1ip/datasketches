@@ -285,7 +285,7 @@
                 So I went off to get my data, helped by knowledge from my <a href='/october/' target='_new'>October Obamas</a> project (in fact, I'm pretty sure I just copy and pasted the first two scripts, yay for reusability!):
                 <ol>
                   <li>Use the <a href='https://en.wikipedia.org/wiki/Taylor_Swift_videography' target='_new'>Wikipedia page for Taylor Swift's videography</a> to compile a <a href='https://github.com/sxywu/taytay/blob/master/src/data/metadata.json' target='_new'>list of her music videos</a>, with additional metadata including album, year, director, bpm, and youtube id.</li>
-                  <li>Loop through the list and download the corresponding Youtube videos (<a href='https://github.com/sxywu/taytay/blob/v1/scripts/downloadYoutube.js' target='_new'>downloadYoutube.js</a>).</li>
+                  <li>Loop through the list and download the corresponding Youtube videos (<a href='https://github.com/sxywu/taytay/blob/master/scripts/downloadYoutube.js' target='_new'>downloadYoutube.js</a>).</li>
                   <li>Take screenshots every 5 seconds for every music video (<a href='https://github.com/sxywu/taytay/blob/master/scripts/takeScreenshot.js' target='_new'>takeScreenshot.js</a>).</li>
                   <li>For every image, grab the RGB information for every 5 pixels.  Plug all the colors into <a href='https://harthur.github.io/clusterfck/' target='_new'>clusterfck</a>, a Node package for hierarchical clustering (no longer maintained).  Save each cluster color and size (<a href='https://github.com/sxywu/taytay/blob/master/scripts/getClusterColors.js' target='_new'>getClusterColors.js</a>).</li>
                 </ol>
@@ -343,12 +343,32 @@
               </p>
 
               <p>
-                By now, I was really discouraged.  I had to admit to myself that I really didn't know much about color and especially color use in music videos, and that I should find a new angle.
+                By now, I was really discouraged.  I had to admit to myself that I really didn't know much about color and especially color use in music videos, and that I should scrap the idea and try something completely different.
               </p>
 
-              <h3>week 2 <span class="light-grey">|</span> sketch</h3>
+              <h3>year 2 <span class="light-grey">|</span> data</h3>
 
-              <p></p>
+              <p>
+                That something new turned out to be emotions.  I was asking myself what I liked the most about Taylor Swift songs (something I should have done from the very beginning), and after some brainstorming, realized it was because I liked the stories she told.  They were easy to relate to (at least her earlier ones were...), and they were usually about daydreams or relationships or breakups - emotional things.
+              </p>
+
+              <p>
+                So I set about gathering all of her lyrics, and I found a <a href='https://github.com/irenetrampoline/taylor-swift-lyrics/blob/master/az_lyrics.json' target='_new'>Github repo</a> with all of her songs until 1989.  It also had some metadata for each line of a song, including title, album, and year.
+              </p>
+
+              <p>
+                I had been streaming my code progress on Twitch, and for figuring out the emotions in the lyrics, someone suggested I use the <a href='https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm' target='_new'>NRC Word-Emotion Association Lexicon</a>.  It was a dataset of ~14,000 common words and whether they were associated with a variety of emotions: anger, anticipation, disgust, fear, joy, sadness, surprise, trust.  I went through each line in each song, and for every word that had a match in the lexicon, I noted the emotion.  I then divided the count for each emotion by the total number of words, and got a "percentage" for each emotion in a song (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/parseLyrics.js' target='_new'>parseLyrics.js</a>).
+              </p>
+
+              <p>
+                I threw the newly acquired dataset into Observable (an online notebook for visualizations), and used Vega-Lite (composable charting library) to draw a line chart of the emotions over the years:
+                <a class="fancybox" href="data/shirley/emotionsacrossyears.png"> <img src="data/shirley/emotionsacrossyears.png" class="img-responsive img-month"></a>
+                (I really like this combination of Observable and Vega-Lite, that allows me to quickly explore the data - a much needed step-up from when I would build out a whole visualization to explore the data.)
+              </p>
+
+              <p>
+                The problem, though, was that because the lexicon only contained the most common 14k words, a lot of the words in the lyrics were unaccounted for.  I was concerned for the accuracy of the dataset, and started to look for an alternative.  I tried to look for a sentiment analysis package, but they all only told me whether a phrase was positive or negative, until I found IBM Watson's Tone Analyzer.  I wrote a script to pass every line of every song into the Tone Analyzer, and remember the set of emotions Watson found in that line as well as its confidence of those emotions existing (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/toneAnalyzer.js' target='_new'>toneAnalyzer.js</a>).  Out of all the tones Watson came back with, I decided to concentrate on just the five <em>Inside Out</em> emotions: joy, sadness, fear, disgust, anger.  I wrote another script to reduce the data file to just those five emotions for each lyric (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/getTopTones.js' target='_new'>getTopTones.js</a>) to get my (almost) final dataset.
+              </p>
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
