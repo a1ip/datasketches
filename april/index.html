@@ -184,21 +184,113 @@
               <div class="time kingBasil"></div>
               <div class="location quicksand">san francisco</div>
 
-              <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
+              <a href="https://medium.com/visualizing-the-field/655-frustrations-doing-data-visualization-e1087c8176fc" target='_new'><img src="code/shirley/header.png" class="img-responsive img-month-top" alt=""></a>
+
+              <p>
+                Hi, let me start with some context: Nadieh and I originally came up with the topic back in March 2017, because the first ever <a href='https://medium.com/@Elijah_Meeks/2017-data-visualization-survey-results-40688830b9f2' target='_new'>data visualization community survey</a> had come out (there's been two more since), and I wanted to do something with the results.  I started on the project right after <a href='http://www.openvisconf.com/2017/' target='_new'>OpenVis Conf</a> in Boston (where Nadieh and I both got to present about data sketches!), and it took until late September to complete the visualization and accompanying blog post.  And honestly it really only took that long because I'm really slow and abhor writing, and then afterwards I was so done with writing about the project that I put off the process write-up until now...June 2019.
+              </p>
+
+              <p>
+                It's been quite a while since I've worked on the project (and a lot has happened since), so I'm going to try my best to remember what I did and what my motivations were.  I feel like I'm playing detective, all I have to go off of are a bunch of screenshots, github commits, and sketchbook entries and I just have to piece it all together.
+              </p>
+
+              <p>
+                So here I go~
+              </p>
 
               <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
-              <p></p>
-                <!-- <a class="fancybox" href="data/shirley/years.png"> <img src="data/shirley/years.png" class="img-responsive img-month"></a> -->
+              <p>
+                This was probably one of the best months for data: the survey had already happened, and <a href='http://twitter.com/Elijah_Meeks' target='_new'>Elijah</a> (who had instigated the survey) had already been so awesome as to clean all the survey responses.  It had <a href='https://github.com/data-visualization-society/data_visualization_survey/blob/master/data/questions_2017.txt' target='_new'>45 questions</a> and 981 responses, all in a nicely formatted - and let me repeat, CLEANED UP - CSV file.
+              </p>
+
+              <p>
+                Honestly, I don't think I've ever had it easier.  That's probably why I wanted to do the project in the first place 😜
+              </p>
+
+              <p>
+                So with my data collecting and cleaning already done for me (hehe), I went on to explore the data.  The very first thing I did to try and understand my data was to list out all the questions I found interesting/relevant:
+                <a class="fancybox" href="sketch/shirley/analyze_questions.jpg"> <img src="sketch/shirley/analyze_questions.jpg" class="img-responsive img-month"></a>
+                Since the premise of the survey was Elijah's claim that dataviz practitioners were leaving because of the current state of the industry, my primary question was: why might people leave the field?  But because there's no direct way to measure that with the survey responses, I decided to go with a proxy: "Do you want to spend more time or less time visualizing data in the future?"  I then organized the relevant questions into categories: how they got to their dataviz jobs, the aspects of their role that might affect their job satisfaction, and finally, their frustrations.
+              </p>
+
+              <p>
+                One of the talks at Openvis Conf had been about <a href='https://vega.github.io/vega-lite/examples/' target='_new'>Vega-Lite</a>, a charting library for quickly composing interactive graphics, and I decided to give it a try for my data exploration.  Below is a set of histograms, and each of them answer the question "Percent of your day focused on X":
+                <a class="fancybox" href="data/shirley/percenttime.jpg"> <img src="data/shirley/percenttime.jpg" class="img-responsive img-month"></a>
+                Which taught me that most people don't get to focus on any one part of the dataviz creation process, and probably have to juggle and do most or all the parts.  I then tried to put some of the qualitative questions into bar charts:
+                <a class="fancybox" href="data/shirley/qualitative.jpg"> <img src="data/shirley/qualitative.jpg" class="img-responsive img-month"></a>
+                And that taught me not to try visualizing any of the open-ended qualitative questions (because I'm not sure if I got anything useful from those bar charts), but rather to stick to those questions that had quantitative or multiple choice questions.
+              </p>
 
               <h3>week 2 <span class="light-grey">|</span> sketch</h3>
 
-              <p></p>
+              <p>
+                When thinking about why people might want to leave the field, the very first question I had was: are there any correlations between how much of their day is spent on creating dataviz, and whether they want to more or less of it in the future?
+              </p>
+
+              <p>
+                So I used a stacked bar chart, where the y-positions were the percent of day spent on data visualization, with the top bars being 0-10% and the bottom most being 90-100%.  Colors represent whether they want to do more/less dataviz, with bars to the left of the gap being "much less" or "less", and to the right being "same", "more", or "much more".
+                <a class="fancybox" href="code/shirley/histogram.png"> <img src="code/shirley/histogram.png" class="img-responsive img-month"></a>
+                (<a href='https://bl.ocks.org/sxywu/302940f09387063010b47dbd790be47f' target='_new'>Code</a>)
+              </p>
+
+              <p>
+                But it turned out that majority of the respondents wanted to do the same amount or more dataviz creation - which might actually be more a bias of the survey, since the people filling out the survey would probably want to stay in the field going forward. So I wondered if that would change if I added the other parts of dataviz creation into it (data prep, data engineering, data science, design):
+                <a class="fancybox" href="sketch/shirley/horizontal_histogram.jpg"> <img src="sketch/shirley/horizontal_histogram.jpg" class="img-responsive img-month"></a>
+                I also wondered if I could identify what part of the process people were most frustrated with, by seeing how much of their day was dedicated to that task, and whether they wanted to do more or less of it.  Unfortunately, this is what it looked like with the data in:
+                <a class="fancybox" href="code/shirley/split_histogram.png"> <img src="code/shirley/split_histogram.png" class="img-responsive img-month"></a>
+                It's definitely another case of good intentions, didn't explore the data enough.  Also, I  was only thinking about how to mash those three questions together and wasn't thinking about readability or how easy it'd be to understand (zero sympathy for the end user...who's usually me).
+              </p>
+
+              <p>
+                But the biggest problem with it was that it didn't tell me much because I was showing absolute numbers instead of percentages so I couldn't compare between the bars.  But I also wanted to show the absolute numbers, because I wanted the user to be able to hover over (or brush and filter) and see the individual responses.  And then it occurred to me: beeswarm plots.
+              </p>
 
               <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p></p>
+              <p>
+                For the second iteration, I decided to make the individual responses more obvious by representing them as dots in a beeswarm plot (which has the nice added benefit of being more compact and thus easy to glance through then the weird bar chart I had before).  I also decided to not concentrate on the different dataviz functions, and concentrate on a different question: whether dataviz is a focus of their work.  The dots were split vertically into the answers they gave, with top being "primary", middle being "secondary", and bottom being "one of several".  And instead of using whether the respondent wanted to do more or less dataviz as the proxy (there were too many that answered "more", and not enough with "less" to make it an even split), I decided to use whether they answered with frustrations as proxy instead.  I placed those that answered with frustrations on the left of the split, and those without on the right.  The color was their years of experience doing data visualization, and a filled circle meant that they intended to go into dataviz.
+                <a class="fancybox" href="code/shirley/beeswarm.png"> <img src="code/shirley/beeswarm.png" class="img-responsive img-month"></a>
+                (<a href='https://bl.ocks.org/sxywu/e1f0938ce926562e8fd69b100b03e58c' target='_new'>Code</a>)
+              </p>
 
+              <p>
+                I liked this first prototype, but was bothered by how hard it was to compare those that did or did not answer with a frustration so I put them on top of each other.  I also realized that whether dataviz was their primary focus (or other questions like whether they had dataviz leadership) probably wouldn't have much relation with how many years they had been doing dataviz, so updated the metric to percent of day focused on dataviz and colored by that.  And finally to make it easy to compare across answers - or even whether the respondent had frustrations or not - I added a box-and-whisker plot on top of the beeswarms.
+                <a class="fancybox" href="code/shirley/box_whisker.png"> <img src="code/shirley/box_whisker.png" class="img-responsive img-month"></a>
+                I wasn't quite happy with the look of the box plot, and when I show it to my friend <a href='https://twitter.com/infowetrust' target='_new'>RJ</a>, he immediately had the suggestion of having the box plot in the middle and those without frustrations above and those with below the box plots.  He explained to me the importance of visual metaphors, that those with frustrations should drip down (like they're weighed down) and those without frustrations should rise up.
+                <a class="fancybox" href="sketch/shirley/box_whisker.jpg"> <img src="sketch/shirley/box_whisker.jpg" class="img-responsive img-month"></a>
+                I implemented the split beeswarm by using <a href='https://github.com/d3/d3-force' target='_new'>D3's force layout</a> (and in particular, the <a href='https://github.com/d3/d3-force#positioning' target='_new'>positioning</a> and <a href='https://github.com/d3/d3-force#collision' target='_new'>collision</a> forces) to calculate the position of each dot, but at each tick I make sure the dots don't go past a certain vertical position (<a href='https://bl.ocks.org/mbostock/1129492' target='_new'>bounded force layout</a>):
+                <a class="fancybox" href="code/shirley/split_beeswarm.png"> <img src="code/shirley/split_beeswarm.png" class="img-responsive img-month"></a>
+                Added in the box-plot in the middle (though it took quite a few tweaks to get it to a satisfying point), and I had the visual for this month:
+                <a class="fancybox" href="code/shirley/split+box.png"> <img src="code/shirley/split+box.png" class="img-responsive img-month"></a>
+                After that, I compiled the <a href='https://github.com/sxywu/community/blob/master/src/data/metadata.json' target='_new'>list of relevant questions</a>:
+                <a class="fancybox" href="sketch/shirley/final_questions.jpg"> <img src="sketch/shirley/final_questions.jpg" class="img-responsive img-month"></a>
+                I put two of the visualizations side-by-side, with the ability to change the input questions with a dropdown and filter the responses with a brush.  I used React.js to help me manage all the state changes (though it was definitely a lot easier than when I had to keep track of the filters for Hamilton), and in retrospect, I'd definitely update the box plot on filter too.
+                <a class="fancybox" href="code/shirley/brush.gif"> <img src="code/shirley/brush.gif" class="img-responsive img-month"></a>
+                I wanted to have at least two of the questions visualized at any given time because I wanted to compare between them and see if I could find any correlations.  I knew early on that I'd want to use it for analysis, and to write a blog post with my learnings (I was on the hook to publish something for <a href='http://medium.com/visualizing-the-field' target='_new'>Visualizing, The Field</a> that year).  So with my exploratory tool completed, I went on to look at each question and jot down any interesting things I noticed:
+                <a class="fancybox" href="sketch/shirley/correlations.jpg"> <img src="sketch/shirley/correlations.jpg" class="img-responsive img-month"></a>
+                To try and figure out what might cause people to leave the field, I decided to define a "successful" dataviz role as one that got to spend a large percent of their time on dataviz, with a higher perceived salary.  I used those two metrics, and looked through the answers for what might correlate with "unsuccessful" dataviz roles, and found that those:
+                <ul>
+                  <li>On an embedded team,</li>
+                  <li>Not hired to work on data visualization,</li>
+                  <li>Does data visualization as only one of several tasks, and</li>
+                  <li>Has a subordinate relationship with the stakeholder of their visualization.</li>
+                </ul>
+                correlated the most with lower perceived salaries, and less time on dataviz.  I then filtered by respondents that fell in those categories, and collected all of their frustrations:
+                <a class="fancybox" href="sketch/shirley/frustrations1.jpg"> <img src="sketch/shirley/frustrations1.jpg" class="img-responsive img-month"></a>
+                <a class="fancybox" href="sketch/shirley/frustrations2.jpg"> <img src="sketch/shirley/frustrations2.jpg" class="img-responsive img-month"></a>
+                <a class="fancybox" href="sketch/shirley/frustrations3.jpg"> <img src="sketch/shirley/frustrations3.jpg" class="img-responsive img-month"></a>
+                I tried my best to categorize their frustrations, and with what I learned (most frustrations seemed to fall under two primary categories: those stemming from others in the organization, and those from the technology) I wrote about what we could do to potentially alleviate these frustrations.  The blog post can be found <a href='https://medium.com/visualizing-the-field/655-frustrations-doing-data-visualization-e1087c8176fc' target='_new'>here</a>.
+              </p>
+
+              <p>
+                And this is my final exploratory tool:
+                <a href="http://sxywu.com/community/"><img src="code/shirley/final.jpg" class="img-responsive img-month"></a>
+                Even though I really <em>really</em> abhored all the writing, I'm really happy about the content of my blog post.  And though there are always things I want to improve, I also am satisfied with my final visualization.  I was able to take away two important lessons: to use Vega-Lite or other similar charting libraries to quickly explore the data, and to use visual metaphors to better communicate the nature of the dataset (and more often than not, make the visualization more interesting).  Most importantly, I'm glad of all that I learned analyzing the survey data and writing about the community's frustrations.  It has informed a lot of what I do inside and outside of my  work: to prototype on ideas and designs with my clients while doing my best to educate them on different charts and their uses, to get better on designing effective visualizations, and to create workshops and talks geared towards frontend developers to make D3.js and dataviz more approachable.
+              </p>
+              <!-- <a class="fancybox" href="code/shirley/separate_embedded.png"> <img src="code/shirley/separate_embedded.png" class="img-responsive img-month"></a>
+              <a class="fancybox" href="code/shirley/higher_salary.png"> <img src="code/shirley/higher_salary.png" class="img-responsive img-month"></a>
+              <a class="fancybox" href="code/shirley/lower_salary.png"> <img src="code/shirley/lower_salary.png" class="img-responsive img-month"></a> -->
             </div>
           </div>
 
@@ -443,7 +535,7 @@
     });
   });
     </script>
-    
+
     <!-- Google analytics -->
 	<script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
