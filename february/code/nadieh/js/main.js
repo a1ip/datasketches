@@ -6,6 +6,14 @@ canvas.width = width;
 canvas.height = height;
 var ctx = canvas.getContext("2d");
 
+// let sf = 3
+// d3.select("#canvas-lines")
+//     .attr("width", sf * width)
+//     .attr("height", sf * height)
+//     .style("width", `${width}px`)
+//     .style("height", `${height}px`)
+// ctx.scale(sf, sf)
+
 //Should the fronts of the paths be shown
 var showMarker = false;
 if(showMarker) {
