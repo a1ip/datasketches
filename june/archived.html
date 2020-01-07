@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel='shortcut icon' href='../img/favicon.ico' type='image/x-icon'/ >
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Data Sketches</title>
+    <meta name="author" content="Nadieh Bremer">
+    <meta name="description" content="Data Sketches - June - Fun">
+    <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Tinos:400,400i|Sacramento|Quicksand|Playfair+Display:400i" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Moment -->
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-timezone-with-data.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+
+	  <!-- fancyBox -->
+	  <link rel="stylesheet" href="../plugins/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+	  <script type="text/javascript" src="../plugins/fancybox/jquery.fancybox.pack.js"></script>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+  <header>
+    <!-- Logo and name -->
+    <div>
+      <a class="hide-mobile peach kingBasil no-border" href="../may"><div class="top-links other-month-link textRight">go to May</div></a>
+      <div class="month-logo"><a class="no-border" href=".."><img class="paddingTop20" src="../img/logo.png" width="120" /></a></div>
+      <a class="hide-mobile peach kingBasil no-border" href="../july"><div class="top-links other-month-link textLeft">go to July</div></a>
+    </div>
+    <div>
+      <a class="quicksand no-border" href=".."><div class="top-links datasketch-top-link"><span class="dark-grey">data sketch<span class="dark-pink">|</span>es</span></div></a>
+    </div>
+
+    <!-- Title above -->
+    <div class="row">
+      <div class="col-xs-12 month-page-title">
+        <h2 class="kingBasil peach">June</h2>
+        <h1 class="quicksand">Fun</h1>
+      </div>
+    </div>
+  </header>
+
+    <section id="june" class="month-page">
+      <div class="nadieh background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+      <div class="shirley background col-xs-12 col-sm-12 col-md-6 col-lg-6"></div>
+
+      <div class="container">
+        <!-- Write-ups -->
+        <div class="row">
+          <!-- Nadieh -->
+          <div class="col-xs-12 col-md-6 write-up">
+            <div class="nadieh">
+              <div class="name paddingBelow kingBasil">Nadieh</div>
+              <div class="time kingBasil"></div>
+              <div class="location quicksand">amsterdam</div>
+
+  			        <a href="code/nadieh"><img src="code/nadieh/img-write-up/ccs_header.jpg" class="img-responsive img-month-top" alt="Cardcaptor Sakura | Fifty chapters of adorable cuteness"></a>
+
+                <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+
+                <p>Yes, I know it's been 6 months since I finished up <a href="../april/code/nadieh" target="_new">the April month</a>, and yes, I know I'm supposed to do May before June. However, I'm still not quite sure about my angle for May and I <i>did</i> have an idea in mind for June 😅 </p>
+                <p>I am starting to understand that the topics that I can get <i>really</i> enthusiastic about are a bit of a niche. That not many other people truly know it. I can only hope that for the people who are fans, as I am, this month will be a joy to explore. The topic that I've chosen for our month of <i>fun</i> is "Cardcaptor Sakura"!</p>
+                <a class="fancybox" href="data/nadieh/img/cardcaptor_sakura.png"> <img src="data/nadieh/img/cardcaptor_sakura_small.jpg" class="img-responsive img-month" alt="Cardcaptor Sakura"></a>
+
+                <p>A magic-girl manga (i.e. Japanese comic) from about 20 years ago. It was the first manga I owned, when manga was practically unknown in the Netherlands (still is actually 😕 ). I even had to travel all the way to the biggest city of our province to buy a new volume. I'm still dreadfully jealous of how <i>perfect</i> and cute practically each panel of the manga looks 😍 I almost chose this subject for our <a href="../january/code/nadieh" target="_new">January Nostalgia month</a>, but eventually went with Dragonball Z then. Nevertheless, after 20 years a new "arc" of Cardcaptor Sakura has started again recently. Therefore, while thinking of what to do for our fun month, I just couldn't shake the feeling of wanting to do something with Cardcaptor Sakura (CCS).</p>
+
+                <p>One of my favorite things about CCS is how beautiful the writers, CLAMP, make each page. Especially the covers of each chapter, which are tiny works of art (the image above is the cover for chapter 23). I therefore wanted to investigate the covers through data somehow. And I've never before done any kind of analysis based on image data. I therefore thought that creating a visualization that would abstract the colors of each cover into 3 - 8 colors would be fun and new for me.</p>
+
+                <p>There are 50 chapters in the original CCS manga, divided into two "arcs". I went through all 12 CCS volumes to see what image was on the cover of each chapter (btw, you can also read CCS online, for example <a href="https://mangarock.com/manga/mrs-serie-287638/chapter/mrs-chapter-287639" target="_new">here</a>). In my volumes the covers are printed in black and white. However, all of those chapter covers have since been published in full-color in several CCS art books. I therefore searched for and downloaded the corresponding color image from the <a href="http://ccsakura.wikia.com/wiki/Artbook" target="_new">CCS Wiki page</a>.</p>
+                <a class="fancybox" href="data/nadieh/img/CCS_manga_collection.jpg"> <img src="data/nadieh/img/CCS_manga_collection_small.jpg" class="img-responsive img-month" alt="All 12 manga volumes of Card Captor Sakura"></a>
+
+                <p>Using the <a href="https://cran.r-project.org/web/packages/imager/index.html" target="_new">imager package</a> in R, I loaded the images into R where each pixel was transformed into a multidimensional array of RGBA values. I converted that complex array into a more simple data frame of (number of pixels) * 3 (for r, g, and b value) size. To figure out which algorithm would cluster the pixel values into decent colors groups I tried several things. First I experimented with using different clustering techniques: from the standard K-means, to hierarchical clustering and even tSNE. But I also converted the RGB values of each pixel into other color spaces (where colors have different "distances" to each other and can thus result into different clustering results), using, amongst others, the <a href="https://cran.r-project.org/web/packages/colorspace/index.html" target="_new">colorspace</a> package.</p>
+
+                <p>I often converted the results of each test into a bar chart such as below to see the color groups found. Eventually, I found that using Kmeans together with the colors converted to "Lab" visually gave the best fitting results.</p>
+                <a class="fancybox" href="data/nadieh/img/chapter_cover_color_distribution.png"> <img src="data/nadieh/img/chapter_cover_color_distribution.png" class="img-responsive img-month" alt="Color distribution of the first CCS chapter using Kmeans"></a>
+
+                <p>However, one of the tricky things with K-means is to figure out how many clusters should be used to create groups. I first tried a combination with hierarchical clustering, but eventually I decided to use something that was probably a better judge (but more time consuming), my own eyes! For each chapter I created a graph as below, that shows me the color distribution for 3 color clusters, up to 11 (I didn't want too many). I then compared the actual cover to these groups and chose the best fitting one; a balance between capturing all the colors and having a good blend of distinct colors. I saved the hex colors and %s (the height of the bars) of the best clustering into a json.</p>
+                <a class="fancybox" href="data/nadieh/img/number_colors_decision.png"> <img src="data/nadieh/img/number_colors_decision.png" class="img-responsive img-month" alt="Color distributions of several Kmeans results with different number of clusters"></a>
+
+                <p>To complement this data about the chapter covers, I also wanted to gather information about which characters appeared in each chapter and which "card" was captured in which chapter (CCS is about Sakura collecting so-called magical Clow cards). The <a href="http://ccsakura.wikia.com/wiki/Chapter_1" target="_new">CCS Wiki page on each chapter</a> seemed like just the resource I needed. But sadly, only the first 8 chapters contain information. Well, nothing else to do but to read all chapters again myself while slowly filling an Excel file with the info I needed 😜</p>
+
+                <p>Due to the "layered" visual result of this month, I eventually sliced and diced all of this information (who is in each chapter/cover image, totals per character/chapter, relations between characters, color distributions, and more) into about 7 separate small files throughout the creation process. I prefer to prepare all data beforehand in R. I find that the easiest and as a bonus, it doesn't clutter my JavaScript code.</p>
+
+                <h3>week 2 <span class="light-grey">|</span> sketch</h3>
+
+                <p>Figuring out the design for this month came slowly. It was more a domino effect. A more concrete idea for one aspect led to a vague idea for the next part of the data which I then explored. I started with how to visualize the colors. Having a cluster of small colored circles per chapter seemed like a logical/interesting step. Placing the color clusters in a radial layout was also an obvious choice after that. Although at first I wanted to do a semi circle, with the color clusters to the right and character info the the left. However, with 50 chapters, I really needed as much space as I could get. So that's why I went with the layered approach of a small circle for all characters and around that another circle with all chapter color clusters. These two circles would then be connected by lines to show which characters appeared in which chapters.</p>
+                <a class="fancybox" href="sketch/nadieh/sketch_1_design.jpg"> <img src="sketch/nadieh/sketch_1_design_small.jpg" class="img-responsive img-month" alt="Sketch of the overall design for the CCS visualization"></a>
+
+                <p>I've always been fascinated by the CMYK dot printing process; where you can see the separate dots when you're looking at it up close, but move farther back and the bigger picture comes into view (I guessing I'm not the only one who could sometimes be found with her nose literally touching an old magazine, or old TV (for the RGB stripes), right....?). Recreating this CMYK dot technique for a visualization about a (printed) manga seemed like a proper style, and challenge. And challenge it was! I won't go into the details here (you can read a bit more in the code section), but below on the right page you can see some scribbles I made to understand how to recreate the CMYK effect (it has to do with rotations...).</p>
+                <a class="fancybox" href="sketch/nadieh/sketch_2_cmyk_calculations.jpg"> <img src="sketch/nadieh/sketch_2_cmyk_calculations_small.jpg" class="img-responsive img-month" alt="Sketch of trigonometric functions to figure out CMYK dots"></a>
+
+                <p>Another mathematical challenge this month was for something that I didn't use in the end... At first I wanted to connect the inner circle of characters with the outer ring of chapters with swirling lines (to say it technically, two connected <a href="http://blogs.sitepointstatic.com/examples/tech/svg-curves/cubic-curve.html" target="_new">SVG Cubic Bézier Curves</a>). Making sure that these lines would always flow <i>around</i> the inner circle and look good, took a <i>lot</i> of time and notes in my sketchbook! I always prefer to draw the approximate SVG path shape I have in mind to then try and figure out where new points and anchor points should be placed. The really hard part is to then understand how these points and anchor points change when the data changes; how to create a "formula" that works for all instances.</p>
+                <a class="fancybox" href="sketch/nadieh/sketch_3_svg_path_swirl_anchors.jpg"> <img src="sketch/nadieh/sketch_3_svg_path_swirl_anchors_small.png" class="img-responsive img-month" alt="Sketch of the swirling lines between characters and chapters"></a>
+
+                <p>The page below shows specifically how to handle the calculation of a tangent line to a circle for different circumstances. I needed this information for those swirly lines from above. But even though I ended up with different lines, I could thankfully use part of the things I'd figured out on these two pages to easily convert the lines to what became the final result (the more circular running lines).</p>
+                <a class="fancybox" href="sketch/nadieh/sketch_4_svg_path_circle_calculations.jpg"> <img src="sketch/nadieh/sketch_4_svg_path_circle_calculations_small.jpg" class="img-responsive img-month" alt="Sketch of figuring out tangent lines"></a>
+
+
+                <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+
+                <p>I first focused on getting the ring of cover color circles on my screen. Mostly because I wanted to see how that CMYK idea would look as soon as possible. And thanks to <a href="https://bl.ocks.org/sxywu/570df88e66e420191d33dc5b5650aaf4" target="_new">this excellent example of multiply points of gravity</a> by Shirley, that was actually a piece of cake! But damn, those circles had to become quite small to make room for all 50 chapters. I was starting to get my doubts if the CMYK effect would work as well in this particular design as I'd hoped...</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/cover_circle_clusters.png"> <img src="code/nadieh/img-write-up/cover_circle_clusters.png" class="img-responsive img-month" alt="All the main colors of the 50 chapters clustered"></a>
+
+                <p>Nevertheless, I first went to one of <a href="https://bl.ocks.org/veltman/50a350e86de82278ffb2df248499d3e2" target="_new">Veltman's</a> amazing blocks in which he already neatly coded up a CMYK dot effect as SVG patterns (btw, I've started collecting my favorite d3.js blocks in <a href="https://nl.pinterest.com/nadiehbremer/dataviz-d3js-blocks/" target="_new">a Pinterest board</a>, so I have a visual 'bookmark' for each, which makes for easier retrieval). Rewrote that to create a separate pattern for each color and I had myself a ring full of CMYK based colored circles. But on closer inspection I found something I didn't quite like. Although the circles on the inside looked exactly how I wanted them, they were still SVGs. So they had been <i>perfectly</i> clipped into a circle. Truly like a pattern that you cut off. But I wanted my CMYK dots to smoothly fade out, not abruptly. But I also wanted to play with the idea of partially overlapping the circles, and having the colors mix even further, which wasn't possible with this technique.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/cmyk_svg_pattern_based.png"> <img src="code/nadieh/img-write-up/cmyk_svg_pattern_based_small.jpg" class="img-responsive img-month" alt="A selection of CMYK circles"></a>
+
+                <p>I therefore did a wide search online looking for other examples. I already expected that using HTML5 Canvas was probably the way to go. And I did find two interesting options <a href="https://gist.github.com/ucnv/249486" target="_new">here</a> and <a href="http://www.patrickmatte.com/?p=352" target="_new">here</a> that took me a good 3 - 4 hours to wrap my head around and combine into one. It took a lot of testing an tweaking...</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/canvas_cmyk_test.png"> <img src="code/nadieh/img-write-up/canvas_cmyk_test_small.jpg" class="img-responsive img-month" alt="Testing my code to create canvas based CMYK effect"></a>
+
+                <p>But eventually I got the visual options and look I was going for. First, smooth edges. By which I mean that the dots get smaller around the sides, but all the CMYK dots are still full dots. But also that I could plot the circles on top of each other with the CMYK effects of both circles visible.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/canvas_cmyk_final.png"> <img src="code/nadieh/img-write-up/canvas_cmyk_final_small.jpg" class="img-responsive img-month" alt="Final canvas CMYK circles than have smooth edges and can overlap"></a>
+
+                <p>And then I applied it to all the circles from the 50 chapters and..... as expected the circles were so small that there wasn't "enough CMYK" going on. It was sometimes a bit hard to actually get a feeling for the true color of circle because it contained only a few CMYK dots in itself 😖 </p>
+                <p>Well, that's how (dataviz) design sometimes works, hours of work on something that never makes it to the end. So I converted a simple version into a <a href="https://bl.ocks.org/nbremer/625e8bde76a099a12a8f3643ec75c77f" target="_new">block</a> to perhaps use for another time and took a closer look at the original SVG version again. What to do about those crisp outer edges? ... Hmmm ... What about adding a thick stroke? And yup, that fixed it enough for me, haha 😅</p>
+
+                <p>I thought the lines between the inner and outer circles would probably be the next most difficult thing to tackle, but to properly do that I first needed my inner circle. Whipping up the thin donut chart from my sketch was straightforward with d3's arc and <a href="https://bl.ocks.org/mbostock/c274877f647361f3df7d" target="_new">pie</a> layout. Still, I felt I first wanted to see if I could get the connections/relations between the characters "visually working" on the inside before I moved to the outer lines. Because if it didn't work I might have to think of a different general layout.</p>
+                <p>Time to write some custom SVG paths again! Below you can see the progress from the simplest approach, straight lines in the top left, to the final version (shape wise), in the bottom right. The final version is made up of circles, using the SVG arc command, re-using code that I had written for the small arcs in my <a href="../november/code/nadieh" target="_new">November piece about Fantasy books</a>.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/inner_relationship_lines.png"> <img src="code/nadieh/img-write-up/inner_relationship_lines_small.jpg" class="img-responsive img-month" alt="Figuring out the SVG paths of the inner relationship lines"></a>
+
+                <p>I then colored the lines according to the type of connection (e.g. family, love) which made me see that there weren't too many lines in there to get insights from, no visual overload, pfew. Alright, then it was really time to dive into those outer lines...</p>
+                <p>To most extreme lines that I could create would run from a character to a chapter that's on the other side of the circle. The line would then have to swirl around the inner circle, without touching any of the other character's names. I thought I could probably pull that off by combining 2 <a href="http://blogs.sitepointstatic.com/examples/tech/svg-curves/cubic-curve.html" target="_new">Cubic Bezier curves</a>. But making 1 of those curves act as you want, depending on the data, can be a hassle. And I found out that 2 was more than twice the hassle o_O</p>
+                <p>With difficult SVG paths I always start out with placing small circles along the line path itself (the red one in the center below) + the anchor points (the blue, green and yellow-orange one. The pink one I placed for another reason that's too technical for me to explain here, hehe)</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_anchor_points_long.jpg"> <img src="code/nadieh/img-write-up/character_lines_anchor_points_long.jpg" class="img-responsive img-month" alt="Placing the SVG path anchor points to understand the line movement"></a>
+
+                <p>After some manual tweaking with fixed numbers I had a shape for the longer line that I liked. I saved those settings and did another one, a short line. I then inspected how all of the settings changed between the two options. This gives me hints on how to infer several formulas that will hopefully create nice looking lines, no matter the start and end points. But, like I said, that wasn't as easy this time as I'd hoped...</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_anchor_points_short.jpg"> <img src="code/nadieh/img-write-up/character_lines_anchor_points_short.jpg" class="img-responsive img-month" alt="Understanding how the SVG path anchor points move for a shorter line"></a>
+
+                <p>Ugh, I don't even want to really think back on what journey eventually led me to have the lines I needed. Most of the notes in my sketches section are about this part. Because slightly different things need to happen when the line moves <i>counterclockwise</i> instead of <i>clockwise</i>. And if you mess it all up completely, well...</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_swirly_blooper_1.jpg"> <img src="code/nadieh/img-write-up/character_lines_swirly_blooper_1.jpg" class="img-responsive img-month" alt="Lines going all over the place"></a>
+
+                <p>Over many, many hours of testing, drawing, thinking and fiddling did I inch closer to having all the lines at least sort of going around the center. Although here the finer details of the lines were still quite.... odd...</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_swirly_blooper_2.jpg"> <img src="code/nadieh/img-write-up/character_lines_swirly_blooper_2.jpg" class="img-responsive img-month" alt="Weird looking, but generally correct lines"></a>
+
+                <p>I didn't make a note of how long this particular section of "creating the lines" took, but my guess is somewhere between 8 - 10 hours. After which I was left with the following when I visualized all of the lines (they represent the chapters that each character appears in):</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_swirly_all.png"> <img src="code/nadieh/img-write-up/character_lines_swirly_all_small.jpg" class="img-responsive img-month" alt="All the lines, correctly and at once"></a>
+
+                <p>Awesome, that looked like one big <i>mess</i>! There were too many lines in there to glean any insight. That would mean I'd have to create some sort of hover interaction that only shows you a subset of the lines when you hover over a character or a chapter.</p>
+
+                <p>Ugh, enough time spend on those lines for now. I therefore moved on to adding the chapter and volume numbers. The inner donut chart inspired me to try something similar for the chapters as well. A donut chart with 50 equally sized, rounded-off sections, in which I could place a number. I was happy with the end result and could quickly move on.</p>
+                <p>For the volumes (typically a collection of ±4 chapters) I started out with the same idea; a donut chart, but made even thinner, which I placed outside the ring of circles. Hmmmm, wasn't as happy with that, but in the meantime something else was bothering even more. Now that I'd placed more elements on the page and all of it seemed to get a sense of "consistency", those inner lines just felt way off 😕</p>
+
+                <p>Perhaps they should have more "body", by making them tapered, as I did in my <a href="../january/code/nadieh" target="_new">January visualization about Dragonball Z</a>? That again took more time tweaking my line formulas... Although I think it did improve things over the same-width lines I hade before:</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_swirly_tapered_all.png"> <img src="code/nadieh/img-write-up/character_lines_swirly_tapered_all_small.jpg" class="img-responsive img-month" alt="Adding the chapter and volume indicators"></a>
+
+                <p>And in of itself it had something nice going on when I implemented the hover interactions. Such as seeing who was in a particular chapter...</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_swirly_tapered_cover.png"> <img src="code/nadieh/img-write-up/character_lines_swirly_tapered_cover_small.jpg" class="img-responsive img-month" alt="Tapered central lines for all characters that appear in the hovered chapter"></a>
+
+                <p>...or when hovering over a character to see the chapters they appeared in...</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_swirly_tapered_character.png"> <img src="code/nadieh/img-write-up/character_lines_swirly_tapered_character_small.jpg" class="img-responsive img-month" alt="Tapered central lines for all chapters that a characters appears in"></a>
+
+                <p>... However, I just felt that it didn't fit the rest of the visual in terms of design. Ugh! What to do about it!? And all those hours of <i>work</i>! 😭 </p>
+                <p>And suddenly, very quickly after knowing that my swirly lines just weren't right, I had a new idea for the lines. I don't even remember what inspired me, it seemed to come out of nowhere (although that's never truly the case). Instead of making them swirl around, I could also make them run along circular paths. A bit like subway lines or piping in a home, but then transformed to some radial layout</p>
+
+                <p>This idea was actually quite easy to execute. I could loop over each line to be drawn, create a tiny array of <i>[radius,angle]</i> points and feed that to d3's <i>radialLine</i> function. Together with setting an interpolation function to curve the edges just a bit. Calculating the small array of radii and angles to feed to the <i>d3.radialLine</i> was a walk in the park compared to my previous cubic bezier curve shenanigans! (but actually enjoying to solve geometry puzzles does help). Naturally, all that didn't go right on the first try. And thankfully I could use <i>some</i> of the work I'd done with the swirly lines. The screenshots below were all made within 1 hour, not bad in terms of progress 😉</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_second_attempt.png"> <img src="code/nadieh/img-write-up/character_lines_second_attempt_small.jpg" class="img-responsive img-month" alt="Different steps in the process of creating the 2nd iteration of lines"></a>
+
+                <p>O, and then I converted all those lines to HTML5 canvas by using the extremely useful <i>.context</i> option that is available in many of d3's drawing functions (such as <i>d3.radialLine</i>). That made things run more smoothly on the hovers!</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_straight_final.png"> <img src="code/nadieh/img-write-up/character_lines_straight_final_small.jpg" class="img-responsive img-month" alt="Final look of the eventual lines between the two circles"></a>
+
+                <p>With that change of lines, I felt that, when hovering over a character or chapter, the resulting lines fitted perfectly with the "straight-roundedness" of the rest (I hope that made some sense, hehe). And as an added benefit, no more lines were overlapping!</p>
+
+                <p>The observant person will notice that I've actually implemented two slightly different line drawing "types". One is drawn by default when you're not hovering, but also when you hover over a character or color circle group. But <i>another</i> is used when you hover over a chapter. Try it for yourself and see what changes 😉</p>
+                <img src="code/nadieh/img-write-up/ccs_interactions.gif" class="img-responsive img-month" alt="The possible interactions in the final visualization">
+
+                <p>Since part of the visualization was about the covers of the chapters. And because I knew most people that would land on the page would probably not know about CCS, I wanted to incorporate some of its imagery. And I just so happened to have a nice large circular area in the center :) It took a while to manually "cut-out" a good looking square image from all 50 chapter covers. But at that time I was in an airport and on a plane anyway (coming back from a great night at the Information is Beautiful Awards where <i>data sketches</i> won GOLD!! Woohoo!).</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/character_lines_sakura.png"> <img src="code/nadieh/img-write-up/character_lines_sakura_small.jpg" class="img-responsive img-month" alt="Hovering over Sakura reveals an image of her"></a>
+
+                <p>With all these elements and layers of information in the visualization, I really needed a legend. After having written lines and lines of code to create custom legends in two recent client project (such as <a href="https://www.article19.org/xpa-17-metric/" target="_new">this one</a> for Article 19), I wasn't in the mood to do that again. Therefore, I created my legends in Illustrator instead. That saved <i>a lot</i> of time over creating them through code.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/ccs_legends_first_iteration.png"> <img src="code/nadieh/img-write-up/ccs_legends_first_iteration_small.jpg" class="img-responsive img-month" alt="Legends explaining how to read the visualization"></a>
+
+                <p>I initially placed these below the visualization. However (as I was getting used to in this month) these were not the final legends...</p>
+
+                <p>But let's not get ahead of myself. Now that the chart itself was nearly finished, I focused on general page layout and annotations. For the layout I had a lot of trouble coming up with something that looked even remotely interesting. To be honest, I'm still not that happy with the final result, but I just can't really design a webpage in itself, just data visualizations, hehe 😅</p>
+                <p>But then having to make that layout work on both mobile and desktop.... 😫  <i>Not</i> something I enjoy or want to recount here. Just know it took effort and time.</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/layout_and_annotations.png"> <img src="code/nadieh/img-write-up/layout_and_annotations_small.jpg" class="img-responsive img-month" alt="Early iterations of the general layout and annotations"></a>
+
+                <p>While reading through all the chapters I took some notes of interesting story points that I wanted to highlight. Using Susie Lu's excellent <a href="http://d3-annotation.susielu.com/" target="_new">d3-annotation library</a> adding these around the circle was quite straightfoward. Especially with the super handy <i>editmode</i>, that let me drag the annotations around, see where I wanted them and then add those locations hardcoded back into my code.</p>
+                <p>But after I had placed all the annotations (see the right visual in the image above) I wasn't happy enough with the result. Typically I love the lines that run from the point that you want to annotate all the way under the lines with text. But here that was getting too much visual weight.</p>
+                <p>I therefore wanted short lines that would radiate outward from the main circle, and place the annotation around those, typically centered. And although the annotation library gives you a lot of freedom, that particular design isn't in there. So instead, I created my own lines, and then used the editmode (see the small dotted circles below, those you can drag around) to position the annotations exactly where I wanted them 😁</p>
+                <a class="fancybox" href="code/nadieh/img-write-up/annotations.png"> <img src="code/nadieh/img-write-up/annotations.png" class="img-responsive img-month" alt="Using the editmode to place annotations"></a>
+
+                <p>After I felt the visualization was ready enough, I shared it with some friends to ask for feedback and got great suggestions to improve on the interactivity understanding. But one also gave me a great example of a better legend, one that would show the visualization with its rings and explain what each ring truly meant. That was much better than those 3 separate ones that I had before. So I drew a new legend in Illustrator.</p>
+
+                <p>And after all that time and effort I finally had a visualization to share with everybody :) which can be found here <a href="code/nadieh" target="_new">Cardcaptor Sakura - Fifty chapters of adorable cuteness</a></p>
+                <a href="code/nadieh" target="_new"> <img src="code/nadieh/img-write-up/ccs_fifty_chapters_of_adorable_cuteness_final_small.jpg" class="img-responsive img-month" alt="Cardcaptor Sakura - Fifty chapters of adorable cuteness"></a>
+
+                <p>This month took me 86 hours to create. However, a lot of that time went into things that were not used in the final result. Such as ±5 hours on a CMYK canvas based dot effect, or ±15 hours on swirly lines and also ±6 hours on a page layout that isn't even really visible on the final page (except when you press "read more"), or ±2 hours on stupid Chrome bug about horizontal scrolling (and how to come up with a "fix")</p>
+
+                <p>Still, I'm quite happy with how the visualization turned out :) I feel I haven't quite seen a similar radial visualization like it before. And data sketches is all about experimenting with new ideas, so it's always a joy when one turns out good ^_^ I hope you enjoy interacting with the visualization, even if you've never heard of Cardcaptor Sakura before (it's great! Trust me ;) )</p>
+
+
+            </div>
+          </div>
+
+          <!-- Shirley -->
+          <div class="col-xs-12 col-md-6 write-up">
+            <div class="shirley">
+              <div class="name paddingBelow kingBasil">Shirley</div>
+              <div class="time kingBasil"></div>
+              <div class="location quicksand">san francisco</div>
+
+              <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
+              <p>
+                Ok buckle up, kids (sorry I know you're not kids, I just feel like that phrase sounds better with "kids"), because it's another wild one.  And probably a long one.  *Heaves heavy sigh*.  I'm sorry.
+              </p>
+
+              <p>
+                I guess before we get into all the technical nitty-gritty, I should talk about feelings first.  I don't like talking about feelings here because I like to keep these write-ups purely about process, about the data and the sketching and the coding.  But oftentimes in my projects, feelings play a big part.  And for this particular one, the feelings were HUGE.
+              </p>
+
+              <p>
+                In particular, huge feelings of *INSECURITY*.
+              </p>
+
+              <p>
+                You see, I never expected <a href='https://pudding.cool/2017/03/hamilton' target='_new'>Hamilton</a> to do as well as it did.  And I'm super grateful that it did so well, but for a few projects after that I was paralyzed with the fear that none of them would live up to it.  And indeed, none of them has.  But after a few months, I learned to be ok with that.  I learned to internalize that external validation is never a good motivator, that it just will lead me into dangerous pits of despair when projects I pour my soul into don't get an equivalent amount of likes and retweets (and it's really a super entitled way of thinking: "I put a lot of work into this, so you all MUST like it!!!").  So instead, I tried to do projects that I would enjoy, to create dataviz that I'd personally want to read and consume - because then I'd have at least one consumer of the visualization.  And if other people liked it, that's great.  But if not, at least I liked it.
+              </p>
+
+              <p>
+                This mantra worked for most of my projects.  But for some reason, for this month of June - this month of "fun", this last month of Data Sketches - I just couldn't internalize it.
+              </p>
+
+              <p>
+                I cared too much.
+              </p>
+
+              <p>
+                I decided on the dataset back in summer 2017.  The new Taylor Swift single ("Look What You Made Me Do") had just come out, and it hit me: what would be more fun than doing something with the entire collection of Taylor Swift songs?  Taylor Swift songs, like Hamilton, is one of my great obsessions.  I feel like she's heralded me through my young adulthood, and her songs are attached to some of my greatest memories.  Whenever she released a new album, I'd have it on repeat for months.
+              </p>
+
+              <p>
+                So, I cared too much.
+              </p>
+
+              <p>
+                I kept feeling like it needed to live up to the quality, the attention to detail, the obsession, the analysis and the story I had for Hamilton.  I kept feeling like I needed to create a second Hamilton.
+              </p>
+
+              <p>
+                The problem was, Hamilton the Musical was a self-contained work rich with nuance and literary gold.  It was purposefully full of interesting patterns and insights; it was a masterpiece.  Taylor Swift's six albums (soon to be seven), though rich with easter eggs, are almost like a series of diary entries - chronicles of her dreams, her romances, her breakups, her feuds, her opinions, her views.
+              </p>
+
+              <p>
+                So of course there weren't Hamilton-level analysis to be done.  It wasn't going to be another Hamilton.  And it's taken me two years to be ok with that.
+              </p>
+
+              <p>
+                Thank you for reading this far about my feelings.  I'm still working on my insecurities.  I don't think they'll ever go away, and maybe it's better that they don't; they're one of my primary motivations for striving to be better.  And in the grand scheme of things, this little project amongst the billions on the internet, is just another project.  A blip in peoples' memories, if it ever makes it in there.  That eases my insecurities by a lot.
+              </p>
+
+              <p>
+                Ok, now back to your regularly scheduled programming of data, sketch, and code.
+              </p>
+
+              <h3 class="margin-top-10">year 1 <span class="light-grey">|</span> first version</h3>
+
+              <p>
+                When I first decided on Taylor Swift songs, I decided to look at the colors in her music videos instead of analyzing her lyrics.  I had just seen Vox's analysis of <a href='https://www.vox.com/culture/2017/8/24/16162814/game-of-thrones-color-spectrum' target='_new'>how color had changed throughout Game of Thrones' seven seasons</a>, and wanted to do something similar.  I also wanted to try a different angle from the usual literary analysis.
+              </p>
+
+              <p>
+                So I went off to get my data, helped by knowledge from my <a href='/october/' target='_new'>October Obamas</a> project (in fact, I'm pretty sure I just copy and pasted the first two scripts, yay for reusability!):
+                <ol>
+                  <li>Use the <a href='https://en.wikipedia.org/wiki/Taylor_Swift_videography' target='_new'>Wikipedia page for Taylor Swift's videography</a> to compile a <a href='https://github.com/sxywu/taytay/blob/master/src/data/metadata.json' target='_new'>list of her music videos</a>, with additional metadata including album, year, director, bpm, and youtube id.</li>
+                  <li>Loop through the list and download the corresponding Youtube videos (<a href='https://github.com/sxywu/taytay/blob/master/scripts/downloadYoutube.js' target='_new'>downloadYoutube.js</a>).</li>
+                  <li>Take screenshots every 5 seconds for every music video (<a href='https://github.com/sxywu/taytay/blob/master/scripts/takeScreenshot.js' target='_new'>takeScreenshot.js</a>).</li>
+                  <li>For every image, grab the RGB information for every 5 pixels.  Plug all the colors into <a href='https://harthur.github.io/clusterfck/' target='_new'>clusterfck</a>, a Node package for hierarchical clustering (no longer maintained).  Save each cluster color and size (<a href='https://github.com/sxywu/taytay/blob/master/scripts/getClusterColors.js' target='_new'>getClusterColors.js</a>).</li>
+                </ol>
+
+                This was the result scene by scene (the x-axis is the hue, and the y-axis is the lightness), which was pretty cool:
+                <a class="fancybox" href="code/shirley/v1_byscene.jpg"> <img src="code/shirley/v1_byscene.jpg" class="img-responsive img-month"></a>
+                And by video:
+                <a class="fancybox" href="code/shirley/v1_byvideo.png"> <img src="code/shirley/v1_byvideo.png" class="img-responsive img-month"></a>
+
+                I liked being able to see all the colors by video, but I didn't like that there was so much overlap.  So I thought of having a histogram of all the hues in a video, and a heatmap underneath so that I could see the spread of the colors scene by scene:
+                <a class="fancybox" href="sketch/shirley/tswift_sketch.jpg"> <img src="sketch/shirley/tswift_sketch.jpg" class="img-responsive img-month"></a>
+
+                The histogram turned out to be very aesthetically pleasing:
+                <a class="fancybox" href="code/shirley/histogram_light.png"> <img src="code/shirley/histogram_light.png" class="img-responsive img-month"></a>
+                <a class="fancybox" href="code/shirley/histogram_dark.png"> <img src="code/shirley/histogram_dark.png" class="img-responsive img-month"></a>
+                But I'm not sure if it told me anything other than that her MVs have a lot of oranges and blues.  Which makes sense, since most of the oranges are various lightness/saturations of her skin tone, and the blues are commonly used to dramatically complement the orange.  Nothing new or mind-blowing there.
+              </p>
+
+              <p>
+                I tried to add in the heatmap for every song, where the x-axis is still the hue, but the y-axis is the time in the music video.  For some of the songs, like "Fifteen", I could see distinct scene changes:
+                <a class="fancybox" href="code/shirley/heatmap.png"> <img src="code/shirley/heatmap.png" class="img-responsive img-month"></a>
+                But for most of the songs there weren't anything too interesting to comment on, and the visualizations for each song took up too much screenspace.
+                <a class="fancybox" href="code/shirley/heatmap.gif"> <img src="code/shirley/heatmap.gif" class="img-responsive img-month"></a>
+                (I did like this hover interaction I built for the heatmap though.)
+              </p>
+
+              <p>
+                I wasn't quite sure how to go forward with what I had, and for some reason I thought that if I wasn't getting (what I thought was) interesting with the detailed view, then I had to dig even <em>deeper</em>. So I decided to build a tool where I could <em>filter each image by hue or saturation</em>.  It was so extra.  To accomplish it, I read the image data using Canvas and sent that image data (and the range of hue and saturation to filter by) to a Web Worker that looped through each pixel in the image and decided whether it could be kept or not.  I also tried using the GPU since each of the pixel calculations were self-contained, but (I think I was doing something wrong) it turned out to be slower than just using the Web Worker.  At one point, I even tried to send the data to the GPU from within the Web Worker, but found out that it wasn't supported in most browsers (this was early 2018).  It was all so unnecessary.  I think I just wanted to do it because it was technically fun, and it had nothing to do with whether the end result would be a good user experience.
+              </p>
+
+              <p>
+                But it did give some interesting results, especially when filtering down to just red colors: in 2006, she wore a red babydoll dress surrounded by red roses, the epitome of innocense.  In 2017, her red dress is deep cut, her lips are deep red, and she stands in front of a bright magenta background, parodying the way media portrays her.
+                <a class="fancybox" href="code/shirley/red_2006.png"> <img src="code/shirley/red_2006.png" class="img-responsive img-month"></a>
+                <em>Scenes from "Our Song", 2006</em>
+                <a class="fancybox" href="code/shirley/red_2017.png"> <img src="code/shirley/red_2017.png" class="img-responsive img-month"></a>
+                <em>Scenes from "Look What You Made Me Do", 2017</em>
+              </p>
+
+              <p>
+                This made me wonder if she ever repeated certain colors with certain objects across songs.  I went through every song and filtered by every hue of the rainbow:
+                <a class="fancybox" href="code/shirley/filter_hsl.gif"> <img src="code/shirley/filter_hsl.gif" class="img-responsive img-month"></a>
+                I found that she frequently had red cars and trucks throughout her country songs, and red lips through her later pop songs.  That was cool, but it didn't feel like enough.
+              </p>
+
+              <p>
+                (NOTHING FELT LIKE ENOUGH 😭😱)
+              </p>
+
+              <p>
+                So I decided to try another approach: since going deep in a song didn't give me enough interesting things, I decided to go broad and see if there were interesting trends across the songs.  I went back to the histograms and grouped them by album:
+                <a class="fancybox" href="code/shirley/v1_byalbum.png"> <img src="code/shirley/v1_byalbum.png" class="img-responsive img-month"></a>
+                But the songs were still too far apart, and I wanted a way to quickly scan through the songs and see if there were any changes in hue, saturation, and lightness.  I sketched out two ideas: one that was a combination of beeswarm and line chart that would show saturation, and another that would group arrange the colors into a block or color wheel to show hue.
+                <a class="fancybox" href="sketch/shirley/changeovertime.jpg"> <img src="sketch/shirley/changeovertime.jpg" class="img-responsive img-month"></a>
+                The saturation went all over the place (maybe looking at lightness would have been more interesting?):
+                <a class="fancybox" href="code/shirley/saturation.png"> <img src="code/shirley/saturation.png" class="img-responsive img-month"></a>
+                And as for hue, there were some interesting songs, like "Love Song" that stayed almsot all yellow and green, or the three songs in 1989 that were mostly orange and blue.
+                <a class="fancybox" href="code/shirley/hue.jpg"> <img src="code/shirley/hue.jpg" class="img-responsive img-month"></a>
+                But for most other songs, there weren't any such clear delineations in hue that I could see, that would be worth writing about.
+              </p>
+
+              <p>
+                By now, I was really discouraged.  I had to admit to myself that I really didn't know much about color and especially color use in music videos, and that I should scrap the idea and try something completely different.
+              </p>
+
+              <h3>year 2 <span class="light-grey">|</span> data</h3>
+
+              <p>
+                That something new turned out to be emotions.  I was asking myself what I liked the most about Taylor Swift songs (something I should have done from the very beginning), and after some brainstorming, realized it was because I liked the stories she told.  They were easy to relate to (at least her earlier ones were...), and they were usually about daydreams or relationships or breakups - emotional things.
+              </p>
+
+              <p>
+                So I set about gathering all of her lyrics, and I found a <a href='https://github.com/irenetrampoline/taylor-swift-lyrics/blob/master/az_lyrics.json' target='_new'>Github repo</a> with all of her songs until 1989.  It also had some metadata for each line of a song, including title, album, and year.
+              </p>
+
+              <p>
+                I had been streaming my code progress on Twitch, and for figuring out the emotions in the lyrics, someone suggested I use the <a href='https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm' target='_new'>NRC Word-Emotion Association Lexicon</a>.  It was a dataset of ~14,000 common words and whether they were associated with a variety of emotions: anger, anticipation, disgust, fear, joy, sadness, surprise, trust.  I went through each line in each song, and for every word that had a match in the lexicon, I noted the emotion.  I then divided the count for each emotion by the total number of words, and got a "percentage" for each emotion in a song (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/parseLyrics.js' target='_new'>parseLyrics.js</a>).
+              </p>
+
+              <p>
+                I threw the newly acquired dataset into Observable (an online notebook for visualizations), and used Vega-Lite (composable charting library) to draw a line chart of the emotions over the years:
+                <a class="fancybox" href="data/shirley/emotionsacrossyears.png"> <img src="data/shirley/emotionsacrossyears.png" class="img-responsive img-month"></a>
+                (I really like this combination of Observable and Vega-Lite, that allows me to quickly explore the data - a much needed step-up from when I would build out a whole visualization to explore the data.)
+              </p>
+
+              <p>
+                The problem, though, was that because the lexicon only contained the most common 14k words, a lot of the words in the lyrics were unaccounted for.  I was concerned for the accuracy of the dataset, and started to look for an alternative.  I tried to look for a sentiment analysis package, but they all only told me whether a phrase was positive or negative, until I found IBM Watson's Tone Analyzer.  I wrote a script to pass every line of every song into the Tone Analyzer, and remember the set of emotions Watson found in that line as well as its confidence of those emotions existing (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/toneAnalyzer.js' target='_new'>toneAnalyzer.js</a>).  Out of all the tones Watson came back with, I decided to concentrate on just the five <em>Inside Out</em> emotions: joy, sadness, fear, disgust, anger.  I wrote another script to reduce the data file to just those five emotions for each lyric (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/getTopTones.js' target='_new'>getTopTones.js</a>) to get my (almost) final dataset.
+              </p>
+
+              <h3>year 2 <span class="light-grey">|</span> sketch & code</h3>
+
+              <p>
+                I was trying to figure out a visual representation/metaphor for these emotion, when on a random drive home, it hit me: emotions are gooey!  They're messy and amorphous and gooey (for some reason I thought of lava lamps).  And so I immediately plugged the data in, drew each emotion as a circle, and applied the "gooey effect" - a set of SVG filters that blurs the circles and then ups the contrast (<a href='https://css-tricks.com/gooey-effect/' target='_new'>CSS Tricks has a great explainer on how this all works</a>):
+                <a class="fancybox" href="code/shirley/v2_gooey.png"> <img src="code/shirley/v2_gooey.png" class="img-responsive img-month"></a>
+                Each of the emotions are mapped to a color: joy is yellow, sadness is blue, disgust is green, fear is purple, and anger is red (just like <em>Inside Out</em>!).  They are sized by Watson's confidence of that emotion existing.  I also tried to position the emotions by when they appear in the song, starting at the top and going clockwise.  I did this so that I could have consistency between the overview and the detailed view of each song, where the gooey emotions animate to the center when its corresponding lyric is played:
+                <a class="fancybox" href="code/shirley/blankspace.gif"> <img src="code/shirley/blankspace.gif" class="img-responsive img-month"></a>
+                I liked this idea, but I didn't like how quickly I had to animate through each line (lest the animation take too long), and how hard it was to associate the lyric with the emotion before it disappeared.  So I brainstormed and sketched out some other ideas:
+                <a class="fancybox" href="sketch/shirley/v2.jpg"> <img src="sketch/shirley/v2.jpg" class="img-responsive img-month"></a>
+                For some reason, while thinking of the confidence level of emotions across time, I thought of the lines that lie detecters drew and overlapping each of the emotion-lines around the gooey.  While thinking of an order to overlap the emotions, I also thought of vertically sorting the emotions in the gooey, so that joy - the "lightest", "airiest" emotion - floated at the top, and anger - the "heaviest" emotion - sat at the bottom.
+              </p>
+
+              <p>
+                Here's the sketch implemented:
+                <a class="fancybox" href="code/shirley/v2_lyrics.png"> <img src="code/shirley/v2_lyrics.png" class="img-responsive img-month"></a>
+                Because the lines were too messy and hard to track around a circle, I filled them in and also used a multiply blend mode so that I could see the overlapping emotions.  I also added the lyrics on the right, and for any lines with emotions I denoted them with a mini version of the circles - that way I wouldn't have to keep going back and forth between the visualization and the lyrics to match the emotions with the words.
+              </p>
+
+              <p>
+                I liked this version, but it was hard to see which emotions were most prominent across the whole song, since it's really hard to compare heights when those heights wrap in a circle.  I tried this next:
+                <a class="fancybox" href="code/shirley/v2_horizontal.png"> <img src="code/shirley/v2_horizontal.png" class="img-responsive img-month"></a>
+                But while I could now easily scan and see which emotions have the highest peak, I really disliked the aesthetic - it reminded me of a sun over a bunch of little mountains, and that was definitely not a look I was going for.
+              </p>
+
+              <p>
+                So I went back to the area chart around the circle, but this time I used annotations to indicate the highest emotions.  It also let me bring the lyrics in underneath the visualization, and thus make each visualization more compact (which I always like):
+                <a class="fancybox" href="sketch/shirley/v2_annotations.jpg"> <img src="sketch/shirley/v2_annotations.jpg" class="img-responsive img-month"></a>
+                I was able to stay pretty faithful to my sketch in my implementation, and even added an extra annotation to show the cutoff for where Watson was confident (or not confident) with its analysis:
+                <a class="fancybox" href="code/shirley/annotated1.png"> <img src="code/shirley/annotated1.png" class="img-responsive img-month"></a>
+                But I didn't like how spiky the area chart got when there were longer lyrics, so I tried a rectangular shape instead:
+                <a class="fancybox" href="code/shirley/annotated2.png"> <img src="code/shirley/annotated2.png" class="img-responsive img-month"></a>
+                And also a rounded version:
+                <a class="fancybox" href="code/shirley/annotated3.png"> <img src="code/shirley/annotated3.png" class="img-responsive img-month"></a>
+              </p>
+
+              <p>
+                At this point, I was pretty satisfied with the look of the detail view, so I decided to work on the title page - and this is where I ran into performance issues trying to animate the gooeys.
+              </p>
+
+              <p>
+                <!-- SOME SCREENSHOTS OF BUGS? -->
+                <!-- Now that TS7 is so colorful, it might be fun to eventually finish the colors version. -->
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Our names and website below -->
+        <div class="row">
+          <div class="nadieh col-xs-6">
+            <div class="name kingBasil">Nadieh</div>
+            <div class="quicksand"><a href="http://www.visualcinnamon.com/">VisualCinnamon.com</a></div>
+          </div>
+
+          <div class="shirley col-xs-6">
+            <div class="name kingBasil">Shirley</div>
+            <div class="quicksand"><a href="http://sxywu.com/">sxywu.com</a></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- <section id="june-guest" class="month-page">
+      <div class="guest background-guest col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
+
+      <div class="container guest-container">
+        <div class="row">
+          <div class="col-xs-12 col-md-12 write-up">
+            <div class="guest">
+			  <div class="guest-introduction quicksand">introducing our guest</div>
+              <div class="name-guest paddingBelow kingBasil">Matt Daniels</div>
+              <div class="time kingBasil"></div>
+              <div class="location quicksand paddingBelow">new york</div>
+
+                <h3>week 1 <span class="light-grey">|</span> data</h3>
+
+                <p></p>
+
+                <h3>week 2 <span class="light-grey">|</span> sketch</h3>
+
+                <p></p>
+
+                <h3>week 3 <span class="light-grey">|</span> design</h3>
+
+                <p></p>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="guest col-xs-12">
+            <div class="name kingBasil">Matt</div>
+            <div class="quicksand"><a href="https://pudding.cool/">Pudding</a></div>
+          </div>
+        </div>
+
+      </div>
+    </section> -->
+
+    <footer class="guest-month">
+      <div class="container">
+        <div>
+          <span>a monthly collaboration between </span>
+          <span class="kingBasil">Nadieh Bremer & Shirley Wu</span>
+        </div>
+        <div class="quicksand">
+          <a href="https://twitter.com/datasketches">@datasketches</a><span class="pipe-divider">  |  </span>#datasketches
+        </div>
+        <div class="about-link quicksand">
+          <a href="../about">about</a><span class="pipe-divider">  |  </span><a href="../feed.xml">rss</a><span class="pipe-divider">  |  </span><a href="https://tinyletter.com/datasketches">newsletter</a>
+        </div>
+      </div>
+    </footer>
+
+	<script>
+  function setTime() {
+    var format = 'h:mm a';
+    var time = new Date();
+    var nadieh = moment(time, format).tz("Europe/Amsterdam");
+    var shirley = moment(time, format).tz("America/Los_Angeles");
+	  var guest = moment(time, format).tz("America/New_York");
+    $('.nadieh .time').text(nadieh.format(format));
+    $('.shirley .time').text(shirley.format(format));
+	  $('.guest .time').text(guest.format(format));
+
+    var nadiehColor = nadieh.hour();
+    nadiehColor = nadiehColor >= 18 || nadiehColor <= 6 ? 'dark' : 'light';
+    var shirleyColor = shirley.hour();
+    shirleyColor = shirleyColor >= 18 || shirleyColor <= 6 ? 'dark' : 'light';
+    var guestColor = guest.hour();
+    guestColor = guestColor >= 18 || guestColor <= 6 ? 'dark' : 'light';
+
+    $('.nadieh').removeClass('light dark').addClass(nadiehColor);
+    $('.shirley').removeClass('light dark').addClass(shirleyColor);
+	  $('.guest').removeClass('light dark').addClass(guestColor);
+  }
+
+  $( document ).ready( function() {
+    setTime();
+    setInterval(setTime, 60000);
+    $(".fancybox").fancybox({
+      openEffect : 'fade',
+      closeEffect : 'fade',
+      padding: 0,
+      helpers: {
+      overlay: {
+        locked: false
+      }
+      }
+    });
+  });
+    </script>
+
+    <!-- Google analytics -->
+	<script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-43942889-3', 'auto');
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
