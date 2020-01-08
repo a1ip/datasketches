@@ -251,19 +251,46 @@
               </p>
 
               <p>
-                When I asked them if they would do a final project with me, they immediately agreed (and I was so happy).
+                When I asked them if they would do a final project with me, they immediately agreed (and I was so happy).  We decided to aim for an installation around women in computing to be exhibit at ITP's Winter Show.
               </p>
 
             <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
 
             <p>
-              From the very beginning, we agreed that we wanted to do the project around women in computing.  It's a topic that I've been very interested in since I did Legends with women Nobel Laureates, and Tina and Christina were in complete agreement that it'd be a very fitting pursuit at ITP (which combines code and computation with art).
+              From the very beginning, we agreed that we should center the project around women in computing.  It's a topic that I've been very interested in since I did Legends with women Nobel Laureates, and Tina and Christina were in complete agreement that it'd be a very fitting pursuit at ITP (which combines code and computation with art).
             </p>
 
             <p>
-              I started my data gathering the same way as Legends, with a Wikipedia article.  I was able to find a page titled <a href='https://en.wikipedia.org/wiki/Women_in_computing' target='_new'>Women in Computing</a>, and from there I discovered the Wikipedia category <a href='https://en.wikipedia.org/wiki/Category:Women_computer_scientists' target='_new'>Women computer scientists.  In this first attempt, I wrote a script that requested the page, used <a href='https://github.com/jsdom/jsdom' target='_new'>JSDOM</a> to turn the HTML text into JSON, and iterating through that for the women's names (I've done this many times for previous Data Sketches projects also, whenever I had to scrape a webpage).
+              I started my data gathering the same way as Legends, with a Wikipedia article.  I was able to find a page titled <a href='https://en.wikipedia.org/wiki/Women_in_computing' target='_new'>Women in Computing</a>, and from there I discovered the Wikipedia category <a href='https://en.wikipedia.org/wiki/Category:Women_computer_scientists' target='_new'>Women computer scientists.  In this first attempt, I wrote a script that requested the page, used <a href='https://github.com/jsdom/jsdom' target='_new'>JSDOM</a> to turn the HTML text into JSON, and iterating through that for the women's names (I've done this many times for previous Data Sketches projects also, whenever I had to scrape a webpage).  I then used <a href='https://www.npmjs.com/package/wikijs' target='_new'>wikijs</a> to get more detailed information from each woman's Wikipedia pages, including number of backlinks, references, and links in the page, as well as their basic information and summary.
             </p>
 
+            <p>
+              Once I had the initial dataset of 416 women (it was really cool to see so many women computer scientists listed), I wanted to see if there was something interesting for us to center the installation around.  But I had to first filter out any women whose pages were stubs and didn't have basic information.  For the 247 women who remained, I took a look at their distribution of birth years, and number of backlinks and references.  Nothing was out of the ordinary, so I decided to concentrate on the women with more than 100 backlinks that may have more fleshed out Wikipedia pages (I thought backlinks might be a good proxy for completeness).
+            </p>
+
+            <p>
+              With those 29 women (which included <a href='https://www.cs.ubc.ca/~tmm/' target='_new'>Tamara Munzner</a>!), I took a look at the intersection of their backlinks, links in the article, nationalities, alma maters, common words in their summary...the only things that stood out were that majority of their nationalities, when listed, were American (which only showed that this list is unfortunately skewed towards America).  I was hoping that clusters would appear, like if some were known for their HCI work, or for their backend optimizations work.  But those patterns didn't emerge, most likely because of the simplicity of the data I decided to pull (just their summaries instead of their whole articles) and because of the simplicity of my own analysis (I was merely counting intersection of keywords in summaries).
+            </p>
+
+            <p>
+              Instead of trying to devise more sophisticated analysis (we were quite limited on time), I decided to take a step back and try my hand at another dataset.  I had initially avoided scraping the <a href='https://en.wikipedia.org/wiki/Women_in_computing' target='_new'>Women in Computing</a> article since the women's names were scattered throughout the paragraphs instead of in a list, and it was much less straightforward to scrape.  But once I realized that the data was much richer there - it succintly described each woman's accomplishments and even gave an approximate timeframe for most women's contributions - I knew it'd be worth the trouble.
+            </p>
+
+            <p>
+              For this second attempt, I wrote a script to:
+              <ol>
+                <li>Use <a href='https://www.npmjs.com/package/wikijs' target='_new'>wikijs</a> to access all the links in the page, and filter down to only those that are links to other Wikipedia pages</li>
+                <li>Use Google's Knowledge Graph Search to determine whether the Wikipedia page is for a person or thing, and only keep those that the Knowledge Graph returned "Person"</li>
+                <li>For each person, go through their Wikipedia article summary and see if it includes "she/her" or "he/him", keep the ones that had more mentions of "she/her"</li>
+                <li>If there were no mentions of either, mark the person for a manual check</li>
+                <li>Save name, summary, and certainty of gender into a spreadsheet</li>
+              </ol>
+              Once I had the spreadsheet, I went through each person to double check their gender.  For each of the remaining 46 women, I wrote a one sentence summary and found an approximate year for their contributions by reading through the Women in Computing page and cross-referencing their own Wikipedia pages.  I also in the process highlighted approximately 30 women that I found particularly inspiring and brilliant.
+            </p>
+
+            <p>
+              Because of the space constraint for the Winter Show, we could only design an installation with a maximum of 20 women.  For the final pass, Christina, Tina, and I all sat down and narrowed the list down to the 16 women that inspired all three of us.
+            </p>
             </div>
           </div>
 
