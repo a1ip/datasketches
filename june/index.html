@@ -254,7 +254,7 @@
                 When I asked them if they would do a final project with me, they immediately agreed (and I was so happy).  We decided to aim for an installation around women in computing to be exhibit at ITP's Winter Show.
               </p>
 
-            <h3 class="margin-top-10">week 1 <span class="light-grey">|</span> data</h3>
+            <h3>week 1 <span class="light-grey">|</span> data</h3>
 
             <p>
               From the very beginning, we agreed that we should center the project around women in computing.  It's a topic that I've been very interested in since I did Legends with women Nobel Laureates, and Tina and Christina were in complete agreement that it'd be a very fitting pursuit at ITP (which combines code and computation with art).
@@ -291,6 +291,115 @@
             <p>
               Because of the space constraint for the Winter Show, we could only design an installation with a maximum of 20 women.  For the final pass, Christina, Tina, and I all sat down and narrowed the list down to the 16 women that inspired all three of us.
             </p>
+
+
+            <h3>week 2 <span class="light-grey">|</span> sketch</h3>
+
+            <p>
+              This is probably the most different and most interesting sketch section from all the other Data Sketches projects I've ever done.  It should more accurately be called "prototype".
+            </p>
+
+            <p>
+              For our very first brainstorm, we asked ourselves: what would we want to make if we had no restrictions on time, space, and money?  We went through many different ideas, but at the core, we agreed that we wanted to highlight the invisibility of these women, and raise awareness for their incredible contributions in computing.  We wanted to create an experience that would have people leave feeling inspired, stimulated, and wanting to go through it again.  We also wanted to create something where people's interactions with the piece can alter it, and they could maybe even leave something of themselves behind.
+            </p>
+
+            <p>
+              The last point of participants being able to affect the artwork was the most important to me, as I've always loved work like <a href='https://domesticstreamers.com/' target='_new'>Domestic Data Streamers'</a> <a href='https://www.youtube.com/watch?v=e9gudFpCJnU' target='_new'>Golden Age Art Installation</a> where people are invited to add to the artwork and change how it looks at the end.  I love that it turns people into participants, that it gives them a sense of ownership in the artwork.
+            </p>
+
+            <p>
+              For the second brainstorm, we brought in installations we pinned for inspiration, and a lot of the aesthetic we seemed to converge on were installations with many small objects hung and suspended in mid-air.  We especially liked Judith G Levy's <a href='https://judithglevy.com/section/421361-Memory-Cloud-1-Indianapolis-Museum-of-Art-an-interactive-installation.html' target='_new'>Memory Cloud</a>, where nostalgic photographs are placed within small souvenir viewers.  People are invited to walk through dozens of these viewers, and peek in to see each 35mm slide.
+            </p>
+
+            <p>
+              We loved the idea of people interacting with each object, and decided to map each object to a woman and put their information inside.  We wanted people to take their time reading about each woman, and I really liked that looking into the viewer felt like looking into a secret world that we previously had no idea about.
+            </p>
+
+            <p>
+              <a class="fancybox" href="sketch/shirley/initial_idea.jpg"> <img src="sketch/shirley/initial_idea.jpg" class="img-responsive img-month"></a>
+              From there, the rest of the data mappings came quickly: the women would be organized in a field by the year of accomplishment, from earliest to most recent.  And their height from the ceiling would be by the number of their backlinks.  So the more backlinks and more "renowned" they were, the higher up they were because they were more "out of reach", and the less backlinks the lower down they were to be more easily accessible.  This was especially important to us, to promote those women that were less well known. We wanted the interaction to be that a person would pull the object down from above their heads and read inside the object.  We thought that interaction could also be how we keep track of which women were interacted with, how we give user feedback, and how we potentially affect the end artwork.
+            </p>
+
+            <p>
+              To have people be able to leave something behind, we decided to have a "summary board" placed at the end of the installation with each woman's name on it.  We wanted to prompt people to place a star sticker (hehe) by a name that they had never heard of before, but were inspired by after the installation.
+              <a class="fancybox" href="sketch/shirley/initial_floor_plan.jpg"> <img src="sketch/shirley/initial_floor_plan.jpg" class="img-responsive img-month"></a>
+              <em>(We initially wanted our experience to have a clear entry and exit, with the summary board placed by the exit.)</em>
+            </p>
+
+            <p>
+              Because this installation was also the final project for the Physical Computation class I was auditing, there were regular check-ins on the idea and scheduled "playtests".  In our first idea check-in, <a href='http://www.smoothware.com/danny/' target='_new'>our teacher</a> gave us the feedback that it'd be really nice that walking up to and pulling down that first object would also trigger other objects to drop down.  That feedback inspired us to cluster the women into groups, so that when a person walks up to the first woman, the others in the group would drop down and create a path to guide them through the installation.
+            </p>
+
+            <p>
+              Once we had the initial idea fleshed out, Christina went about sourcing materials, and Tina and I went about trying to figure out how to detect a person interacting with our object.  We brainstormed several ideas, including a pulley system that would complete the circuit when pulled down on (thus sending a signal), a motor at the top that would unwind the cord when pulled on, a capacitive touch sensor on the object, an infrared motion sensor placed somewhere near the object...all the options felt overly engineered, overly finicky, or overly sensitive.
+            </p>
+
+            <p>
+              When we went to our <a href='http://blightdesign.com/' target='_new'>Fabrication teacher</a>'s office hours, he suggested we go simpler.  He gave us a vibration sensor (the circuit completes when we shake the sensor), and a tilt sensor (the circuit completes when it's tilted up) to experiment with.
+              <a class="fancybox" href="sketch/shirley/vibration_sensor.gif"> <img src="sketch/shirley/vibration_sensor.gif" class="img-responsive img-month"></a>
+              <a class="fancybox" href="sketch/shirley/tilt_sensor.gif"> <img src="sketch/shirley/tilt_sensor.gif" class="img-responsive img-month"></a>
+              As you might be able to tell from the gif, the vibration sensor took quite a bit of force to trigger, which meant that if we put it in our object the person would have to really shake it (instead of gently picking it up) for us to know that they've interacted with it.  On the other hand, though the tilt sensor wasn't perfect (there didn't seem to be an exact angle that it started sending "on" signals, and even then those signals were quite noisy) it was a much better option.
+            </p>
+
+            <p>
+              (We also considered an accelerometer, which would be more sophisticated than a tilt sensor and be able to tell us the angle of the tilt, but we ultimately decided against it because it was ~4x more expensive than the tilt sensor.)
+            </p>
+
+            <p>
+              Through this process, we also realized how finnicky a motor would be to deal with and fragile it would be especially with the thousands of people coming through the Winter Show and pulling on the cords (with many kids!).  Even though we really liked the idea - motion always really captures attention - we decided to nix the idea.  Instead, we decided to put lights in the object since changes in light are still quite noticeable and even more importantly, much easier to control.
+            </p>
+
+            <p>
+              We immediately liked the metaphor the lights gave us: we decided to have the hanging objects all start out dim - a metaphor that these women are largely unknown - and as people went through the installation and read about each woman, their light would grow slight bit brighter.  We hoped that by the end of the show, all of their lights would be brightly lit.
+            </p>
+
+            <p>
+              For the lights, we went with Adafruit's brand of individually controllable RGB color lights called the Neopixel.  We originally went with this because we thought we might try encoding data into the color of the lights as well but decided against it because it was quite hard to distinguish most colors from each other unless they were <em>very</em> different (like between, red, blue, green).  We decided to continue using it even though we weren't going to have different colors, because they gave us better control over brightness than normal LEDs.
+            </p>
+
+            <p>
+              Unfortunately, when we first ordered the Neopixels, we ordered 100 individual ones, not realizing we'd have to solder each of them to their own boards so that we could wire them up to the arduino to communicate with.  I learned a very valuable lesson that first time I soldered one of these Neopixels, that they have four pins (one for plus, one for minus/ground, one for data in to receive commands from the Arduino,  and another for data out to send the commands to the next pixel if we ever decided to chain them) very <em>very</em> close together and they CANNOT touch.  And if they touched, they would short-circuit.
+              <a class="fancybox" href="sketch/shirley/individual_neopixel.jpg"> <img src="sketch/shirley/individual_neopixel.jpg" class="img-responsive img-month"></a>
+              <em>(Trying to hold down the wires so they wouldn't move as I very carefully tried to solder the pins to a cut-up board.)</em>
+            </p>
+
+            <p>
+              I did four more of this.  Unfortunately, two of them shortcircuited and we decided it really wasn't going to scale up very well.  On the bright side, I eventually learned how to use a multimeter to test for shorts, instead of trying it out on my (and Tina's) Arduino boards and shorting them...
+            </p>
+
+            <p>
+              Fortunately, because there are very many talented and experienced people always on the ITP floor, they were around to advise us on using a Neopixel strip instead, since it has a much nicer and larger area we could solder to.  Unfortunately, those larger areas were still quite close to each other and if we weren't being careful, ran the risk of the solders running into each other.  Amidst those struggles, I was introduced to soldering paste, which makes it so that the solder only sticks to the conductive part and doesn't stick to anything else.  That was such a time saver.  And after soldering the wires to the strip, I learned to use a hot glue gun to make sure that the wires wouldn't fall off easily.
+            </p>
+
+            <p>
+              (These sorts of lessons are precisely what I went to ITP for 👍)
+              <a class="fancybox" href="sketch/shirley/solder_paste.jpg"> <img src="sketch/shirley/solder_paste.jpg" class="img-responsive img-month"></a>
+              At the same time we were figuring out the electrical components for each object, Christina was sourcing and experimenting with materials.  She quickly landed on using fillable Christmas ornaments, and we went about acquiring one from a nearby Michael's to prototype with and ordering three dozen from Amazon at the same time.
+              <a class="fancybox" href="sketch/shirley/orbs.jpg"> <img src="sketch/shirley/orbs.jpg" class="img-responsive img-month"></a>
+              Christina then went about sanding the nobs off of each ornament, and carefully drilling holes into the center for wires to run out of.  To hide the tilt sensor and Neopixel within the orb, we first tried to spray paint the interior of the orbs.  We had bought reflective spray paint that was supposed to give a mirror-like finish, but it didn't turn out well.  That was the night we learned reflective spray paint only works well on glass and not plastic 😅
+              <a class="fancybox" href="sketch/shirley/spray_paint.jpg"> <img src="sketch/shirley/spray_paint.jpg" class="img-responsive img-month"></a>
+              We also took the opportunity to test out two ideas we had: whether we wanted people to peek in through a small hole to read the information, or whether we should leave the orb as is and have a larger area to read the information from.  It was really great to have the spray painted prototypes, because right away we could tell that the peephole would be way too small and too much of a struggle for people to read large amounts of information through.
+              <a class="fancybox" href="sketch/shirley/orb_options.png"> <img src="sketch/shirley/orb_options.png" class="img-responsive img-month"></a>
+              <em>(The two options we considered for how the orb should look like)</em>
+            </p>
+
+            <p>
+              We also realized that we should place the information placard at a certain angle so that people would 1. know that there was a placard inside they needed to read, and 2. be incentivized to pick it up in the correct direction to trigger the tilt sensor.
+              <a class="fancybox" href="sketch/shirley/orb_angled.jpg"> <img src="sketch/shirley/orb_angled.jpg" class="img-responsive img-month"></a>
+              <em>(Prototype of the second option with no peephole, and a large transparent area to read the information through)</em>
+            </p>
+
+            <p>
+              It was really fun to prototype the materials, and the whole process was so different from working digitally (where gathering materials is not a thing).  Overall it took about two weeks for us to settle on all the materials, and we had to be really strategic about buying just enough material to test with without being wasteful if we decided against the idea, and ordering the materials online early enough that it'd get to us by the time we needed to start production.  I also learned a lot about prototyping with cheap, readily available materials (like masking tape and tin foil) to mimic the effect we were going for just to be able to quickly try out an idea.
+            </p>
+
+            <p>
+              Since the reflective spray paint didn't work out, Christina suggested cellophane (Christina was an absolute pro when it came to materials).  This not only hid the tilt sensor and neopixel, it also had a beautiful effect when lit up in the dark.
+              <a class="fancybox" href="sketch/shirley/cellophane.jpg"> <img src="sketch/shirley/cellophane.jpg" class="img-responsive img-month"></a>
+              <a class="fancybox" href="sketch/shirley/cellophane.gif"> <img src="sketch/shirley/cellophane.gif" class="img-responsive img-month"></a>
+              <em>(A quick prototype with cellophane and the information printed on vellum, a translucent paper to help mimic frosted acrylic and diffuse the light, that can also be printed on.)</em>
+            </p>
+
             </div>
           </div>
 
