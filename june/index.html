@@ -247,7 +247,7 @@
               </p>
 
               <p>
-                I audited Introduction to Fabrication where I learned about power tools and machines and played with the laser cutter, and Introduction to Physical Computation where I learned about circuits and sensors and lights and Arduinos.  And through those classes (and the office hours I was asked to hold as a resident) I was able to meet my two project partners: Christina with her beautiful illustrations and bold uses of color, and Tina with her architectural background and keen awareness of space.  I knew they would be perfect complements to my data and code background.
+                I audited Introduction to Fabrication where I learned about power tools and machines and played with the laser cutter, and Introduction to Physical Computation where I learned about circuits and sensors and lights and Arduinos.  And through those classes (and the office hours I was asked to hold as a resident) I was able to meet my two project partners: <a href='http://cdacanay.com/' target='_new'>Christina Dacanay</a> with her beautiful illustrations and bold uses of color, and <a href='http://tina.pizza/' target='_new'>Tina Rungsawang</a> with her architectural background and keen awareness of space.  I knew they would be perfect complements to my data and code background.
               </p>
 
               <p>
@@ -390,7 +390,7 @@
             </p>
 
             <p>
-              It was really fun to prototype the materials, and the whole process was so different from working digitally (where gathering materials is not a thing).  Overall it took about two weeks for us to settle on all the materials, and we had to be really strategic about buying just enough material to test with without being wasteful if we decided against the idea, and ordering the materials online early enough that it'd get to us by the time we needed to start production.  I also learned a lot about prototyping with cheap, readily available materials (like masking tape and tin foil) to mimic the effect we were going for just to be able to quickly try out an idea.
+              It was really fun to prototype the materials, and the whole process was so different from working digitally (where gathering materials is not a thing).  Overall it took about two weeks for us to settle on all the materials, and we had to be really strategic about buying just enough material to test with without being wasteful if we decided against the idea, and ordering the materials online early enough that it'd get to us by the time we needed to start production.  I also learned a lot about prototyping with cheap, readily available materials (like masking tape, cardboard, and tin foil) to mimic the effect we were going for just to be able to quickly try out an idea.
             </p>
 
             <p>
@@ -398,6 +398,105 @@
               <a class="fancybox" href="sketch/shirley/cellophane.jpg"> <img src="sketch/shirley/cellophane.jpg" class="img-responsive img-month"></a>
               <a class="fancybox" href="sketch/shirley/cellophane.gif"> <img src="sketch/shirley/cellophane.gif" class="img-responsive img-month"></a>
               <em>(A quick prototype with cellophane and the information printed on vellum, a translucent paper to help mimic frosted acrylic and diffuse the light, that can also be printed on.)</em>
+            </p>
+
+            <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
+
+            <p>
+              Once we had all the physical components for the orb determined, I went about with the coding.  To control the tilt sensor and Neopixel we settled on, we used the Arduino.
+              <a class="fancybox" href="code/shirley/arduino.png"> <img src="code/shirley/arduino.png" class="img-responsive img-month"></a>
+              Arduino is a brand of microcontrollers (I think of microcontrollers as small, simple computers that we can use to control other devices), and the way we use it is by wiring the pins on the Arduino (circled in orange in the photo) to our lights, sensors, motors, etc.  Each of those pins have a corresponding number it is identified by, and so in our code, we can tell Arduino that a certain pin is being used as input to read from (usually a sensor) and another is being used as output to write to and control.
+            </p>
+
+            <p>
+              (You never thought you were gonna get a run-down of Arduino from this project, did you?  Well we aim to go above and beyond 😆)
+            </p>
+
+            <p>
+              Because this was my first full project with Arduino, I started my code super simple.  I used a button as a stand-in for the tilt sensor, and an LED in place of the Neopixel.  I used an array to keep track of which pins the buttons were wired to, and another array for which pins the LEDs were wired to.  I also had an array for keeping track of which buttons were pressed, and another array for each LED's brightness.  Every time the button was pressed it was the equivalent of a "tilt" and I'd increase the brightness of the LED and save it to the brightness array.  I wanted to use the button and LED (which I was already familiar with how to code) first so that I could get the functionality working first, before having to worry about incorporating the tilt sensor and Neopixel - both things I haven't worked with before.
+              <a class="fancybox" href="code/shirley/tilt_lights.jpg"> <img src="code/shirley/tilt_lights.jpg" class="img-responsive img-month"></a>
+              <em>(Four Neopixel strips and one orb with Neopixel and tilt sensor all frighteningly wired up for my code testing purposes.)</em>
+            </p>
+
+            <p>
+              Once I had the basic functionality, I went about replacing the LED and push button with the Neopixel and tilt sensor in my code.  The Neopixel actually comes with its own library of functions, and because it assumes that I'm programming a strip of many Neopixels, most documentation examples involve instantiating the Neopixel class with an array of pin numbers.  I actually had to do some gymnastics and guesswork to setup each orb's Neopixel individually.  (Next time, I might consider using something else, but for this project it was already too late to look for other options.)
+            </p>
+
+            <p>
+              Reading the tilt sensor was a little more straightforward, though I did have to adapt an <a href='https://learn.adafruit.com/tilt-sensor/using-a-tilt-sensor' target='_new'>Adafruit example</a> to implement debounce on the reading.  That was probably the most interesting lesson I learned about working in hardware, that nothing in the physical world is clear cut like it is in computers, and all sensor readings are noisy.
+            </p>
+
+            <p>
+              With the Neopixel and tilt sensor code incorporated, the rest of the code from my first iteration worked perfectly.
+              <a class="fancybox" href="code/shirley/tilt_light.gif"> <img src="code/shirley/tilt_light.gif" class="img-responsive img-month"></a>
+              <em>(I got this working around 1AM after a few late nights and I was so deliriously happy.)</em>
+            </p>
+
+            <p>
+              With one orb working, I had to make sure it could work scaled up and with groups.  We had decided to group our list of 16 women into four categories - Mathematicians, Computer Scientists, Creatives, and Others (executives, inventors, etc.) - and if any one orb was lifted up, the rest of the women in the same group would also light up in a delayed stagger.
+              <a class="fancybox" href="code/shirley/group_plans.jpg"> <img src="code/shirley/group_plans.jpg" class="img-responsive img-month"></a>
+              <em>(Working out the logic for when an orb is picked up and all the other orbs in the same group should light up in a staggered pattern, and the opposite happening when the orb is put down.)</em>
+            </p>
+
+            <p>
+              To implement the delayed stagger, I needed to incorporate time into my code.  The only way to do this in Arduino is with <code>mills()</code>, which returns the number of milliseconds since the Arduino began running.  I refactored my code to store group information: whether the whole group should be lit up or not, which orb in the group triggered that change, and at what millisecond that change was triggered (which I called <code>startTime</code>).  I could then use that information to loop through each orb in the group, and depending on which orb triggered the change (<code>activeOrb</code>), calculate each orb's <code>startTime</code> (when its own brightness would change) based on the distance of that orb from the <code>activeOrb</code>.  I would then set the orb's brightness if the time was past that orb's <code>startTime</code>.
+              <a class="fancybox" href="code/shirley/stagger.gif"> <img src="code/shirley/stagger.gif" class="img-responsive img-month"></a>
+              <em>(The Neopixels lighting up when the tilt sensor in my hand is lifted, and dimming down when the tilt sensor is down.)</em>
+            </p>
+
+            <p>
+               I also ended up coding in a fade animation by storing a start and end brightness for each orb, which made the brightness change much gentler, and added in code for a pulsating introductory orb to catch attention and explain the installation.
+            </p>
+
+            <p>
+              Coding in Arduino was an interesting challenge in trying to make sure I was being memory efficient, especially when I had to add in groups and remember milliseconds (which were stored as unsigned longs).  It definitely made my code more convoluted, but I had a really fun time trying to figure out the challenge.
+            </p>
+
+            <h3>week 5 & 6 <span class="light-grey">|</span> production</h3>
+
+            <p>
+              This was the point at which I had finished my fellowship and had to go home to SF (and then to a conference in Tokyo), so I only was able to help Tina and Christina finish prototyping the orbs and wasn't able to help them through the production process.  I highly recommend checking both of their writeups (<a href='http://www.cdacanay.com/itp-blog/2019/12/23/one-amongst-many-connecting-womxn-in-computing' target='_new'>Christina's</a> and Tina's coming soon) for more details on this section.
+            </p>
+
+            <p>
+              One of the first things that Tina did to kickstart the production phase is to 3D model an enclosure to hold both the tilt sensor (which is very sensitive to the angle of its placement) and Neopixel in place.  We also received a brilliant suggestion from our teachers to use a phone jack to connect our orbs to our wires, so that we could make the orbs easily detachable.  That way, just in case an orb malfunctioned, we could easily separate it and debug it away from the rest of the installation.  Tina also incorporated the phone jack into her enclosure design, and together with Christina, 3D printed 17 of these enclosures and spent roughly 30 hours soldering them all.
+              <a class="fancybox" href="code/shirley/3d_model.jpg"> <img src="code/shirley/3d_model.jpg" class="img-responsive img-month"></a>
+              <em>(3D model of the enclosure.)</em>
+              <a class="fancybox" href="code/shirley/enclosure.jpg"> <img src="code/shirley/enclosure.jpg" class="img-responsive img-month"></a>
+              <em>(Tilt sensor and Neopixel soldered to the phone jack within Tina's 3D printed enclosure.)</em>
+              <a class="fancybox" href="code/shirley/enclosure_orb.jpg"> <img src="code/shirley/enclosure_orb.jpg" class="img-responsive img-month"></a>
+              <a class="fancybox" href="code/shirley/enclosure.gif"> <img src="code/shirley/enclosure.gif" width='100%' class="img-responsive img-month"></a>
+              <em>(The orb wired up and working as a stand-alone piece!)</em>
+            </p>
+
+            <p>
+              They also designed the information within each orb, and laser etched and cut it into acrylic.
+              <a class="fancybox" href="code/shirley/laser_cut.jpg"> <img src="code/shirley/laser_cut.jpg" class="img-responsive img-month"></a>
+              <a class="fancybox" href="code/shirley/info.jpg"> <img src="code/shirley/info.jpg" class="img-responsive img-month"></a>
+              And finally, they translated the data I gave them into positions and heights in the space we were given for the Winter Show.  They then used planks of wood to hang the orbs from the ceiling.
+              <a class="fancybox" href="code/shirley/planks.png"> <img src="code/shirley/planks.png" class="img-responsive img-month"></a>
+              <iframe src="https://player.vimeo.com/video/381232779" width='405' height='240' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              <em>(Install timelapse)</em>
+            </p>
+
+            <p>
+              It was absolutely incredible to see this whole project come together.  It received great feedback at the Winter Show, where over two hundred people experienced it.  My favorite stories are of women, young and old, reading through each orb and looking inspired and emotional, placing a gem in the groups they most identified with.
+              <iframe src="https://player.vimeo.com/video/381236132" width='405' height='240' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              <a class="fancybox" href="code/shirley/feedback.jpg"> <img src="code/shirley/feedback.jpg" class="img-responsive img-month"></a>
+              <em>(A board where we asked people what groups they identified as - definitely not the most optimal Venn diagram, but probably much easier to understand for non-dataviz people.)</em>
+            </p>
+
+            <p>
+              <a class="fancybox" href="code/shirley/dream_team.png"> <img src="code/shirley/dream_team.png" class="img-responsive img-month"></a>
+              I'm so grateful to Tina and Christina for being the best teammates to pull off this ambitious project (in 6 weeks!), and to all the teachers and residents and students who graciously offered their time and wisdom.  I don't think we could have pulled this project off anywhere else.
+            </p>
+
+            <p>
+              And I'm so happy and grateful that this is the project that I get to end a whole decade with, to end Data Sketches with.  I think it perfectly encapsulates my personal journey - of going from someone that was purely technical, to learning more about design, to finding and chasing and executing on my dreams of doing a full data installation.  I'm excited that this ushers me into the next phase of my career, where I want to do more art, and bring more data visualizations out into the physical world for more people to get immersed in and enjoy.
+            </p>
+
+            <p>
+              Thank you for three years, Data Sketches 💖
             </p>
 
             </div>
