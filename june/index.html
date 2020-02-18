@@ -58,7 +58,7 @@
     <div class="row">
       <div class="col-xs-12 month-page-title">
         <h2 class="kingBasil peach">June</h2>
-        <h1 class="quicksand">Fun</h1>
+        <h1 class="quicksand">Fearless</h1>
       </div>
     </div>
   </header>
@@ -223,200 +223,280 @@
               <div class="location quicksand">san francisco</div>
 
               <!-- <a href="http://sxywu.com/obamas" target='_new'><img src="code/shirley/final.png" class="img-responsive img-month-top" alt=""></a> -->
+              <a href="" target='_new'>
+                <img src="code/shirley/header.jpg" class="img-responsive img-month-top" alt="">
+              </a>
+
               <p>
-                Ok buckle up, kids (sorry I know you're not kids, I just feel like that phrase sounds better with "kids"), because it's another wild one.  And probably a long one.  *Heaves heavy sigh*.  I'm sorry.
+                I just want to say how absolutely relieved that I'm now finishing my last month of Data Sketches.  For a little while I was feeling a little bit of despair that maybe I'll just never be able to finish this last project.  Indeed, I spent <em>two years</em> trying to create a data visualization with Taylor Swift's work - first with the colors in her music videos, and then with the emotions in her lyrics (detected by IBM Watson's Tone Analyzer).  I learned a lot from the process, and I really liked the visuals that I had come up with, but I couldn't figure out what I wanted to tell with the story.  I was stuck in limbo for a year.
+                <a class="fancybox" href="data/shirley/tswift.png"> <img src="data/shirley/tswift.png" class="img-responsive img-month"></a>
+                <em>(In-progress visualizations of the colors in Taylor Swift music videos, and of the emotions in her lyrics.)</em>
               </p>
 
               <p>
-                I guess before we get into all the technical nitty-gritty, I should talk about feelings first.  I don't like talking about feelings here because I like to keep these write-ups purely about process, about the data and the sketching and the coding.  But oftentimes in my projects, feelings play a big part.  And for this particular one, the feelings were HUGE.
+                At one point, I had to admit to myself that I might never be able to finish Data Sketches if I kept on having writer's block.  So I started thinking through other projects I was already working on, that could be a compelling last project for Data Sketches.  And I realized that the final project I was working on at ITP was as good of a candidate as any.
               </p>
 
               <p>
-                In particular, huge feelings of *INSECURITY*.
+                For the last few years I've been wanting to bring my data visualizations into the physical world.  I've been obsessed with the idea of expressing data-driven stories as installations that people can actually walk through, to explore and touch and feel.  Once I realized that the biggest reason why I couldn't design any projects in the physical world was because I work in the 2D, and have no idea how to think in the third dimension.  As soon as I realized that, I created <a href='https://christmasexperiments.com/2018/23/legends' target='_new'>Legends</a> with Three.js and WebGL.  That project really helped me learn how to think about space, lighting, and camera position.
               </p>
 
               <p>
-                You see, I never expected <a href='https://pudding.cool/2017/03/hamilton' target='_new'>Hamilton</a> to do as well as it did.  And I'm super grateful that it did so well, but for a few projects after that I was paralyzed with the fear that none of them would live up to it.  And indeed, none of them has.  But after a few months, I learned to be ok with that.  I learned to internalize that external validation is never a good motivator, that it just will lead me into dangerous pits of despair when projects I pour my soul into don't get an equivalent amount of likes and retweets (and it's really a super entitled way of thinking: "I put a lot of work into this, so you all MUST like it!!!").  So instead, I tried to do projects that I would enjoy, to create dataviz that I'd personally want to read and consume - because then I'd have at least one consumer of the visualization.  And if other people liked it, that's great.  But if not, at least I liked it.
+                Bug being able to code in 3D isn't enough to create a physical installation, I also needed to learn hardware.  In the fall of 2019, I did an Artist-in-Residency at New York University's Interactive Telecommunications Program (ITP), a master's program that is at the intersection of art and technology.  I went to ITP with a big hope: to create a physical data installation in collaboration with talented people.
               </p>
 
               <p>
-                This mantra worked for most of my projects.  But for some reason, for this month of June - this month of "fun", this last month of Data Sketches - I just couldn't internalize it.
+                I audited Introduction to Fabrication where I learned about power tools and machines and played with the laser cutter, and Introduction to Physical Computation where I learned about circuits and sensors and lights and Arduinos.  And through those classes (and the office hours I was asked to hold as a resident) I was able to meet my two project partners: <a href='http://cdacanay.com/' target='_new'>Christina Dacanay</a> with her beautiful illustrations and bold uses of color, and <a href='http://tina.pizza/' target='_new'>Tina Rungsawang</a> with her architectural background and keen awareness of space.  I knew they would be perfect complements to my data and code background.
               </p>
 
               <p>
-                I cared too much.
+                When I asked them if they would do a final project with me, they immediately agreed (and I was so happy).  We decided to aim for an installation around women in computing to be exhibit at ITP's Winter Show.
               </p>
 
-              <p>
-                I decided on the dataset back in summer 2017.  The new Taylor Swift single ("Look What You Made Me Do") had just come out, and it hit me: what would be more fun than doing something with the entire collection of Taylor Swift songs?  Taylor Swift songs, like Hamilton, is one of my great obsessions.  I feel like she's heralded me through my young adulthood, and her songs are attached to some of my greatest memories.  Whenever she released a new album, I'd have it on repeat for months.
-              </p>
+            <h3>week 1 <span class="light-grey">|</span> data</h3>
 
-              <p>
-                So, I cared too much.
-              </p>
+            <p>
+              From the very beginning, we agreed that we should center the project around women in computing.  It's a topic that I've been very interested in since I did Legends with women Nobel Laureates, and Tina and Christina were in complete agreement that it'd be a very fitting pursuit at ITP (which combines code and computation with art).
+            </p>
 
-              <p>
-                I kept feeling like it needed to live up to the quality, the attention to detail, the obsession, the analysis and the story I had for Hamilton.  I kept feeling like I needed to create a second Hamilton.
-              </p>
+            <p>
+              I started my data gathering the same way as Legends, with a Wikipedia article.  I was able to find a page titled <a href='https://en.wikipedia.org/wiki/Women_in_computing' target='_new'>Women in Computing</a>, and from there I discovered the Wikipedia category <a href='https://en.wikipedia.org/wiki/Category:Women_computer_scientists' target='_new'>Women computer scientists.  In this first attempt, I wrote a script that requested the page, used <a href='https://github.com/jsdom/jsdom' target='_new'>JSDOM</a> to turn the HTML text into JSON, and iterating through that for the women's names (I've done this many times for previous Data Sketches projects also, whenever I had to scrape a webpage).  I then used <a href='https://www.npmjs.com/package/wikijs' target='_new'>wikijs</a> to get more detailed information from each woman's Wikipedia pages, including number of backlinks, references, and links in the page, as well as their basic information and summary.
+            </p>
 
-              <p>
-                The problem was, Hamilton the Musical was a self-contained work rich with nuance and literary gold.  It was purposefully full of interesting patterns and insights; it was a masterpiece.  Taylor Swift's six albums (soon to be seven), though rich with easter eggs, are almost like a series of diary entries - chronicles of her dreams, her romances, her breakups, her feuds, her opinions, her views.
-              </p>
+            <p>
+              Once I had the initial dataset of 416 women (it was really cool to see so many women computer scientists listed), I wanted to see if there was something interesting for us to center the installation around.  But I had to first filter out any women whose pages were stubs and didn't have basic information.  For the 247 women who remained, I took a look at their distribution of birth years, and number of backlinks and references.  Nothing was out of the ordinary, so I decided to concentrate on the women with more than 100 backlinks that may have more fleshed out Wikipedia pages (I thought backlinks might be a good proxy for completeness).
+            </p>
 
-              <p>
-                So of course there weren't Hamilton-level analysis to be done.  It wasn't going to be another Hamilton.  And it's taken me two years to be ok with that.
-              </p>
+            <p>
+              With those 29 women (which included <a href='https://www.cs.ubc.ca/~tmm/' target='_new'>Tamara Munzner</a>!), I took a look at the intersection of their backlinks, links in the article, nationalities, alma maters, common words in their summary...the only things that stood out were that majority of their nationalities, when listed, were American (which only showed that this list is unfortunately skewed towards America).  I was hoping that clusters would appear, like if some were known for their HCI work, or for their backend optimizations work.  But those patterns didn't emerge, most likely because of the simplicity of the data I decided to pull (just their summaries instead of their whole articles) and because of the simplicity of my own analysis (I was merely counting intersection of keywords in summaries).
+            </p>
 
-              <p>
-                Thank you for reading this far about my feelings.  I'm still working on my insecurities.  I don't think they'll ever go away, and maybe it's better that they don't; they're one of my primary motivations for striving to be better.  And in the grand scheme of things, this little project amongst the billions on the internet, is just another project.  A blip in peoples' memories, if it ever makes it in there.  That eases my insecurities by a lot.
-              </p>
+            <p>
+              Instead of trying to devise more sophisticated analysis (we were quite limited on time), I decided to take a step back and try my hand at another dataset.  I had initially avoided scraping the <a href='https://en.wikipedia.org/wiki/Women_in_computing' target='_new'>Women in Computing</a> article since the women's names were scattered throughout the paragraphs instead of in a list, and it was much less straightforward to scrape.  But once I realized that the data was much richer there - it succintly described each woman's accomplishments and even gave an approximate timeframe for most women's contributions - I knew it'd be worth the trouble.
+            </p>
 
-              <p>
-                Ok, now back to your regularly scheduled programming of data, sketch, and code.
-              </p>
+            <p>
+              For this second attempt, I wrote a script to:
+              <ol>
+                <li>Use <a href='https://www.npmjs.com/package/wikijs' target='_new'>wikijs</a> to access all the links in the page, and filter down to only those that are links to other Wikipedia pages</li>
+                <li>Use Google's Knowledge Graph Search to determine whether the Wikipedia page is for a person or thing, and only keep those that the Knowledge Graph returned "Person"</li>
+                <li>For each person, go through their Wikipedia article summary and see if it includes "she/her" or "he/him", keep the ones that had more mentions of "she/her"</li>
+                <li>If there were no mentions of either, mark the person for a manual check</li>
+                <li>Save name, summary, and certainty of gender into a spreadsheet</li>
+              </ol>
+              Once I had the spreadsheet, I went through each person to double check their gender.  For each of the remaining 46 women, I wrote a one sentence summary and found an approximate year for their contributions by reading through the Women in Computing page and cross-referencing their own Wikipedia pages.  I also in the process highlighted approximately 30 women that I found particularly inspiring and brilliant.
+            </p>
 
-              <h3 class="margin-top-10">year 1 <span class="light-grey">|</span> first version</h3>
+            <p>
+              Because of the space constraint for the Winter Show, we could only design an installation with a maximum of 20 women.  For the final pass, Christina, Tina, and I all sat down and narrowed the list down to the 16 women that inspired all three of us.
+            </p>
 
-              <p>
-                When I first decided on Taylor Swift songs, I decided to look at the colors in her music videos instead of analyzing her lyrics.  I had just seen Vox's analysis of <a href='https://www.vox.com/culture/2017/8/24/16162814/game-of-thrones-color-spectrum' target='_new'>how color had changed throughout Game of Thrones' seven seasons</a>, and wanted to do something similar.  I also wanted to try a different angle from the usual literary analysis.
-              </p>
 
-              <p>
-                So I went off to get my data, helped by knowledge from my <a href='/october/' target='_new'>October Obamas</a> project (in fact, I'm pretty sure I just copy and pasted the first two scripts, yay for reusability!):
-                <ol>
-                  <li>Use the <a href='https://en.wikipedia.org/wiki/Taylor_Swift_videography' target='_new'>Wikipedia page for Taylor Swift's videography</a> to compile a <a href='https://github.com/sxywu/taytay/blob/master/src/data/metadata.json' target='_new'>list of her music videos</a>, with additional metadata including album, year, director, bpm, and youtube id.</li>
-                  <li>Loop through the list and download the corresponding Youtube videos (<a href='https://github.com/sxywu/taytay/blob/master/scripts/downloadYoutube.js' target='_new'>downloadYoutube.js</a>).</li>
-                  <li>Take screenshots every 5 seconds for every music video (<a href='https://github.com/sxywu/taytay/blob/master/scripts/takeScreenshot.js' target='_new'>takeScreenshot.js</a>).</li>
-                  <li>For every image, grab the RGB information for every 5 pixels.  Plug all the colors into <a href='https://harthur.github.io/clusterfck/' target='_new'>clusterfck</a>, a Node package for hierarchical clustering (no longer maintained).  Save each cluster color and size (<a href='https://github.com/sxywu/taytay/blob/master/scripts/getClusterColors.js' target='_new'>getClusterColors.js</a>).</li>
-                </ol>
+            <h3>week 2 <span class="light-grey">|</span> sketch</h3>
 
-                This was the result scene by scene (the x-axis is the hue, and the y-axis is the lightness), which was pretty cool:
-                <a class="fancybox" href="code/shirley/v1_byscene.jpg"> <img src="code/shirley/v1_byscene.jpg" class="img-responsive img-month"></a>
-                And by video:
-                <a class="fancybox" href="code/shirley/v1_byvideo.png"> <img src="code/shirley/v1_byvideo.png" class="img-responsive img-month"></a>
+            <p>
+              This is probably the most different and most interesting sketch section from all the other Data Sketches projects I've ever done.  It should more accurately be called "prototype".
+            </p>
 
-                I liked being able to see all the colors by video, but I didn't like that there was so much overlap.  So I thought of having a histogram of all the hues in a video, and a heatmap underneath so that I could see the spread of the colors scene by scene:
-                <a class="fancybox" href="sketch/shirley/tswift_sketch.jpg"> <img src="sketch/shirley/tswift_sketch.jpg" class="img-responsive img-month"></a>
+            <p>
+              For our very first brainstorm, we asked ourselves: what would we want to make if we had no restrictions on time, space, and money?  We went through many different ideas, but at the core, we agreed that we wanted to highlight the invisibility of these women, and raise awareness for their incredible contributions in computing.  We wanted to create an experience that would have people leave feeling inspired, stimulated, and wanting to go through it again.  We also wanted to create something where people's interactions with the piece can alter it, and they could maybe even leave something of themselves behind.
+            </p>
 
-                The histogram turned out to be very aesthetically pleasing:
-                <a class="fancybox" href="code/shirley/histogram_light.png"> <img src="code/shirley/histogram_light.png" class="img-responsive img-month"></a>
-                <a class="fancybox" href="code/shirley/histogram_dark.png"> <img src="code/shirley/histogram_dark.png" class="img-responsive img-month"></a>
-                But I'm not sure if it told me anything other than that her MVs have a lot of oranges and blues.  Which makes sense, since most of the oranges are various lightness/saturations of her skin tone, and the blues are commonly used to dramatically complement the orange.  Nothing new or mind-blowing there.
-              </p>
+            <p>
+              The last point of participants being able to affect the artwork was the most important to me, as I've always loved work like <a href='https://domesticstreamers.com/' target='_new'>Domestic Data Streamers'</a> <a href='https://www.youtube.com/watch?v=e9gudFpCJnU' target='_new'>Golden Age Art Installation</a> where people are invited to add to the artwork and change how it looks at the end.  I love that it turns people into participants, that it gives them a sense of ownership in the artwork.
+            </p>
 
-              <p>
-                I tried to add in the heatmap for every song, where the x-axis is still the hue, but the y-axis is the time in the music video.  For some of the songs, like "Fifteen", I could see distinct scene changes:
-                <a class="fancybox" href="code/shirley/heatmap.png"> <img src="code/shirley/heatmap.png" class="img-responsive img-month"></a>
-                But for most of the songs there weren't anything too interesting to comment on, and the visualizations for each song took up too much screenspace.
-                <a class="fancybox" href="code/shirley/heatmap.gif"> <img src="code/shirley/heatmap.gif" class="img-responsive img-month"></a>
-                (I did like this hover interaction I built for the heatmap though.)
-              </p>
+            <p>
+              For the second brainstorm, we brought in installations we pinned for inspiration, and a lot of the aesthetic we seemed to converge on were installations with many small objects hung and suspended in mid-air.  We especially liked Judith G Levy's <a href='https://judithglevy.com/section/421361-Memory-Cloud-1-Indianapolis-Museum-of-Art-an-interactive-installation.html' target='_new'>Memory Cloud</a>, where nostalgic photographs are placed within small souvenir viewers.  People are invited to walk through dozens of these viewers, and peek in to see each 35mm slide.
+            </p>
 
-              <p>
-                I wasn't quite sure how to go forward with what I had, and for some reason I thought that if I wasn't getting (what I thought was) interesting with the detailed view, then I had to dig even <em>deeper</em>. So I decided to build a tool where I could <em>filter each image by hue or saturation</em>.  It was so extra.  To accomplish it, I read the image data using Canvas and sent that image data (and the range of hue and saturation to filter by) to a Web Worker that looped through each pixel in the image and decided whether it could be kept or not.  I also tried using the GPU since each of the pixel calculations were self-contained, but (I think I was doing something wrong) it turned out to be slower than just using the Web Worker.  At one point, I even tried to send the data to the GPU from within the Web Worker, but found out that it wasn't supported in most browsers (this was early 2018).  It was all so unnecessary.  I think I just wanted to do it because it was technically fun, and it had nothing to do with whether the end result would be a good user experience.
-              </p>
+            <p>
+              We loved the idea of people interacting with each object, and decided to map each object to a woman and put their information inside.  We wanted people to take their time reading about each woman, and I really liked that looking into the viewer felt like looking into a secret world that we previously had no idea about.
+            </p>
 
-              <p>
-                But it did give some interesting results, especially when filtering down to just red colors: in 2006, she wore a red babydoll dress surrounded by red roses, the epitome of innocense.  In 2017, her red dress is deep cut, her lips are deep red, and she stands in front of a bright magenta background, parodying the way media portrays her.
-                <a class="fancybox" href="code/shirley/red_2006.png"> <img src="code/shirley/red_2006.png" class="img-responsive img-month"></a>
-                <em>Scenes from "Our Song", 2006</em>
-                <a class="fancybox" href="code/shirley/red_2017.png"> <img src="code/shirley/red_2017.png" class="img-responsive img-month"></a>
-                <em>Scenes from "Look What You Made Me Do", 2017</em>
-              </p>
+            <p>
+              <a class="fancybox" href="sketch/shirley/initial_idea.jpg"> <img src="sketch/shirley/initial_idea.jpg" class="img-responsive img-month"></a>
+              From there, the rest of the data mappings came quickly: the women would be organized in a field by the year of accomplishment, from earliest to most recent.  And their height from the ceiling would be by the number of their backlinks.  So the more backlinks and more "renowned" they were, the higher up they were because they were more "out of reach", and the less backlinks the lower down they were to be more easily accessible.  This was especially important to us, to promote those women that were less well known. We wanted the interaction to be that a person would pull the object down from above their heads and read inside the object.  We thought that interaction could also be how we keep track of which women were interacted with, how we give user feedback, and how we potentially affect the end artwork.
+            </p>
 
-              <p>
-                This made me wonder if she ever repeated certain colors with certain objects across songs.  I went through every song and filtered by every hue of the rainbow:
-                <a class="fancybox" href="code/shirley/filter_hsl.gif"> <img src="code/shirley/filter_hsl.gif" class="img-responsive img-month"></a>
-                I found that she frequently had red cars and trucks throughout her country songs, and red lips through her later pop songs.  That was cool, but it didn't feel like enough.
-              </p>
+            <p>
+              To have people be able to leave something behind, we decided to have a "summary board" placed at the end of the installation with each woman's name on it.  We wanted to prompt people to place a star sticker (hehe) by a name that they had never heard of before, but were inspired by after the installation.
+              <a class="fancybox" href="sketch/shirley/initial_floor_plan.jpg"> <img src="sketch/shirley/initial_floor_plan.jpg" class="img-responsive img-month"></a>
+              <em>(We initially wanted our experience to have a clear entry and exit, with the summary board placed by the exit.)</em>
+            </p>
 
-              <p>
-                (NOTHING FELT LIKE ENOUGH 😭😱)
-              </p>
+            <p>
+              Because this installation was also the final project for the Physical Computation class I was auditing, there were regular check-ins on the idea and scheduled "playtests".  In our first idea check-in, <a href='http://www.smoothware.com/danny/' target='_new'>our teacher</a> gave us the feedback that it'd be really nice that walking up to and pulling down that first object would also trigger other objects to drop down.  That feedback inspired us to cluster the women into groups, so that when a person walks up to the first woman, the others in the group would drop down and create a path to guide them through the installation.
+            </p>
 
-              <p>
-                So I decided to try another approach: since going deep in a song didn't give me enough interesting things, I decided to go broad and see if there were interesting trends across the songs.  I went back to the histograms and grouped them by album:
-                <a class="fancybox" href="code/shirley/v1_byalbum.png"> <img src="code/shirley/v1_byalbum.png" class="img-responsive img-month"></a>
-                But the songs were still too far apart, and I wanted a way to quickly scan through the songs and see if there were any changes in hue, saturation, and lightness.  I sketched out two ideas: one that was a combination of beeswarm and line chart that would show saturation, and another that would group arrange the colors into a block or color wheel to show hue.
-                <a class="fancybox" href="sketch/shirley/changeovertime.jpg"> <img src="sketch/shirley/changeovertime.jpg" class="img-responsive img-month"></a>
-                The saturation went all over the place (maybe looking at lightness would have been more interesting?):
-                <a class="fancybox" href="code/shirley/saturation.png"> <img src="code/shirley/saturation.png" class="img-responsive img-month"></a>
-                And as for hue, there were some interesting songs, like "Love Song" that stayed almsot all yellow and green, or the three songs in 1989 that were mostly orange and blue.
-                <a class="fancybox" href="code/shirley/hue.jpg"> <img src="code/shirley/hue.jpg" class="img-responsive img-month"></a>
-                But for most other songs, there weren't any such clear delineations in hue that I could see, that would be worth writing about.
-              </p>
+            <p>
+              Once we had the initial idea fleshed out, Christina went about sourcing materials, and Tina and I went about trying to figure out how to detect a person interacting with our object.  We brainstormed several ideas, including a pulley system that would complete the circuit when pulled down on (thus sending a signal), a motor at the top that would unwind the cord when pulled on, a capacitive touch sensor on the object, an infrared motion sensor placed somewhere near the object...all the options felt overly engineered, overly finicky, or overly sensitive.
+            </p>
 
-              <p>
-                By now, I was really discouraged.  I had to admit to myself that I really didn't know much about color and especially color use in music videos, and that I should scrap the idea and try something completely different.
-              </p>
+            <p>
+              When we went to our <a href='http://blightdesign.com/' target='_new'>Fabrication teacher</a>'s office hours, he suggested we go simpler.  He gave us a vibration sensor (the circuit completes when we shake the sensor), and a tilt sensor (the circuit completes when it's tilted up) to experiment with.
+              <a class="fancybox" href="sketch/shirley/vibration_sensor.gif"> <img src="sketch/shirley/vibration_sensor.gif" class="img-responsive img-month"></a>
+              <a class="fancybox" href="sketch/shirley/tilt_sensor.gif"> <img src="sketch/shirley/tilt_sensor.gif" class="img-responsive img-month"></a>
+              As you might be able to tell from the gif, the vibration sensor took quite a bit of force to trigger, which meant that if we put it in our object the person would have to really shake it (instead of gently picking it up) for us to know that they've interacted with it.  On the other hand, though the tilt sensor wasn't perfect (there didn't seem to be an exact angle that it started sending "on" signals, and even then those signals were quite noisy) it was a much better option.
+            </p>
 
-              <h3>year 2 <span class="light-grey">|</span> data</h3>
+            <p>
+              (We also considered an accelerometer, which would be more sophisticated than a tilt sensor and be able to tell us the angle of the tilt, but we ultimately decided against it because it was ~4x more expensive than the tilt sensor.)
+            </p>
 
-              <p>
-                That something new turned out to be emotions.  I was asking myself what I liked the most about Taylor Swift songs (something I should have done from the very beginning), and after some brainstorming, realized it was because I liked the stories she told.  They were easy to relate to (at least her earlier ones were...), and they were usually about daydreams or relationships or breakups - emotional things.
-              </p>
+            <p>
+              Through this process, we also realized how finnicky a motor would be to deal with and fragile it would be especially with the thousands of people coming through the Winter Show and pulling on the cords (with many kids!).  Even though we really liked the idea - motion always really captures attention - we decided to nix the idea.  Instead, we decided to put lights in the object since changes in light are still quite noticeable and even more importantly, much easier to control.
+            </p>
 
-              <p>
-                So I set about gathering all of her lyrics, and I found a <a href='https://github.com/irenetrampoline/taylor-swift-lyrics/blob/master/az_lyrics.json' target='_new'>Github repo</a> with all of her songs until 1989.  It also had some metadata for each line of a song, including title, album, and year.
-              </p>
+            <p>
+              We immediately liked the metaphor the lights gave us: we decided to have the hanging objects all start out dim - a metaphor that these women are largely unknown - and as people went through the installation and read about each woman, their light would grow slight bit brighter.  We hoped that by the end of the show, all of their lights would be brightly lit.
+            </p>
 
-              <p>
-                I had been streaming my code progress on Twitch, and for figuring out the emotions in the lyrics, someone suggested I use the <a href='https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm' target='_new'>NRC Word-Emotion Association Lexicon</a>.  It was a dataset of ~14,000 common words and whether they were associated with a variety of emotions: anger, anticipation, disgust, fear, joy, sadness, surprise, trust.  I went through each line in each song, and for every word that had a match in the lexicon, I noted the emotion.  I then divided the count for each emotion by the total number of words, and got a "percentage" for each emotion in a song (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/parseLyrics.js' target='_new'>parseLyrics.js</a>).
-              </p>
+            <p>
+              For the lights, we went with Adafruit's brand of individually controllable RGB color lights called the Neopixel.  We originally went with this because we thought we might try encoding data into the color of the lights as well but decided against it because it was quite hard to distinguish most colors from each other unless they were <em>very</em> different (like between, red, blue, green).  We decided to continue using it even though we weren't going to have different colors, because they gave us better control over brightness than normal LEDs.
+            </p>
 
-              <p>
-                I threw the newly acquired dataset into Observable (an online notebook for visualizations), and used Vega-Lite (composable charting library) to draw a line chart of the emotions over the years:
-                <a class="fancybox" href="data/shirley/emotionsacrossyears.png"> <img src="data/shirley/emotionsacrossyears.png" class="img-responsive img-month"></a>
-                (I really like this combination of Observable and Vega-Lite, that allows me to quickly explore the data - a much needed step-up from when I would build out a whole visualization to explore the data.)
-              </p>
+            <p>
+              Unfortunately, when we first ordered the Neopixels, we ordered 100 individual ones, not realizing we'd have to solder each of them to their own boards so that we could wire them up to the arduino to communicate with.  I learned a very valuable lesson that first time I soldered one of these Neopixels, that they have four pins (one for plus, one for minus/ground, one for data in to receive commands from the Arduino,  and another for data out to send the commands to the next pixel if we ever decided to chain them) very <em>very</em> close together and they CANNOT touch.  And if they touched, they would short-circuit.
+              <a class="fancybox" href="sketch/shirley/individual_neopixel.jpg"> <img src="sketch/shirley/individual_neopixel.jpg" class="img-responsive img-month"></a>
+              <em>(Trying to hold down the wires so they wouldn't move as I very carefully tried to solder the pins to a cut-up board.)</em>
+            </p>
 
-              <p>
-                The problem, though, was that because the lexicon only contained the most common 14k words, a lot of the words in the lyrics were unaccounted for.  I was concerned for the accuracy of the dataset, and started to look for an alternative.  I tried to look for a sentiment analysis package, but they all only told me whether a phrase was positive or negative, until I found IBM Watson's Tone Analyzer.  I wrote a script to pass every line of every song into the Tone Analyzer, and remember the set of emotions Watson found in that line as well as its confidence of those emotions existing (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/toneAnalyzer.js' target='_new'>toneAnalyzer.js</a>).  Out of all the tones Watson came back with, I decided to concentrate on just the five <em>Inside Out</em> emotions: joy, sadness, fear, disgust, anger.  I wrote another script to reduce the data file to just those five emotions for each lyric (<a href='https://github.com/sxywu/taytayv2/blob/master/scripts/getTopTones.js' target='_new'>getTopTones.js</a>) to get my (almost) final dataset.
-              </p>
+            <p>
+              I did four more of this.  Unfortunately, two of them shortcircuited and we decided it really wasn't going to scale up very well.  On the bright side, I eventually learned how to use a multimeter to test for shorts, instead of trying it out on my (and Tina's) Arduino boards and shorting them...
+            </p>
 
-              <h3>year 2 <span class="light-grey">|</span> sketch & code</h3>
+            <p>
+              Fortunately, because there are very many talented and experienced people always on the ITP floor, they were around to advise us on using a Neopixel strip instead, since it has a much nicer and larger area we could solder to.  Unfortunately, those larger areas were still quite close to each other and if we weren't being careful, ran the risk of the solders running into each other.  Amidst those struggles, I was introduced to soldering paste, which makes it so that the solder only sticks to the conductive part and doesn't stick to anything else.  That was such a time saver.  And after soldering the wires to the strip, I learned to use a hot glue gun to make sure that the wires wouldn't fall off easily.
+            </p>
 
-              <p>
-                I was trying to figure out a visual representation/metaphor for these emotion, when on a random drive home, it hit me: emotions are gooey!  They're messy and amorphous and gooey (for some reason I thought of lava lamps).  And so I immediately plugged the data in, drew each emotion as a circle, and applied the "gooey effect" - a set of SVG filters that blurs the circles and then ups the contrast (<a href='https://css-tricks.com/gooey-effect/' target='_new'>CSS Tricks has a great explainer on how this all works</a>):
-                <a class="fancybox" href="code/shirley/v2_gooey.png"> <img src="code/shirley/v2_gooey.png" class="img-responsive img-month"></a>
-                Each of the emotions are mapped to a color: joy is yellow, sadness is blue, disgust is green, fear is purple, and anger is red (just like <em>Inside Out</em>!).  They are sized by Watson's confidence of that emotion existing.  I also tried to position the emotions by when they appear in the song, starting at the top and going clockwise.  I did this so that I could have consistency between the overview and the detailed view of each song, where the gooey emotions animate to the center when its corresponding lyric is played:
-                <a class="fancybox" href="code/shirley/blankspace.gif"> <img src="code/shirley/blankspace.gif" class="img-responsive img-month"></a>
-                I liked this idea, but I didn't like how quickly I had to animate through each line (lest the animation take too long), and how hard it was to associate the lyric with the emotion before it disappeared.  So I brainstormed and sketched out some other ideas:
-                <a class="fancybox" href="sketch/shirley/v2.jpg"> <img src="sketch/shirley/v2.jpg" class="img-responsive img-month"></a>
-                For some reason, while thinking of the confidence level of emotions across time, I thought of the lines that lie detecters drew and overlapping each of the emotion-lines around the gooey.  While thinking of an order to overlap the emotions, I also thought of vertically sorting the emotions in the gooey, so that joy - the "lightest", "airiest" emotion - floated at the top, and anger - the "heaviest" emotion - sat at the bottom.
-              </p>
+            <p>
+              (These sorts of lessons are precisely what I went to ITP for 👍)
+              <a class="fancybox" href="sketch/shirley/solder_paste.jpg"> <img src="sketch/shirley/solder_paste.jpg" class="img-responsive img-month"></a>
+              At the same time we were figuring out the electrical components for each object, Christina was sourcing and experimenting with materials.  She quickly landed on using fillable Christmas ornaments, and we went about acquiring one from a nearby Michael's to prototype with and ordering three dozen from Amazon at the same time.
+              <a class="fancybox" href="sketch/shirley/orbs.jpg"> <img src="sketch/shirley/orbs.jpg" class="img-responsive img-month"></a>
+              Christina then went about sanding the nobs off of each ornament, and carefully drilling holes into the center for wires to run out of.  To hide the tilt sensor and Neopixel within the orb, we first tried to spray paint the interior of the orbs.  We had bought reflective spray paint that was supposed to give a mirror-like finish, but it didn't turn out well.  That was the night we learned reflective spray paint only works well on glass and not plastic 😅
+              <a class="fancybox" href="sketch/shirley/spray_paint.jpg"> <img src="sketch/shirley/spray_paint.jpg" class="img-responsive img-month"></a>
+              We also took the opportunity to test out two ideas we had: whether we wanted people to peek in through a small hole to read the information, or whether we should leave the orb as is and have a larger area to read the information from.  It was really great to have the spray painted prototypes, because right away we could tell that the peephole would be way too small and too much of a struggle for people to read large amounts of information through.
+              <a class="fancybox" href="sketch/shirley/orb_options.png"> <img src="sketch/shirley/orb_options.png" class="img-responsive img-month"></a>
+              <em>(The two options we considered for how the orb should look like)</em>
+            </p>
 
-              <p>
-                Here's the sketch implemented:
-                <a class="fancybox" href="code/shirley/v2_lyrics.png"> <img src="code/shirley/v2_lyrics.png" class="img-responsive img-month"></a>
-                Because the lines were too messy and hard to track around a circle, I filled them in and also used a multiply blend mode so that I could see the overlapping emotions.  I also added the lyrics on the right, and for any lines with emotions I denoted them with a mini version of the circles - that way I wouldn't have to keep going back and forth between the visualization and the lyrics to match the emotions with the words.
-              </p>
+            <p>
+              We also realized that we should place the information placard at a certain angle so that people would 1. know that there was a placard inside they needed to read, and 2. be incentivized to pick it up in the correct direction to trigger the tilt sensor.
+              <a class="fancybox" href="sketch/shirley/orb_angled.jpg"> <img src="sketch/shirley/orb_angled.jpg" class="img-responsive img-month"></a>
+              <em>(Prototype of the second option with no peephole, and a large transparent area to read the information through)</em>
+            </p>
 
-              <p>
-                I liked this version, but it was hard to see which emotions were most prominent across the whole song, since it's really hard to compare heights when those heights wrap in a circle.  I tried this next:
-                <a class="fancybox" href="code/shirley/v2_horizontal.png"> <img src="code/shirley/v2_horizontal.png" class="img-responsive img-month"></a>
-                But while I could now easily scan and see which emotions have the highest peak, I really disliked the aesthetic - it reminded me of a sun over a bunch of little mountains, and that was definitely not a look I was going for.
-              </p>
+            <p>
+              It was really fun to prototype the materials, and the whole process was so different from working digitally (where gathering materials is not a thing).  Overall it took about two weeks for us to settle on all the materials, and we had to be really strategic about buying just enough material to test with without being wasteful if we decided against the idea, and ordering the materials online early enough that it'd get to us by the time we needed to start production.  I also learned a lot about prototyping with cheap, readily available materials (like masking tape, cardboard, and tin foil) to mimic the effect we were going for just to be able to quickly try out an idea.
+            </p>
 
-              <p>
-                So I went back to the area chart around the circle, but this time I used annotations to indicate the highest emotions.  It also let me bring the lyrics in underneath the visualization, and thus make each visualization more compact (which I always like):
-                <a class="fancybox" href="sketch/shirley/v2_annotations.jpg"> <img src="sketch/shirley/v2_annotations.jpg" class="img-responsive img-month"></a>
-                I was able to stay pretty faithful to my sketch in my implementation, and even added an extra annotation to show the cutoff for where Watson was confident (or not confident) with its analysis:
-                <a class="fancybox" href="code/shirley/annotated1.png"> <img src="code/shirley/annotated1.png" class="img-responsive img-month"></a>
-                But I didn't like how spiky the area chart got when there were longer lyrics, so I tried a rectangular shape instead:
-                <a class="fancybox" href="code/shirley/annotated2.png"> <img src="code/shirley/annotated2.png" class="img-responsive img-month"></a>
-                And also a rounded version:
-                <a class="fancybox" href="code/shirley/annotated3.png"> <img src="code/shirley/annotated3.png" class="img-responsive img-month"></a>
-              </p>
+            <p>
+              Since the reflective spray paint didn't work out, Christina suggested cellophane (Christina was an absolute pro when it came to materials).  This not only hid the tilt sensor and neopixel, it also had a beautiful effect when lit up in the dark.
+              <a class="fancybox" href="sketch/shirley/cellophane.jpg"> <img src="sketch/shirley/cellophane.jpg" class="img-responsive img-month"></a>
+              <a class="fancybox" href="sketch/shirley/cellophane.gif"> <img src="sketch/shirley/cellophane.gif" class="img-responsive img-month"></a>
+              <em>(A quick prototype with cellophane and the information printed on vellum, a translucent paper to help mimic frosted acrylic and diffuse the light, that can also be printed on.)</em>
+            </p>
 
-              <p>
-                At this point, I was pretty satisfied with the look of the detail view, so I decided to work on the title page - and this is where I ran into performance issues trying to animate the gooeys.
-              </p>
+            <h3>week 3 & 4 <span class="light-grey">|</span> code</h3>
 
-              <p>
-                <!-- SOME SCREENSHOTS OF BUGS? -->
-                <!-- Now that TS7 is so colorful, it might be fun to eventually finish the colors version. -->
-              </p>
+            <p>
+              Once we had all the physical components for the orb determined, I went about with the coding.  To control the tilt sensor and Neopixel we settled on, we used the Arduino.
+              <a class="fancybox" href="code/shirley/arduino.png"> <img src="code/shirley/arduino.png" class="img-responsive img-month"></a>
+              Arduino is a brand of microcontrollers (I think of microcontrollers as small, simple computers that we can use to control other devices), and the way we use it is by wiring the pins on the Arduino (circled in orange in the photo) to our lights, sensors, motors, etc.  Each of those pins have a corresponding number it is identified by, and so in our code, we can tell Arduino that a certain pin is being used as input to read from (usually a sensor) and another is being used as output to write to and control.
+            </p>
+
+            <p>
+              (You never thought you were gonna get a run-down of Arduino from this project, did you?  Well we aim to go above and beyond 😆)
+            </p>
+
+            <p>
+              Because this was my first full project with Arduino, I started my code super simple.  I used a button as a stand-in for the tilt sensor, and an LED in place of the Neopixel.  I used an array to keep track of which pins the buttons were wired to, and another array for which pins the LEDs were wired to.  I also had an array for keeping track of which buttons were pressed, and another array for each LED's brightness.  Every time the button was pressed it was the equivalent of a "tilt" and I'd increase the brightness of the LED and save it to the brightness array.  I wanted to use the button and LED (which I was already familiar with how to code) first so that I could get the functionality working first, before having to worry about incorporating the tilt sensor and Neopixel - both things I haven't worked with before.
+              <a class="fancybox" href="code/shirley/tilt_lights.jpg"> <img src="code/shirley/tilt_lights.jpg" class="img-responsive img-month"></a>
+              <em>(Four Neopixel strips and one orb with Neopixel and tilt sensor all frighteningly wired up for my code testing purposes.)</em>
+            </p>
+
+            <p>
+              Once I had the basic functionality, I went about replacing the LED and push button with the Neopixel and tilt sensor in my code.  The Neopixel actually comes with its own library of functions, and because it assumes that I'm programming a strip of many Neopixels, most documentation examples involve instantiating the Neopixel class with an array of pin numbers.  I actually had to do some gymnastics and guesswork to setup each orb's Neopixel individually.  (Next time, I might consider using something else, but for this project it was already too late to look for other options.)
+            </p>
+
+            <p>
+              Reading the tilt sensor was a little more straightforward, though I did have to adapt an <a href='https://learn.adafruit.com/tilt-sensor/using-a-tilt-sensor' target='_new'>Adafruit example</a> to implement debounce on the reading.  That was probably the most interesting lesson I learned about working in hardware, that nothing in the physical world is clear cut like it is in computers, and all sensor readings are noisy.
+            </p>
+
+            <p>
+              With the Neopixel and tilt sensor code incorporated, the rest of the code from my first iteration worked perfectly.
+              <a class="fancybox" href="code/shirley/tilt_light.gif"> <img src="code/shirley/tilt_light.gif" class="img-responsive img-month"></a>
+              <em>(I got this working around 1AM after a few late nights and I was so deliriously happy.)</em>
+            </p>
+
+            <p>
+              With one orb working, I had to make sure it could work scaled up and with groups.  We had decided to group our list of 16 women into four categories - Mathematicians, Computer Scientists, Creatives, and Others (executives, inventors, etc.) - and if any one orb was lifted up, the rest of the women in the same group would also light up in a delayed stagger.
+              <a class="fancybox" href="code/shirley/group_plans.jpg"> <img src="code/shirley/group_plans.jpg" class="img-responsive img-month"></a>
+              <em>(Working out the logic for when an orb is picked up and all the other orbs in the same group should light up in a staggered pattern, and the opposite happening when the orb is put down.)</em>
+            </p>
+
+            <p>
+              To implement the delayed stagger, I needed to incorporate time into my code.  The only way to do this in Arduino is with <code>mills()</code>, which returns the number of milliseconds since the Arduino began running.  I refactored my code to store group information: whether the whole group should be lit up or not, which orb in the group triggered that change, and at what millisecond that change was triggered (which I called <code>startTime</code>).  I could then use that information to loop through each orb in the group, and depending on which orb triggered the change (<code>activeOrb</code>), calculate each orb's <code>startTime</code> (when its own brightness would change) based on the distance of that orb from the <code>activeOrb</code>.  I would then set the orb's brightness if the time was past that orb's <code>startTime</code>.
+              <a class="fancybox" href="code/shirley/stagger.gif"> <img src="code/shirley/stagger.gif" class="img-responsive img-month"></a>
+              <em>(The Neopixels lighting up when the tilt sensor in my hand is lifted, and dimming down when the tilt sensor is down.)</em>
+            </p>
+
+            <p>
+               I also ended up coding in a fade animation by storing a start and end brightness for each orb, which made the brightness change much gentler, and added in code for a pulsating introductory orb to catch attention and explain the installation.
+            </p>
+
+            <p>
+              Coding in Arduino was an interesting challenge in trying to make sure I was being memory efficient, especially when I had to add in groups and remember milliseconds (which were stored as unsigned longs).  It definitely made my code more convoluted, but I had a really fun time trying to figure out the challenge.
+            </p>
+
+            <h3>week 5 & 6 <span class="light-grey">|</span> production</h3>
+
+            <p>
+              This was the point at which I had finished my fellowship and had to go home to SF (and then to a conference in Tokyo), so I only was able to help Tina and Christina finish prototyping the orbs and wasn't able to help them through the production process.  I highly recommend checking both of their writeups (<a href='http://www.cdacanay.com/itp-blog/2019/12/23/one-amongst-many-connecting-womxn-in-computing' target='_new'>Christina's</a> and Tina's coming soon) for more details on this section.
+            </p>
+
+            <p>
+              One of the first things that Tina did to kickstart the production phase is to 3D model an enclosure to hold both the tilt sensor (which is very sensitive to the angle of its placement) and Neopixel in place.  We also received a brilliant suggestion from our teachers to use a phone jack to connect our orbs to our wires, so that we could make the orbs easily detachable.  That way, just in case an orb malfunctioned, we could easily separate it and debug it away from the rest of the installation.  Tina also incorporated the phone jack into her enclosure design, and together with Christina, 3D printed 17 of these enclosures and spent roughly 30 hours soldering them all.
+              <a class="fancybox" href="code/shirley/3d_model.jpg"> <img src="code/shirley/3d_model.jpg" class="img-responsive img-month"></a>
+              <em>(3D model of the enclosure.)</em>
+              <a class="fancybox" href="code/shirley/enclosure.jpg"> <img src="code/shirley/enclosure.jpg" class="img-responsive img-month"></a>
+              <em>(Tilt sensor and Neopixel soldered to the phone jack within Tina's 3D printed enclosure.)</em>
+              <a class="fancybox" href="code/shirley/enclosure_orb.jpg"> <img src="code/shirley/enclosure_orb.jpg" class="img-responsive img-month"></a>
+              <a class="fancybox" href="code/shirley/enclosure.gif"> <img src="code/shirley/enclosure.gif" width='100%' class="img-responsive img-month"></a>
+              <em>(The orb wired up and working as a stand-alone piece!)</em>
+            </p>
+
+            <p>
+              They also designed the information within each orb, and laser etched and cut it into acrylic.
+              <a class="fancybox" href="code/shirley/laser_cut.jpg"> <img src="code/shirley/laser_cut.jpg" class="img-responsive img-month"></a>
+              <a class="fancybox" href="code/shirley/info.jpg"> <img src="code/shirley/info.jpg" class="img-responsive img-month"></a>
+              And finally, they translated the data I gave them into positions and heights in the space we were given for the Winter Show.  They then used planks of wood to hang the orbs from the ceiling.
+              <a class="fancybox" href="code/shirley/planks.png"> <img src="code/shirley/planks.png" class="img-responsive img-month"></a>
+              <iframe src="https://player.vimeo.com/video/381232779" width='405' height='240' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              <em>(Install timelapse)</em>
+            </p>
+
+            <p>
+              It was absolutely incredible to see this whole project come together.  It received great feedback at the Winter Show, where over two hundred people experienced it.  My favorite stories are of women, young and old, reading through each orb and looking inspired and emotional, placing a gem in the groups they most identified with.
+              <iframe src="https://player.vimeo.com/video/381236132" width='405' height='240' frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              <a class="fancybox" href="code/shirley/feedback.jpg"> <img src="code/shirley/feedback.jpg" class="img-responsive img-month"></a>
+              <em>(A board where we asked people what groups they identified as - definitely not the most optimal Venn diagram, but probably much easier to understand for non-dataviz people.)</em>
+            </p>
+
+            <p>
+              <a class="fancybox" href="code/shirley/dream_team.png"> <img src="code/shirley/dream_team.png" class="img-responsive img-month"></a>
+              I'm so grateful to Tina and Christina for being the best teammates to pull off this ambitious project (in 6 weeks!), and to all the teachers and residents and students who graciously offered their time and wisdom.  I don't think we could have pulled this project off anywhere else.
+            </p>
+
+            <p>
+              And I'm so happy and grateful that this is the project that I get to end a whole decade with, to end Data Sketches with.  I think it perfectly encapsulates my personal journey - of going from someone that was purely technical, to learning more about design, to finding and chasing and executing on my dreams of doing a full data installation.  I'm excited that this ushers me into the next phase of my career, where I want to do more art, and bring more data visualizations out into the physical world for more people to get immersed in and enjoy.
+            </p>
+
+            <p>
+              Thank you for three years, Data Sketches 💖
+            </p>
 
             </div>
           </div>
