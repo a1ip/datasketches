@@ -2,6 +2,6 @@
   "name": "july-data",
   "dependencies": {
     "d3": "^3.5.17",
-    "lodash": "^4.17.13"
+    "lodash": "^4.17.19"
   }
 }
